@@ -1,0 +1,44 @@
+{
+  "name": "roto-server",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "nuxt",
+    "build": "nuxt build",
+    "start": "nuxt start",
+    "generate": "nuxt generate"
+  },
+  "dependencies": {
+    "@fortawesome/free-brands-svg-icons": "^5.15.4",
+    "@fortawesome/free-regular-svg-icons": "^5.15.4",
+    "@fortawesome/free-solid-svg-icons": "^5.15.4",
+    "@nuxt/http": "^0.6.4",
+    "@nuxtjs/auth": "^4.9.1",
+    "@nuxtjs/axios": "^5.13.6",
+    "@nuxtjs/fontawesome": "^1.1.2",
+    "bootstrap": "^4.6.0",
+    "bootstrap-vue": "^2.21.2",
+    "chart.js": "^2.9.4",
+    "core-js": "^3.15.1",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "express-validator": "^6.12.2",
+    "fs": "0.0.1-security",
+    "mariadb": "^2.5.4",
+    "net": "^1.0.2",
+    "nuxt": "^2.15.7",
+    "vue-chartjs": "^3.5.1",
+    "vue-tour": "^2.0.0"
+  },
+  "devDependencies": {
+    "@nuxtjs/tailwindcss": "^4.2.1",
+    "autoprefixer": "^10.3.7",
+    "eslint-config-prettier": "^8.3.0",
+    "fibers": "^5.0.0",
+    "postcss": "^8.3.9",
+    "prettier": "^2.3.2",
+    "sass": "^1.42.1",
+    "sass-loader": "^10.2.0",
+    "tailwindcss": "^2.2.16"
+  }
+}
