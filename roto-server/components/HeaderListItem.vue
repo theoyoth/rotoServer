@@ -1,7 +1,15 @@
 <template>
     <div class="container mx-auto py-5">
         <header class="flex justify-between">
-            <div @click="$router.back()" id="kembali">
+
+            <nuxt-link to="/master" class="flex rounded-md justify-between items-center" v-show="monitor || server || ups || baterai || rak || ac || cctv ||network || apar||monitor||keyboard||mouse||nas||genset">
+                <div class="bg-blue-400 w-8 h-8 rounded-full flex items-center justify-center">
+                    <font-awesome-icon :icon="['fas','arrow-left']" class="text-white" />
+                </div>
+                <p class="font-medium text-xl ml-2">Kembali</p>
+            </nuxt-link>
+        
+            <div @click="$router.back()" id="kembali" v-show="maintenance || ambilbarang || gantibarang || tambahbarang || dokumen">
             <nuxt-link to="" class="flex rounded-md justify-between items-center ">
                 <div class="bg-blue-400 w-8 h-8 rounded-full flex items-center justify-center">
                     <font-awesome-icon :icon="['fas','arrow-left']" class="text-white" />

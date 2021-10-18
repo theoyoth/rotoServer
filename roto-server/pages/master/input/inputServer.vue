@@ -10,13 +10,13 @@
                     <input type="text" v-model="produk" name="produk" id="produk" class="p-2 w-72 rounded-lg outline-none">
                 </div>
                 <div class="mb-4">
-                    <label for="model" class="block mb-2 text-sm">model</label>
-                    <input type="text" v-model="model" name="model" id="model" class="p-2 w-72 rounded-lg outline-none">
-                </div>
-                <div class="mb-4">
                     <label for="merek" class="block mb-2 text-sm">merek</label>
                     <input type="text" v-model="merek" name="merek" id="merek" class="p-2 w-72 rounded-lg outline-none">
                 </div>
+                <div class="mb-4">
+                    <label for="model" class="block mb-2 text-sm">model</label>
+                    <input type="text" v-model="model" name="model" id="model" class="p-2 w-72 rounded-lg outline-none">
+                </div>                
                 <div class="mb-4">
                     <label for="processor" class="block mb-2 text-sm">processor</label>
                     <input type="text" v-model="processor" name="processor" id="processor" class="p-2 w-72 rounded-lg outline-none">
@@ -31,19 +31,19 @@
                 </div>
                 <div class="mb-4">
                     <label for="netwokController" class="block mb-2 text-sm">network Controller</label>
-                    <input type="text" v-model="netwokController" name="netwokController" id="netwokController" class="p-2 w-72 rounded-lg outline-none">
+                    <input type="text" v-model="networkController" name="networkController" id="netwokController" class="p-2 w-72 rounded-lg outline-none">
                 </div>
                 <div class="mb-4">
                     <label for="eksternalStorage" class="block mb-2 text-sm">eksternal Storage</label>
                     <input type="text" v-model="eksternalStorage" name="eksternalStorage" id="eksternalStorage" class="p-2 w-72 rounded-lg outline-none">
                 </div>
                 <div class="mb-4">
-                    <label for="eksternalStorage" class="block mb-2 text-sm">eksternal Storage</label>
-                    <input type="text" v-model="eksternalStorage" name="eksternalStorage" id="eksternalStorage" class="p-2 w-72 rounded-lg outline-none">
+                    <label for="storage" class="block mb-2 text-sm">Storage</label>
+                    <input type="text" v-model="storage" name="storage" id="storage" class="p-2 w-72 rounded-lg outline-none">
                 </div>
                 <div class="mb-4">
-                    <label for="powerSupply" class="block mb-2 text-sm">power supply</label>
-                    <input type="text" v-model="powerSupply" name="powerSupply" id="powerSupply" class="p-2 w-72 rounded-lg outline-none">
+                    <label for="sumberDayaListrik" class="block mb-2 text-sm">power supply</label>
+                    <input type="text" v-model="sumberDayaListrik" name="sumberDayaListrik" id="sumberDayaListrik" class="p-2 w-72 rounded-lg outline-none">
                 </div>
                 <div class="mb-4">
                     <label for="tahun" class="block mb-2 text-sm">tahun</label>
@@ -66,6 +66,7 @@ export default {
     data(){
         return {
             item : "server",
+            garansi : "",
         }
     }
 }

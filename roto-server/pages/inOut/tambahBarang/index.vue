@@ -50,6 +50,11 @@
 
 <script>
 export default {
+    data(){
+        return{
+            cari:"",
+        }
+    }
 }
 </script>
 
