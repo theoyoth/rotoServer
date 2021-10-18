@@ -1,6 +1,6 @@
 <template>
 <div class="bg-hero h-screen">
-    <InputHeader/>
+    <InputHeader map="map"/>
 </div>
   
 </template>

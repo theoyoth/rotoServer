@@ -39,6 +39,7 @@ export default {
   buildModules: [
     '@nuxtjs/fontawesome',
     '@nuxtjs/tailwindcss',
+    '@nuxtjs/moment',
   ],
   fontawesome: {
     icons: {

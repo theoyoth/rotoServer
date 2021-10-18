@@ -14,14 +14,14 @@
             <p class="text-xl font-medium" v-show="tambahbarang">formulir input data {{tambahbarang}}</p>
             <p class="text-xl font-medium" v-show="dokumen">formulir input data {{dokumen}}</p>
             <p class="text-xl font-medium" v-show="maintenance">formulir input data {{maintenance}}</p> -->
-            <p class="text-xl font-medium">formulir input data</p>
+            <p class="text-xl font-medium" v-show="!map">formulir input data {{dokumen}}</p>
         </header>
     </div>
 </template>
 
 <script>
 export default {
-    props:['ambilbarang','gantibarang','tambahbarang','dokumen','maintenance']
+    props:['ambilbarang','gantibarang','tambahbarang','dokumen','maintenance','map']
 }
 </script>
 

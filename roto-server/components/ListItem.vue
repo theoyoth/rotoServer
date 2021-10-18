@@ -67,18 +67,18 @@
             </tr>
         </thead>
         <tbody class="text-center bg-white bg-opacity-40">
-            <tr v-show="server" class="text-sm">
-                <td>Intro to CSS</td>
-                <td>Adam</td>
-                <td>858</td>
-                <td>858</td>
-                <td>858</td>
-                <td>858</td>
-                <td>858</td>
-                <td>858</td>
-                <td>858</td>
-                <td>858</td>
-                <td>858</td>
+            <tr v-show="server" class="text-sm" v-for="(server,index) in servers" :key="index">
+                <td>{{server.produk}}</td>
+                <td>{{server.merek}}</td>
+                <td>{{server.model}}</td>
+                <td>{{server.processor}}</td>
+                <td>{{server.memori}}</td>
+                <td>{{server.internal_storage}}</td>
+                <td>{{server.network_controller}}</td>
+                <td>{{server.storage}}</td>
+                <td>{{server.sumber_daya_listrik}}</td>
+                <td>{{server.tahun}}</td>
+                <td>{{server.garansi}}</td>
                 <td class="py-3">
                     <a href="#">
                         <font-awesome-icon :icon="['fas','pencil-alt']" class="text-blue-500"/>
@@ -277,7 +277,12 @@
 
 <script>
 export default {
-    props:['monitor','server','ups','baterai','rak','ac','cctv','network','apar','monitor','keyboard','mouse','nas','genset']
+    data(){
+        return{
+            cari:"",
+        }
+    },
+    props:['monitor','server','ups','baterai','rak','ac','cctv','network','apar','monitor','keyboard','mouse','nas','genset','servers']
 }
 </script>
 

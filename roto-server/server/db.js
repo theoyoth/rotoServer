@@ -3,7 +3,7 @@ const pool = mariadb.createPool({
     host:'localhost',
     user: 'root',
     password: '',
-    database:"mahasiswa",
+    database:"rotoserver",
     connectionLimit:10
 })
 module.exports = pool

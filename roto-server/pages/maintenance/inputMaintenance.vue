@@ -2,9 +2,9 @@
 <div class="bg-bg-gen min-h-screen">
     <InputHeader maintenance="maintenance"/>
     <section class="container mx-auto mt-8">
-    <form action="" method="post" class="w-3/4">
+    <form action="/server/inputmaintenance" method="post" class="w-3/4" id="inputmaintenance">
         <div >
-            <div class="grid grid-cols-3 grid-rows-4">
+            <div class="grid grid-cols-3">
                 <div class="mb-4">
                     <label for="nama" class="block mb-2 text-sm">nama</label>
                     <input type="text" v-model="nama" name="nama" id="nama" class="p-2 w-72 rounded-lg outline-none">
@@ -43,7 +43,7 @@
                 </div>
                 <div class="mb-4">
                     <label for="keterangan" class="block mb-2 text-sm">keterangan</label>
-                    <input type="text" v-model="keterangan" name="keterangan" id="keterangan" class="p-2 w-72 rounded-lg outline-none">
+                    <textarea rows="4" form="inputmaintenance" type="text" v-model="keterangan" name="keterangan" id="keterangan" class="p-2 w-72 rounded-lg outline-none"></textarea>
                 </div>
             </div>
         </div>

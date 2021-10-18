@@ -14,110 +14,110 @@
                 <font-awesome-icon :icon="['fas','question']" class="text-black" />
             </div>
             
-            <nuxt-link v-if="server" :to="'/master/input/'+server" class="logout-btn px-2 w-28 flex rounded-md justify-between items-center">
-                <p class="font-medium text-xl">input</p>
+            <nuxt-link v-if="server" :to="'/master/input/'+server" class="logout-btn flex rounded-md items-center">
+                <p class="font-medium text-xl mr-2">input</p>
                 <div class="bg-blue-400 w-8 h-8 rounded-full flex items-center justify-center">
                     <font-awesome-icon :icon="['fas','plus']" class="text-white" />
                 </div>
             </nuxt-link>
-            <nuxt-link v-if="rak" :to="'/master/input/'+rak" class="logout-btn px-2 w-28 flex rounded-md justify-between items-center">
-                <p class="font-medium text-xl">input</p>
+            <nuxt-link v-if="rak" :to="'/master/input/'+rak" class="logout-btn flex rounded-md items-center">
+                <p class="font-medium text-xl mr-2">input</p>
                 <div class="bg-blue-400 w-8 h-8 rounded-full flex items-center justify-center">
                     <font-awesome-icon :icon="['fas','plus']" class="text-white" />
                 </div>
             </nuxt-link>
-            <nuxt-link v-if="ups" :to="'/master/input/'+ups" class="logout-btn px-2 w-28 flex rounded-md justify-between items-center">
-                <p class="font-medium text-xl">input</p>
+            <nuxt-link v-if="ups" :to="'/master/input/'+ups" class="logout-btn flex rounded-md items-center">
+                <p class="font-medium text-xl mr-2">input</p>
                 <div class="bg-blue-400 w-8 h-8 rounded-full flex items-center justify-center">
                     <font-awesome-icon :icon="['fas','plus']" class="text-white" />
                 </div>
             </nuxt-link>
-            <nuxt-link v-if="baterai" :to="'/master/input/'+baterai" class="logout-btn px-2 w-28 flex rounded-md justify-between items-center">
-                <p class="font-medium text-xl">input</p>
+            <nuxt-link v-if="baterai" :to="'/master/input/'+baterai" class="logout-btn flex rounded-md items-center">
+                <p class="font-medium text-xl mr-2">input</p>
                 <div class="bg-blue-400 w-8 h-8 rounded-full flex items-center justify-center">
                     <font-awesome-icon :icon="['fas','plus']" class="text-white" />
                 </div>
             </nuxt-link>
-            <nuxt-link v-if="ac" :to="'/master/input/'+ac" class="logout-btn px-2 w-28 flex rounded-md justify-between items-center">
-                <p class="font-medium text-xl">input</p>
+            <nuxt-link v-if="ac" :to="'/master/input/'+ac" class="logout-btn flex rounded-md items-center">
+                <p class="font-medium text-xl mr-2">input</p>
                 <div class="bg-blue-400 w-8 h-8 rounded-full flex items-center justify-center">
                     <font-awesome-icon :icon="['fas','plus']" class="text-white" />
                 </div>
             </nuxt-link>
-            <nuxt-link v-if="cctv" :to="'/master/input/'+cctv" class="logout-btn px-2 w-28 flex rounded-md justify-between items-center">
-                <p class="font-medium text-xl">input</p>
+            <nuxt-link v-if="cctv" :to="'/master/input/'+cctv" class="logout-btn flex rounded-md items-center">
+                <p class="font-medium text-xl mr-2">input</p>
                 <div class="bg-blue-400 w-8 h-8 rounded-full flex items-center justify-center">
                     <font-awesome-icon :icon="['fas','plus']" class="text-white" />
                 </div>
             </nuxt-link>
-            <nuxt-link v-if="network" :to="'/master/input/'+network" class="logout-btn px-2 w-28 flex rounded-md justify-between items-center">
-                <p class="font-medium text-xl">input</p>
+            <nuxt-link v-if="network" :to="'/master/input/'+network" class="logout-btn flex rounded-md items-center">
+                <p class="font-medium text-xl mr-2">input</p>
                 <div class="bg-blue-400 w-8 h-8 rounded-full flex items-center justify-center">
                     <font-awesome-icon :icon="['fas','plus']" class="text-white" />
                 </div>
             </nuxt-link>
-            <nuxt-link v-if="apar" :to="'/master/input/'+apar" class="logout-btn px-2 w-28 flex rounded-md justify-between items-center">
-                <p class="font-medium text-xl">input</p>
+            <nuxt-link v-if="apar" :to="'/master/input/'+apar" class="logout-btn flex rounded-md items-center">
+                <p class="font-medium text-xl mr-2">input</p>
                 <div class="bg-blue-400 w-8 h-8 rounded-full flex items-center justify-center">
                     <font-awesome-icon :icon="['fas','plus']" class="text-white" />
                 </div>
             </nuxt-link>
-            <nuxt-link v-if="monitor" :to="'/master/input/'+monitor" class="logout-btn px-2 w-28 flex rounded-md justify-between items-center">
-                <p class="font-medium text-xl">input</p>
+            <nuxt-link v-if="monitor" :to="'/master/input/'+monitor" class="logout-btn flex rounded-md items-center">
+                <p class="font-medium text-xl mr-2">input</p>
                 <div class="bg-blue-400 w-8 h-8 rounded-full flex items-center justify-center">
                     <font-awesome-icon :icon="['fas','plus']" class="text-white" />
                 </div>
             </nuxt-link>
-            <nuxt-link v-if="keyboard" :to="'/master/input/'+keyboard" class="logout-btn px-2 w-28 flex rounded-md justify-between items-center">
-                <p class="font-medium text-xl">input</p>
+            <nuxt-link v-if="keyboard" :to="'/master/input/'+keyboard" class="logout-btn flex rounded-md items-center">
+                <p class="font-medium text-xl mr-2">input</p>
                 <div class="bg-blue-400 w-8 h-8 rounded-full flex items-center justify-center">
                     <font-awesome-icon :icon="['fas','plus']" class="text-white" />
                 </div>
             </nuxt-link>
-            <nuxt-link v-if="mouse" :to="'/master/input/'+mouse" class="logout-btn px-2 w-28 flex rounded-md justify-between items-center">
-                <p class="font-medium text-xl">input</p>
+            <nuxt-link v-if="mouse" :to="'/master/input/'+mouse" class="logout-btn flex rounded-md items-center">
+                <p class="font-medium text-xl mr-2">input</p>
                 <div class="bg-blue-400 w-8 h-8 rounded-full flex items-center justify-center">
                     <font-awesome-icon :icon="['fas','plus']" class="text-white" />
                 </div>
             </nuxt-link>
-            <nuxt-link v-if="nas" :to="'/master/input/'+nas" class="logout-btn px-2 w-28 flex rounded-md justify-between items-center">
-                <p class="font-medium text-xl">input</p>
+            <nuxt-link v-if="nas" :to="'/master/input/'+nas" class="logout-btn flex rounded-md items-center">
+                <p class="font-medium text-xl mr-2">input</p>
                 <div class="bg-blue-400 w-8 h-8 rounded-full flex items-center justify-center">
                     <font-awesome-icon :icon="['fas','plus']" class="text-white" />
                 </div>
             </nuxt-link>
-            <nuxt-link v-if="genset" :to="'/master/input/'+genset" class="logout-btn px-2 w-28 flex rounded-md justify-between items-center">
-                <p class="font-medium text-xl">input</p>
+            <nuxt-link v-if="genset" :to="'/master/input/'+genset" class="logout-btn flex rounded-md items-center">
+                <p class="font-medium text-xl mr-2">input</p>
                 <div class="bg-blue-400 w-8 h-8 rounded-full flex items-center justify-center">
                     <font-awesome-icon :icon="['fas','plus']" class="text-white" />
                 </div>
             </nuxt-link>
-            <nuxt-link v-show="maintenance" to="/maintenance/inputmaintenance" class="logout-btn px-2 w-28 flex rounded-md justify-between items-center" id="inputmaintenance">
-                <p class="font-medium text-xl">input</p>
+            <nuxt-link v-show="maintenance" to="/maintenance/inputmaintenance" class="logout-btn flex rounded-md  items-center" id="inputmaintenance">
+                <p class="font-medium text-xl mr-2">input</p>
                 <div class="bg-blue-400 w-8 h-8 rounded-full flex items-center justify-center">
                     <font-awesome-icon :icon="['fas','plus']" class="text-white" />
                 </div>
             </nuxt-link>
-            <nuxt-link v-show="ambilbarang" to="/inout/ambilbarang/inputambilbarang" class="logout-btn px-2 w-28 flex rounded-md justify-between items-center" id="inputambilbarang">
-                <p class="font-medium text-xl">input</p>
+            <nuxt-link v-show="ambilbarang" to="/inout/ambilbarang/inputambilbarang" class="logout-btn flex rounded-md  items-center" id="inputambilbarang">
+                <p class="font-medium text-xl mr-2">input</p>
                 <div class="bg-blue-400 w-8 h-8 rounded-full flex items-center justify-center">
                     <font-awesome-icon :icon="['fas','plus']" class="text-white" />
                 </div>
             </nuxt-link>
-            <nuxt-link v-show="gantibarang" to="/inout/gantibarang/inputgantibarang" class="logout-btn px-2 w-28 flex rounded-md justify-between items-center" id="inputgantibarang">
-                <p class="font-medium text-xl">input</p>
+            <nuxt-link v-show="gantibarang" to="/inout/gantibarang/inputgantibarang" class="logout-btn flex rounded-md  items-center" id="inputgantibarang">
+                <p class="font-medium text-xl mr-2">input</p>
                 <div class="bg-blue-400 w-8 h-8 rounded-full flex items-center justify-center">
                     <font-awesome-icon :icon="['fas','plus']" class="text-white" />
                 </div>
             </nuxt-link>
-            <nuxt-link v-show="tambahbarang" to="/inout/tambahbarang/inputtambahbarang" class="logout-btn px-2 w-28 flex rounded-md justify-between items-center" id="inputtambahbarang">
-                <p class="font-medium text-xl">input</p>
+            <nuxt-link v-show="tambahbarang" to="/inout/tambahbarang/inputtambahbarang" class="logout-btn flex rounded-md  items-center" id="inputtambahbarang">
+                <p class="font-medium text-xl mr-2">input</p>
                 <div class="bg-blue-400 w-8 h-8 rounded-full flex items-center justify-center">
                     <font-awesome-icon :icon="['fas','plus']" class="text-white" />
                 </div>
             </nuxt-link>
-            <nuxt-link v-show="dokumen" to="/document/inputdokumen" class="logout-btn px-2 w-28 flex rounded-md justify-between items-center">
-                <p class="font-medium text-xl">input</p>
+            <nuxt-link v-show="dokumen" to="/document/inputdokumen" class="logout-btn flex rounded-md  items-center">
+                <p class="font-medium text-xl mr-2">input</p>
                 <div class="bg-blue-400 w-8 h-8 rounded-full flex items-center justify-center">
                     <font-awesome-icon :icon="['fas','plus']" class="text-white" />
                 </div>
@@ -134,7 +134,7 @@
 
 <script>
 export default {
-    props:['monitor','server','ups','aterai','rak','ac','cctv','network','apar','monitor','keyboard','mouse','nas','genset','maintenance','ambilbarang','gantibarang','tambahbarang','dokumen'],
+    props:['monitor','server','ups','baterai','rak','ac','cctv','network','apar','monitor','keyboard','mouse','nas','genset','maintenance','ambilbarang','gantibarang','tambahbarang','dokumen'],
     
     data(){
         return{

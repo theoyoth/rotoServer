@@ -1,30 +1,32 @@
 <template>
 <div class="bg-hero min-h-screen ">
-    <ListItem :server="master"/>
+    <ListItem :server="master" :servers="servers"/>
 </div>
 </template>
 
 <script>
+import axios from "axios"
+
 export default {
     data(){
         return{
-            cari:"",
             master:{
                 nama : "inputServer",
-                produk : "produk",
-                merek : "merek",
-                model : "model",
-                processor : "processor",
-                memori : "memori",
-                internalStorage : "internal storage",
-                networkController : "network controller",
-                eksternalStorage : "eksternal storage",
-                powerSupply : "power supply",
-                tahun : "tahun",
-                garansi : "garansi",
-            }
+            },
+            servers : [],
         }
-        }
+    },
+    mounted(){
+        axios.get('http://localhost:3000/server/masterserver')
+        .then(resp => {
+              resp.data.forEach(server => {
+                this.servers.push(server)
+              })
+            })
+            .catch(err => {
+                console.error(err);
+            });
+    }
 }
 </script>
 

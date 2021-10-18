@@ -5,7 +5,8 @@
             <div class="flex justify-between items-center">
                 <div class="flex">
                     <p>{{users[0]}}</p>
-                    <!-- <p class="font-semibold">server roto 1</p> -->
+                    <p>|</p>
+                    <p>{{lokasis[0]}}</p>
                 </div>
                 <div class="maintenance-result w-96 flex justify-between">
                     <nuxt-link to="/graphictemperature" class="temperature h-10 w-44 rounded-md bg-gr-blue flex justify-around items-center shadow-md transform hover:scale-95 hover:shadow-lg transition ease-in duration-200">
@@ -25,16 +26,6 @@
                 </nuxt-link>
             </div>
         </header>
-        <!-- <section> -->
-            <!-- <button @click="$fetch">user list</button> -->
-            <!-- <div v-if="isData">
-                <div v-for="(user,index) in users" :key="index">
-                    <p>{{user.nama}}</p>
-                    <p>{{user.nim}}</p> -->
-                    <!-- <p>{{user.alamat}}</p> -->
-                <!-- </div> -->
-            <!-- </div> -->
-        <!-- </section> -->
         <section class="grid place-items-center h-5/6">
             <div class="grid grid-cols-3 h-3/4 w-4/5 place-items-center">
                 <nuxt-link to="/master" class="master-menu h-36 w-60 rounded-xl relative backdrop-blur-md bg-opacity-10 flex justify-center items-center bg-gr-white transform hover:translate-y-1 hover:shadow-lg transition ease-in-out duration-300">
@@ -70,27 +61,23 @@ export default {
     data(){
         return{
             users : [],
-            isData : true,
+            lokasis : [],
         }
     },
-    // async fetch(){
-    //     await this.getUsers()
-    // },
-    // methods:{
-    //     async getUsers(){
-    //         const data = axios.get("https://localhost:3000/server/")
-    //         const result = await data
-    //         result.forEach(user => {
-    //             this.users.push(user)
-    //         });
-    //         console.log(this.users)
-    //     }
-    // },
     mounted(){
      axios.get('http://localhost:3000/server')
             .then(resp => {
               resp.data.forEach(user => {
                 this.users.push(user.nama)
+              })
+            })
+            .catch(err => {
+                console.error(err);
+            });
+     axios.get('http://localhost:3000/server/lokasiserver')
+            .then(resp => {
+              resp.data.forEach(lokasi => {
+                this.lokasis.push(lokasi.nama)
               })
             })
             .catch(err => {

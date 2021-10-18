@@ -1,6 +1,6 @@
 <template>
 <div class="bg-hero h-screen">
-    <HeaderListItem maintenance="maintenance" :element="data"/>
+    <HeaderListItem maintenance="maintenance" />
     <div class="container mx-auto flex mt-8 ">
         <form class="flex" method="post" ref="formcari" id="formcari">
             <input type="search" placeholder="cari" name="cari" v-model="cari" class="rounded-l-lg p-2 outline-none">
@@ -27,22 +27,22 @@
                 <th class="font-semibold" >network</th>
                 <th class="font-semibold" >server</th>
                 <th class="font-semibold" >keterangan</th>
+                <th class="font-semibold" >aksi</th>
             </tr>
         </thead>
         <tbody class="text-center bg-white bg-opacity-40">
-            <tr v-show="server" class="text-sm">
-                <td>Intro to CSS</td>
-                <td>Adam</td>
-                <td>858</td>
-                <td>858</td>
-                <td>858</td>
-                <td>858</td>
-                <td>858</td>
-                <td>858</td>
-                <td>858</td>
-                <td>858</td>
-                <td>858</td>
-                <td class="py-3">
+            <tr class="text-sm" v-for="(main,index) in hasilMaintenance" :key="index">
+                <td class="py-3">{{main.nama}}</td>
+                <td>{{$moment(main.tanggal).format("DD-MM-YYYY")}}</td>
+                <td>{{main.suhu}}</td>
+                <td>{{main.kelembapan}}</td>
+                <td>{{main.ac}}</td>
+                <td>{{main.ups}}</td>
+                <td>{{main.baterai}}</td>
+                <td>{{main.network}}</td>
+                <td>{{main.server}}</td>
+                <td>{{main.keterangan}}</td>
+                <td class="py-3 flex w-4">
                     <a href="#">
                         <font-awesome-icon :icon="['fas','pencil-alt']" class="text-blue-500"/>
                     </a>
@@ -57,10 +57,29 @@
 </template>
 
 <script>
-    
+import axios from 'axios'
+import moment from 'moment'
 
 export default {
+    data(){
+        return{
+            cari:"",
+            hasilMaintenance:[],
+        }
+    },
     props:['monitor','server','ups','baterai','rak','ac','cctv','network','apar','monitor','keyboard','mouse','nas','genset'],
+    mounted(){
+        axios.get('http://localhost:3000/server/inputmaintenance')
+            .then(resp => {
+              resp.data.forEach(maintenance => {
+                //   console.log(maintenance.nama)
+                  this.hasilMaintenance.push(maintenance)
+              })
+            })
+            .catch(err => {
+                console.error(err);
+            });
+    }
 }
 </script>
 
