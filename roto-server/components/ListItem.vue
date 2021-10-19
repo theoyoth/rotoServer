@@ -80,21 +80,25 @@
                 <td>{{server.tahun}}</td>
                 <td>{{server.garansi}}</td>
                 <td class="py-3">
-                    <a href="#">
+                    <form action="/server/master/" method="post" class="ml-4">
+                    <button>
                         <font-awesome-icon :icon="['fas','pencil-alt']" class="text-blue-500"/>
-                    </a>
-                    <a href="#" class="ml-4">
+                    </button>
+                    </form>
+                    <form action="/server/master/server/5" method="post">
+                    <button type="submit">
                         <font-awesome-icon :icon="['fas','trash']" class="text-red-500"/>
-                    </a>
+                    </button>
+                    </form>
                 </td>
             </tr>
-            <tr v-show="rak" class="text-sm">
-                <td class="py-3">858</td>
-                <td>858</td>
-                <td>858</td>
-                <td>858</td>
-                <td>858</td>
-                <td>858</td>
+            <tr v-show="rak" class="text-sm" v-for="(rak,index) in raks" :key="index">
+                <td class="py-3">{{rak.tipe_rak}}</td>
+                <td>{{rak.tipe_pintu}}</td>
+                <td>{{rak.nama_produk}}</td>
+                <td>{{rak.dimensi}}</td>
+                <td>{{rak.berat}}</td>
+                <td>{{rak.tahun}}</td>
                 <td class="py-3">
                     <a href="#">
                         <font-awesome-icon :icon="['fas','pencil-alt']" class="text-blue-500"/>
@@ -104,19 +108,19 @@
                     </a>
                 </td>
             </tr>
-            <tr v-show="ups" class="text-sm">
-                <td>858</td>
-                <td>858</td>
-                <td>858</td>
-                <td>858</td>
-                <td>858</td>
-                <td>858</td>
-                <td>858</td>
-                <td>858</td>
-                <td>858</td>
-                <td>858</td>
-                <td>858</td>
-                <td>858</td>
+            <tr v-show="ups" class="text-sm" v-for="(ups,index) in upss" :key="index">
+                <td>{{ups.model}}</td>
+                <td>{{ups.ups_critical_load}}</td>
+                <td>{{ups.ups_critical_temperature}}</td>
+                <td>{{ups.ups_critical_capacity}}</td>
+                <td>{{ups.nomor_serial}}</td>
+                <td>{{ups.nama_sistem}}</td>
+                <td>{{ups.manufaktur}}</td>
+                <td>{{ups.peringkat_tegangan}}</td>
+                <td>{{ups.peringkat_frekuensi}}</td>
+                <td>{{ups.peringkat_tegangan_baterai}}</td>
+                <td>{{ups.tahun}}</td>
+                <td>{{ups.garansi}}</td>
                 <td class="py-3">
                     <a href="#">
                         <font-awesome-icon :icon="['fas','pencil-alt']" class="text-blue-500"/>
@@ -126,12 +130,12 @@
                     </a>
                 </td>
             </tr>
-            <tr v-show="baterai" class="text-sm">
-                <td class="py-3">858</td>
-                <td>858</td>
-                <td>858</td>
-                <td>858</td>
-                <td>858</td>
+            <tr v-show="baterai" class="text-sm" v-for="(baterai,index) in baterais" :key="index">
+                <td class="py-3">{{baterai.accu}}</td>
+                <td>{{baterai.kuantitas}}</td>
+                <td>{{baterai.voltage}}</td>
+                <td>{{baterai.tahun}}</td>
+                <td>{{baterai.garansi}}</td>
                 <td class="py-3">
                     <a href="#">
                         <font-awesome-icon :icon="['fas','pencil-alt']" class="text-blue-500"/>
@@ -141,15 +145,15 @@
                     </a>
                 </td>
             </tr>
-            <tr v-show="ac" class="text-sm">
-                <td class="py-3">858</td>
-                <td>858</td>
-                <td>858</td>
-                <td>858</td>
-                <td>858</td>
-                <td>858</td>
-                <td>858</td>
-                <td>858</td>
+            <tr v-show="ac" class="text-sm" v-for="(ac,index) in acs" :key="index">
+                <td class="py-3">{{ac.merek}}</td>
+                <td>{{ac.model}}</td>
+                <td>{{ac.sumber_daya_listrik}}</td>
+                <td>{{ac.dimensi}}</td>
+                <td>{{ac.konsumsi_daya}}</td>
+                <td>{{ac.kapasitas_pendingin}}</td>
+                <td>{{ac.tahun}}</td>
+                <td>{{ac.garansi}}</td>
                 <td class="py-3">
                     <a href="#">
                         <font-awesome-icon :icon="['fas','pencil-alt']" class="text-blue-500"/>
@@ -159,14 +163,10 @@
                     </a>
                 </td>
             </tr>
-            <tr v-show="network" class="text-sm">
-                <td>858</td>
-                <td>858</td>
-                <td>858</td>
-                <td>858</td>
-                <td>858</td>
-                <td>858</td>
-                <td>858</td>
+            <tr v-show="cctv" class="text-sm" v-for="(cctv,index) in cctvs" :key="index">
+                <td>{{cctv.merek}}</td>
+                <td>{{cctv.model}}</td>
+                <td>{{cctv.garansi}}</td>
                 <td class="py-3">
                     <a href="#">
                         <font-awesome-icon :icon="['fas','pencil-alt']" class="text-blue-500"/>
@@ -176,16 +176,14 @@
                     </a>
                 </td>
             </tr>
-            <tr v-show="nas" class="text-sm">
-                <td>858</td>
-                <td>858</td>
-                <td>858</td>
-                <td>858</td>
-                <td>858</td>
-                <td>858</td>
-                <td>858</td>
-                <td>858</td>
-                <td>858</td>
+            <tr v-show="network" class="text-sm" v-for="(network,index) in networks" :key="index">
+                <td>{{network.merek}}</td>
+                <td>{{network.model}}</td>
+                <td>{{network.tipe}}</td>
+                <td>{{network.kuantitas}}</td>
+                <td>{{network.kanal}}</td>
+                <td>{{network.tahun}}</td>
+                <td>{{network.garansi}}</td>
                 <td class="py-3">
                     <a href="#">
                         <font-awesome-icon :icon="['fas','pencil-alt']" class="text-blue-500"/>
@@ -195,12 +193,16 @@
                     </a>
                 </td>
             </tr>
-            <tr v-show="apar" class="text-sm">
-                <td class="py-3">858</td>
-                <td>858</td>
-                <td>858</td>
-                <td>858</td>
-                <td>858</td>
+            <tr v-show="nas" class="text-sm" v-for="(nas,index) in nass" :key="index">
+                <td>{{nas.merek}}</td>
+                <td>{{nas.model}}</td>
+                <td>{{nas.processor}}</td>
+                <td>{{nas.storage}}</td>
+                <td>{{nas.tipe}}</td>
+                <td>{{nas.cpu}}</td>
+                <td>{{nas.raid}}</td>
+                <td>{{nas.tahun}}</td>
+                <td>{{nas.garansi}}</td>
                 <td class="py-3">
                     <a href="#">
                         <font-awesome-icon :icon="['fas','pencil-alt']" class="text-blue-500"/>
@@ -210,12 +212,12 @@
                     </a>
                 </td>
             </tr>
-            <tr v-show="monitor" class="text-sm">
-                <td class="py-3">858</td>
-                <td>858</td>
-                <td>858</td>
-                <td>858</td>
-                <td>858</td>
+            <tr v-show="apar" class="text-sm" v-for="(apar,index) in apars" :key="index">
+                <td class="py-3">{{apar.merek}}</td>
+                <td>{{apar.model}}</td>
+                <td>{{apar.tipe}}</td>
+                <td>{{apar.tahun}}</td>
+                <td>{{apar.garansi}}</td>
                 <td class="py-3">
                     <a href="#">
                         <font-awesome-icon :icon="['fas','pencil-alt']" class="text-blue-500"/>
@@ -225,12 +227,12 @@
                     </a>
                 </td>
             </tr>
-            <tr v-show="keyboard" class="text-sm">
-                <td class="py-3">858</td>
-                <td>858</td>
-                <td>858</td>
-                <td>858</td>
-                <td>858</td>
+            <tr v-show="monitor" class="text-sm" v-for="(monitor,index) in monitors" :key="index">
+                <td class="py-3">{{monitor.merek}}</td>
+                <td>{{monitor.model}}</td>
+                <td>{{monitor.tipe}}</td>
+                <td>{{monitor.tahun}}</td>
+                <td>{{monitor.garansi}}</td>
                 <td class="py-3">
                     <a href="#">
                         <font-awesome-icon :icon="['fas','pencil-alt']" class="text-blue-500"/>
@@ -240,12 +242,12 @@
                     </a>
                 </td>
             </tr>
-            <tr v-show="mouse" class="text-sm">
-                <td class="py-3">858</td>
-                <td>858</td>
-                <td>858</td>
-                <td>858</td>
-                <td>858</td>
+            <tr v-show="keyboard" class="text-sm" v-for="(keyboard,index) in keyboards" :key="index">
+                <td class="py-3">{{keyboard.merek}}</td>
+                <td>{{keyboard.model}}</td>
+                <td>{{keyboard.tipe}}</td>
+                <td>{{keyboard.tahun}}</td>
+                <td>{{keyboard.garansi}}</td>
                 <td class="py-3">
                     <a href="#">
                         <font-awesome-icon :icon="['fas','pencil-alt']" class="text-blue-500"/>
@@ -255,12 +257,27 @@
                     </a>
                 </td>
             </tr>
-            <tr v-show="genset" class="text-sm">
-                <td class="py-3">858</td>
-                <td>858</td>
-                <td>858</td>
-                <td>858</td>
-                <td>858</td>
+            <tr v-show="mouse" class="text-sm" v-for="(mouse,index) in mouses" :key="index">
+                <td class="py-3">{{mouse.merek}}</td>
+                <td>{{mouse.model}}</td>
+                <td>{{mouse.tipe}}</td>
+                <td>{{mouse.tahun}}</td>
+                <td>{{mouse.garansi}}</td>
+                <td class="py-3">
+                    <a href="#">
+                        <font-awesome-icon :icon="['fas','pencil-alt']" class="text-blue-500"/>
+                    </a>
+                    <a href="#" class="ml-4">
+                        <font-awesome-icon :icon="['fas','trash']" class="text-red-500"/>
+                    </a>
+                </td>
+            </tr>
+            <tr v-show="genset" class="text-sm" v-for="(genset,index) in gensets" :key="index">
+                <td class="py-3">{{genset.merek}}</td>
+                <td>{{genset.model}}</td>
+                <td>{{genset.tipe}}</td>
+                <td>{{genset.tahun}}</td>
+                <td>{{genset.garansi}}</td>
                 <td class="py-3">
                     <a href="#">
                         <font-awesome-icon :icon="['fas','pencil-alt']" class="text-blue-500"/>
@@ -276,13 +293,21 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
+    props:['monitor','server','ups','baterai','rak','ac','cctv','network','apar','monitor','keyboard','mouse','nas','genset','servers','raks','upss','baterais','acs','cctvs','networks','apars','monitors','mouses','keyboards','nass','gensets'],
+
     data(){
         return{
             cari:"",
         }
     },
-    props:['monitor','server','ups','baterai','rak','ac','cctv','network','apar','monitor','keyboard','mouse','nas','genset','servers']
+
+    methods:{
+        deleteData(){
+            axios.post('server/master/server/delete/',{params: {id : this.servers[0].id} })
+        }
+    }
 }
 </script>
 

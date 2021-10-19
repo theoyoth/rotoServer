@@ -1,57 +1,12 @@
 <template>
 <div class="bg-hero min-h-screen">
-    <ListItem :baterai="master"/>
-    <!-- <HeaderListItem/>
-    <div class="container mx-auto flex mt-8 ">
-        <form class="flex" method="post">
-            <input type="search" placeholder="cari" name="cari" v-model="cari" class="rounded-l-lg p-2 outline-none">
-            <button class="p-2 rounded-r-lg bg-white flex items-center justify-center">
-                <font-awesome-icon :icon="['fas','search']" class="text-black-500"/>
-            </button>
-        </form>
-        <select id="date" class="rounded-lg p-2 outline-none ml-8">
-            <option value="hari">hari</option>
-            <option value="bulan">bulan</option>
-            <option value="tahun">tahun</option>
-        </select>
-    </div>
-    <table class="table space-y-6 container mx-auto table-auto border-collapse border border-white mt-7">
-        <thead class="bg-white text-sm">
-            <tr class=""> 
-                <th class="font-semibold py-3">accu</th>
-                <th class="font-semibold" >kuantitas</th>
-                <th class="font-semibold" >voltage</th>
-                <th class="font-semibold">tahun</th>
-                <th class="font-semibold">garansi</th>
-                <th class="font-semibold">aksi</th>
-                
-            </tr>
-        </thead>
-        <tbody class="text-center bg-white bg-opacity-40">
-            <tr>
-                <td>Intro to CSS</td>
-                <td>Adam</td>
-                <td>858</td>
-                <td>858</td>
-                <td>858</td>
-                <td class="py-3 flex justify-around">
-                    <form action="" method="post">
-                    <a href="#">
-                        <font-awesome-icon :icon="['fas','pencil-alt']" class="text-blue-500"/>
-                    </a>
-                    </form>
-                    <form action="" method="post">
-                    <a href="#" class="ml-4">
-                        <font-awesome-icon :icon="['fas','trash']" class="text-red-500"/>
-                    </a>
-                    </form>
-                </td>
-            </tr>
-        </tbody>   
-    </table> -->
+    <ListItem :baterai="master" :baterais="baterais"/>
+ 
 </div>
 </template>
 <script>
+import axios from 'axios'
+
 export default {
     data(){
         return{
@@ -63,8 +18,20 @@ export default {
                 tegangan : "tegangan", 
                 tahun : "tahun",
                 garansi : "garansi",
-            }
+            },
+            baterais:[],
         }
+    },
+    mounted(){
+        axios.get('http://localhost:3000/server/masterbaterai')
+        .then(resp => {
+            resp.data.forEach(baterai => {
+                this.baterais.push(baterai)
+            })
+        })
+        .catch(err => {
+            console.error(err);
+        });
     }
 
 }

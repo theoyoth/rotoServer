@@ -1,29 +1,31 @@
 <template>
 <div class="bg-hero min-h-screen">
-    <ListItem :ac="master"/>
+    <ListItem :ac="master" :acs="acs"/>
 </div>
 </template>
 <script>
+import axios from 'axios'
+
 export default {
-    head(){
-        return{
-            title : "ac",
-        }
-    },
     data(){
         return{
             cari:"",
             master:{
                 nama: "inputAc",
-                merek : "merek", 
-                submerDayaListrik : "sumber daya listrik", 
-                konsumsiDaya : "konsumis daya", 
-                dimensi : "konsumis daya", 
-                kapasitasPendingin : "konsumis daya", 
-                tahun : "tahun",
-                garansi : "garansi",
-            }
+            },
+            acs:[],
         }
+    },
+     mounted(){
+        axios.get('http://localhost:3000/server/masterac')
+        .then(resp => {
+            resp.data.forEach(ac => {
+                this.acs.push(ac)
+            })
+        })
+        .catch(err => {
+            console.error(err);
+        });
     }
 
 }

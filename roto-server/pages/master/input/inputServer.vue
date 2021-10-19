@@ -34,10 +34,6 @@
                     <input type="text" v-model="networkController" name="networkController" id="netwokController" class="p-2 w-72 rounded-lg outline-none">
                 </div>
                 <div class="mb-4">
-                    <label for="eksternalStorage" class="block mb-2 text-sm">eksternal Storage</label>
-                    <input type="text" v-model="eksternalStorage" name="eksternalStorage" id="eksternalStorage" class="p-2 w-72 rounded-lg outline-none">
-                </div>
-                <div class="mb-4">
                     <label for="storage" class="block mb-2 text-sm">Storage</label>
                     <input type="text" v-model="storage" name="storage" id="storage" class="p-2 w-72 rounded-lg outline-none">
                 </div>

@@ -2,7 +2,7 @@
 <div class="bg-bg-gen min-h-screen">
     <InputHeader item="Network"/>
     <section class="container mx-auto mt-8">
-    <form action="" method="post" class="w-3/4">
+    <form action="/server/master/inputnetwork" method="post" class="w-3/4">
         <div >
             <div class="grid grid-cols-3 grid-rows-4">
                 <div class="mb-4">
@@ -26,13 +26,14 @@
                     <input type="text" v-model="kanal" name="kanal" id="kanal" class="p-2 w-72 rounded-lg outline-none">
                 </div>
                 <div class="mb-4">
-                    <label for="garansi" class="block mb-2 text-sm">garansi</label>
-                    <input type="text" v-model="garansi" name="garansi" id="garansi" class="p-2 w-72 rounded-lg outline-none">
-                </div>
-                <div class="mb-4">
                     <label for="tahun" class="block mb-2 text-sm">tahun</label>
                     <input type="text" v-model="tahun" name="tahun" id="tahun" class="p-2 w-72 rounded-lg outline-none">
                 </div>
+                <div class="mb-4">
+                    <label for="garansi" class="block mb-2 text-sm">garansi</label>
+                    <input type="text" v-model="garansi" name="garansi" id="garansi" class="p-2 w-72 rounded-lg outline-none">
+                </div>
+                
                 
             </div>
         </div>
@@ -44,6 +45,17 @@
 
 <script>
 export default {
+    data(){
+        return{
+            model : "",
+            merek : "",
+            tipe : "",
+            kanal : "",
+            kuantitas : "",
+            tahun : "",
+            garansi : "",
+        }
+    }
 
 }
 </script>

@@ -2,7 +2,7 @@
 <div class="bg-bg-gen min-h-screen">
     <InputHeader item="rak"/>
     <section class="container mx-auto mt-8">
-    <form action="" method="post" class="w-3/4">
+    <form action="/server/master/inputrak" method="post" class="w-3/4">
         <div >
             <div class="grid grid-cols-3 grid-rows-4">
                 <div class="mb-4">
@@ -11,7 +11,7 @@
                 </div>
                 <div class="mb-4">
                     <label for="tipePintu" class="block mb-2 text-sm">tipe pintu</label>
-                    <input type="text" v-model="model" name="tipePintu" id="tipePintu" class="p-2 w-72 rounded-lg outline-none">
+                    <input type="text" v-model="tipePintu" name="tipePintu" id="tipePintu" class="p-2 w-72 rounded-lg outline-none">
                 </div>
                 <div class="mb-4">
                     <label for="namaProduk" class="block mb-2 text-sm">nama produk</label>
@@ -40,6 +40,13 @@
 
 <script>
 export default {
+    data(){
+        return{
+            tahun:"",
+            berat:"",
+            
+        }
+    }
 
 }
 </script>

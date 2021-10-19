@@ -1,23 +1,32 @@
 <template>
 <div class="bg-hero min-h-screen">
-    <ListItem :monitor="master"/>
+    <ListItem :monitor="master" :monitors="monitors"/>
 
 </div>
 </template>
 <script>
+import axios from 'axios'
+
 export default {
     data(){
         return{
             cari:"",
             master:{
                 nama : "inputMonitor",
-                merek : "merek",
-                model : "model",
-                tipe : "tipe",
-                tahun : "tahun",
-                garansi : "garansi",
-            }
+            },
+            monitors:[],
         }
+    },
+    mounted(){
+        axios.get('http://localhost:3000/server/mastermonitor')
+        .then(resp => {
+            resp.data.forEach(monitor => {
+                this.monitors.push(monitor)
+            })
+        })
+        .catch(err => {
+            console.error(err);
+        });
     }
 
 }

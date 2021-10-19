@@ -2,7 +2,7 @@
 <div class="bg-bg-gen min-h-screen">
     <InputHeader item="NAS"/>
     <section class="container mx-auto mt-8">
-    <form action="" method="post" class="w-3/4">
+    <form action="/server/master/inputnas" method="post" class="w-3/4">
         <div >
             <div class="grid grid-cols-3 grid-rows-4">
                 <div class="mb-4">
@@ -26,12 +26,12 @@
                     <input type="text" v-model="processor" name="processor" id="processor" class="p-2 w-72 rounded-lg outline-none">
                 </div>
                 <div class="mb-4">
-                    <label for="CPU" class="block mb-2 text-sm">CPU</label>
-                    <input type="text" v-model="CPU" name="CPU" id="CPU" class="p-2 w-72 rounded-lg outline-none">
+                    <label for="cpu" class="block mb-2 text-sm">cpu</label>
+                    <input type="text" v-model="cpu" name="cpu" id="cpu" class="p-2 w-72 rounded-lg outline-none">
                 </div>
                 <div class="mb-4">
-                    <label for="RAID" class="block mb-2 text-sm">RAID</label>
-                    <input type="text" v-model="RAID" name="RAID" id="RAID" class="p-2 w-72 rounded-lg outline-none">
+                    <label for="raid" class="block mb-2 text-sm">raid</label>
+                    <input type="text" v-model="raid" name="raid" id="raid" class="p-2 w-72 rounded-lg outline-none">
                 </div>
                 <div class="mb-4">
                     <label for="garansi" class="block mb-2 text-sm">garansi</label>

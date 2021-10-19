@@ -2,7 +2,7 @@
 <div class="bg-bg-gen min-h-screen">
     <InputHeader item="AC"/>
     <section class="container mx-auto mt-8">
-    <form action="" method="post" class="w-3/4">
+    <form action="/server/master/inputac" method="post" class="w-3/4">
         <div >
             <div class="grid grid-cols-3 grid-rows-4">
                 <div class="mb-4">
@@ -14,8 +14,8 @@
                     <input type="text" v-model="model" name="model" id="model" class="p-2 w-72 rounded-lg outline-none">
                 </div>
                 <div class="mb-4">
-                    <label for="powerSupply" class="block mb-2 text-sm">power supply</label>
-                    <input type="text" v-model="powerSupply" name="powerSupply" id="powerSupply" class="p-2 w-72 rounded-lg outline-none">
+                    <label for="sumberDayaListrik" class="block mb-2 text-sm">sumber daya listrik</label>
+                    <input type="text" v-model="sumberDayaListrik" name="sumberDayaListrik" id="sumberDayaListrik" class="p-2 w-72 rounded-lg outline-none">
                 </div>
 
                 <div class="mb-4">

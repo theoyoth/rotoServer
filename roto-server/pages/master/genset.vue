@@ -1,22 +1,31 @@
 <template>
 <div class="bg-hero min-h-screen">
-    <ListItem :genset="master"/>
+    <ListItem :genset="master" :gensets="gensets"/>
 </div>
 </template>
 <script>
+import axios from 'axios'
+
 export default {
     data(){
         return{
             cari:"",
             master:{
                 nama : "inputGenset",
-                merek : "merek",
-                model : "model",
-                tipe : "tipe",
-                tahun : "tahun",
-                garansi : "garansi",
-            }
+            },
+            gensets:[],
         }
+    },
+    mounted(){
+    axios.get('http://localhost:3000/server/mastergenset')
+    .then(resp => {
+        resp.data.forEach(genset => {
+            this.gensets.push(genset)
+        })
+    })
+    .catch(err => {
+        console.error(err);
+    });
     }
 
 }

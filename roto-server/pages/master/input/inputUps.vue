@@ -2,7 +2,7 @@
 <div class="bg-bg-gen min-h-screen">
     <InputHeader item="ups"/>
     <section class="container mx-auto mt-8">
-    <form action="" method="post" class="w-3/4">
+    <form action="/server/master/inputups" method="post" class="w-3/4">
         <div >
             <div class="grid grid-cols-3 grid-rows-4">
                 <div class="mb-4">
@@ -64,6 +64,22 @@
 
 <script>
 export default {
+    data(){
+        return{
+            garansi : "",
+            tahun : "",
+            model : "",
+            upsCriticalLoad : "",
+            upsCriticalTemperature : "",
+            upsCriticalCapacity : "",
+            peringkatTegangan : "",
+            peringkatFrekuensi : "",
+            peringkatTeganganBaterai : "",
+            manufaktur : "",
+            nomorSerial : "",
+            namaSistem : "",
+        }
+    }
 
 }
 </script>

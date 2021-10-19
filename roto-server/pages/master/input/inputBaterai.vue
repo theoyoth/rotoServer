@@ -2,7 +2,7 @@
 <div class="bg-bg-gen min-h-screen">
     <InputHeader item="baterai"/>
     <section class="container mx-auto mt-8">
-    <form action="" method="post" class="w-3/4">
+    <form action="/server/master/inputbaterai" method="post" class="w-3/4">
         <div >
             <div class="grid grid-cols-3 grid-rows-4">
                 <div class="mb-4">
@@ -37,6 +37,15 @@
 
 <script>
 export default {
+    data(){
+        return{
+            accu : "",
+            kuantitas:"",
+            tegangan:"",
+            tahun: "",
+            garansi : "",
+        }
+    }
 
 }
 </script>
