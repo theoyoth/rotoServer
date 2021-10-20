@@ -16,7 +16,7 @@
     <div class="container mx-auto flex mt-8 ">
         <form class="flex" method="post">
             <input type="search" placeholder="cari" name="cari" v-model="cari" class="rounded-l-lg p-2 outline-none">
-            <button class="p-2 rounded-r-lg bg-white flex items-center justify-center">
+            <button class="p-2 rounded-r-lg bg-white flex items-center justify-center" type="submit">
                 <font-awesome-icon :icon="['fas','search']" class="text-black-500"/>
             </button>
         </form>
@@ -80,15 +80,15 @@
                 <td>{{server.tahun}}</td>
                 <td>{{server.garansi}}</td>
                 <td class="py-3">
-                    <form action="/server/master/" method="post" class="ml-4">
+                    <form @click="updateData(server.id)" class="ml-4">
                     <button>
                         <font-awesome-icon :icon="['fas','pencil-alt']" class="text-blue-500"/>
                     </button>
                     </form>
-                    <form action="/server/master/server/5" method="post">
+                    <form @click="deleteData(server.id)" class="ml-4">
                     <button type="submit">
                         <font-awesome-icon :icon="['fas','trash']" class="text-red-500"/>
-                    </button>
+                    </button> 
                     </form>
                 </td>
             </tr>
@@ -300,12 +300,13 @@ export default {
     data(){
         return{
             cari:"",
+            
         }
     },
 
     methods:{
-        deleteData(){
-            axios.post('server/master/server/delete/',{params: {id : this.servers[0].id} })
+        deleteData(id){
+            axios.post(`/server/master/server/delete/${id}`)
         }
     }
 }

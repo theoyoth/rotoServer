@@ -35,8 +35,6 @@ app.post('/master/inputnas', masterController.inputmasternas)
 app.get('/mastergenset', masterController.mastergenset)
 app.post('/master/inputgenset', masterController.inputmastergenset)
 
-
-
-app.post('/master/server/:id', masterController.deletemasterserver)
+app.post('/master/server/delete/:id', masterController.deletemasterserver)
 
 module.exports = app
