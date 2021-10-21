@@ -79,13 +79,11 @@
                 <td>{{server.sumber_daya_listrik}}</td>
                 <td>{{server.tahun}}</td>
                 <td>{{server.garansi}}</td>
-                <td class="py-3">
-                    <form @click="updateData(server.id)" class="ml-4">
-                    <button>
+                <td class="py-3 flex w-3">
+                    <NuxtLink :to="{name : 'master-update-updateid', params:{id : server.id} }">
                         <font-awesome-icon :icon="['fas','pencil-alt']" class="text-blue-500"/>
-                    </button>
-                    </form>
-                    <form @click="deleteData(server.id)" class="ml-4">
+                    </NuxtLink>
+                    <form @click="deleteData(server.id,nama.server)" class="ml-4">
                     <button type="submit">
                         <font-awesome-icon :icon="['fas','trash']" class="text-red-500"/>
                     </button> 
@@ -103,9 +101,11 @@
                     <a href="#">
                         <font-awesome-icon :icon="['fas','pencil-alt']" class="text-blue-500"/>
                     </a>
-                    <a href="#" class="ml-4">
+                    <form @click="deleteData(rak.id,nama.rak)" class="ml-4">
+                    <button type="submit">
                         <font-awesome-icon :icon="['fas','trash']" class="text-red-500"/>
-                    </a>
+                    </button> 
+                    </form>
                 </td>
             </tr>
             <tr v-show="ups" class="text-sm" v-for="(ups,index) in upss" :key="index">
@@ -125,9 +125,11 @@
                     <a href="#">
                         <font-awesome-icon :icon="['fas','pencil-alt']" class="text-blue-500"/>
                     </a>
-                    <a href="#" class="ml-4">
+                    <form @click="deleteData(ups.id,nama.ups)" class="ml-4">
+                    <button type="submit">
                         <font-awesome-icon :icon="['fas','trash']" class="text-red-500"/>
-                    </a>
+                    </button> 
+                    </form>
                 </td>
             </tr>
             <tr v-show="baterai" class="text-sm" v-for="(baterai,index) in baterais" :key="index">
@@ -140,9 +142,11 @@
                     <a href="#">
                         <font-awesome-icon :icon="['fas','pencil-alt']" class="text-blue-500"/>
                     </a>
-                    <a href="#" class="ml-4">
+                     <form @click="deleteData(baterai.id,nama.baterai)" class="ml-4">
+                    <button type="submit">
                         <font-awesome-icon :icon="['fas','trash']" class="text-red-500"/>
-                    </a>
+                    </button> 
+                    </form>
                 </td>
             </tr>
             <tr v-show="ac" class="text-sm" v-for="(ac,index) in acs" :key="index">
@@ -158,9 +162,11 @@
                     <a href="#">
                         <font-awesome-icon :icon="['fas','pencil-alt']" class="text-blue-500"/>
                     </a>
-                    <a href="#" class="ml-4">
+                    <form @click="deleteData(ac.id,nama.ac)" class="ml-4">
+                    <button type="submit">
                         <font-awesome-icon :icon="['fas','trash']" class="text-red-500"/>
-                    </a>
+                    </button> 
+                    </form>
                 </td>
             </tr>
             <tr v-show="cctv" class="text-sm" v-for="(cctv,index) in cctvs" :key="index">
@@ -171,9 +177,11 @@
                     <a href="#">
                         <font-awesome-icon :icon="['fas','pencil-alt']" class="text-blue-500"/>
                     </a>
-                    <a href="#" class="ml-4">
+                    <form @click="deleteData(cctv.id,nama.cctv)" class="ml-4">
+                    <button type="submit">
                         <font-awesome-icon :icon="['fas','trash']" class="text-red-500"/>
-                    </a>
+                    </button> 
+                    </form>
                 </td>
             </tr>
             <tr v-show="network" class="text-sm" v-for="(network,index) in networks" :key="index">
@@ -188,9 +196,11 @@
                     <a href="#">
                         <font-awesome-icon :icon="['fas','pencil-alt']" class="text-blue-500"/>
                     </a>
-                    <a href="#" class="ml-4">
+                    <form @click="deleteData(network.id,nama.network)" class="ml-4">
+                    <button type="submit">
                         <font-awesome-icon :icon="['fas','trash']" class="text-red-500"/>
-                    </a>
+                    </button> 
+                    </form>
                 </td>
             </tr>
             <tr v-show="nas" class="text-sm" v-for="(nas,index) in nass" :key="index">
@@ -207,9 +217,11 @@
                     <a href="#">
                         <font-awesome-icon :icon="['fas','pencil-alt']" class="text-blue-500"/>
                     </a>
-                    <a href="#" class="ml-4">
+                    <form @click="deleteData(nas.id,nama.nas)" class="ml-4">
+                    <button type="submit">
                         <font-awesome-icon :icon="['fas','trash']" class="text-red-500"/>
-                    </a>
+                    </button> 
+                    </form>
                 </td>
             </tr>
             <tr v-show="apar" class="text-sm" v-for="(apar,index) in apars" :key="index">
@@ -222,9 +234,11 @@
                     <a href="#">
                         <font-awesome-icon :icon="['fas','pencil-alt']" class="text-blue-500"/>
                     </a>
-                    <a href="#" class="ml-4">
+                     <form @click="deleteData(apar.id,nama.apar)" class="ml-4">
+                    <button type="submit">
                         <font-awesome-icon :icon="['fas','trash']" class="text-red-500"/>
-                    </a>
+                    </button> 
+                    </form>
                 </td>
             </tr>
             <tr v-show="monitor" class="text-sm" v-for="(monitor,index) in monitors" :key="index">
@@ -237,9 +251,11 @@
                     <a href="#">
                         <font-awesome-icon :icon="['fas','pencil-alt']" class="text-blue-500"/>
                     </a>
-                    <a href="#" class="ml-4">
+                     <form @click="deleteData(monitor.id,nama.monitor)" class="ml-4">
+                    <button type="submit">
                         <font-awesome-icon :icon="['fas','trash']" class="text-red-500"/>
-                    </a>
+                    </button> 
+                    </form>
                 </td>
             </tr>
             <tr v-show="keyboard" class="text-sm" v-for="(keyboard,index) in keyboards" :key="index">
@@ -252,9 +268,11 @@
                     <a href="#">
                         <font-awesome-icon :icon="['fas','pencil-alt']" class="text-blue-500"/>
                     </a>
-                    <a href="#" class="ml-4">
+                     <form @click="deleteData(keyboard.id,nama.keyboard)" class="ml-4">
+                    <button type="submit">
                         <font-awesome-icon :icon="['fas','trash']" class="text-red-500"/>
-                    </a>
+                    </button> 
+                    </form>
                 </td>
             </tr>
             <tr v-show="mouse" class="text-sm" v-for="(mouse,index) in mouses" :key="index">
@@ -267,9 +285,11 @@
                     <a href="#">
                         <font-awesome-icon :icon="['fas','pencil-alt']" class="text-blue-500"/>
                     </a>
-                    <a href="#" class="ml-4">
+                     <form @click="deleteData(mouse.id,nama.mouse)" class="ml-4">
+                    <button type="submit">
                         <font-awesome-icon :icon="['fas','trash']" class="text-red-500"/>
-                    </a>
+                    </button> 
+                    </form>
                 </td>
             </tr>
             <tr v-show="genset" class="text-sm" v-for="(genset,index) in gensets" :key="index">
@@ -282,9 +302,11 @@
                     <a href="#">
                         <font-awesome-icon :icon="['fas','pencil-alt']" class="text-blue-500"/>
                     </a>
-                    <a href="#" class="ml-4">
+                     <form @click="deleteData(genset.id,nama.genset)" class="ml-4">
+                    <button type="submit">
                         <font-awesome-icon :icon="['fas','trash']" class="text-red-500"/>
-                    </a>
+                    </button> 
+                    </form>
                 </td>
             </tr>
         </tbody>   
@@ -300,14 +322,28 @@ export default {
     data(){
         return{
             cari:"",
-            
+            nama:{
+                server : 'master_server',
+                rak : 'master_rak',
+                ups : 'master_ups',
+                ac : 'master_ac',
+                baterai : 'master_baterai',
+                cctv : 'master_cctv',
+                network : 'master_network',
+                nas : 'master_nas',
+                apar : 'master_apar',
+                monitor : 'master_monitor',
+                mouse : 'master_mouse',
+                keyboard : 'master_keyboard',
+                genset : 'master_genset',
+            },
         }
     },
 
     methods:{
-        deleteData(id){
-            axios.post(`/server/master/server/delete/${id}`)
-        }
+        deleteData(id,nama){
+            axios.post(`/server/master/delete/${id}/${nama}`)
+        },
     }
 }
 </script>

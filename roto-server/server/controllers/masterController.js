@@ -47,15 +47,15 @@ module.exports.inputmasterserver = async (req, res) => {
   }
 }
 
-module.exports.deletemasterserver = async (req, res) => {
+module.exports.deletemaster = async (req, res) => {
   let conn
   try {
     const id = req.params.id
+    const nama = req.params.nama
     conn = await pool.getConnection()
-    const data = await conn.query(`DELETE FROM master_server WHERE id=${id}`)
+    const data = await conn.query(`DELETE FROM ${nama} WHERE id=${id}`)
 
-    res.send(id)
-    // res.redirect('master/server')
+    res.send(data)
   }catch (err) {
     console.log(err)
   }finally {
@@ -478,6 +478,48 @@ module.exports.inputmastergenset = async (req, res) => {
     )
 
     res.redirect('/master/genset')
+  } catch (err) {
+    console.log(err)
+  } finally {
+    if (conn) return conn.end()
+  }
+}
+
+module.exports.masterservergetdata = async (req, res) => {
+  const id = req.params.id
+  let conn
+  try {
+    conn = await pool.getConnection()
+    const rows = await conn.query(`SELECT * FROM master_Server WHERE id = ${id}`)
+    res.send(rows)
+  } catch (err) {
+    console.log(err)
+  } finally {
+    if (conn) return conn.end()
+  }
+}
+module.exports.inputmasterserverupdate = async (req, res) => {
+  const id = req.params.id
+  let conn
+  try {
+    const produk = req.body.produk
+    const merek = req.body.merek
+    const model = req.body.model
+    const processor = req.body.processor
+    const memori = req.body.memori
+    const internalStorage = req.body.internalStorage
+    const networkController = req.body.networkController
+    const storage = req.body.storage
+    const sumberDayaListrik = req.body.sumberDayaListrik
+    const tahun = req.body.tahun
+    const garansi = req.body.garansi
+
+    conn = await pool.getConnection()
+    const data = await conn.query(
+      `UPDATE master_server SET produk=${produk}, merek=${merek}, model=${model}, processor=${processor}, memori=${memori},internal_storage=${internalStorage}, network_controller=${networkController}, storage=${storage}, sumber_daya_listrik=${sumberDayaListrik}, tahun=${tahun}, garansi=${garansi} WHERE id = ${id}`
+    )
+
+    res.redirect('/master/server')
   } catch (err) {
     console.log(err)
   } finally {
