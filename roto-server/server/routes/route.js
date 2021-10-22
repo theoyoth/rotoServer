@@ -38,7 +38,9 @@ app.post('/master/inputgenset', masterController.inputmastergenset)
 app.post('/master/delete/:id/:nama', masterController.deletemaster)
 
 app.get('/master/update/updateserver/:id', masterController.masterservergetdata)
-app.post('/master/update/updateserver/:id', masterController.inputmasterserverupdate)
-
+app.post(
+  '/master/serve/update/updateserver',
+  masterController.inputmasterserverupdate
+)
 
 module.exports = app

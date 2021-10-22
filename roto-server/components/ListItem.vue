@@ -83,7 +83,7 @@
                     <NuxtLink :to="{name : 'master-update-updateid', params:{id : server.id} }">
                         <font-awesome-icon :icon="['fas','pencil-alt']" class="text-blue-500"/>
                     </NuxtLink>
-                    <form @click="deleteData(server.id,nama.server)" class="ml-4">
+                    <form @click="deleteData(server.id,nama.server)" class="ml-2">
                     <button type="submit">
                         <font-awesome-icon :icon="['fas','trash']" class="text-red-500"/>
                     </button> 

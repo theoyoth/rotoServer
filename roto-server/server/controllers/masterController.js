@@ -56,9 +56,9 @@ module.exports.deletemaster = async (req, res) => {
     const data = await conn.query(`DELETE FROM ${nama} WHERE id=${id}`)
 
     res.send(data)
-  }catch (err) {
+  } catch (err) {
     console.log(err)
-  }finally {
+  } finally {
     if (conn) return conn.end()
   }
 }
@@ -490,7 +490,7 @@ module.exports.masterservergetdata = async (req, res) => {
   let conn
   try {
     conn = await pool.getConnection()
-    const rows = await conn.query(`SELECT * FROM master_Server WHERE id = ${id}`)
+    const rows = await conn.query(`SELECT * FROM master_server WHERE id=${id}`)
     res.send(rows)
   } catch (err) {
     console.log(err)
@@ -499,9 +499,9 @@ module.exports.masterservergetdata = async (req, res) => {
   }
 }
 module.exports.inputmasterserverupdate = async (req, res) => {
-  const id = req.params.id
   let conn
   try {
+    const id = req.body.id
     const produk = req.body.produk
     const merek = req.body.merek
     const model = req.body.model
@@ -515,7 +515,7 @@ module.exports.inputmasterserverupdate = async (req, res) => {
     const garansi = req.body.garansi
 
     conn = await pool.getConnection()
-    const data = await conn.query(
+    const result = await conn.query(
       `UPDATE master_server SET produk=${produk}, merek=${merek}, model=${model}, processor=${processor}, memori=${memori},internal_storage=${internalStorage}, network_controller=${networkController}, storage=${storage}, sumber_daya_listrik=${sumberDayaListrik}, tahun=${tahun}, garansi=${garansi} WHERE id = ${id}`
     )
 
