@@ -39,9 +39,9 @@
         </div>
         <div class="form-login flex flex-col justify-center w-80 px-5">
             <h1 class="text-center mb-4 text-3xl font-semibold">Login</h1>
-            <form method="POST" action="/server/login">
-                <input type="text" name="username" v-model="username" placeholder="nama" class="rounded-lg mb-2 p-2 w-full outline-none" required>
-                <input type="password" name="password" v-model="password" placeholder="kata sandi" class="rounded-lg p-2 w-full outline-none" required> 
+            <form method="POST" @submit.prevent="submit">
+                <input type="text" name="nama" placeholder="nama" class="rounded-lg mb-2 p-2 w-full outline-none" v-model="data.nama" required>
+                <input type="password" name="sandi" placeholder="kata sandi" class="rounded-lg p-2 w-full outline-none" v-model="data.sandi" required> 
                 <nuxt-link to="">
                     <p class="text-xs text-center mt-4">lupa kata sandi?</p>
                 </nuxt-link>
@@ -54,39 +54,37 @@
 </template>
 
 <script>
-
+import axios from 'axios'
 export default {
-    middleware: 'auth',
-    middleware: 'guest',
     data(){
         return{
-            username:'',
-            password:'',
-        }
-    },
-    async asyncData({$http}){
-        try{
-            const tests = await $http.$get('/server/users')
-            return tests
-        }
-        catch(err){
-        return err
+            data:{
+                nama:'',
+                sandi:'',
+            }
         }
     },
     methods:{
-        submitForm(){
-            // this.$auth.loginWith('local',{
-            //     data:{
-            //         username:this.data.username,
-            //         password:this.data.password,
-            //     }
-            // })
-            // .catch(err =>{
-            //     console.error(err)
-            // })
-            console.log(this.username)
-            console.log(this.username)
-        }
+        async login(){
+            try{
+                let response = await this.$auth.loginWith("local", {data: this.data})
+                this.$route.push('/homepage')
+                console.log(response)
+            }
+            catch(err){
+                console.log(err)
+            }
+        },
+         submit () {
+      axios.post('/server/login', {
+        nama: this.data.nama,
+        sandi: this.data.sandi
+      }).then(() => {
+        this.$router.push('/homepage')
+      }).catch(error => {
+          console.log(error)
+      })
+    },
     }
 }
 </script>

@@ -63,7 +63,7 @@ export default {
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
-    // baseURL : 'http://127.0.0.1:3000/server'
+    baseURL : 'http://127.0.0.1:3000/'
   },
   auth:{
     
@@ -72,23 +72,22 @@ export default {
             endpoints:{
                   // sesuai route di express
                 login:{
-                    url:'/server/',
-                    method:'get',
+                    url:'/server/login',
+                    method:'post',
                 },
                 user:{
                   url:'/server/users',
-                  method:'get'
+                  method:'get',
+                  propertyName: 'user'
                 },
-                logout:true,
+                logout:false,
             },
-            tokenRequired: true,
-            tokenType: 'Bearer'
         }
     },
     redirect:{
-      login:'/server',
+      login:'/',
       logout: '/',
-      home:'/'
+      home:'/homepage'
     },
     rewriteRedirects:true,
   },

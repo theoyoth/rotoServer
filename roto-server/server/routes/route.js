@@ -1,7 +1,10 @@
 const pathController = require('../controllers/controller.js')
 const masterController = require('../controllers/masterController.js')
+const loginController = require('../controllers/loginController.js')
 const express = require('express')
 const app = express()
+const cors = require('cors')
+app.use(cors())
 
 app.get('/', pathController.users)
 app.get('/lokasiserver', pathController.lokasiserver)
@@ -43,4 +46,8 @@ app.post(
   masterController.inputmasterserverupdate
 )
 
+// login
+app.post('/login', loginController.login)
+module.exports = app
+app.get('/login', loginController.loginget)
 module.exports = app
