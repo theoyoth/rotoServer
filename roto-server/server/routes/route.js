@@ -48,6 +48,6 @@ app.post(
 
 // login
 app.post('/login', loginController.login)
-module.exports = app
-app.get('/login', loginController.loginget)
+// app.get('/login', loginController.loginget)
+
 module.exports = app
