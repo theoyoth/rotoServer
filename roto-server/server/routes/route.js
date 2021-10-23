@@ -1,6 +1,7 @@
 const pathController = require('../controllers/controller.js')
 const masterController = require('../controllers/masterController.js')
 const loginController = require('../controllers/loginController.js')
+const {auth} = require('../verifyToken.js')
 const express = require('express')
 const app = express()
 const cors = require('cors')

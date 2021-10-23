@@ -6,4 +6,5 @@ const pool = mariadb.createPool({
   database: 'rotoserver',
   connectionLimit: 10,
 })
+
 module.exports = pool

@@ -40,8 +40,8 @@
         <div class="form-login flex flex-col justify-center w-80 px-5">
             <h1 class="text-center mb-4 text-3xl font-semibold">Login</h1>
             <form method="POST" action="/server/login">
-                <input type="text" name="nama" placeholder="nama" class="rounded-lg mb-2 p-2 w-full outline-none" v-model="nama" required>
-                <input type="password" name="sandi" placeholder="kata sandi" class="rounded-lg p-2 w-full outline-none" v-model="sandi" required> 
+                <input type="text" name="nama" placeholder="nama" class="rounded-lg mb-2 p-2 w-full outline-none" v-model="login.nama" required>
+                <input type="password" name="sandi" placeholder="kata sandi" class="rounded-lg p-2 w-full outline-none" v-model="login.sandi" required> 
                 <nuxt-link to="">
                     <p class="text-xs text-center mt-4">lupa kata sandi?</p>
                 </nuxt-link>
@@ -58,22 +58,23 @@ import axios from 'axios'
 export default {
     data(){
         return{
+            login:{
                 nama:'',
                 sandi:'',
+            }
             
         }
     },
     methods:{
-        submit () {
-            axios.post('/server/login', {
-                nama: this.data.nama,
-                sandi: this.data.sandi
-            }).then(() => {
-                console.log("ok masuk")
-            }).catch(error => {
-                console.log(error)
-            })
-        },
+        // async userLogin () {
+        //     try {
+        //     let response = await this.$auth.loginWith('local', { data: this.login })
+        //     console.log(response)
+        //     } catch (err) {
+        //         console.log(err)
+        //     }
+
+        // },
     }
 }
 </script>

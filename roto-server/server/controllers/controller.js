@@ -1,26 +1,5 @@
 const pool = require('../db.js')
 
-// module.exports.loginForm = (req, res) => {
-//     const username = req.body.username
-//     const password = req.body.password
-
-//     const user = {
-//         name: username,
-//         password: password
-//     }
-//     res.json(user)
-
-// pool.getConnection()
-//     .then(conn => {
-//         conn.query("SELECT * FROM user")
-//         .then(rows => {
-//             res.json(rows)
-//         })
-//         .catch(err => {
-//             return err
-//         })
-//     })
-// }
 
 module.exports.users = async (req, res) => {
   let conn
@@ -101,3 +80,5 @@ module.exports.getInputMaintenance = async (req, res) => {
 //     if (conn) conn.end()
 //   }
 // }
+
+

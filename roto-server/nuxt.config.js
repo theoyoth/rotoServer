@@ -53,8 +53,8 @@ export default {
   modules: [
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
-    '@nuxtjs/auth',
-    '@nuxt/http',
+    // '@nuxtjs/auth',
+    '@nuxtjs/auth-next',
     
   ],
   // router:{
@@ -63,12 +63,17 @@ export default {
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
-    baseURL : 'http://127.0.0.1:3000/'
+    // baseURL : 'http://127.0.0.1:3000/'
   },
   auth:{
-    
     strategies:{
         local:{
+          token: {
+            property: 'token',
+            global: true,
+            // required: true,
+            type: 'Bearer'
+          },
             endpoints:{
                   // sesuai route di express
                 login:{

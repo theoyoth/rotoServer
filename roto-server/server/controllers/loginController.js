@@ -6,23 +6,27 @@ const dotenv = require('dotenv')
 dotenv.config()
 
 module.exports.login = async (req, res) => {
-  let conn
-
+    let conn
   try {
-    const nama = req.body.nama
-    const sandi = req.body.sandi
+    const {nama,sandi} = req.body
+    
+    if(nama && sandi){
+        conn = await pool.getConnection()
+        const data = await conn.query(`SELECT * FROM users WHERE nama='${nama}' AND sandi='${sandi}'`)
+        if(data.length > 0){
+            let user = data[0]
 
-    conn = await pool.getConnection()
-    const data = await conn.query(`SELECT * FROM users WHERE nama='${nama}'`)
-
-    if (nama !== data[0].nama || sandi !== data[0].sandi) {
-      res.json({
-        message: 'data yang dimasukkan tidak cocok',
-      })
-      res.redirect('/')
-    } else {
-      res.redirect('/homepage')
+            const token = jwt.sign({id:user.id,nama:user.nama},process.env.TOKEN_KEY)
+            res.header('auth-token',token).json({token : token}).redirect('/homepage')
+        }
+        else{
+            res.redirect("/")
+        }
     }
+    else{
+        res.send("no data, enter name and password")
+    }
+
   } catch (err) {
     console.log(err)
   } finally {
