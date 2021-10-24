@@ -1,14 +1,14 @@
 const pathController = require('../controllers/controller.js')
 const masterController = require('../controllers/masterController.js')
-const loginController = require('../controllers/loginController.js')
-const {auth} = require('../verifyToken.js')
+const authController = require('../controllers/authController.js')
+const { auth } = require('../verifyToken.js')
 const express = require('express')
 const app = express()
 const cors = require('cors')
 app.use(cors())
 
-app.get('/', pathController.users)
-app.get('/lokasiserver', pathController.lokasiserver)
+// app.get('/', pathController.users)
+// app.get('/lokasiserver', pathController.lokasiserver)
 app.get('/masterserver', masterController.masterserver)
 app.post('/inputmaintenance', pathController.inputmaintenance)
 app.get('/inputmaintenance', pathController.getInputMaintenance)
@@ -43,12 +43,21 @@ app.post('/master/delete/:id/:nama', masterController.deletemaster)
 
 app.get('/master/update/updateserver/:id', masterController.masterservergetdata)
 app.post(
-  '/master/serve/update/updateserver',
+  '/master/server/update/updateserver',
   masterController.inputmasterserverupdate
 )
 
 // login
-app.post('/login', loginController.login)
-// app.get('/login', loginController.loginget)
+app.post('/login', authController.login)
+// homepage when login success
+app.get('/homepage', authController.homepage)
+// logout
+app.post('/logout', async (req, res) => {
+  res.cookie('authtoken', '', { maxAge: 0 })
+  res.send({
+    message: 'you are success to logout',
+  })
+})
+app.get('/cari', masterController.caribarang)
 
 module.exports = app

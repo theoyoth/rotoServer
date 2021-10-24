@@ -3,34 +3,30 @@ export default {
   head: {
     title: 'roto-server',
     htmlAttrs: {
-      lang: 'en'
+      lang: 'en',
     },
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       { hid: 'description', name: 'description', content: '' },
-      { name: 'format-detection', content: 'telephone=no' }
+      { name: 'format-detection', content: 'telephone=no' },
     ],
-    script:[
-      {src:"/dist/driver.min.js"},
-    ],
+    script: [{ src: '/dist/driver.min.js' }],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
-      { rel:'stylesheet', 
-        href:"/dist/driver.min.css",
-        href: "https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap",
+      {
+        rel: 'stylesheet',
+        href: '/dist/driver.min.css',
+        href: 'https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap',
       },
     ],
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
-  css: [
-    '~/assets/default.scss'
-  ],
+  css: ['~/assets/default.scss'],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: [
-  ],
+  plugins: [],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
@@ -43,10 +39,10 @@ export default {
   ],
   fontawesome: {
     icons: {
-      solid:true,
-      brands:true,
-      regular:true,
-    }
+      solid: true,
+      brands: true,
+      regular: true,
+    },
   },
 
   // Modules: https://go.nuxtjs.dev/config-modules
@@ -55,7 +51,6 @@ export default {
     '@nuxtjs/axios',
     // '@nuxtjs/auth',
     '@nuxtjs/auth-next',
-    
   ],
   // router:{
   //   middleware: ['auth']
@@ -65,50 +60,44 @@ export default {
   axios: {
     // baseURL : 'http://127.0.0.1:3000/'
   },
-  auth:{
-    strategies:{
-        local:{
-          token: {
-            property: 'token',
-            global: true,
-            // required: true,
-            type: 'Bearer'
+  auth: {
+    strategies: {
+      local: {
+        token: {
+          property: 'token',
+          global: true,
+          required: true,
+          type: '',
+        },
+        endpoints: {
+          // sesuai route di express
+          login: {
+            url: '/server/login',
+            method: 'post',
           },
-            endpoints:{
-                  // sesuai route di express
-                login:{
-                    url:'/server/login',
-                    method:'post',
-                },
-                user:{
-                  url:'/server/users',
-                  method:'get',
-                  propertyName: 'user'
-                },
-                logout:false,
-            },
-        }
+          user: {
+            url: '/server/homepage',
+            method: 'get',
+            propertyName: 'user',
+          },
+          logout: false,
+        },
+      },
     },
-    redirect:{
-      login:'/',
-      logout: '/',
-      home:'/homepage'
-    },
-    rewriteRedirects:true,
+    // rewriteRedirects: true,
   },
-  
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
     extend(config, {}) {
       config.node = {
-          fs: 'empty'
+        fs: 'empty',
       }
-  }
+    },
   },
-  serverMiddleware :[
+  serverMiddleware: [
     // {path: '/server',handler:'~/server'},
-    '~/server/index.js'
+    '~/server/index.js',
     // {path: '/server/home', handler:'~/server'},
-  ]
+  ],
 }

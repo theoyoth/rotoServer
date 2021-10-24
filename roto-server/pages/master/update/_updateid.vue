@@ -52,7 +52,7 @@
                 </div>
             </div>
         </div>
-        <button class="bg-blue-400 shadow-md rounded-lg w-28 h-10 mt-8 transform hover:shadow-lg hover:scale-100 transition ease-in duration-200" type="submit">kirim</button>
+        <button class="bg-blue-400 shadow-md rounded-lg w-28 h-10 mt-8 transform hover:shadow-lg hover:scale-100 transition ease-in duration-200" type="submit">ubah</button>
     </form>
 </section>
 </div>
@@ -89,31 +89,32 @@ export default {
         .catch(err =>{
             console.log(err)
         })
-    }
-        
-        // updateData(id){
-        //     const data = {
-        //         produk : this.produk,
-        //         merek : this.merek,
-        //         model : this.model,
-        //         processor : this.processor,
-        //         memori : this.memori,
-        //         internalStorage : this.internalStorage,
-        //         networkController : this.networkController,
-        //         tahun : this.tahun,
-        //         garansi : this.garansi,
-        //         sumberDayaListrik : this.sumberDayaListrik,
-        //         storage : this.storage,
-        //     }
-        //  axios.post({
-        //      url : `http://localhost:3000/server/master/update/updateserver/${id}`,
-        //      method:'post',
-        //      body:{data}
-        //      })
-        //  .then((res)=>{
-        //      this.$route.push('master/server')
-        //  })
-        // }
+    },
+    // methods:{
+    //     updateData(id){
+    //         const data = {
+    //             produk : this.produk,
+    //             merek : this.merek,
+    //             model : this.model,
+    //             processor : this.processor,
+    //             memori : this.memori,
+    //             internalStorage : this.internalStorage,
+    //             networkController : this.networkController,
+    //             tahun : this.tahun,
+    //             garansi : this.garansi,
+    //             sumberDayaListrik : this.sumberDayaListrik,
+    //             storage : this.storage,
+    //         }
+    //      axios.post({
+    //          url : `http://localhost:3000/server/master/update/updateserver/${id}`,
+    //          method:'post',
+    //          body:{data}
+    //          })
+    //      .then((res)=>{
+    //          this.$route.push('master/server')
+    //      })
+    //     }
+    // }
     
 }
 </script>

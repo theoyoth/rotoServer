@@ -13,21 +13,23 @@
     <HeaderListItem :mouse="mouse.nama" v-if="mouse"/>
     <HeaderListItem :nas="nas.nama" v-if="nas"/>
     <HeaderListItem :genset="genset.nama" v-if="genset"/>
-    <div class="container mx-auto flex mt-8 ">
-        <form class="flex" method="post">
-            <input type="search" placeholder="cari" name="cari" v-model="cari" class="rounded-l-lg p-2 outline-none">
-            <button class="p-2 rounded-r-lg bg-white flex items-center justify-center" type="submit">
-                <font-awesome-icon :icon="['fas','search']" class="text-black-500"/>
+    <div class="container mx-auto flex mt-8">
+        <div class="flex">
+            <input type="text" placeholder="cari" name="cari" v-model.lazy="caribarang" @keyup.enter="$fetch" class="rounded-l-lg p-2 outline-none">
+            <button class="p-2 rounded-r-lg bg-gray-400 flex items-center justify-center" @click="clearSearch">
+                <!-- <font-awesome-icon :icon="['fas','search']" class="text-black-500"/> -->
+                <p>hapus</p>
             </button>
-        </form>
-        <select id="date" class="rounded-lg p-2 outline-none ml-8 cursor-pointer">
+        </div>
+        <!-- <select id="date" class="rounded-lg p-2 outline-none ml-8 cursor-pointer">
             <option value="hari">hari</option>
             <option value="bulan">bulan</option>
             <option value="tahun">tahun</option>
-        </select>
+        </select> -->
     </div>
     <table class="table space-y-6 container mx-auto table-auto border-collapse border border-white mt-7">
-        <thead class="bg-white text-sm">
+        <thead class="bg-white text-sm has-tooltip">
+            <span class="tooltip rounded shadow-lg p-1 bg-gray-700 text-white -mt-10 absolute left-2/4 transform -translate-x-2/4">semua detail barang</span>
             <tr class="text-xs"> 
                 <th class="font-semibold py-3" v-show="server">Produk</th>
                 <th class="font-semibold py-3" v-show="!rak && !ups && !baterai">Merek</th>
@@ -66,7 +68,32 @@
                 <th class="font-semibold">aksi</th>
             </tr>
         </thead>
-        <tbody class="text-center bg-white bg-opacity-40">
+        <tbody v-if="caribarang !== ''" class="text-center bg-white bg-opacity-40">
+            <tr v-show="server" class="text-sm" v-for="(value,index) in values" :key="index">
+                <td>{{value.produk}}</td>
+                <td>{{value.merek}}</td>
+                <td>{{value.model}}</td>
+                <td>{{value.processor}}</td>
+                <td>{{value.memori}}</td>
+                <td>{{value.internal_storage}}</td>
+                <td>{{value.network_controller}}</td>
+                <td>{{value.storage}}</td>
+                <td>{{value.sumber_daya_listrik}}</td>
+                <td>{{value.tahun}}</td>
+                <td>{{value.garansi}}</td>
+                <td class="py-3 flex w-3">
+                    <NuxtLink :to="{name : 'master-update-updateid', params:{id : server.id} }">
+                        <font-awesome-icon :icon="['fas','pencil-alt']" class="text-blue-500"/>
+                    </NuxtLink>
+                    <form @click="deleteData(value.id,nama.value)" class="ml-2">
+                    <button type="submit">
+                        <font-awesome-icon :icon="['fas','trash']" class="text-red-500"/>
+                    </button> 
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+        <tbody v-else class="text-center bg-white bg-opacity-40">
             <tr v-show="server" class="text-sm" v-for="(server,index) in servers" :key="index">
                 <td>{{server.produk}}</td>
                 <td>{{server.merek}}</td>
@@ -310,6 +337,8 @@
                 </td>
             </tr>
         </tbody>   
+
+        
     </table>
 </div>
 </template>
@@ -321,7 +350,8 @@ export default {
 
     data(){
         return{
-            cari:"",
+            caribarang:"",
+            values:[],
             nama:{
                 server : 'master_server',
                 rak : 'master_rak',
@@ -339,15 +369,33 @@ export default {
             },
         }
     },
+    // mounted(){
+    //     const res = axios.get('http://localhost:3000/server/cari')
+    //     res.forEach(value =>{
+    //         this.values.push(value)
+    //     })
+    // },
 
+    async fetch(){
+        if(this.caribarang !== ''){
+            await this.caribarangserver()
+        return
+        }
+    },
     methods:{
         deleteData(id,nama){
             axios.post(`/server/master/delete/${id}/${nama}`)
         },
-    }
+        async caribarangserver(){
+            const res = await axios.get(`http://localhost:3000/server/cari?cari=${this.caribarang}`)
+            res.data.forEach(val =>{
+                this.values.push(val)
+            })
+        },
+        clearSearch(){
+            this.caribarang = ''
+            this.values = []
+        }
+    },
 }
 </script>
-
-<style>
-
-</style>

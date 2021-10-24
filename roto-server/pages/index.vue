@@ -1,22 +1,21 @@
 <template>
-  <div>
+  <div v-if="!auth">
     <AuthLogin/>
   </div>
 </template>
 
 <script>
 export default {
-  async asyncData({$http}){
-    try{
-      const test = await $http.$get('/server')
-      return{
-        test
-      }
-    }
-    catch(err){
-      return err
+  data(){
+    return{
+      auth : false,
     }
   },
+  mounted(){
+    this.$nuxt.$on('auth',auth => {
+      this.auth = auth;
+    })
+  }
   
 }
 </script>

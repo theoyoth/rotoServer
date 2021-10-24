@@ -516,7 +516,7 @@ module.exports.inputmasterserverupdate = async (req, res) => {
 
     conn = await pool.getConnection()
     const result = await conn.query(
-      `UPDATE master_server SET produk=${produk}, merek=${merek}, model=${model}, processor=${processor}, memori=${memori},internal_storage=${internalStorage}, network_controller=${networkController}, storage=${storage}, sumber_daya_listrik=${sumberDayaListrik}, tahun=${tahun}, garansi=${garansi} WHERE id = ${id}`
+      `UPDATE master_server SET produk='${produk}', merek='${merek}', model='${model}', processor='${processor}', memori='${memori}',internal_storage='${internalStorage}', network_controller='${networkController}', storage='${storage}', sumber_daya_listrik='${sumberDayaListrik}', tahun='${tahun}', garansi='${garansi}' WHERE id = '${id}'`
     )
 
     res.redirect('/master/server')
@@ -524,5 +524,21 @@ module.exports.inputmasterserverupdate = async (req, res) => {
     console.log(err)
   } finally {
     if (conn) return conn.end()
+  }
+}
+
+module.exports.caribarang = async (req, res) => {
+  let conn
+
+  try {
+    const value = req.query.cari
+
+    conn = await pool.getConnection()
+    const barang = await conn.query(
+      `SELECT * FROM master_server WHERE merek='${value}'`
+    )
+    res.send(barang)
+  } catch (err) {
+    console.log(err)
   }
 }
