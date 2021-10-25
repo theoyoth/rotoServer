@@ -1,5 +1,5 @@
 <template>
-<div class="bg-hero h-screen" >
+<div class="bg-hero h-screen">
     <div class="container mx-auto h-full py-5">
         <header>
             <div class="flex justify-between items-center">
@@ -81,31 +81,43 @@
 
 <script>
 import axios from 'axios'
+// import { mapGetters, mapMutations } from 'vuex'
 
 export default {
     data(){
         return{
             user : '',
             message : '',
-            auth:false,
         }
     },
-    // asyncData(){
-    //     if(!auth){
-    //         this.$router.push( '/')
-    //     }
+    // middleware: 'auth',
+    // computed: {
+    //     ...mapGetters([
+    //     'user', 
+    //     'isLoggedIn'
+    // ])
+        // loggedIn() {
+        //     return this.$auth.loggedIn
+        // },
+        // user() {
+        //     return this.$auth.user
+        // }
     // },
-    // middleware:['auth'],
     async mounted(){
-        this.$nuxt.$on('auth',auth=>{
-            this.auth = auth
-        })
+        // this.$nuxt.$on('auth',auth=>{
+        //     this.auth = auth
+        // })
+
+        // const cookie = document.cookie
+        // if(!cookie){
+        //     this.$router.push('/')
+        // }
 
         try{
             const resp = await axios.get('http://localhost:3000/server/homepage',{},{withCredentials: true})
 
             this.user = resp.data.nama
-            this.$nuxt.$emit('auth',true)
+            // this.$nuxt.$emit('auth',true)
             // console.log(resp.data)
             //  let response = await this.$auth.loginWith('local', {})
             // this.user = response.data.nama
@@ -115,15 +127,22 @@ export default {
         }
         catch (err){
             this.message = 'you are not login'
-            this.$nuxt.$emit('auth',false)
+            // this.$nuxt.$emit('auth',false)
         }
   },
   methods:{
+    //   ...mapMutations(['setisauth']),
       logout(){
           axios.post('/server/logout',{},{withCredentials : true})
 
           this.$router.push('/')
       }
+
+    //   async logout() {
+    //         await this.$auth.logout() 
+    //         this.setisauth(false) 
+    //         this.$router.push('/login') 
+    //     }
   }
 }
 </script>

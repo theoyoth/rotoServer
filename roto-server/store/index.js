@@ -1,14 +1,23 @@
-// export const getters = {
-//     isAuthenticated(state) {
-//       return state.auth.loggedIn; // auth object as default will be added in vuex state, when you initialize nuxt auth
-//     },
-//     getUserInfo(state) {
-//       return state.auth.user;
-//     }
-//   };
-
-export const state = () => {
-  return {
-    authenticated: true,
+export const getters = {
+isAuthenticated(state) {
+  return state.auth.loggedIn
+},
+      
+getUserInfo(state) {
+   return state.auth.user
   }
 }
+
+// export const state = ()=> ({
+//   isAuth : false
+// })
+// export const mutations = {
+//   setisauth(state, payload) {
+//     state.isAuth = payload
+//   }
+// }
+// export const actions = {
+//   nuxtServerInit({commit},context){
+//     commit('setisauth',context.app.$auth.$state.LoggedIn)
+//   }
+// }

@@ -20,15 +20,15 @@ module.exports.login = async (req, res) => {
 
         const token = jwt.sign(
           { id: user.id, nama: user.nama },
-          process.env.TOKEN_KEY
+          process.env.TOKEN_KEY,{expiresIn:"20m"}
         )
         // res.header('auth-token', token).redirect('/homepage')
-        res
-          .cookie('authtoken', token, {
-            httpOnly: true,
-            maxAge: 60 * 60 * 24 * 1000,
-          })
-          .redirect('/homepage')
+        // res
+        //   .cookie('authtoken', token, {
+        //     httpOnly: true,
+        //     maxAge: 60 * 60 * 24 * 1000,
+        //   })
+        res.json({token:token})
       } else {
         res.redirect('/')
       }

@@ -1,3 +1,5 @@
+import { data } from "autoprefixer"
+
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
@@ -58,32 +60,43 @@ export default {
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
-    // baseURL : 'http://127.0.0.1:3000/'
+    baseURL : 'http://localhost:3000',
+    // credentials :true,
   },
   auth: {
     strategies: {
       local: {
+        user:{
+          property : 'user',
+          autoFetch : true,
+        },
         token: {
           property: 'token',
           global: true,
           required: true,
-          type: '',
+          type: 'Bearer',
         },
         endpoints: {
           // sesuai route di express
           login: {
             url: '/server/login',
             method: 'post',
+            // propertyName : 'token',
           },
           user: {
             url: '/server/homepage',
             method: 'get',
-            propertyName: 'user',
+            // propertyName:false,
           },
           logout: false,
         },
       },
     },
+    redirect: {
+      login: '/',
+      logout: '/',
+      user: '/homepage'
+    }
     // rewriteRedirects: true,
   },
 
