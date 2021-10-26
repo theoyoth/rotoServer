@@ -5,6 +5,7 @@ const pool = mariadb.createPool({
   password: '',
   database: 'rotoserver',
   connectionLimit: 10,
+  acquireTimeout:5000,
 })
 
 module.exports = pool

@@ -11,7 +11,7 @@
                 </div>
                 <div class="mb-4">
                     <label for="upsCriticalTemperature" class="block mb-2 text-sm">ups critical temperature</label>
-                    <input type="text" v-model="model" name="upsCriticalTemperature" id="upsCriticalTemperature" class="p-2 w-72 rounded-lg outline-none">
+                    <input type="text" v-model="upsCriticalTemperature" name="upsCriticalTemperature" id="upsCriticalTemperature" class="p-2 w-72 rounded-lg outline-none">
                 </div>
                 <div class="mb-4">
                     <label for="upsCriticalCapacity" class="block mb-2 text-sm">up critical capacity</label>

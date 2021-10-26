@@ -69,7 +69,7 @@
             </tr>
         </thead>
         <tbody v-if="caribarang !== ''" class="text-center bg-white bg-opacity-40">
-            <tr v-show="server" class="text-sm" v-for="(value,index) in values" :key="index">
+            <tr v-show="server" class="text-sm" v-for="(value,index) in cariserver" :key="index">
                 <td>{{value.produk}}</td>
                 <td>{{value.merek}}</td>
                 <td>{{value.model}}</td>
@@ -85,7 +85,120 @@
                     <NuxtLink :to="{name : 'master-update-updateid', params:{id : server.id} }">
                         <font-awesome-icon :icon="['fas','pencil-alt']" class="text-blue-500"/>
                     </NuxtLink>
-                    <form @click="deleteData(value.id,nama.value)" class="ml-2">
+                    <form @click="deleteData(value.id,nama.server)" class="ml-2">
+                    <button type="submit">
+                        <font-awesome-icon :icon="['fas','trash']" class="text-red-500"/>
+                    </button> 
+                    </form>
+                </td>
+            </tr>
+             <tr v-show="rak" class="text-sm" v-for="(rak,index) in carirak" :key="index">
+                <td class="py-3">{{rak.tipe_rak}}</td>
+                <td>{{rak.tipe_pintu}}</td>
+                <td>{{rak.nama_produk}}</td>
+                <td>{{rak.dimensi}}</td>
+                <td>{{rak.berat}}</td>
+                <td>{{rak.tahun}}</td>
+                <td class="py-3 flex w-3">
+                    <a href="#">
+                        <font-awesome-icon :icon="['fas','pencil-alt']" class="text-blue-500"/>
+                    </a>
+                    <form @click="deleteData(rak.id,nama.rak)" class="ml-4">
+                    <button type="submit">
+                        <font-awesome-icon :icon="['fas','trash']" class="text-red-500"/>
+                    </button> 
+                    </form>
+                </td>
+            </tr>
+            <tr v-show="ups" class="text-sm" v-for="(value,index) in cariups" :key="index">
+                <td>{{value.model}}</td>
+                <td>{{value.ups_critical_load}}</td>
+                <td>{{value.ups_critical_temperature}}</td>
+                <td>{{value.ups_critical_capacity}}</td>
+                <td>{{value.nomor_serial}}</td>
+                <td>{{value.nama_sistem}}</td>
+                <td>{{value.manufaktur}}</td>
+                <td>{{value.peringkat_tegangan}}</td>
+                <td>{{value.peringkat_frekuensi}}</td>
+                <td>{{value.peringkat_tegangan_baterai}}</td>
+                <td>{{value.tahun}}</td>
+                <td>{{value.garansi}}</td>
+                <td class="py-3 flex justify-evenly w-full">
+                    <a href="#">
+                        <font-awesome-icon :icon="['fas','pencil-alt']" class="text-blue-500"/>
+                    </a>
+                    <form @click="deleteData(value.id,nama.ups)" class="ml-4">
+                    <button type="submit">
+                        <font-awesome-icon :icon="['fas','trash']" class="text-red-500"/>
+                    </button> 
+                    </form>
+                </td>
+            </tr>
+            <tr v-show="baterai" class="text-sm" v-for="(baterai,index) in caribaterai" :key="index">
+                <td class="py-3">{{baterai.accu}}</td>
+                <td>{{baterai.kuantitas}}</td>
+                <td>{{baterai.voltage}}</td>
+                <td>{{baterai.tahun}}</td>
+                <td>{{baterai.garansi}}</td>
+                <td class="py-3 flex justify-evenly">
+                    <a href="#">
+                        <font-awesome-icon :icon="['fas','pencil-alt']" class="text-blue-500"/>
+                    </a>
+                     <form @click="deleteData(baterai.id,nama.baterai)" class="ml-4">
+                    <button type="submit">
+                        <font-awesome-icon :icon="['fas','trash']" class="text-red-500"/>
+                    </button> 
+                    </form>
+                </td>
+            </tr>
+             <tr v-show="ac" class="text-sm" v-for="(ac,index) in cariac" :key="index">
+                <td class="py-3">{{ac.merek}}</td>
+                <td>{{ac.model}}</td>
+                <td>{{ac.sumber_daya_listrik}}</td>
+                <td>{{ac.dimensi}}</td>
+                <td>{{ac.konsumsi_daya}}</td>
+                <td>{{ac.kapasitas_pendingin}}</td>
+                <td>{{ac.tahun}}</td>
+                <td>{{ac.garansi}}</td>
+                <td class="py-3">
+                    <a href="#">
+                        <font-awesome-icon :icon="['fas','pencil-alt']" class="text-blue-500"/>
+                    </a>
+                    <form @click="deleteData(ac.id,nama.ac)" class="ml-4">
+                    <button type="submit">
+                        <font-awesome-icon :icon="['fas','trash']" class="text-red-500"/>
+                    </button> 
+                    </form>
+                </td>
+            </tr>
+            <tr v-show="cctv" class="text-sm" v-for="(cctv,index) in caricctv" :key="index">
+                <td>{{cctv.merek}}</td>
+                <td>{{cctv.model}}</td>
+                <td>{{cctv.garansi}}</td>
+                <td class="py-3 flex">
+                    <a href="#">
+                        <font-awesome-icon :icon="['fas','pencil-alt']" class="text-blue-500"/>
+                    </a>
+                    <form @click="deleteData(cctv.id,nama.cctv)" class="ml-4">
+                    <button type="submit">
+                        <font-awesome-icon :icon="['fas','trash']" class="text-red-500"/>
+                    </button> 
+                    </form>
+                </td>
+            </tr>
+            <tr v-show="network" class="text-sm" v-for="(network,index) in carinetwork" :key="index">
+                <td>{{network.merek}}</td>
+                <td>{{network.model}}</td>
+                <td>{{network.tipe}}</td>
+                <td>{{network.kuantitas}}</td>
+                <td>{{network.kanal}}</td>
+                <td>{{network.tahun}}</td>
+                <td>{{network.garansi}}</td>
+                <td class="py-3">
+                    <a href="#">
+                        <font-awesome-icon :icon="['fas','pencil-alt']" class="text-blue-500"/>
+                    </a>
+                    <form @click="deleteData(network.id,nama.network)" class="ml-4">
                     <button type="submit">
                         <font-awesome-icon :icon="['fas','trash']" class="text-red-500"/>
                     </button> 
@@ -93,6 +206,9 @@
                 </td>
             </tr>
         </tbody>
+
+
+
         <tbody v-else class="text-center bg-white bg-opacity-40">
             <tr v-show="server" class="text-sm" v-for="(server,index) in servers" :key="index">
                 <td>{{server.produk}}</td>
@@ -124,7 +240,7 @@
                 <td>{{rak.dimensi}}</td>
                 <td>{{rak.berat}}</td>
                 <td>{{rak.tahun}}</td>
-                <td class="py-3">
+                <td class="py-3 flex justify-evenly w-full">
                     <a href="#">
                         <font-awesome-icon :icon="['fas','pencil-alt']" class="text-blue-500"/>
                     </a>
@@ -148,7 +264,7 @@
                 <td>{{ups.peringkat_tegangan_baterai}}</td>
                 <td>{{ups.tahun}}</td>
                 <td>{{ups.garansi}}</td>
-                <td class="py-3">
+                <td class="py-3 flex justify-evenly w-full">
                     <a href="#">
                         <font-awesome-icon :icon="['fas','pencil-alt']" class="text-blue-500"/>
                     </a>
@@ -165,7 +281,7 @@
                 <td>{{baterai.voltage}}</td>
                 <td>{{baterai.tahun}}</td>
                 <td>{{baterai.garansi}}</td>
-                <td class="py-3">
+                <td class="py-3 flex justify-evenly">
                     <a href="#">
                         <font-awesome-icon :icon="['fas','pencil-alt']" class="text-blue-500"/>
                     </a>
@@ -351,7 +467,19 @@ export default {
     data(){
         return{
             caribarang:"",
-            values:[],
+            cariserver:[],
+            carirak:[],
+            cariups:[],
+            caribaterai: [],
+            cariac: [],
+            caricctv: [],
+            carinetwork: [],
+            cariapar: [],
+            carimonitor: [],
+            carikeyboard: [],
+            carimouse: [],
+            carinas: [],
+            carigenset: [],
             nama:{
                 server : 'master_server',
                 rak : 'master_rak',
@@ -379,6 +507,18 @@ export default {
     async fetch(){
         if(this.caribarang !== ''){
             await this.caribarangserver()
+            await this.caribarangrak()
+            await this.caribarangups()
+            await this.caribarangbaterai()
+            await this.caribarangac()
+            await this.caribarangcctv()
+            await this.caribarangnetwork()
+            await this.caribarangapar()
+            await this.caribarangmonitor()
+            await this.caribarangkeyboard()
+            await this.caribarangmouse()
+            await this.caribarangnas()
+            await this.caribaranggenset()
         return
         }
     },
@@ -387,15 +527,87 @@ export default {
             axios.post(`/server/master/delete/${id}/${nama}`)
         },
         async caribarangserver(){
-            const res = await axios.get(`http://localhost:3000/server/cari?cari=${this.caribarang}`)
+            const res = await axios.get(`http://localhost:3000/server/cariserver?cari=${this.caribarang}`)
             res.data.forEach(val =>{
-                this.values.push(val)
+                this.cariserver.push(val)
             })
         },
         clearSearch(){
             this.caribarang = ''
             this.values = []
-        }
+        },
+        async caribarangrak(){
+            const res = await axios.get(`http://localhost:3000/server/carirak?cari=${this.caribarang}`)
+            res.data.forEach(val =>{
+                this.carirak.push(val)
+            })
+        },
+        async caribarangups(){
+            const res = await axios.get(`http://localhost:3000/server/cariups?cari=${this.caribarang}`)
+            res.data.forEach(val =>{
+                this.cariups.push(val)
+            })
+        },
+        async caribarangbaterai(){
+            const res = await axios.get(`http://localhost:3000/server/caribaterai?cari=${this.caribarang}`)
+            res.data.forEach(val =>{
+                this.caribaterai.push(val)
+            })
+        },
+        async caribarangcctv(){
+            const res = await axios.get(`http://localhost:3000/server/cariac?cari=${this.caribarang}`)
+            res.data.forEach(val =>{
+                this.caricctv.push(val)
+            })
+        },
+        async caribarangac(){
+            const res = await axios.get(`http://localhost:3000/server/cariac?cari=${this.caribarang}`)
+            res.data.forEach(val =>{
+                this.cariac.push(val)
+            })
+        },
+        async caribarangnetwork(){
+            const res = await axios.get(`http://localhost:3000/server/carinetwork?cari=${this.caribarang}`)
+            res.data.forEach(val =>{
+                this.carinetwork.push(val)
+            })
+        },
+        async caribarangapar(){
+            const res = await axios.get(`http://localhost:3000/server/cariapar?cari=${this.caribarang}`)
+            res.data.forEach(val =>{
+                this.cariapar.push(val)
+            })
+        },
+        async caribarangmonitor(){
+            const res = await axios.get(`http://localhost:3000/server/carimonitor?cari=${this.caribarang}`)
+            res.data.forEach(val =>{
+                this.carimonitor.push(val)
+            })
+        },
+        async caribarangkeyboard(){
+            const res = await axios.get(`http://localhost:3000/server/carikeyboard?cari=${this.caribarang}`)
+            res.data.forEach(val =>{
+                this.carikeyboard.push(val)
+            })
+        },
+        async caribarangmouse(){
+            const res = await axios.get(`http://localhost:3000/server/carimouse?cari=${this.caribarang}`)
+            res.data.forEach(val =>{
+                this.carimouse.push(val)
+            })
+        },
+        async caribarangnas(){
+            const res = await axios.get(`http://localhost:3000/server/carinas?cari=${this.caribarang}`)
+            res.data.forEach(val =>{
+                this.carinas.push(val)
+            })
+        },
+        async caribaranggenset(){
+            const res = await axios.get(`http://localhost:3000/server/carigenset?cari=${this.caribarang}`)
+            res.data.forEach(val =>{
+                this.carigenset.push(val)
+            })
+        },
     },
 }
 </script>

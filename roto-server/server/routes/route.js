@@ -58,6 +58,18 @@ app.post('/logout', async (req, res) => {
     message: 'you are success to logout',
   })
 })
-app.get('/cari', masterController.caribarang)
+app.get('/cariserver', masterController.caribarangserver)
+app.get('/carirak', masterController.caribarangrak)
+app.get('/cariups', masterController.caribarangups)
+app.get('/caribaterai', masterController.caribarangbaterai)
+app.get('/cariac', masterController.caribarangac)
+app.get('/caricctv', masterController.caribarangcctv)
+app.get('/carinetwork', masterController.caribarangnetwork)
+app.get('/cariapar', masterController.caribarangapar)
+app.get('/carimonitor', masterController.caribarangmonitor)
+app.get('/carikeyboard', masterController.caribarangkeyboard)
+app.get('/carimouse', masterController.caribarangmouse)
+app.get('/carinas', masterController.caribarangnas)
+app.get('/carigenset', masterController.caribaranggenset)
 
 module.exports = app
