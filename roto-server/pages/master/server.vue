@@ -5,7 +5,7 @@
         <div class="flex">
             <input type="text" placeholder="cari" name="cari" v-model.lazy="caribarang" @keyup.enter="$fetch" class="rounded-l-lg p-2 outline-none">
             <button class="p-2 rounded-r-lg bg-gray-400 flex items-center justify-center" @click="clearSearch">
-                <font-awesome-icon :icon="['fas','search']" class="text-black-500"/>
+                <!-- <font-awesome-icon :icon="['fas','search']" class="text-black-500"/> -->
                 <p>hapus</p>
             </button>
         </div>
@@ -47,7 +47,7 @@
                 <td>{{hasilcari.tahun}}</td>
                 <td>{{hasilcari.garansi}}</td>
                 <td class="py-3 flex w-3">
-                    <NuxtLink :to="{name : 'master-update-updateid', params:{id : hasilcari.id} }">
+                    <NuxtLink :to="{name : 'master-update-updateserver-server', params:{id : hasilcari.id} }">
                         <font-awesome-icon :icon="['fas','pencil-alt']" class="text-blue-500"/>
                     </NuxtLink>
                     <form @click="deleteData(hasilcari.id,nama.server)" class="ml-2">
@@ -72,7 +72,7 @@
                 <td>{{server.tahun}}</td>
                 <td>{{server.garansi}}</td>
                 <td class="py-3 flex w-3">
-                    <NuxtLink :to="{name : 'master-update-updateid', params:{id : server.id} }">
+                    <NuxtLink :to="{name : 'master-update-updateserver-server', params:{id : server.id} }">
                         <font-awesome-icon :icon="['fas','pencil-alt']" class="text-blue-500"/>
                     </NuxtLink>
                     <form @click="deleteData(server.id,nama.nama_tabel)" class="ml-2">
@@ -122,7 +122,7 @@ export default {
         },
         clearSearch(){
             this.caribarang = ''
-            this.values = []
+            this.cariserver = []
         },
     },
     async mounted(){

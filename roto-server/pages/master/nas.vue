@@ -1,6 +1,84 @@
 <template>
 <div class="bg-hero min-h-screen">
-    <ListItem :nas="master" :nass="nass"/>
+    <!-- <ListItem :nas="master"/> -->
+    <HeaderListItem :nas="nas"/>
+    <div class="container mx-auto flex mt-8">
+        <div class="flex">
+            <input type="text" placeholder="cari" name="cari" v-model.lazy="caribarang" @keyup.enter="$fetch" class="rounded-l-lg p-2 outline-none">
+            <button class="p-2 rounded-r-lg bg-gray-400 flex items-center justify-center" @click="clearSearch">
+                <!-- <font-awesome-icon :icon="['fas','search']" class="text-black-500"/> -->
+                <p>hapus</p>
+            </button>
+        </div>
+        <!-- <select id="date" class="rounded-lg p-2 outline-none ml-8 cursor-pointer">
+            <option value="hari">hari</option>
+            <option value="bulan">bulan</option>
+            <option value="tahun">tahun</option>
+        </select> -->
+    </div>
+    <table class="table space-y-6 container mx-auto table-auto border-collapse border border-white mt-7">
+        <thead class="bg-white text-sm has-tooltip">
+            <span class="tooltip rounded shadow-lg p-1 bg-gray-700 text-white -mt-10 absolute left-2/4 transform -translate-x-2/4">semua detail barang</span>
+            <tr class="text-xs"> 
+                <th class="font-semibold py-3">Merek</th>
+                <th class="font-semibold py-3">Model</th>
+                <th class="font-semibold">Processor</th>
+                <th class="font-semibold">storage</th>  
+                <th class="font-semibold">tipe</th>    
+                <th class="font-semibold">CPU</th>
+                <th class="font-semibold">RAID</th>
+                <th class="font-semibold">tahun</th>
+                <th class="font-semibold">garansi</th>
+                <th class="font-semibold">aksi</th>
+            </tr>
+        </thead>
+        <tbody v-if="caribarang !== ''" class="text-center bg-white bg-opacity-40">
+            <tr class="text-sm" v-for="(hasilcari,index) in carinas" :key="index">
+                <td>{{hasilcari.merek}}</td>
+                <td>{{hasilcari.model}}</td>
+                <td>{{hasilcari.processor}}</td>
+                <td>{{hasilcari.storage}}</td>
+                <td>{{hasilcari.tipe}}</td>
+                <td>{{hasilcari.cpu}}</td>
+                <td>{{hasilcari.raid}}</td>
+                <td>{{hasilcari.tahun}}</td>
+                <td>{{hasilcari.garansi}}</td>
+                <td class="py-3 flex justify-evenly">
+                    <a href="#">
+                        <font-awesome-icon :icon="['fas','pencil-alt']" class="text-blue-500"/>
+                    </a>
+                    <form @click="deleteData(hasilcari.id,nama.nama_tabel)" class="ml-4">
+                    <button type="submit">
+                        <font-awesome-icon :icon="['fas','trash']" class="text-red-500"/>
+                    </button> 
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+        <tbody v-else class="text-center bg-white bg-opacity-40">
+            <tr class="text-sm" v-for="(nas,index) in nass" :key="index">
+                <td>{{nas.merek}}</td>
+                <td>{{nas.model}}</td>
+                <td>{{nas.processor}}</td>
+                <td>{{nas.storage}}</td>
+                <td>{{nas.tipe}}</td>
+                <td>{{nas.cpu}}</td>
+                <td>{{nas.raid}}</td>
+                <td>{{nas.tahun}}</td>
+                <td>{{nas.garansi}}</td>
+                <td class="py-3 flex justify-evenly">
+                    <a href="#">
+                        <font-awesome-icon :icon="['fas','pencil-alt']" class="text-blue-500"/>
+                    </a>
+                    <form @click="deleteData(nas.id,nama.nama_tabel)" class="ml-4">
+                    <button type="submit">
+                        <font-awesome-icon :icon="['fas','trash']" class="text-red-500"/>
+                    </button> 
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+    </table>
    
 </div>
 </template>
@@ -10,23 +88,48 @@ import axios from 'axios'
 export default {
     data(){
         return{
-            cari:"",
+            caribarang:"",
+            carinas:[],
+            nass:[],
             master:{
                 nama : "inputNas",
             },
-            nass:[],
+            nama:{
+                nama_tabel:"master_nas"
+            }
         }
     },
-    mounted(){
-    axios.get('http://localhost:3000/server/masternas')
-    .then(resp => {
-        resp.data.forEach(nas => {
-            this.nass.push(nas)
-        })
-    })
-    .catch(err => {
-        console.error(err);
-    });
+    async fetch(){
+        if(this.caribarang !== ""){
+            await this.caribarangnas()
+        return 
+        }
+    },
+    methods:{
+        deleteData(id,nama){
+            axios.post(`/server/master/delete/${id}/${nama}`)
+        },
+        clearSearch(){
+            this.caribarang = ''
+            this.carinas = []
+        },
+        async caribarangnas(){
+            const res = await axios.get(`http://localhost:3000/server/carinas?cari=${this.caribarang}`)
+            res.data.forEach(val =>{
+                this.carinas.push(val)
+            })
+        },
+    },
+    async mounted(){
+        try{
+            const resp = await axios.get('http://localhost:3000/server/masternas')
+            resp.data.forEach(nas => {
+                this.nass.push(nas)
+            })
+        }
+        catch(err){
+            console.error(err);
+        };
     }
 
 }

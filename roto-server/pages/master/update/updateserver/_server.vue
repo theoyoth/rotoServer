@@ -65,18 +65,6 @@ export default {
  data(){
         return {
             servers:'',
-
-            // produk:'',
-            // merek:'',
-            // model: '',
-            // processor: '',
-            // networkController: '',
-            // tahun: '',
-            // garansi: '',
-            // sumberDayaListrik: '',
-            // storage: '',
-            // internalStorage: '',
-            // memori: '',
         }
     },
     
@@ -86,7 +74,7 @@ export default {
             const result = res
             this.servers = result.data[0]
         })
-        .catch(err =>{
+        .catch(err =>{z
             console.log(err)
         })
     },

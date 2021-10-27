@@ -492,6 +492,7 @@ module.exports.inputmastergenset = async (req, res) => {
   }
 }
 
+// ============== update barang master =============
 module.exports.masterservergetdata = async (req, res) => {
   const id = req.params.id
   let conn
@@ -499,6 +500,7 @@ module.exports.masterservergetdata = async (req, res) => {
     conn = await pool.getConnection()
     const rows = await conn.query(`SELECT * FROM master_server WHERE id=${id}`)
     res.send(rows)
+    conn.release()
   } catch (err) {
     console.log(err)
   } finally {
@@ -522,11 +524,10 @@ module.exports.inputmasterserverupdate = async (req, res) => {
     const garansi = req.body.garansi
 
     conn = await pool.getConnection()
-    const result = await conn.query(
-      `UPDATE master_server SET produk='${produk}', merek='${merek}', model='${model}', processor='${processor}', memori='${memori}',internal_storage='${internalStorage}', network_controller='${networkController}', storage='${storage}', sumber_daya_listrik='${sumberDayaListrik}', tahun='${tahun}', garansi='${garansi}' WHERE id = '${id}'`
+    await conn.query(`UPDATE master_server SET produk='${produk}', merek='${merek}', model='${model}', processor='${processor}', memori='${memori}',internal_storage='${internalStorage}', network_controller='${networkController}', storage='${storage}', sumber_daya_listrik='${sumberDayaListrik}', tahun='${tahun}', garansi='${garansi}' WHERE id = ${id}`
     )
-
     res.redirect('/master/server')
+    conn.release()
   } catch (err) {
     console.log(err)
   } finally {
@@ -534,6 +535,46 @@ module.exports.inputmasterserverupdate = async (req, res) => {
   }
 }
 
+module.exports.masterrakgetdata = async (req, res) => {
+  const id = req.params.id
+  let conn
+  try {
+    conn = await pool.getConnection()
+    const rows = await conn.query(`SELECT * FROM master_rak WHERE id=${id}`)
+    res.send(rows)
+    conn.release()
+  } catch (err) {
+    console.log(err)
+  } finally {
+    if (conn) return conn.end()
+  }
+}
+module.exports.inputmasterrakupdate = async (req, res) => {
+  let conn
+  try {
+    const id = req.body.id
+    const tipeRak = req.body.tipeRak
+    const tipePintu = req.body.tipePintu
+    const namaProduk = req.body.namaProduk
+    const dimensi = req.body.dimensi
+    const berat = req.body.berat
+    const tahun = req.body.tahun
+
+    conn = await pool.getConnection()
+      await conn.query(`UPDATE master_rak SET tipe_rak='${tipeRak}', tipe_pintu='${tipePintu}', nama_produk='${namaProduk}', dimensi='${dimensi}', berat='${berat}',tahun='${tahun}' WHERE id=${id}`
+    )
+    res.redirect('/master/rak')
+    conn.release()
+  } catch (err) {
+    console.log(err)
+  } finally {
+    if (conn) return conn.end()
+  }
+}
+
+
+
+// ============ fitur cari barang master =============
 module.exports.caribarangserver = async (req, res) => {
   let conn
 
@@ -542,7 +583,7 @@ module.exports.caribarangserver = async (req, res) => {
 
     conn = await pool.getConnection()
     const barang = await conn.query(
-      `SELECT * FROM master_server WHERE merek='${value}'`
+      `SELECT * FROM master_server WHERE merek LIKE '${value}%'`
     )
     res.send(barang)
     conn.release()
@@ -558,7 +599,7 @@ module.exports.caribarangrak = async (req, res) => {
 
     conn = await pool.getConnection()
     const barang = await conn.query(
-      `SELECT * FROM master_rak WHERE nama_produk='${value}'`
+      `SELECT * FROM master_rak WHERE nama_produk LIKE '${value}%'`
     )
     res.send(barang)
     conn.release()
@@ -577,6 +618,7 @@ module.exports.caribarangups = async (req, res) => {
       `SELECT * FROM master_ups WHERE model LIKE '${value}%'`
     )
     res.send(barang)
+    conn.release()
   } catch (err) {
     console.log(err)
   }
@@ -592,6 +634,7 @@ module.exports.caribarangbaterai = async (req, res) => {
       `SELECT * FROM master_baterai WHERE accu LIKE '${value}%' OR voltage LIKE '${value}%'`
     )
     res.send(barang)
+    conn.release()
   } catch (err) {
     console.log(err)
   }
@@ -607,134 +650,131 @@ module.exports.caribarangac = async (req, res) => {
       `SELECT * FROM master_ac WHERE model LIKE '${value}%' OR merek LIKE '${value}%'`
     )
     res.send(barang)
+    conn.release()
   } catch (err) {
     console.log(err)
   }
 }
 module.exports.caribarangcctv = async (req, res) => {
+  let conn
   try {
     const value = req.query.cari
 
-    // conn = await pool.getConnection()
-    const conn = await mariadb.createConnection(config)
-
+    conn = await pool.getConnection()
+    // conn = await mariadb.createConnection(config)
     const data = await conn.query(
       `SELECT * FROM master_cctv WHERE model LIKE '${value}%' OR merek LIKE '${value}%'`
     )
-
     res.send(data)
+    conn.release()
   } catch (err) {
     console.log(err)
   }
 }
 module.exports.caribarangnetwork = async (req, res) => {
+  let conn
   try {
     const value = req.query.cari
 
-    // conn = await pool.getConnection()
-    const conn = await mariadb.createConnection(config)
-
-    const data = await conn.query(
+    conn = await pool.getConnection()
+    // const conn = await mariadb.createConnection(config)
+    const barang = await conn.query(
       `SELECT * FROM master_network WHERE model LIKE '${value}%' OR merek LIKE '${value}%'`
     )
-
-    res.send(data)
+    res.send(barang)
+    conn.release()
   } catch (err) {
     console.log(err)
   }
 }
 module.exports.caribarangapar = async (req, res) => {
+  let conn
   try {
     const value = req.query.cari
 
-    // conn = await pool.getConnection()
-    const conn = await mariadb.createConnection(config)
-
+    conn = await pool.getConnection()
+    // const conn = await mariadb.createConnection(config)
     const data = await conn.query(
       `SELECT * FROM master_apar WHERE model LIKE '${value}%' OR merek LIKE '${value}%'`
     )
-
     res.send(data)
+    conn.release()
   } catch (err) {
     console.log(err)
   }
 }
 module.exports.caribarangmonitor = async (req, res) => {
+  let conn
   try {
     const value = req.query.cari
 
-    // conn = await pool.getConnection()
-    const conn = await mariadb.createConnection(config)
-
+    conn = await pool.getConnection()
+    // const conn = await mariadb.createConnection(config)
     const data = await conn.query(
       `SELECT * FROM master_monitor WHERE model LIKE '${value}%' OR merek LIKE '${value}%'`
     )
-
     res.send(data)
+    conn.release()
   } catch (err) {
     console.log(err)
   }
 }
 module.exports.caribarangkeyboard = async (req, res) => {
+  let conn
   try {
     const value = req.query.cari
 
-    // conn = await pool.getConnection()
-    const conn = await mariadb.createConnection(config)
-
+    conn = await pool.getConnection()
     const data = await conn.query(
       `SELECT * FROM master_keyboard WHERE model LIKE '${value}%' OR merek LIKE '${value}%'`
     )
-
     res.send(data)
+    conn.release()
   } catch (err) {
     console.log(err)
   }
 }
 module.exports.caribarangmouse = async (req, res) => {
+  let conn
   try {
     const value = req.query.cari
 
-    // conn = await pool.getConnection()
-    const conn = await mariadb.createConnection(config)
-
+    conn = await pool.getConnection()
     const data = await conn.query(
       `SELECT * FROM master_mouse WHERE model LIKE '${value}%' OR merek LIKE '${value}%'`
     )
-
     res.send(data)
+    conn.release()
   } catch (err) {
     console.log(err)
   }
 }
 module.exports.caribarangnas = async (req, res) => {
+  let conn
   try {
     const value = req.query.cari
-
-    // conn = await pool.getConnection()
-    const conn = await mariadb.createConnection(config)
-
+    
+    conn = await pool.getConnection()
     const data = await conn.query(
       `SELECT * FROM master_nas WHERE model LIKE '${value}%' OR merek LIKE '${value}%'`
     )
-
     res.send(data)
+    conn.release()
   } catch (err) {
     console.log(err)
   }
 }
 module.exports.caribaranggenset = async (req, res) => {
+  let conn
   try {
     const value = req.query.cari
 
-    // conn = await pool.getConnection()
-    const conn = await mariadb.createConnection(config)
-
+    conn = await pool.getConnection()
     const data = await conn.query(
       `SELECT * FROM master_genset WHERE model LIKE '${value}%' OR merek LIKE '${value}%'`
     )
-
     res.send(data)
+    conn.release()
   } catch (err) {
     console.log(err)
   }

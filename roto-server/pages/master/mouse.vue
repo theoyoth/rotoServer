@@ -1,6 +1,72 @@
 <template>
 <div class="bg-hero min-h-screen">
-    <ListItem :mouse="master" :mouses="mouses"/>
+    <!-- <ListItem :mouse="master"/> -->
+    <HeaderListItem :mouse="master"/>
+    <div class="container mx-auto flex mt-8">
+        <div class="flex">
+            <input type="text" placeholder="cari" name="cari" v-model.lazy="caribarang" @keyup.enter="$fetch" class="rounded-l-lg p-2 outline-none">
+            <button class="p-2 rounded-r-lg bg-gray-400 flex items-center justify-center" @click="clearSearch">
+                <!-- <font-awesome-icon :icon="['fas','search']" class="text-black-500"/> -->
+                <p>hapus</p>
+            </button>
+        </div>
+        <!-- <select id="date" class="rounded-lg p-2 outline-none ml-8 cursor-pointer">
+            <option value="hari">hari</option>
+            <option value="bulan">bulan</option>
+            <option value="tahun">tahun</option>
+        </select> -->
+    </div>
+    <table class="table space-y-6 container mx-auto table-auto border-collapse border border-white mt-7">
+        <thead class="bg-white text-sm has-tooltip">
+            <span class="tooltip rounded shadow-lg p-1 bg-gray-700 text-white -mt-10 absolute left-2/4 transform -translate-x-2/4">semua detail barang</span>
+            <tr class="text-xs"> 
+                <th class="font-semibold py-3">Merek</th>
+                <th class="font-semibold py-3">Model</th>   
+                <th class="font-semibold">tipe</th>    
+                <th class="font-semibold">tahun</th>
+                <th class="font-semibold">garansi</th>
+                <th class="font-semibold">aksi</th>
+            </tr>
+        </thead>
+        <tbody v-if="caribarang !== ''" class="text-center bg-white bg-opacity-40">
+            <tr class="text-sm" v-for="(hasilcari,index) in carimouse" :key="index">
+                <td class="py-3">{{hasilcari.merek}}</td>
+                <td>{{hasilcari.model}}</td>
+                <td>{{hasilcari.tipe}}</td>
+                <td>{{hasilcari.tahun}}</td>
+                <td>{{hasilcari.garansi}}</td>
+                <td class="py-3 flex justify-evenly">
+                    <a href="#">
+                        <font-awesome-icon :icon="['fas','pencil-alt']" class="text-blue-500"/>
+                    </a>
+                     <form @click="deleteData(hasilcari.id,nama.nama_tabel)" class="ml-4">
+                    <button type="submit">
+                        <font-awesome-icon :icon="['fas','trash']" class="text-red-500"/>
+                    </button> 
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+        <tbody v-else class="text-center bg-white bg-opacity-40">
+            <tr v-show="mouse" class="text-sm" v-for="(mouse,index) in mouses" :key="index">
+                <td class="py-3">{{mouse.merek}}</td>
+                <td>{{mouse.model}}</td>
+                <td>{{mouse.tipe}}</td>
+                <td>{{mouse.tahun}}</td>
+                <td>{{mouse.garansi}}</td>
+                <td class="py-3 flex justify-evenly">
+                    <a href="#">
+                        <font-awesome-icon :icon="['fas','pencil-alt']" class="text-blue-500"/>
+                    </a>
+                     <form @click="deleteData(mouse.id,nama.nama_tabel)" class="ml-4">
+                    <button type="submit">
+                        <font-awesome-icon :icon="['fas','trash']" class="text-red-500"/>
+                    </button> 
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 </div>
 </template>
 <script>
@@ -9,23 +75,48 @@ import axios from 'axios'
 export default {
     data(){
         return{
-            cari:"",
+            caribarang:"",
+            carimouse:[],
+            mouses:[],
             master:{
                 nama : "inputMouse",
             },
-            mouses:[],
+            nama:{
+                nama_tabel:"master_mouse"
+            }
         }
     },
-    mounted(){
-    axios.get('http://localhost:3000/server/mastermouse')
-    .then(resp => {
-        resp.data.forEach(mouse => {
+     async fetch(){
+        if(this.caribarang !== ""){
+            await this.caribarangmouse();
+        return
+        }
+    },
+    methods:{
+        deleteData(id,nama){
+            axios.post(`/server/master/delete/${id}/${nama}`)
+        },
+        clearSearch(){
+            this.caribarang = ''
+            this.carimouse = []
+        },
+        async caribarangmouse(){
+            const res = await axios.get(`http://localhost:3000/server/carimouse?cari=${this.caribarang}`)
+            res.data.forEach(val =>{
+                this.carimouse.push(val)
+            })
+        },
+    },
+    async mounted(){
+        try{
+            const resp = await axios.get('http://localhost:3000/server/mastermouse')
+            resp.data.forEach(mouse => {
             this.mouses.push(mouse)
         })
-    })
-    .catch(err => {
-        console.error(err);
-    });
+        }
+        catch(err){
+            console.error(err);
+        };
     }
 
 }

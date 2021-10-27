@@ -5,7 +5,7 @@
         <div class="flex">
             <input type="text" placeholder="cari" name="cari" v-model.lazy="caribarang" @keyup.enter="$fetch" class="rounded-l-lg p-2 outline-none">
             <button class="p-2 rounded-r-lg bg-gray-400 flex items-center justify-center" @click="clearSearch">
-                <font-awesome-icon :icon="['fas','search']" class="text-black-500"/>
+                <!-- <font-awesome-icon :icon="['fas','search']" class="text-black-500"/> -->
                 <p>hapus</p>
             </button>
         </div>
@@ -23,8 +23,8 @@
                 <th class="font-semibold">tipe pintu</th>
                 <th class="font-semibold">nama produk</th>
                 <th class="font-semibold">dimensi</th>
+                <th class="font-semibold">berat</th>
                 <th class="font-semibold">tahun</th>
-                <th class="font-semibold">garansi</th>
                 <th class="font-semibold">aksi</th>
             </tr>
         </thead>
@@ -37,9 +37,9 @@
                 <td>{{hasilcari.berat}}</td>
                 <td>{{hasilcari.tahun}}</td>
                 <td class="py-3 flex w-3">
-                    <a href="#">
+                    <NuxtLink :to="{name : 'master-update-updaterak-rak', params:{id : hasilcari.id,nama:nama_tabel} }">
                         <font-awesome-icon :icon="['fas','pencil-alt']" class="text-blue-500"/>
-                    </a>
+                    </NuxtLink>
                     <form @click="deleteData(hasilcari.id,nama.rak)" class="ml-4">
                     <button type="submit">
                         <font-awesome-icon :icon="['fas','trash']" class="text-red-500"/>
@@ -57,9 +57,9 @@
                 <td>{{rak.berat}}</td>
                 <td>{{rak.tahun}}</td>
                 <td class="py-3 flex justify-evenly w-full">
-                    <a href="#">
+                    <NuxtLink :to="{name : 'master-update-updaterak-rak', params:{id : rak.id} }">
                         <font-awesome-icon :icon="['fas','pencil-alt']" class="text-blue-500"/>
-                    </a>
+                    </NuxtLink>
                     <form @click="deleteData(rak.id,nama.nama_tabel)" class="ml-4">
                     <button type="submit">
                         <font-awesome-icon :icon="['fas','trash']" class="text-red-500"/>
@@ -83,14 +83,16 @@ export default {
             master:{
                 nama:"inputRak",
             },
-             nama:{
+            nama:{
                 nama_tabel : 'master_rak',
-             }
+            }
         }
     },
     async fetch(){
-        await this.caribarangrak()
-    return
+        if(this.caribarang !== ""){
+            await this.caribarangrak()
+        return
+        }
     },
     methods:{
         deleteData(id,nama){
@@ -98,7 +100,7 @@ export default {
         },
         clearSearch(){
             this.caribarang = ''
-            this.values = []
+            this.carirak = []
         },
         async caribarangrak(){
             const res = await axios.get(`http://localhost:3000/server/carirak?cari=${this.caribarang}`)

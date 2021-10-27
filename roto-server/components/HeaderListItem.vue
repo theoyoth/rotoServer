@@ -1,7 +1,6 @@
 <template>
     <div class="container mx-auto py-5">
         <header class="flex justify-between">
-
             <nuxt-link to="/master" class="flex rounded-md justify-between items-center" v-show="monitor || server || ups || baterai || rak || ac || cctv ||network || apar||monitor||keyboard||mouse||nas||genset">
                 <div class="bg-blue-400 w-8 h-8 rounded-full flex items-center justify-center">
                     <font-awesome-icon :icon="['fas','arrow-left']" class="text-white" />
@@ -22,67 +21,67 @@
                 <font-awesome-icon :icon="['fas','question']" class="text-black" />
             </div>
             
-            <nuxt-link v-if="server" :to="'/master/input/'+server" class="logout-btn flex rounded-md items-center">
+            <nuxt-link v-show="server" :to="'/master/input/'+server" class="logout-btn flex rounded-md items-center">
                 <p class="font-medium text-xl mr-2">input</p>
                 <div class="bg-blue-400 w-8 h-8 rounded-full flex items-center justify-center">
                     <font-awesome-icon :icon="['fas','plus']" class="text-white" />
                 </div>
             </nuxt-link>
-            <nuxt-link v-if="rak" :to="'/master/input/'+rak" class="logout-btn flex rounded-md items-center">
+            <nuxt-link v-show="rak" :to="'/master/input/'+rak" class="logout-btn flex rounded-md items-center">
                 <p class="font-medium text-xl mr-2">input</p>
                 <div class="bg-blue-400 w-8 h-8 rounded-full flex items-center justify-center">
                     <font-awesome-icon :icon="['fas','plus']" class="text-white" />
                 </div>
             </nuxt-link>
-            <nuxt-link v-if="ups" :to="'/master/input/'+ups" class="logout-btn flex rounded-md items-center">
+            <nuxt-link v-show="ups" :to="'/master/input/'+ups" class="logout-btn flex rounded-md items-center">
                 <p class="font-medium text-xl mr-2">input</p>
                 <div class="bg-blue-400 w-8 h-8 rounded-full flex items-center justify-center">
                     <font-awesome-icon :icon="['fas','plus']" class="text-white" />
                 </div>
             </nuxt-link>
-            <nuxt-link v-if="baterai" :to="'/master/input/'+baterai" class="logout-btn flex rounded-md items-center">
+            <nuxt-link v-show="baterai" :to="'/master/input/'+baterai" class="logout-btn flex rounded-md items-center">
                 <p class="font-medium text-xl mr-2">input</p>
                 <div class="bg-blue-400 w-8 h-8 rounded-full flex items-center justify-center">
                     <font-awesome-icon :icon="['fas','plus']" class="text-white" />
                 </div>
             </nuxt-link>
-            <nuxt-link v-if="ac" :to="'/master/input/'+ac" class="logout-btn flex rounded-md items-center">
+            <nuxt-link v-show="ac" :to="'/master/input/'+ac" class="logout-btn flex rounded-md items-center">
                 <p class="font-medium text-xl mr-2">input</p>
                 <div class="bg-blue-400 w-8 h-8 rounded-full flex items-center justify-center">
                     <font-awesome-icon :icon="['fas','plus']" class="text-white" />
                 </div>
             </nuxt-link>
-            <nuxt-link v-if="cctv" :to="'/master/input/'+cctv" class="logout-btn flex rounded-md items-center">
+            <nuxt-link v-show="cctv" :to="'/master/input/'+cctv" class="logout-btn flex rounded-md items-center">
                 <p class="font-medium text-xl mr-2">input</p>
                 <div class="bg-blue-400 w-8 h-8 rounded-full flex items-center justify-center">
                     <font-awesome-icon :icon="['fas','plus']" class="text-white" />
                 </div>
             </nuxt-link>
-            <nuxt-link v-if="network" :to="'/master/input/'+network" class="logout-btn flex rounded-md items-center">
+            <nuxt-link v-show="network" :to="'/master/input/'+network" class="logout-btn flex rounded-md items-center">
                 <p class="font-medium text-xl mr-2">input</p>
                 <div class="bg-blue-400 w-8 h-8 rounded-full flex items-center justify-center">
                     <font-awesome-icon :icon="['fas','plus']" class="text-white" />
                 </div>
             </nuxt-link>
-            <nuxt-link v-if="apar" :to="'/master/input/'+apar" class="logout-btn flex rounded-md items-center">
+            <nuxt-link v-show="apar" :to="'/master/input/'+apar" class="logout-btn flex rounded-md items-center">
                 <p class="font-medium text-xl mr-2">input</p>
                 <div class="bg-blue-400 w-8 h-8 rounded-full flex items-center justify-center">
                     <font-awesome-icon :icon="['fas','plus']" class="text-white" />
                 </div>
             </nuxt-link>
-            <nuxt-link v-if="monitor" :to="'/master/input/'+monitor" class="logout-btn flex rounded-md items-center">
+            <nuxt-link v-show="monitor" :to="'/master/input/'+monitor" class="logout-btn flex rounded-md items-center">
                 <p class="font-medium text-xl mr-2">input</p>
                 <div class="bg-blue-400 w-8 h-8 rounded-full flex items-center justify-center">
                     <font-awesome-icon :icon="['fas','plus']" class="text-white" />
                 </div>
             </nuxt-link>
-            <nuxt-link v-if="keyboard" :to="'/master/input/'+keyboard" class="logout-btn flex rounded-md items-center">
+            <nuxt-link v-show="keyboard" :to="'/master/input/'+keyboard" class="logout-btn flex rounded-md items-center">
                 <p class="font-medium text-xl mr-2">input</p>
                 <div class="bg-blue-400 w-8 h-8 rounded-full flex items-center justify-center">
                     <font-awesome-icon :icon="['fas','plus']" class="text-white" />
                 </div>
             </nuxt-link>
-            <nuxt-link v-if="mouse" :to="'/master/input/'+mouse" class="logout-btn flex rounded-md items-center">
+            <nuxt-link v-show="mouse" :to="'/master/input/'+mouse" class="logout-btn flex rounded-md items-center">
                 <p class="font-medium text-xl mr-2">input</p>
                 <div class="bg-blue-400 w-8 h-8 rounded-full flex items-center justify-center">
                     <font-awesome-icon :icon="['fas','plus']" class="text-white" />

@@ -41,10 +41,16 @@ app.post('/master/inputgenset', masterController.inputmastergenset)
 
 app.post('/master/delete/:id/:nama', masterController.deletemaster)
 
+// update master
 app.get('/master/update/updateserver/:id', masterController.masterservergetdata)
 app.post(
   '/master/server/update/updateserver',
   masterController.inputmasterserverupdate
+)
+app.get('/master/update/updaterak/:id', masterController.masterrakgetdata)
+app.post(
+  '/master/server/update/updaterak',
+  masterController.inputmasterrakupdate
 )
 
 // login
@@ -58,6 +64,8 @@ app.post('/logout', async (req, res) => {
     message: 'you are success to logout',
   })
 })
+
+// cari barang
 app.get('/cariserver', masterController.caribarangserver)
 app.get('/carirak', masterController.caribarangrak)
 app.get('/cariups', masterController.caribarangups)
