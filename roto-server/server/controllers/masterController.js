@@ -1,6 +1,6 @@
 const pool = require('../db.js')
 const mariadb = require('mariadb')
-config={
+config = {
   host: 'localhost',
   user: 'root',
   password: '',
@@ -545,6 +545,7 @@ module.exports.caribarangserver = async (req, res) => {
       `SELECT * FROM master_server WHERE merek='${value}'`
     )
     res.send(barang)
+    conn.release()
   } catch (err) {
     console.log(err)
   }
@@ -557,9 +558,10 @@ module.exports.caribarangrak = async (req, res) => {
 
     conn = await pool.getConnection()
     const barang = await conn.query(
-      `SELECT * FROM master_rak WHERE nama_produk LIKE '${value}%'`
+      `SELECT * FROM master_rak WHERE nama_produk='${value}'`
     )
     res.send(barang)
+    conn.release()
   } catch (err) {
     console.log(err)
   }
@@ -616,8 +618,10 @@ module.exports.caribarangcctv = async (req, res) => {
     // conn = await pool.getConnection()
     const conn = await mariadb.createConnection(config)
 
-    const data = await conn.query(`SELECT * FROM master_cctv WHERE model LIKE '${value}%' OR merek LIKE '${value}%'`)
-  
+    const data = await conn.query(
+      `SELECT * FROM master_cctv WHERE model LIKE '${value}%' OR merek LIKE '${value}%'`
+    )
+
     res.send(data)
   } catch (err) {
     console.log(err)
@@ -630,8 +634,10 @@ module.exports.caribarangnetwork = async (req, res) => {
     // conn = await pool.getConnection()
     const conn = await mariadb.createConnection(config)
 
-    const data = await conn.query(`SELECT * FROM master_network WHERE model LIKE '${value}%' OR merek LIKE '${value}%'`)
-  
+    const data = await conn.query(
+      `SELECT * FROM master_network WHERE model LIKE '${value}%' OR merek LIKE '${value}%'`
+    )
+
     res.send(data)
   } catch (err) {
     console.log(err)
@@ -644,8 +650,10 @@ module.exports.caribarangapar = async (req, res) => {
     // conn = await pool.getConnection()
     const conn = await mariadb.createConnection(config)
 
-    const data = await conn.query(`SELECT * FROM master_apar WHERE model LIKE '${value}%' OR merek LIKE '${value}%'`)
-  
+    const data = await conn.query(
+      `SELECT * FROM master_apar WHERE model LIKE '${value}%' OR merek LIKE '${value}%'`
+    )
+
     res.send(data)
   } catch (err) {
     console.log(err)
@@ -658,8 +666,10 @@ module.exports.caribarangmonitor = async (req, res) => {
     // conn = await pool.getConnection()
     const conn = await mariadb.createConnection(config)
 
-    const data = await conn.query(`SELECT * FROM master_monitor WHERE model LIKE '${value}%' OR merek LIKE '${value}%'`)
-  
+    const data = await conn.query(
+      `SELECT * FROM master_monitor WHERE model LIKE '${value}%' OR merek LIKE '${value}%'`
+    )
+
     res.send(data)
   } catch (err) {
     console.log(err)
@@ -672,8 +682,10 @@ module.exports.caribarangkeyboard = async (req, res) => {
     // conn = await pool.getConnection()
     const conn = await mariadb.createConnection(config)
 
-    const data = await conn.query(`SELECT * FROM master_keyboard WHERE model LIKE '${value}%' OR merek LIKE '${value}%'`)
-  
+    const data = await conn.query(
+      `SELECT * FROM master_keyboard WHERE model LIKE '${value}%' OR merek LIKE '${value}%'`
+    )
+
     res.send(data)
   } catch (err) {
     console.log(err)
@@ -686,8 +698,10 @@ module.exports.caribarangmouse = async (req, res) => {
     // conn = await pool.getConnection()
     const conn = await mariadb.createConnection(config)
 
-    const data = await conn.query(`SELECT * FROM master_mouse WHERE model LIKE '${value}%' OR merek LIKE '${value}%'`)
-  
+    const data = await conn.query(
+      `SELECT * FROM master_mouse WHERE model LIKE '${value}%' OR merek LIKE '${value}%'`
+    )
+
     res.send(data)
   } catch (err) {
     console.log(err)
@@ -700,8 +714,10 @@ module.exports.caribarangnas = async (req, res) => {
     // conn = await pool.getConnection()
     const conn = await mariadb.createConnection(config)
 
-    const data = await conn.query(`SELECT * FROM master_nas WHERE model LIKE '${value}%' OR merek LIKE '${value}%'`)
-  
+    const data = await conn.query(
+      `SELECT * FROM master_nas WHERE model LIKE '${value}%' OR merek LIKE '${value}%'`
+    )
+
     res.send(data)
   } catch (err) {
     console.log(err)
@@ -714,8 +730,10 @@ module.exports.caribaranggenset = async (req, res) => {
     // conn = await pool.getConnection()
     const conn = await mariadb.createConnection(config)
 
-    const data = await conn.query(`SELECT * FROM master_genset WHERE model LIKE '${value}%' OR merek LIKE '${value}%'`)
-  
+    const data = await conn.query(
+      `SELECT * FROM master_genset WHERE model LIKE '${value}%' OR merek LIKE '${value}%'`
+    )
+
     res.send(data)
   } catch (err) {
     console.log(err)
