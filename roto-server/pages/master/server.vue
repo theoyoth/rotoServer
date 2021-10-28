@@ -69,8 +69,8 @@
                 <td>{{server.network_controller}}</td>
                 <td>{{server.storage}}</td>
                 <td>{{server.sumber_daya_listrik}}</td>
-                <td>{{server.tahun}}</td>
-                <td>{{server.garansi}}</td>
+                <td>{{new Date(server.tahun).toLocaleString()}}</td>
+                <td>{{new Date(server.tahun).toLocaleString()}}</td>
                 <td class="py-3 flex w-3">
                     <NuxtLink :to="{name : 'master-update-updateserver-server', params:{id : server.id} }">
                         <font-awesome-icon :icon="['fas','pencil-alt']" class="text-blue-500"/>
