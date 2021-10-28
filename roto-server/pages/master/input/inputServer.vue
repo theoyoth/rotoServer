@@ -29,7 +29,7 @@
                 <div class="mb-4 has-tooltip">
                     <span class="tooltip text-xs rounded shadow-lg p-1 bg-gray-700 text-white ml-32">masukan jumlah memori</span>
                     <label for="memori" class="block mb-2 text-sm">memori</label>
-                    <input type="text" name="memori" id="memori" class="p-2 w-72 rounded-lg outline-none" required >
+                    <input type="number" min="1" max="5" name="memori" id="memori" class="p-2 w-72 rounded-lg outline-none" required >
                     <select name="kapasitas" id="kapasitas" class="p-2 rounded">
                         <option value="gb">GB</option>
                         <option value="tb">TB</option>
@@ -72,7 +72,7 @@
                 <div class="mb-4 has-tooltip">
                     <span class="tooltip text-xs rounded shadow-lg p-1 bg-gray-700 text-white ml-20">masukan tahun garansi berakhir</span>
                     <label for="garansi" class="block mb-2 text-sm">garansi</label>
-                    <input type="date" name="garansi" id="garansi" class="p-2 w-72 rounded-lg outline-none" required>
+                    <input type="date" name="garansi" id="garansi" ref="garansi" class="p-2 w-72 rounded-lg outline-none" required>
                 </div>
             </div>
         </div>
@@ -89,7 +89,8 @@ export default {
             item : "server",
             garansi : "",
         }
-    }
+    },
+    
 }
 </script>
 

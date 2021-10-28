@@ -2,6 +2,8 @@ const pathController = require('../controllers/controller.js')
 const masterController = require('../controllers/masterController.js')
 const authController = require('../controllers/authController.js')
 const { auth } = require('../verifyToken.js')
+const{userEdp} = require('../middleware/userAuthorization')
+const { check, validationResult } = require('express-validator');
 const express = require('express')
 const app = express()
 const cors = require('cors')
@@ -13,7 +15,19 @@ app.get('/masterserver', masterController.masterserver)
 app.post('/inputmaintenance', pathController.inputmaintenance)
 app.get('/inputmaintenance', pathController.getInputMaintenance)
 // app.post('/inputmaintenance/hapus/:id', pathController.deleteMaintenance)
-app.post('/master/inputserver', masterController.inputmasterserver)
+app.post('/master/inputserver',[
+  check('produk').isAlpha().withMessage('harus berupa huruf'),
+  check('merek').isAlpha().withMessage('harus berupa huruf'), 
+  check('model').isAlphanumeric().withMessage('harus berupa angka dan huruf bukan simbol'), 
+  check('processor').isAlphanumeric().withMessage('harus berupa angka dan huruf bukan simbol'), 
+  check('memori').isNumeric().withMessage('harus berupa angka'), 
+  check('internalStorage').isNumeric(),
+  check('networkController').isAlphanumeric(), 
+  check('storage').isNumeric(),
+  check('sumberDayaListrik').isNumeric(),
+  check('tahun').isDate(),
+  check('garansi').isDate()
+], masterController.inputmasterserver)
 app.get('/masterrak', masterController.masterrak)
 app.post('/master/inputrak', masterController.inputmasterrak)
 app.get('/masterups', masterController.masterups)

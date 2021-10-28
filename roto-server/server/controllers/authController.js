@@ -2,6 +2,7 @@ const pool = require('../db.js')
 const nuxt = require('nuxt')
 const jwt = require('jsonwebtoken')
 const dotenv = require('dotenv')
+const cookieParser = require('cookie-parser')
 
 dotenv.config()
 
@@ -9,7 +10,6 @@ module.exports.login = async (req, res) => {
   let conn
   try {
     const { nama, sandi } = req.body
-
     if (nama && sandi) {
       conn = await pool.getConnection()
       const data = await conn.query(
@@ -23,13 +23,14 @@ module.exports.login = async (req, res) => {
           process.env.TOKEN_KEY
         )
         // res.header('auth-token', token).redirect('/homepage')
-        // res
+        res
           .cookie('authtoken', token, {
             httpOnly: true,
             maxAge: 60 * 60 * 24 * 1000,
           })
-          .redirect('/homepage')
-        // res.json({token:token})
+          // .redirect('/homepage')
+          .json({user,token})
+
       } else {
         res.redirect('/')
       }
@@ -44,6 +45,7 @@ module.exports.login = async (req, res) => {
 }
 
 module.exports.homepage = async (req, res) => {
+  let conn
   try {
     const token = req.cookies['authtoken']
     const verified = jwt.verify(token, process.env.TOKEN_KEY)
@@ -55,10 +57,11 @@ module.exports.homepage = async (req, res) => {
     const user = await conn.query(`SELECT * FROM users WHERE id=${verified.id}`)
     const { sandi, ...data } = await user[0]
     res.send(data)
-    // next()
   } catch (err) {
     res.status(401).send({
       message: 'unAuthenticated user',
     })
+  }finally {
+    if (conn) return conn.end()
   }
 }

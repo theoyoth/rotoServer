@@ -39,6 +39,9 @@
         </div>
         <div class="form-login flex flex-col justify-center w-80 px-5">
             <h1 class="text-center mb-4 text-3xl font-semibold">Login</h1>
+            <div v-if="validation.title" class="mb-2">
+            <p>{{ validation.title[0] }}</p>
+            </div>
             <form method="post" action="/server/login">
                 <input type="text" name="nama" placeholder="nama" class="rounded-lg mb-2 p-2 w-full outline-none" v-model="login.nama" required>
                 <input type="password" name="sandi" placeholder="kata sandi" class="rounded-lg p-2 w-full outline-none" v-model="login.sandi" required> 
@@ -64,30 +67,30 @@ export default {
                 nama: '',
                 sandi: '',
 
-            }
+            },
+            validation:[]
         }
     },
-    // methods:{
+    methods:{
         // ...mapMutations(['setisauth']),
-        // async userLogin() {
-        // try {
-        // const response = await this.$auth.loginWith("local", { 
-        //    data: this.login
-        // })
-
-        // this.$router.push('/homepage')
-        // console.log(response)
+        async userLogin() {
+        try {
+            const response = await this.$auth.loginWith("local", { 
+           data: this.login
+            })
+        this.$router.push('/homepage')
+        console.log(response)
         // this.setisauth(true)
         // if (this.$auth.loggedIn) {
         //     console.log('Successfully Logged In');
         // }
 
-    //   } catch (err) {
-    //     this.$router.push('/')
-    // }
-    // }
+        } catch (err) {
+          this.validation = err.response.data
+        }
+    }
 
-    // },
+    },
   
 }
 </script>

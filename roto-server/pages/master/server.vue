@@ -1,6 +1,7 @@
 <template>
 <div class="bg-hero min-h-screen ">
-    <ListItem :server="master"/>
+    <HeaderListItem :server="master.nama"/>
+        <p class="text-center text-lg">Halaman master server</p>
     <div class="container mx-auto flex mt-8">
         <div class="flex">
             <input type="text" placeholder="cari" name="cari" v-model.lazy="caribarang" @keyup.enter="$fetch" class="rounded-l-lg p-2 outline-none">
@@ -44,8 +45,8 @@
                 <td>{{hasilcari.network_controller}}</td>
                 <td>{{hasilcari.storage}}</td>
                 <td>{{hasilcari.sumber_daya_listrik}}</td>
-                <td>{{hasilcari.tahun}}</td>
-                <td>{{hasilcari.garansi}}</td>
+                <td class="text-xs">{{new Date(hasilcari.tahun).toLocaleString()}}</td>
+                <td class="text-xs">{{new Date(hasilcari.garansi).toLocaleString()}}</td>
                 <td class="py-3 flex w-3">
                     <NuxtLink :to="{name : 'master-update-updateserver-server', params:{id : hasilcari.id} }">
                         <font-awesome-icon :icon="['fas','pencil-alt']" class="text-blue-500"/>
@@ -69,8 +70,8 @@
                 <td>{{server.network_controller}}</td>
                 <td>{{server.storage}}</td>
                 <td>{{server.sumber_daya_listrik}}</td>
-                <td>{{new Date(server.tahun).toLocaleString()}}</td>
-                <td>{{new Date(server.tahun).toLocaleString()}}</td>
+                <td class="text-xs">{{new Date(server.tahun).toLocaleString()}}</td>
+                <td class="text-xs">{{new Date(server.tahun).toLocaleString()}}</td>
                 <td class="py-3 flex w-3">
                     <NuxtLink :to="{name : 'master-update-updateserver-server', params:{id : server.id} }">
                         <font-awesome-icon :icon="['fas','pencil-alt']" class="text-blue-500"/>

@@ -1,11 +1,10 @@
 const express = require('express')
 const cors = require('cors')
 const cookieParser = require('cookie-parser')
-
+const { loadNuxt, build } = require('nuxt')
 const rute = require('./routes/route')
 const app = express()
-// const bodyParser = require('body-parser')
-
+const isDev = 'development' !== 'production'
 app.use(cookieParser())
 app.use(
   cors({
@@ -14,12 +13,23 @@ app.use(
   })
 )
 
-// app.use(bodyParser.urlencoded({ extended: false }))
-// app.use(bodyParser.json())
-
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(rute)
+
+// async function start() {
+// // We get Nuxt instance
+// const nuxt = await loadNuxt('dev')
+
+// // Render every route with Nuxt
+// app.use(nuxt.render)
+
+// // Build only in dev mode with hot-reloading
+// if (isDev) {
+//   build(nuxt)
+// }
+// }
+// start()
 
 module.exports = {
   path: '/server',

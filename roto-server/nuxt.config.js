@@ -70,14 +70,13 @@ export default {
           property : 'user',
           autoFetch : true,
         },
-        token: {
-          property: 'token',
-          global: true,
-          required: true,
-          type: 'Bearer',
-        },
+        // token: {
+        //   property: 'token',
+        //   global: true,
+        //   required: true,
+        //   type: 'Bearer',
+        // },
         endpoints: {
-          // sesuai route di express
           login: {
             url: '/server/login',
             method: 'post',

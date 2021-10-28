@@ -1,11 +1,6 @@
 const pool = require('../db.js')
 const mariadb = require('mariadb')
-config = {
-  host: 'localhost',
-  user: 'root',
-  password: '',
-  database: 'rotoserver',
-}
+
 // const conn = pool.getConnection()
 
 // async function fetchConn() {
