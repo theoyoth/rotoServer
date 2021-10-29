@@ -1,5 +1,6 @@
 const pool = require('../db.js')
 const mariadb = require('mariadb')
+const { check, validationResult } = require('express-validator')
 
 // const conn = pool.getConnection()
 
@@ -22,6 +23,10 @@ module.exports.masterserver = async (req, res) => {
 }
 
 module.exports.inputmasterserver = async (req, res) => {
+  const errors = validationResult(req)
+  if (!errors.isEmpty()) {
+    return res.status(422).json({ errors: errors.array() })
+  }
   let conn
   try {
     const produk = req.body.produk
@@ -519,7 +524,8 @@ module.exports.inputmasterserverupdate = async (req, res) => {
     const garansi = req.body.garansi
 
     conn = await pool.getConnection()
-    await conn.query(`UPDATE master_server SET produk='${produk}', merek='${merek}', model='${model}', processor='${processor}', memori='${memori}',internal_storage='${internalStorage}', network_controller='${networkController}', storage='${storage}', sumber_daya_listrik='${sumberDayaListrik}', tahun='${tahun}', garansi='${garansi}' WHERE id = ${id}`
+    await conn.query(
+      `UPDATE master_server SET produk='${produk}', merek='${merek}', model='${model}', processor='${processor}', memori='${memori}',internal_storage='${internalStorage}', network_controller='${networkController}', storage='${storage}', sumber_daya_listrik='${sumberDayaListrik}', tahun='${tahun}', garansi='${garansi}' WHERE id = ${id}`
     )
     res.redirect('/master/server')
     conn.release()
@@ -556,7 +562,8 @@ module.exports.inputmasterrakupdate = async (req, res) => {
     const tahun = req.body.tahun
 
     conn = await pool.getConnection()
-      await conn.query(`UPDATE master_rak SET tipe_rak='${tipeRak}', tipe_pintu='${tipePintu}', nama_produk='${namaProduk}', dimensi='${dimensi}', berat='${berat}',tahun='${tahun}' WHERE id=${id}`
+    await conn.query(
+      `UPDATE master_rak SET tipe_rak='${tipeRak}', tipe_pintu='${tipePintu}', nama_produk='${namaProduk}', dimensi='${dimensi}', berat='${berat}',tahun='${tahun}' WHERE id=${id}`
     )
     res.redirect('/master/rak')
     conn.release()
@@ -566,8 +573,6 @@ module.exports.inputmasterrakupdate = async (req, res) => {
     if (conn) return conn.end()
   }
 }
-
-
 
 // ============ fitur cari barang master =============
 module.exports.caribarangserver = async (req, res) => {
@@ -748,7 +753,7 @@ module.exports.caribarangnas = async (req, res) => {
   let conn
   try {
     const value = req.query.cari
-    
+
     conn = await pool.getConnection()
     const data = await conn.query(
       `SELECT * FROM master_nas WHERE model LIKE '${value}%' OR merek LIKE '${value}%'`
