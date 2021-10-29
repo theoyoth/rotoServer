@@ -25,7 +25,8 @@ module.exports.masterserver = async (req, res) => {
 module.exports.inputmasterserver = async (req, res) => {
   const errors = validationResult(req)
   if (!errors.isEmpty()) {
-    return res.status(422).json({ errors: errors.array() })
+    // console.log(errors.array())
+    return res.json({ errors: errors.array() })
   }
   let conn
   try {
@@ -45,8 +46,12 @@ module.exports.inputmasterserver = async (req, res) => {
     const data = await conn.query(
       `INSERT INTO master_server VALUES ('','${produk}','${merek}','${model}','${processor}','${memori}','${internalStorage}','${networkController}','${storage}','${sumberDayaListrik}','${tahun}','${garansi}')`
     )
-
-    res.redirect('/master/server')
+    if(data.affectedRows>0){
+      return res.json({msg:"data ditambahkan"}).redirect('/master/server')
+    }else{
+      return res.json({msg:"gagal di input"})
+    }
+    // res.redirect('/master/server')
   } catch (err) {
     console.log(err)
   } finally {

@@ -42,7 +42,7 @@
             <div v-if="validation.title" class="mb-2">
             <p>{{ validation.title[0] }}</p>
             </div>
-            <form method="post" action="/server/login">
+            <form @submit.prevent="userLogin">
                 <input type="text" name="nama" placeholder="nama" class="rounded-lg mb-2 p-2 w-full outline-none" v-model="login.nama" required>
                 <input type="password" name="sandi" placeholder="kata sandi" class="rounded-lg p-2 w-full outline-none" v-model="login.sandi" required> 
                 <nuxt-link to="">
@@ -68,7 +68,7 @@ export default {
                 sandi: '',
 
             },
-            validation:[]
+            validation:[],
         }
     },
     methods:{
@@ -78,8 +78,8 @@ export default {
             const response = await this.$auth.loginWith("local", { 
            data: this.login
             })
-        this.$router.push('/homepage')
-        console.log(response)
+        // this.$router.push('/homepage')
+            console.log(response)
         // this.setisauth(true)
         // if (this.$auth.loggedIn) {
         //     console.log('Successfully Logged In');

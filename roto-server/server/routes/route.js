@@ -19,12 +19,12 @@ app.post('/master/inputserver',[
   check('produk').isAlpha().withMessage('harus berupa huruf'),
   check('merek').isAlpha().withMessage('harus berupa huruf'), 
   check('model').isAlphanumeric().withMessage('harus berupa angka dan huruf bukan simbol'), 
-  check('processor').isAlphanumeric().withMessage('harus berupa angka dan huruf bukan simbol'), 
+  check('processor').isAlpha().withMessage('harus berupa angka dan huruf bukan simbol'), 
   check('memori').isNumeric().withMessage('harus berupa angka'), 
-  check('internalStorage').isNumeric(),
-  check('networkController').isAlphanumeric(), 
-  check('storage').isNumeric(),
-  check('sumberDayaListrik').isNumeric(),
+  check('internalStorage').isNumeric().withMessage('harus angka'),
+  check('networkController').isAlphanumeric().withMessage('harus berupa huruf'), 
+  check('storage').isNumeric().withMessage('harus berupa angka'),
+  check('sumberDayaListrik').isNumeric().withMessage('harus berupa angka'),
   check('tahun').isDate(),
   check('garansi').isDate()
 ], masterController.inputmasterserver)

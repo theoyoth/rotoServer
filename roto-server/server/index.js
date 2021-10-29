@@ -2,6 +2,7 @@ const express = require('express')
 const cors = require('cors')
 const cookieParser = require('cookie-parser')
 const { loadNuxt, build } = require('nuxt')
+const { flash } = require('express-flash-message')
 const rute = require('./routes/route')
 const app = express()
 const isDev = 'development' !== 'production'

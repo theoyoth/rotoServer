@@ -70,12 +70,12 @@ export default {
           property : 'user',
           autoFetch : true,
         },
-        // token: {
-        //   property: 'token',
-        //   global: true,
-        //   required: true,
-        //   type: 'Bearer',
-        // },
+        token: {
+          property: 'token',
+          global: true,
+          // required: true,
+          // type: 'Bearer',
+        },
         endpoints: {
           login: {
             url: '/server/login',
@@ -92,7 +92,7 @@ export default {
       },
     },
     redirect: {
-      login: '/',
+      login: '/homepage',
       logout: '/',
       user: '/homepage'
     }

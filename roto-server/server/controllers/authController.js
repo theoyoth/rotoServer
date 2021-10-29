@@ -16,20 +16,16 @@ module.exports.login = async (req, res) => {
         `SELECT * FROM users WHERE nama='${nama}' AND sandi='${sandi}'`
       )
       if (data.length > 0) {
-        let user = data[0]
-
-        const token = jwt.sign(
-          { id: user.id, nama: user.nama },
-          process.env.TOKEN_KEY
-        )
+        // let user = data[0]
+        // const token = jwt.sign(
+        //   { id: user.id, nama: user.nama },
+        //   process.env.TOKEN_KEY
+        // )
         // res.header('auth-token', token).redirect('/homepage')
-        res
-          .cookie('authtoken', token, {
+        return res.cookie('authtoken', token, {
             httpOnly: true,
             maxAge: 60 * 60 * 24 * 1000,
-          })
-          // .redirect('/homepage')
-          .json({user,token})
+          }).json(data)
 
       } else {
         res.redirect('/')

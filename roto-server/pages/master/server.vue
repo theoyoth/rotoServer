@@ -2,6 +2,9 @@
 <div class="bg-hero min-h-screen ">
     <HeaderListItem :server="master.nama"/>
         <p class="text-center text-lg">Halaman master server</p>
+        <div class="block bg-blue-500">
+            <p v-if="datamsg" class="text-gray-600">{{datamsg}}</p>
+        </div>
     <div class="container mx-auto flex mt-8">
         <div class="flex">
             <input type="text" placeholder="cari" name="cari" v-model.lazy="caribarang" @keyup.enter="$fetch" class="rounded-l-lg p-2 outline-none">
@@ -95,6 +98,7 @@ export default {
     data(){
         return{
             caribarang:"",
+            datamsg:"",
             cariserver:[],
             servers : [],
             master:{
@@ -136,6 +140,11 @@ export default {
         catch(err) {
             console.error(err);
         };
+
+
+
+        // this.datamsg = data.data.msg
+
     }
 }
 </script>
