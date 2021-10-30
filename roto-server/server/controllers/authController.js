@@ -22,13 +22,14 @@ module.exports.login = async (req, res) => {
         //   process.env.TOKEN_KEY
         // )
         // res.header('auth-token', token).redirect('/homepage')
-        return res.cookie('authtoken', token, {
+        return res
+          .cookie('authtoken', token, {
             httpOnly: true,
             maxAge: 60 * 60 * 24 * 1000,
-          }).json(data)
-
+          })
+          .json(data)
       } else {
-        res.redirect('/')
+        return res.redirect('/')
       }
     } else {
       res.send('no data, enter name and password')
@@ -57,7 +58,7 @@ module.exports.homepage = async (req, res) => {
     res.status(401).send({
       message: 'unAuthenticated user',
     })
-  }finally {
+  } finally {
     if (conn) return conn.end()
   }
 }
