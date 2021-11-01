@@ -68,6 +68,7 @@ export default {
         }
     },
     props:['monitor','server','ups','baterai','rak','ac','cctv','network','apar','monitor','keyboard','mouse','nas','genset'],
+    
     mounted(){
         axios.get('http://localhost:3000/server/inputmaintenance')
             .then(resp => {

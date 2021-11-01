@@ -1,6 +1,7 @@
 <template>
 <div class="h-screen background-image bg-hero">
     <div class="flex h-full  px-4 py-2 justify-between">
+          
         <div class="w-3/4 p-2 flex flex-col justify-around maintenance-login">
             <section class="layout-one flex justify-around">
                 <div class="temperature-container homepage-maintenance p-2">
@@ -39,8 +40,8 @@
         </div>
         <div class="form-login flex flex-col justify-center w-80 px-5">
             <h1 class="text-center mb-4 text-3xl font-semibold">Login</h1>
-            <div v-if="validation.title" class="mb-2">
-            <p>{{ validation.title[0] }}</p>
+            <div v-for="(error,index) in errors" :key="index" class="mb-2">
+            <p>{{ error[0] }}</p>
             </div>
             <form @submit.prevent="userLogin">
                 <input type="text" name="nama" placeholder="nama" class="rounded-lg mb-2 p-2 w-full outline-none" v-model="login.nama" required>
@@ -68,7 +69,7 @@ export default {
                 sandi: '',
 
             },
-            validation:[],
+            errors:null,
         }
     },
     methods:{
@@ -78,7 +79,7 @@ export default {
             const response = await this.$auth.loginWith("local", { 
            data: this.login
             })
-        // this.$router.push('/homepage')
+            this.$router.push('/homepage')
             console.log(response)
         // this.setisauth(true)
         // if (this.$auth.loggedIn) {
@@ -86,7 +87,7 @@ export default {
         // }
 
         } catch (err) {
-          this.validation = err.response.data
+          this.errors = err.response.data.msg
         }
     }
 

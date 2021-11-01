@@ -98,7 +98,7 @@ export default {
             const result = res
             this.servers = result.data[0]
         })
-        .catch(err =>{z
+        .catch(err =>{
             console.log(err)
         })
     },

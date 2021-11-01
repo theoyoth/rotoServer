@@ -1,14 +1,11 @@
 <template>
 <div class="bg-hero min-h-screen">
-    <!-- <ListItem :genset="master"/> -->
-    <HeaderListItem :nas="master"/>
-
+    <HeaderListItem :genset="master.nama"/>
      <div class="container mx-auto flex mt-8">
         <div class="flex">
             <input type="text" placeholder="cari" name="cari" v-model.lazy="caribarang" @keyup.enter="$fetch" class="rounded-l-lg p-2 outline-none">
-            <button class="p-2 rounded-r-lg bg-gray-400 flex items-center justify-center" @click="clearSearch">
-                <!-- <font-awesome-icon :icon="['fas','search']" class="text-black-500"/> -->
-                <p>hapus</p>
+            <button class="p-2 rounded-r-lg bg-gray-400 flex items-center justify-center" @click="$fetch">
+                <font-awesome-icon :icon="['fas','search']" class="text-white"/>
             </button>
         </div>
         <!-- <select id="date" class="rounded-lg p-2 outline-none ml-8 cursor-pointer">
@@ -34,8 +31,8 @@
                 <td class="py-3">{{hasilcari.merek}}</td>
                 <td>{{hasilcari.model}}</td>
                 <td>{{hasilcari.tipe}}</td>
-                <td>{{hasilcari.tahun}}</td>
-                <td>{{hasilcari.garansi}}</td>
+                <td>{{$moment(hasilcari.tahun).format('DD-MM-YYYY')}}</td>
+                <td>{{$moment(hasilcari.garansi).format('DD-MM-YYYY')}}</td>
                 <td class="py-3 flex justify-evenly">
                     <NuxtLink :to="{name : 'master-update-updategenset-genset', params:{id : hasilcari.id} }">
                         <font-awesome-icon :icon="['fas','pencil-alt']" class="text-blue-500"/>
@@ -53,8 +50,8 @@
                 <td class="py-3">{{genset.merek}}</td>
                 <td>{{genset.model}}</td>
                 <td>{{genset.tipe}}</td>
-                <td>{{genset.tahun}}</td>
-                <td>{{genset.garansi}}</td>
+                <td>{{$moment(genset.tahun).format('DD-MM-YYYY')}}</td>
+                <td>{{$moment(genset.garansi).format('DD-MM-YYYY')}}</td>
                 <td class="py-3 flex justify-evenly">
                     <NuxtLink :to="{name : 'master-update-updategenset-genset', params:{id : genset.id} }">
                         <font-awesome-icon :icon="['fas','pencil-alt']" class="text-blue-500"/>
@@ -72,7 +69,7 @@
 </template>
 <script>
 import axios from 'axios'
-
+import moment from 'moment'
 export default {
     data(){
         return{
@@ -97,11 +94,8 @@ export default {
     deleteData(id,nama){
         axios.post(`/server/master/delete/${id}/${nama}`)
     },
-    clearSearch(){
-        this.caribarang = ''
-        this.carigenset = []
-    },
     async caribaranggenset(){
+        this.carigenset = []
         const res = await axios.get(`http://localhost:3000/server/carigenset?cari=${this.caribarang}`)
         res.data.forEach(val =>{
             this.carigenset.push(val)

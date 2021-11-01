@@ -7,10 +7,9 @@
         </div>
     <div class="container mx-auto flex mt-8">
         <div class="flex">
-            <input type="text" placeholder="cari" name="cari" v-model.lazy="caribarang" @keyup.enter="$fetch" class="rounded-l-lg p-2 outline-none">
-            <button class="p-2 rounded-r-lg bg-gray-400 flex items-center justify-center" @click="clearSearch">
-                <!-- <font-awesome-icon :icon="['fas','search']" class="text-black-500"/> -->
-                <p>hapus</p>
+            <input type="text" placeholder="cari" name="cari" v-model.lazy="caribarang" class="rounded-l-lg p-2 outline-none" @keyup.enter="$fetch">
+            <button class="p-2 rounded-r-lg bg-gray-400 flex items-center justify-center w-12" @click="$fetch">
+                <font-awesome-icon :icon="['fas','search']" class="text-white"/>
             </button>
         </div>
         <!-- <select id="date" class="rounded-lg p-2 outline-none ml-8 cursor-pointer">
@@ -19,11 +18,14 @@
             <option value="tahun">tahun</option>
         </select> -->
     </div>
+    <div v-if="datamsg" class="bg-blue-600">
+        <p>{{datamsg}}</p>
+    </div>
     <table class="table space-y-6 container mx-auto table-auto border-collapse border border-white mt-7">
         <thead class="bg-white text-sm has-tooltip">
             <span class="tooltip rounded shadow-lg p-1 bg-gray-700 text-white -mt-10 absolute left-2/4 transform -translate-x-2/4">semua detail barang</span>
             <tr class="text-xs"> 
-                <th class="font-semibold py-3">Produk</th>
+                <th class="font-semibold py-3 w-12">Produk</th>
                 <th class="font-semibold py-3">Merek</th>
                 <th class="font-semibold py-3">Model</th>
                 <th class="font-semibold">Processor</th>
@@ -38,6 +40,11 @@
             </tr>
         </thead>
         <tbody v-if="caribarang !== ''" class="text-center bg-white bg-opacity-40">
+            
+            <tr class="container py-2 px-3 rounded block m-auto mt-2" v-if="caribarang != cariserver">
+            <p class="text-center text-lg font-semibold">tidak ada data</p>
+            </tr>
+            
             <tr class="text-sm" v-for="(hasilcari,index) in cariserver" :key="index">
                 <td>{{hasilcari.produk}}</td>
                 <td>{{hasilcari.merek}}</td>
@@ -48,13 +55,13 @@
                 <td>{{hasilcari.network_controller}}</td>
                 <td>{{hasilcari.storage}}</td>
                 <td>{{hasilcari.sumber_daya_listrik}}</td>
-                <td class="text-xs">{{new Date(hasilcari.tahun).toLocaleString()}}</td>
-                <td class="text-xs">{{new Date(hasilcari.garansi).toLocaleString()}}</td>
+                <td class="text-xs">{{$moment(hasilcari.tahun).format('DD-MM-YYYY')}}</td>
+                <td class="text-xs">{{$moment(hasilcari.garansi).format('DD-MM-YYYY')}}</td>
                 <td class="py-3 flex w-3">
                     <NuxtLink :to="{name : 'master-update-updateserver-server', params:{id : hasilcari.id} }">
                         <font-awesome-icon :icon="['fas','pencil-alt']" class="text-blue-500"/>
                     </NuxtLink>
-                    <form @click="deleteData(hasilcari.id,nama.server)" class="ml-2">
+                    <form @click="deleteData(hasilcari.id,nama.nama_tabel)" class="ml-2">
                     <button type="submit">
                         <font-awesome-icon :icon="['fas','trash']" class="text-red-500"/>
                     </button> 
@@ -62,6 +69,7 @@
                 </td>
             </tr>
         </tbody>
+
         <tbody v-else class="text-center bg-white bg-opacity-40">
             <tr class="text-sm" v-for="(server,index) in servers" :key="index">
                 <td>{{server.produk}}</td>
@@ -73,8 +81,8 @@
                 <td>{{server.network_controller}}</td>
                 <td>{{server.storage}}</td>
                 <td>{{server.sumber_daya_listrik}}</td>
-                <td class="text-xs">{{new Date(server.tahun).toLocaleString()}}</td>
-                <td class="text-xs">{{new Date(server.tahun).toLocaleString()}}</td>
+                <td class="text-xs">{{$moment(server.tahun).format('DD-MM-YYYY')}}</td>
+                <td class="text-xs">{{$moment(server.garansi).format('DD-MM-YYYY')}}</td>
                 <td class="py-3 flex w-3">
                     <NuxtLink :to="{name : 'master-update-updateserver-server', params:{id : server.id} }">
                         <font-awesome-icon :icon="['fas','pencil-alt']" class="text-blue-500"/>
@@ -87,13 +95,15 @@
                 </td>
             </tr>
         </tbody>
+        
     </table>
+    
 </div>
 </template>
 
 <script>
 import axios from "axios"
-
+import moment from "moment"
 export default {
     data(){
         return{
@@ -120,14 +130,11 @@ export default {
             axios.post(`/server/master/delete/${id}/${nama}`)
         },
         async caribarangserver(){
+            this.cariserver = []
             const res = await axios.get(`http://localhost:3000/server/cariserver?cari=${this.caribarang}`)
             res.data.forEach(val =>{
                 this.cariserver.push(val)
             })
-        },
-        clearSearch(){
-            this.caribarang = ''
-            this.cariserver = []
         },
     },
     async mounted(){
@@ -141,6 +148,9 @@ export default {
             console.error(err);
         };
 
+        this.$nuxt.$on('msgberhasil',tambahdata=>{
+            this.datamsg = tambahdata
+        })
 
 
         // this.datamsg = data.data.msg

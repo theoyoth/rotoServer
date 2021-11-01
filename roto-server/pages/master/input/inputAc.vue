@@ -3,7 +3,7 @@
     <InputHeader item="AC"/>
     <section class="container mx-auto mt-8">
     <form action="/server/master/inputac" method="post" class="w-3/4">
-        <div >
+        <div>
             <div class="grid grid-cols-3 grid-rows-4">
                 <div class="mb-4">
                     <label for="merek" class="block mb-2 text-sm">merek</label>
@@ -17,14 +17,13 @@
                     <label for="sumberDayaListrik" class="block mb-2 text-sm">sumber daya listrik</label>
                     <input type="text" v-model="sumberDayaListrik" name="sumberDayaListrik" id="sumberDayaListrik" class="p-2 w-72 rounded-lg outline-none">
                 </div>
-
+                 <div class="mb-4">
+                    <label for="dimensi" class="block mb-2 text-sm">dimensi</label>
+                    <input type="text" v-model="dimensi" name="dimensi" id="dimensi" class="p-2 w-72 rounded-lg outline-none">
+                </div>
                 <div class="mb-4">
                     <label for="konsumsiDaya" class="block mb-2 text-sm">konsumsi daya</label>
                     <input type="text" v-model="konsumsiDaya" name="konsumsiDaya" id="konsumsiDaya" class="p-2 w-72 rounded-lg outline-none">
-                </div>
-                <div class="mb-4">
-                    <label for="dimensi" class="block mb-2 text-sm">dimensi</label>
-                    <input type="text" v-model="dimensi" name="dimensi" id="dimensi" class="p-2 w-72 rounded-lg outline-none">
                 </div>
                 <div class="mb-4">
                     <label for="kapasitasPendingin" class="block mb-2 text-sm">kapasitas pendingin</label>
@@ -32,11 +31,11 @@
                 </div>
                 <div class="mb-4">
                     <label for="tahun" class="block mb-2 text-sm">tahun</label>
-                    <input type="text" v-model="tahun" name="tahun" id="tahun" class="p-2 w-72 rounded-lg outline-none">
+                    <input type="date" v-model="tahun" name="tahun" id="tahun" class="p-2 w-72 rounded-lg outline-none">
                 </div>
                 <div class="mb-4">
                     <label for="garansi" class="block mb-2 text-sm">garansi</label>
-                    <input type="text" v-model="garansi" name="garansi" id="garansi" class="p-2 w-72 rounded-lg outline-none">
+                    <input type="date" v-model="garansi" name="garansi" id="garansi" class="p-2 w-72 rounded-lg outline-none">
                 </div>
                 
             </div>

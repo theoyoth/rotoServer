@@ -3,10 +3,10 @@
     <ListItem :rak="master"/>
     <div class="container mx-auto flex mt-8">
         <div class="flex">
-            <input type="text" placeholder="cari" name="cari" v-model.lazy="caribarang" @keyup.enter="$fetch" class="rounded-l-lg p-2 outline-none">
-            <button class="p-2 rounded-r-lg bg-gray-400 flex items-center justify-center" @click="clearSearch">
-                <!-- <font-awesome-icon :icon="['fas','search']" class="text-black-500"/> -->
-                <p>hapus</p>
+            <input type="text" placeholder="cari" name="cari" v-model.lazy="caribarang" class="rounded-l-lg p-2 outline-none">
+            <button class="p-2 rounded-r-lg bg-gray-400 flex items-center justify-center" @click="$fetch">
+                <font-awesome-icon :icon="['fas','search']" class="text-black-500"/>
+                <!-- <p>hapus</p> -->
             </button>
         </div>
         <!-- <select id="date" class="rounded-lg p-2 outline-none ml-8 cursor-pointer">
@@ -35,7 +35,7 @@
                 <td>{{hasilcari.nama_produk}}</td>
                 <td>{{hasilcari.dimensi}}</td>
                 <td>{{hasilcari.berat}}</td>
-                <td>{{hasilcari.tahun}}</td>
+                <td>{{$moment(hasilcari.tahun).format('DD-MM-YYYY')}}</td>
                 <td class="py-3 flex w-3">
                     <NuxtLink :to="{name : 'master-update-updaterak-rak', params:{id : hasilcari.id,nama:nama_tabel} }">
                         <font-awesome-icon :icon="['fas','pencil-alt']" class="text-blue-500"/>
@@ -55,7 +55,7 @@
                 <td>{{rak.nama_produk}}</td>
                 <td>{{rak.dimensi}}</td>
                 <td>{{rak.berat}}</td>
-                <td>{{rak.tahun}}</td>
+                <td>{{$moment(rak.tahun).format('DD-MM-YYYY')}}</td>
                 <td class="py-3 flex justify-evenly w-full">
                     <NuxtLink :to="{name : 'master-update-updaterak-rak', params:{id : rak.id} }">
                         <font-awesome-icon :icon="['fas','pencil-alt']" class="text-blue-500"/>
@@ -73,7 +73,7 @@
 </template>
 <script>
 import axios from 'axios'
-
+import moment from 'moment'
 export default {
     data(){
         return{
@@ -103,6 +103,7 @@ export default {
             this.carirak = []
         },
         async caribarangrak(){
+            this.carirak = []
             const res = await axios.get(`http://localhost:3000/server/carirak?cari=${this.caribarang}`)
             res.data.forEach(val =>{
                 this.carirak.push(val)

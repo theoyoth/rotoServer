@@ -4,9 +4,8 @@
         <div class="container mx-auto flex mt-8">
         <div class="flex">
             <input type="text" placeholder="cari" name="cari" v-model.lazy="caribarang" @keyup.enter="$fetch" class="rounded-l-lg p-2 outline-none">
-            <button class="p-2 rounded-r-lg bg-gray-400 flex items-center justify-center" @click="clearSearch">
-                <!-- <font-awesome-icon :icon="['fas','search']" class="text-black-500"/> -->
-                <p>hapus</p>
+            <button class="p-2 rounded-r-lg bg-gray-400 flex items-center justify-center" @click="$fetch">
+                <font-awesome-icon :icon="['fas','search']" class="text-white"/>
             </button>
         </div>
         <!-- <select id="date" class="rounded-lg p-2 outline-none ml-8 cursor-pointer">
@@ -32,12 +31,12 @@
                 <td class="py-3">{{hasilcari.merek}}</td>
                 <td>{{hasilcari.model}}</td>
                 <td>{{hasilcari.tipe}}</td>
-                <td>{{hasilcari.tahun}}</td>
-                <td>{{hasilcari.garansi}}</td>
-                <td class="py-3">
-                    <a href="#">
+                <td>{{$moment(hasilcari.tahun).format('DD-MM-YYYY')}}</td>
+                <td>{{$moment(hasilcari.garansi).format('DD-MM-YYYY')}}</td>
+                <td class="py-3 flex justify-evenly">
+                    <NuxtLink :to="{name : 'master-update-updatekeyboard-keyboard', params:{id : hasilcari.id} }">
                         <font-awesome-icon :icon="['fas','pencil-alt']" class="text-blue-500"/>
-                    </a>
+                    </NuxtLink>
                      <form @click="deleteData(hasilcari.id,nama.nama_tabel)" class="ml-4">
                     <button type="submit">
                         <font-awesome-icon :icon="['fas','trash']" class="text-red-500"/>
@@ -51,12 +50,12 @@
                 <td class="py-3">{{keyboard.merek}}</td>
                 <td>{{keyboard.model}}</td>
                 <td>{{keyboard.tipe}}</td>
-                <td>{{keyboard.tahun}}</td>
-                <td>{{keyboard.garansi}}</td>
-                <td class="py-3">
-                    <a href="#">
+                <td>{{$moment(keyboard.tahun).format("DD-MM-YYYY")}}</td>
+                <td>{{$moment(keyboard.garansi).format("DD-MM-YYYY")}}</td>
+                <td class="py-3 flex justify-evenly">
+                   <NuxtLink :to="{name : 'master-update-updatekeyboard-keyboard', params:{id : keyboard.id} }">
                         <font-awesome-icon :icon="['fas','pencil-alt']" class="text-blue-500"/>
-                    </a>
+                    </NuxtLink>
                      <form @click="deleteData(keyboard.id,nama.nama_tabel)" class="ml-4">
                     <button type="submit">
                         <font-awesome-icon :icon="['fas','trash']" class="text-red-500"/>
@@ -70,6 +69,7 @@
 </template>
 <script>
 import axios from 'axios'
+import moment from 'moment'
 
 export default {
     data(){
@@ -95,11 +95,8 @@ export default {
         deleteData(id,nama){
             axios.post(`/server/master/delete/${id}/${nama}`)
         },
-        clearSearch(){
-            this.caribarang = ''
-            this.carikeyboard = []
-        },
          async caribarangkeyboard(){
+             this.carikeyboard = []
             const res = await axios.get(`http://localhost:3000/server/carikeyboard?cari=${this.caribarang}`)
             res.data.forEach(val =>{
                 this.carikeyboard.push(val)

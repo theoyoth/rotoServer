@@ -128,12 +128,13 @@ export default {
                     tahun: this.inputServer.tahun,
                     garansi : this.inputServer.garansi,
                 })
-                // console.log(data)
+                // console.log(data.data.msg)
+                // this.$nuxt.$emit('msgberhasil',data.data.msg)
                 this.$router.push('/master/server')
             }
             catch(err){
                 if(err.response){
-                    this.errormsg = err.response.data.errors.msg
+                    this.errormsg = err.response.data.errors
                     // console.log(err.response.data.errors)
                     
                     console.log(this.errormsg)

@@ -4,9 +4,9 @@
     <div class="container mx-auto flex mt-8">
         <div class="flex">
             <input type="text" placeholder="cari" name="cari" v-model.lazy="caribarang" @keyup.enter="$fetch" class="rounded-l-lg p-2 outline-none">
-            <button class="p-2 rounded-r-lg bg-gray-400 flex items-center justify-center" @click="clearSearch">
-                <!-- <font-awesome-icon :icon="['fas','search']" class="text-black-500"/> -->
-                <p>hapus</p>
+            <button class="p-2 rounded-r-lg bg-gray-400 flex items-center justify-center" @click="$fetch">
+                <font-awesome-icon :icon="['fas','search']" class="text-black-500"/>
+                <!-- <p>hapus</p> -->
             </button>
         </div>
         <!-- <select id="date" class="rounded-lg p-2 outline-none ml-8 cursor-pointer">
@@ -46,10 +46,10 @@
                 <td>{{hasilcari.peringkat_tegangan}}</td>
                 <td>{{hasilcari.peringkat_frekuensi}}</td>
                 <td>{{hasilcari.peringkat_tegangan_baterai}}</td>
-                <td>{{hasilcari.tahun}}</td>
-                <td>{{hasilcari.garansi}}</td>
+                <td>{{$moment(hasilcari.tahun).format('DD-MM-YYYY')}}</td>
+                <td>{{$moment(hasilcari.garansi).format('DD-MM-YYYY')}}</td>
                 <td class="py-3 flex justify-evenly w-full">
-                    <NuxtLink :to="{name : 'master-update-updateid', params:{id : hasilcari.id} }">
+                    <NuxtLink :to="{name : 'master-update-updateups-ups', params:{id : hasilcari.id} }">
                         <font-awesome-icon :icon="['fas','pencil-alt']" class="text-blue-500"/>
                     </NuxtLink>
                     <form @click="deleteData(hasilcari.id,nama.nama_tabel)" class="ml-4">
@@ -72,10 +72,10 @@
                 <td>{{ups.peringkat_tegangan}}</td>
                 <td>{{ups.peringkat_frekuensi}}</td>
                 <td>{{ups.peringkat_tegangan_baterai}}</td>
-                <td>{{ups.tahun}}</td>
-                <td>{{ups.garansi}}</td>
+                <td>{{$moment(ups.tahun).format('DD-MM-YYYY')}}</td>
+                <td>{{$moment(ups.garansi).format('DD-MM-YYYY')}}</td>
                 <td class="py-3 flex justify-evenly w-full">
-                    <NuxtLink :to="{name : 'master-update-updateid', params:{id : ups.id} }">
+                    <NuxtLink :to="{name : 'master-update-updateups-ups', params:{id : ups.id} }">
                         <font-awesome-icon :icon="['fas','pencil-alt']" class="text-blue-500"/>
                     </NuxtLink>
                     <form @click="deleteData(ups.id,nama.nama_tabel)" class="ml-4">
@@ -93,7 +93,7 @@
 
 <script>
 import axios from 'axios'
-
+import moment from 'moment'
 export default {
     data(){
         return{
@@ -118,11 +118,9 @@ export default {
         deleteData(id,nama){
         axios.post(`/server/master/delete/${id}/${nama}`)
         },
-         clearSearch(){
-            this.caribarang = ''
-            this.cariups = []
-        },
+        
         async caribarangups(){
+            this.cariups = []
             const res = await axios.get(`http://localhost:3000/server/cariups?cari=${this.caribarang}`)
             res.data.forEach(val =>{
                 this.cariups.push(val)

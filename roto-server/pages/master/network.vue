@@ -1,12 +1,11 @@
 <template>
 <div class="bg-hero min-h-screen">
-    <ListItem :network="master"/> 
+    <HeaderListItem :network="master.nama"/> 
     <div class="container mx-auto flex mt-8">
         <div class="flex">
             <input type="text" placeholder="cari" name="cari" v-model.lazy="caribarang" @keyup.enter="$fetch" class="rounded-l-lg p-2 outline-none">
-            <button class="p-2 rounded-r-lg bg-gray-400 flex items-center justify-center" @click="clearSearch">
-                <!-- <font-awesome-icon :icon="['fas','search']" class="text-black-500"/> -->
-                <p>hapus</p>
+            <button class="p-2 rounded-r-lg bg-gray-400 flex items-center justify-center" @click="$fetch">
+                <font-awesome-icon :icon="['fas','search']" class="text-black-500"/>
             </button>
         </div>
         <!-- <select id="date" class="rounded-lg p-2 outline-none ml-8 cursor-pointer">
@@ -36,12 +35,12 @@
                 <td>{{hasilcari.tipe}}</td>
                 <td>{{hasilcari.kuantitas}}</td>
                 <td>{{hasilcari.kanal}}</td>
-                <td>{{hasilcari.tahun}}</td>
-                <td>{{hasilcari.garansi}}</td>
+                <td>{{$moment(hasilcari.tahun).format('DD-MM-YYYY')}}</td>
+                <td>{{$moment(hasilcari.garansi).format('DD-MM-YYYY')}}</td>
                 <td class="py-3 flex justify-evenly">
-                    <a href="#">
+                    <NuxtLink :to="{name : 'master-update-updatenetwork-network', params:{id : hasilcari.id} }">
                         <font-awesome-icon :icon="['fas','pencil-alt']" class="text-blue-500"/>
-                    </a>
+                    </NuxtLink>
                     <form @click="deleteData(hasilcari.id,nama.nama_tabel)" class="ml-4">
                     <button type="submit">
                         <font-awesome-icon :icon="['fas','trash']" class="text-red-500"/>
@@ -57,13 +56,13 @@
                 <td>{{network.tipe}}</td>
                 <td>{{network.kuantitas}}</td>
                 <td>{{network.kanal}}</td>
-                <td>{{network.tahun}}</td>
-                <td>{{network.garansi}}</td>
+                <td>{{$moment(network.tahun).format('DD-MM-YYYY')}}</td>
+                <td>{{$moment(network.garansi).format('DD-MM-YYYY')}}</td>
                 <td class="py-3 flex justify-evenly">
-                    <a href="#">
+                    <NuxtLink :to="{name : 'master-update-updatenetwork-network', params:{id : network.id} }">
                         <font-awesome-icon :icon="['fas','pencil-alt']" class="text-blue-500"/>
-                    </a>
-                    <form @click="deleteData(network.id,nama.network)" class="ml-4">
+                    </NuxtLink>
+                    <form @click="deleteData(network.id,nama.nama_tabel)" class="ml-4">
                     <button type="submit">
                         <font-awesome-icon :icon="['fas','trash']" class="text-red-500"/>
                     </button> 
@@ -76,7 +75,7 @@
 </template>
 <script>
 import axios from 'axios'
-
+import moment from 'moment'
 export default {
     data(){
         return{
@@ -101,11 +100,8 @@ export default {
         deleteData(id,nama){
             axios.post(`/server/master/delete/${id}/${nama}`)
         },
-        clearSearch(){
-            this.caribarang = ''
-            this.carinetwork = []
-        },
         async caribarangnetwork(){
+            this.carinetwork = []
             const res = await axios.get(`http://localhost:3000/server/carinetwork?cari=${this.caribarang}`)
             res.data.forEach(val =>{
                 this.carinetwork.push(val)

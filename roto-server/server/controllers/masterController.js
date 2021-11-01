@@ -25,8 +25,8 @@ module.exports.masterserver = async (req, res) => {
 module.exports.inputmasterserver = async (req, res) => {
   const errors = validationResult(req)
   if (!errors.isEmpty()) {
-    // console.log(errors.array())
-    return res.json({ errors: errors.array() })
+    console.log(errors.array())
+    // return res.json({ errors: errors.array() })
   }
   let conn
   try {
@@ -46,12 +46,14 @@ module.exports.inputmasterserver = async (req, res) => {
     const data = await conn.query(
       `INSERT INTO master_server VALUES ('','${produk}','${merek}','${model}','${processor}','${memori}','${internalStorage}','${networkController}','${storage}','${sumberDayaListrik}','${tahun}','${garansi}')`
     )
-    if(data.affectedRows>0){
-      return res.json({msg:"data ditambahkan"}).redirect('/master/server')
-    }else{
-      return res.json({msg:"gagal di input"})
+    if (data.affectedRows > 0) {
+      return res.json({ msg: 'data ditambahkan' })
+    } else {
+      return res
+        .json({ msg: 'gagal di input' })
+        .redirect('/master/server/inputserver')
     }
-    // res.redirect('/master/server')
+    conn.release()
   } catch (err) {
     console.log(err)
   } finally {
@@ -202,15 +204,15 @@ module.exports.inputmasterac = async (req, res) => {
     const merek = req.body.merek
     const model = req.body.model
     const sumberDayaListrik = req.body.sumberDayaListrik
-    const konsumsiDaya = req.body.konsumsiDaya
     const dimensi = req.body.dimensi
+    const konsumsiDaya = req.body.konsumsiDaya
     const kapasitasPendingin = req.body.kapasitasPendingin
     const tahun = req.body.tahun
     const garansi = req.body.garansi
 
     conn = await pool.getConnection()
     const data = await conn.query(
-      `INSERT INTO master_ac VALUES ('','${merek}','${model}','${sumberDayaListrik}','${konsumsiDaya}','${dimensi}','${kapasitasPendingin}','${tahun}','${garansi}')`
+      `INSERT INTO master_ac VALUES ('','${merek}','${model}','${sumberDayaListrik}','${dimensi}','${konsumsiDaya}','${kapasitasPendingin}','${tahun}','${garansi}')`
     )
 
     res.redirect('/master/ac')
@@ -227,6 +229,7 @@ module.exports.mastercctv = async (req, res) => {
     conn = await pool.getConnection()
     const rows = await conn.query('SELECT * FROM master_cctv')
     res.send(rows)
+    conn.release()
   } catch (err) {
     console.log(err)
   } finally {
@@ -246,6 +249,7 @@ module.exports.inputmastercctv = async (req, res) => {
     )
 
     res.redirect('/master/cctv')
+    conn.release()
   } catch (err) {
     console.log(err)
   } finally {
@@ -571,6 +575,428 @@ module.exports.inputmasterrakupdate = async (req, res) => {
       `UPDATE master_rak SET tipe_rak='${tipeRak}', tipe_pintu='${tipePintu}', nama_produk='${namaProduk}', dimensi='${dimensi}', berat='${berat}',tahun='${tahun}' WHERE id=${id}`
     )
     res.redirect('/master/rak')
+    conn.release()
+  } catch (err) {
+    console.log(err)
+  } finally {
+    if (conn) return conn.end()
+  }
+}
+module.exports.masterupsgetdata = async (req, res) => {
+  const id = req.params.id
+  let conn
+  try {
+    conn = await pool.getConnection()
+    const rows = await conn.query(`SELECT * FROM master_ups WHERE id=${id}`)
+    res.send(rows)
+    conn.release()
+  } catch (err) {
+    console.log(err)
+  } finally {
+    if (conn) return conn.end()
+  }
+}
+module.exports.inputmasterupsupdate = async (req, res) => {
+  let conn
+  try {
+    const id = req.body.id
+    const upsCriticalLoad = req.body.upsCriticalLoad
+    const upsCriticalTemperature = req.body.upsCriticalTemperature
+    const upsCriticalCapacity = req.body.upsCriticalCapacity
+    const nomorSerial = req.body.nomorSerial
+    const namaSistem = req.body.namaSistem
+    const model = req.body.model
+    const manufaktur = req.body.manufaktur
+    const peringkatTegangan = req.body.peringkatTegangan
+    const peringkatFrekuensi = req.body.peringkatFrekuensi
+    const peringkatTeganganBaterai = req.body.peringkatTeganganBaterai
+    const tahun = req.body.tahun
+    const garansi = req.body.garansi
+
+    conn = await pool.getConnection()
+    await conn.query(
+      `UPDATE master_ups SET ups_critical_load='${upsCriticalLoad}', ups_critical_temperature='${upsCriticalTemperature}', ups_critical_capacity='${upsCriticalCapacity}', nomor_serial='${nomorSerial}', nama_sistem='${namaSistem}',model='${model}',manufaktur='${manufaktur}',peringkat_tegangan='${peringkatTegangan}',peringkat_frekuensi='${peringkatFrekuensi}',peringkat_tegangan_baterai='${peringkatTeganganBaterai}',tahun='${tahun}',garansi='${garansi}' WHERE id=${id}`
+    )
+    res.redirect('/master/ups')
+    conn.release()
+  } catch (err) {
+    console.log(err)
+  } finally {
+    if (conn) return conn.end()
+  }
+}
+
+module.exports.masterbateraigetdata = async (req, res) => {
+  const id = req.params.id
+  let conn
+  try {
+    conn = await pool.getConnection()
+    const rows = await conn.query(`SELECT * FROM master_baterai WHERE id=${id}`)
+    res.send(rows)
+    conn.release()
+  } catch (err) {
+    console.log(err)
+  } finally {
+    if (conn) return conn.end()
+  }
+}
+module.exports.inputmasterbateraiupdate = async (req, res) => {
+  let conn
+  try {
+    const id = req.body.id
+    const accu = req.body.accu
+    const kuantitas = req.body.kuantitas
+    const tegangan = req.body.tegangan
+    const tahun = req.body.tahun
+    const garansi = req.body.garansi
+
+    conn = await pool.getConnection()
+    await conn.query(
+      `UPDATE master_baterai SET accu='${accu}', kuantitas='${kuantitas}',voltage='${tegangan}',tahun='${tahun}',garansi='${garansi}' WHERE id=${id}`
+    )
+    res.redirect('/master/baterai')
+    conn.release()
+  } catch (err) {
+    console.log(err)
+  } finally {
+    if (conn) return conn.end()
+  }
+}
+
+module.exports.masteracgetdata = async (req, res) => {
+  const id = req.params.id
+  let conn
+  try {
+    conn = await pool.getConnection()
+    const rows = await conn.query(`SELECT * FROM master_ac WHERE id=${id}`)
+    res.send(rows)
+    conn.release()
+  } catch (err) {
+    console.log(err)
+  } finally {
+    if (conn) return conn.end()
+  }
+}
+module.exports.inputmasteracupdate = async (req, res) => {
+  let conn
+  try {
+    const id = req.body.id
+    const merek = req.body.merek
+    const model = req.body.model
+    const sumberDayaListrik = req.body.sumberDayaListrik
+    const dimensi = req.body.dimensi
+    const konsumsiDayaListrik = req.body.konsumsiDayaListrik
+    const kapasitasPendingin = req.body.kapasitasPendingin
+    const tahun = req.body.tahun
+    const garansi = req.body.garansi
+
+    conn = await pool.getConnection()
+    await conn.query(
+      `UPDATE master_ac SET merek='${merek}', model='${model}',sumber_daya_listrik='${sumberDayaListrik}',dimensi='${dimensi}',konsumsi_daya_listrik='${konsumsiDayaListrik}',kapasitas_pendingin='${kapasitasPendingin}',tahun='${tahun}',garansi='${garansi}' WHERE id=${id}`
+    )
+    res.redirect('/master/ac')
+    conn.release()
+  } catch (err) {
+    console.log(err)
+  } finally {
+    if (conn) return conn.end()
+  }
+}
+
+module.exports.mastercctvgetdata = async (req, res) => {
+  const id = req.params.id
+  let conn
+  try {
+    conn = await pool.getConnection()
+    const rows = await conn.query(`SELECT * FROM master_cctv WHERE id=${id}`)
+    res.send(rows)
+    conn.release()
+  } catch (err) {
+    console.log(err)
+  } finally {
+    if (conn) return conn.end()
+  }
+}
+module.exports.inputmastercctvupdate = async (req, res) => {
+  let conn
+  try {
+    const id = req.body.id
+    const merek = req.body.merek
+    const model = req.body.model
+    const garansi = req.body.garansi
+
+    conn = await pool.getConnection()
+    await conn.query(
+      `UPDATE master_cctv SET merek='${merek}', model='${model}',garansi='${garansi}' WHERE id=${id}`
+    )
+    res.redirect('/master/cctv')
+    conn.release()
+  } catch (err) {
+    console.log(err)
+  } finally {
+    if (conn) return conn.end()
+  }
+}
+
+module.exports.masternetworkgetdata = async (req, res) => {
+  const id = req.params.id
+  let conn
+  try {
+    conn = await pool.getConnection()
+    const rows = await conn.query(`SELECT * FROM master_network WHERE id=${id}`)
+    res.send(rows)
+    conn.release()
+  } catch (err) {
+    console.log(err)
+  } finally {
+    if (conn) return conn.end()
+  }
+}
+module.exports.inputmasternetworkupdate = async (req, res) => {
+  let conn
+  try {
+    const id = req.body.id
+    const merek = req.body.merek
+    const model = req.body.model
+    const tipe = req.body.tipe
+    const kuantitas = req.body.kuantitas
+    const kanal = req.body.kanal
+    const tahun = req.body.tahun
+    const garansi = req.body.garansi
+
+    conn = await pool.getConnection()
+    await conn.query(
+      `UPDATE master_network SET merek='${merek}', model='${model}',tipe='${tipe}',kuantitas='${kuantitas}',kanal='${kanal}',tahun='${tahun}',garansi='${garansi}' WHERE id=${id}`
+    )
+    res.redirect('/master/network')
+    conn.release()
+  } catch (err) {
+    console.log(err)
+  } finally {
+    if (conn) return conn.end()
+  }
+}
+
+module.exports.masterapargetdata = async (req, res) => {
+  const id = req.params.id
+  let conn
+  try {
+    conn = await pool.getConnection()
+    const rows = await conn.query(`SELECT * FROM master_apar WHERE id=${id}`)
+    res.send(rows)
+    conn.release()
+  } catch (err) {
+    console.log(err)
+  } finally {
+    if (conn) return conn.end()
+  }
+}
+module.exports.inputmasteraparupdate = async (req, res) => {
+  let conn
+  try {
+    const id = req.body.id
+    const merek = req.body.merek
+    const model = req.body.model
+    const tipe = req.body.tipe
+    const tahun = req.body.tahun
+    const garansi = req.body.garansi
+
+    conn = await pool.getConnection()
+    await conn.query(
+      `UPDATE master_apar SET merek='${merek}', model='${model}',tipe='${tipe}',tahun='${tahun}',garansi='${garansi}' WHERE id=${id}`
+    )
+    res.redirect('/master/apar')
+    conn.release()
+  } catch (err) {
+    console.log(err)
+  } finally {
+    if (conn) return conn.end()
+  }
+}
+
+module.exports.mastermonitorgetdata = async (req, res) => {
+  const id = req.params.id
+  let conn
+  try {
+    conn = await pool.getConnection()
+    const rows = await conn.query(`SELECT * FROM master_monitor WHERE id=${id}`)
+    res.send(rows)
+    conn.release()
+  } catch (err) {
+    console.log(err)
+  } finally {
+    if (conn) return conn.end()
+  }
+}
+module.exports.inputmastermonitorupdate = async (req, res) => {
+  let conn
+  try {
+    const id = req.body.id
+    const merek = req.body.merek
+    const model = req.body.model
+    const tipe = req.body.tipe
+    const tahun = req.body.tahun
+    const garansi = req.body.garansi
+
+    conn = await pool.getConnection()
+    await conn.query(
+      `UPDATE master_monitor SET merek='${merek}', model='${model}',tipe='${tipe}',tahun='${tahun}',garansi='${garansi}' WHERE id=${id}`
+    )
+    res.redirect('/master/monitor')
+    conn.release()
+  } catch (err) {
+    console.log(err)
+  } finally {
+    if (conn) return conn.end()
+  }
+}
+
+module.exports.masterkeyboardgetdata = async (req, res) => {
+  const id = req.params.id
+  let conn
+  try {
+    conn = await pool.getConnection()
+    const rows = await conn.query(
+      `SELECT * FROM master_keyboard WHERE id=${id}`
+    )
+    res.send(rows)
+    conn.release()
+  } catch (err) {
+    console.log(err)
+  } finally {
+    if (conn) return conn.end()
+  }
+}
+module.exports.inputmasterkeyboardupdate = async (req, res) => {
+  let conn
+  try {
+    const id = req.body.id
+    const merek = req.body.merek
+    const model = req.body.model
+    const tipe = req.body.tipe
+    const tahun = req.body.tahun
+    const garansi = req.body.garansi
+
+    conn = await pool.getConnection()
+    await conn.query(
+      `UPDATE master_keyboard SET merek='${merek}', model='${model}',tipe='${tipe}',tahun='${tahun}',garansi='${garansi}' WHERE id=${id}`
+    )
+    res.redirect('/master/keyboard')
+    conn.release()
+  } catch (err) {
+    console.log(err)
+  } finally {
+    if (conn) return conn.end()
+  }
+}
+
+module.exports.mastermousegetdata = async (req, res) => {
+  const id = req.params.id
+  let conn
+  try {
+    conn = await pool.getConnection()
+    const rows = await conn.query(`SELECT * FROM master_mouse WHERE id=${id}`)
+    res.send(rows)
+    conn.release()
+  } catch (err) {
+    console.log(err)
+  } finally {
+    if (conn) return conn.end()
+  }
+}
+module.exports.inputmastermouseupdate = async (req, res) => {
+  let conn
+  try {
+    const id = req.body.id
+    const merek = req.body.merek
+    const model = req.body.model
+    const tipe = req.body.tipe
+    const tahun = req.body.tahun
+    const garansi = req.body.garansi
+
+    conn = await pool.getConnection()
+    await conn.query(
+      `UPDATE master_mouse SET merek='${merek}', model='${model}',tipe='${tipe}',tahun='${tahun}',garansi='${garansi}' WHERE id=${id}`
+    )
+    res.redirect('/master/mouse')
+    conn.release()
+  } catch (err) {
+    console.log(err)
+  } finally {
+    if (conn) return conn.end()
+  }
+}
+
+module.exports.masternasgetdata = async (req, res) => {
+  const id = req.params.id
+  let conn
+  try {
+    conn = await pool.getConnection()
+    const rows = await conn.query(`SELECT * FROM master_nas WHERE id=${id}`)
+    res.send(rows)
+    conn.release()
+  } catch (err) {
+    console.log(err)
+  } finally {
+    if (conn) return conn.end()
+  }
+}
+module.exports.inputmasternasupdate = async (req, res) => {
+  let conn
+  try {
+    const id = req.body.id
+    const merek = req.body.merek
+    const model = req.body.model
+    const tipe = req.body.tipe
+    const storage = req.body.storage
+    const processor = req.body.processor
+    const cpu = req.body.cpu
+    const raid = req.body.raid
+    const tahun = req.body.tahun
+    const garansi = req.body.garansi
+
+    conn = await pool.getConnection()
+    await conn.query(
+      `UPDATE master_nas SET '${merek}','${model}','${processor}','${storage}','${tipe}','${cpu}','${raid}','${tahun}','${garansi}' WHERE id=${id}`
+    )
+    res.redirect('/master/nas')
+    conn.release()
+  } catch (err) {
+    console.log(err)
+  } finally {
+    if (conn) return conn.end()
+  }
+}
+
+module.exports.mastergensetgetdata = async (req, res) => {
+  const id = req.params.id
+  let conn
+  try {
+    conn = await pool.getConnection()
+    const rows = await conn.query(`SELECT * FROM master_genset WHERE id=${id}`)
+    res.send(rows)
+    conn.release()
+  } catch (err) {
+    console.log(err)
+  } finally {
+    if (conn) return conn.end()
+  }
+}
+module.exports.inputmastergensetupdate = async (req, res) => {
+  let conn
+  try {
+    const id = req.body.id
+    const merek = req.body.merek
+    const model = req.body.model
+    const tipe = req.body.tipe
+    const tahun = req.body.tahun
+    const garansi = req.body.garansi
+
+    conn = await pool.getConnection()
+    await conn.query(
+      `UPDATE master_genset SET '${merek}','${model}','${tipe}','${tahun}','${garansi}' WHERE id=${id}`
+    )
+    res.redirect('/master/genset')
     conn.release()
   } catch (err) {
     console.log(err)

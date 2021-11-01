@@ -16,23 +16,25 @@ module.exports.login = async (req, res) => {
         `SELECT * FROM users WHERE nama='${nama}' AND sandi='${sandi}'`
       )
       if (data.length > 0) {
-        // let user = data[0]
-        // const token = jwt.sign(
-        //   { id: user.id, nama: user.nama },
-        //   process.env.TOKEN_KEY
-        // )
+        let user = data[0]
+        const token = jwt.sign(
+          { id: user.id, nama: user.nama },
+          process.env.TOKEN_KEY
+        )
         // res.header('auth-token', token).redirect('/homepage')
-        return res
-          .cookie('authtoken', token, {
-            httpOnly: true,
-            maxAge: 60 * 60 * 24 * 1000,
-          })
-          .json(data)
+        return (
+          res
+            // .cookie('authtoken', token, {
+            //   httpOnly: true,
+            //   maxAge: 60 * 60 * 24 * 1000,
+            // })
+            .json({ data: { user, token } })
+        )
       } else {
-        return res.redirect('/')
+        return res.json({ msg: 'no data match' })
       }
     } else {
-      res.send('no data, enter name and password')
+      res.json({ msg: 'no data, enter name and password' })
     }
   } catch (err) {
     console.log(err)

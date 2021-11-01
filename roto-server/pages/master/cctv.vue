@@ -4,9 +4,8 @@
     <div class="container mx-auto flex mt-8">
         <div class="flex">
             <input type="text" placeholder="cari" name="cari" v-model.lazy="caribarang" @keyup.enter="$fetch" class="rounded-l-lg p-2 outline-none">
-            <button class="p-2 rounded-r-lg bg-gray-400 flex items-center justify-center" @click="clearSearch">
-                <!-- <font-awesome-icon :icon="['fas','search']" class="text-black-500"/> -->
-                <p>hapus</p>
+            <button class="p-2 rounded-r-lg bg-gray-400 flex items-center justify-center" @click="$fetch">
+                <font-awesome-icon :icon="['fas','search']" class="text-black-500"/>
             </button>
         </div>
         <!-- <select id="date" class="rounded-lg p-2 outline-none ml-8 cursor-pointer">
@@ -30,9 +29,9 @@
             <tr class="text-sm" v-for="(hasilcari,index) in caricctv" :key="index">
                 <td>{{hasilcari.merek}}</td>
                 <td>{{hasilcari.model}}</td>
-                <td>{{hasilcari.garansi}}</td>
-                <td class="py-3 flex">
-                    <NuxtLink :to="{name : 'master-update-updateid', params:{id : hasilcari.id} }">
+                <td>{{$moment(hasilcari.garansi).format('DD-MM-YYYY')}}</td>
+                <td class="py-3 flex justify-evenly">
+                    <NuxtLink :to="{name : 'master-update-updatecctv-cctv', params:{id : hasilcari.id} }">
                         <font-awesome-icon :icon="['fas','pencil-alt']" class="text-blue-500"/>
                     </NuxtLink>
                     <form @click="deleteData(hasilcari.id,nama.nama_tabel)" class="ml-4">
@@ -47,12 +46,12 @@
             <tr class="text-sm" v-for="(cctv,index) in cctvs" :key="index">
                 <td>{{cctv.merek}}</td>
                 <td>{{cctv.model}}</td>
-                <td>{{cctv.garansi}}</td>
-                <td class="py-3">
-                     <NuxtLink :to="{name : 'master-update-updateid', params:{id : cctv.id} }">
+                <td>{{$moment(cctv.garansi).format('DD-MM-YYYY')}}</td>
+                <td class="py-3 flex justify-evenly">
+                     <NuxtLink :to="{name : 'master-update-updatecctv-cctv', params:{id : cctv.id} }">
                         <font-awesome-icon :icon="['fas','pencil-alt']" class="text-blue-500"/>
                     </NuxtLink>
-                    <form @click="deleteData(cctv.id,nama.cctv)" class="ml-4">
+                    <form @click="deleteData(cctv.id,nama.nama_tabel)" class="ml-4">
                     <button type="submit">
                         <font-awesome-icon :icon="['fas','trash']" class="text-red-500"/>
                     </button> 
@@ -66,7 +65,7 @@
 
 <script>
 import axios from 'axios'
-
+import moment from 'moment'
 export default {
     data(){
         return{
@@ -91,11 +90,8 @@ export default {
         deleteData(id,nama){
             axios.post(`/server/master/delete/${id}/${nama}`)
         },
-        clearSearch(){
-            this.caribarang = ''
-            this.caricctv = []
-        },
         async caribarangcctv(){
+            this.caricctv = []
             const res = await axios.get(`http://localhost:3000/server/caricctv?cari=${this.caribarang}`)
             res.data.forEach(val =>{
                 this.caricctv.push(val)

@@ -1,7 +1,7 @@
 <template>
-<div class="bg-hero h-screen">
+<div class="bg-hero h-screen" >
     <div class="container mx-auto h-full py-5">
-        <header>
+        <header  v-if="isAuthenticated">
             <div class="flex justify-between items-center">
                 <div>
                     <p>{{user}}</p>
@@ -36,6 +36,9 @@
                 </div> -->
             </div>
         </header>
+        <!-- <div v-for="(error,index) in errors" :key="index">
+            <p>{{error.msg[0]}}</p>
+        </div> -->
         <section class="grid place-items-center h-5/6">
             <div class="grid grid-cols-3 h-3/4 w-4/5 place-items-center">
                 <div class="has-tooltip">
@@ -81,28 +84,28 @@
 
 <script>
 import axios from 'axios'
-// import { mapGetters, mapMutations } from 'vuex'
+import { mapGetters } from 'vuex'
 
 export default {
     data(){
         return{
             user : '',
             message : '',
+            errors:null,
         }
     },
     // middleware: 'auth',
-    // computed: {
-    //     ...mapGetters([
-    //     'user', 
-    //     'isLoggedIn'
-    // ])
+    computed: {
+        ...mapGetters([ 
+        'isAuthenticated','getUserInfo'
+    ])
         // loggedIn() {
         //     return this.$auth.loggedIn
         // },
         // user() {
         //     return this.$auth.user
         // }
-    // },
+    },
     async mounted(){
         // this.$nuxt.$on('auth',auth=>{
         //     this.auth = auth
@@ -119,7 +122,6 @@ export default {
             this.user = resp.data.nama
             // this.$nuxt.$emit('auth',true)
             // console.log(resp.data)
-            //  let response = await this.$auth.loginWith('local', {})
             // this.user = response.data.nama
             // this.$nuxt.$emit('auth',true)
             
