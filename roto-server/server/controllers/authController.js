@@ -22,16 +22,14 @@ module.exports.login = async (req, res) => {
           process.env.TOKEN_KEY
         )
         // res.header('auth-token', token).redirect('/homepage')
-        return (
-          res
-            // .cookie('authtoken', token, {
-            //   httpOnly: true,
-            //   maxAge: 60 * 60 * 24 * 1000,
-            // })
-            .json({ data: { user, token } })
-        )
+        res.json({ data: { token, user } })
+        // .cookie('authtoken', token, {
+        //   httpOnly: true,
+        //   maxAge: 60 * 60 * 24 * 1000,
+        // })
       } else {
-        return res.json({ msg: 'no data match' })
+        return res.json({ msg: 'data tidak cocok' })
+        // res.redirect('/')
       }
     } else {
       res.json({ msg: 'no data, enter name and password' })
@@ -46,16 +44,17 @@ module.exports.login = async (req, res) => {
 module.exports.homepage = async (req, res) => {
   let conn
   try {
-    const token = req.cookies['authtoken']
-    const verified = jwt.verify(token, process.env.TOKEN_KEY)
-
-    if (!verified) return res.status(401).send('unAuthenticated')
+    const tokenuser = req.cookies
+    const verified = jwt.verify(tokenuser, process.env.TOKEN_KEY)
+    console.log(verified)
+    if (!verified) return res.status(401).send('unAuthorized')
 
     let conn = await pool.getConnection()
 
     const user = await conn.query(`SELECT * FROM users WHERE id=${verified.id}`)
     const { sandi, ...data } = await user[0]
     res.send(data)
+    conn.release()
   } catch (err) {
     res.status(401).send({
       message: 'unAuthenticated user',

@@ -46,8 +46,8 @@
                 <td>{{hasilcari.peringkat_tegangan}}</td>
                 <td>{{hasilcari.peringkat_frekuensi}}</td>
                 <td>{{hasilcari.peringkat_tegangan_baterai}}</td>
-                <td>{{$moment(hasilcari.tahun).format('DD-MM-YYYY')}}</td>
-                <td>{{$moment(hasilcari.garansi).format('DD-MM-YYYY')}}</td>
+                <td class="text-xs">{{$moment(hasilcari.tahun).format('DD-MM-YYYY')}}</td>
+                <td class="text-xs">{{$moment(hasilcari.garansi).format('DD-MM-YYYY')}}</td>
                 <td class="py-3 flex justify-evenly w-full">
                     <NuxtLink :to="{name : 'master-update-updateups-ups', params:{id : hasilcari.id} }">
                         <font-awesome-icon :icon="['fas','pencil-alt']" class="text-blue-500"/>
@@ -72,8 +72,8 @@
                 <td>{{ups.peringkat_tegangan}}</td>
                 <td>{{ups.peringkat_frekuensi}}</td>
                 <td>{{ups.peringkat_tegangan_baterai}}</td>
-                <td>{{$moment(ups.tahun).format('DD-MM-YYYY')}}</td>
-                <td>{{$moment(ups.garansi).format('DD-MM-YYYY')}}</td>
+                <td class="text-xs">{{$moment(ups.tahun).format('DD-MM-YYYY')}}</td>
+                <td class="text-xs">{{$moment(ups.garansi).format('DD-MM-YYYY')}}</td>
                 <td class="py-3 flex justify-evenly w-full">
                     <NuxtLink :to="{name : 'master-update-updateups-ups', params:{id : ups.id} }">
                         <font-awesome-icon :icon="['fas','pencil-alt']" class="text-blue-500"/>

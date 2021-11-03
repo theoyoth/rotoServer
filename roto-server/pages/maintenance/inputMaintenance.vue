@@ -2,8 +2,8 @@
 <div class="bg-bg-gen min-h-screen">
     <InputHeader maintenance="maintenance"/>
     <section class="container mx-auto mt-8">
-    <form action="/server/inputmaintenance" method="post" class="w-3/4" id="inputmaintenance">
-        <div >
+    <form action="/server/inputmaintenance" method="post" class="w-11/12" id="inputmaintenance">
+        <div>
             <div class="grid grid-cols-3">
                 <div class="mb-4">
                     <label for="nama" class="block mb-2 text-sm">nama</label>
@@ -11,35 +11,35 @@
                 </div>
                 <div class="mb-4">
                     <label for="tanggal" class="block mb-2 text-sm">tanggal</label>
-                    <input type="date" v-model="tanggal" name="tanggal" id="tanggal" class="p-2 w-72 rounded-lg outline-none">
+                    <input type="date" :value="$moment().format('YYYY-MM-DD')" name="tanggal" id="tanggal" class="p-2 w-72 rounded-lg outline-none" required>
                 </div>
                 <div class="mb-4">
                     <label for="suhu" class="block mb-2 text-sm">suhu</label>
-                    <input type="text" v-model="suhu" name="suhu" id="suhu" class="p-2 w-72 rounded-lg outline-none">
+                    <input type="text" v-model="suhu" name="suhu" id="suhu" class="p-2 w-72 rounded-lg outline-none" required>
                 </div>
                 <div class="mb-4">
                     <label for="kelembapan" class="block mb-2 text-sm">kelembapan</label>
-                    <input type="text" v-model="kelembapan" name="kelembapan" id="kelembapan" class="p-2 w-72 rounded-lg outline-none">
+                    <input type="text" v-model="kelembapan" name="kelembapan" id="kelembapan" class="p-2 w-72 rounded-lg outline-none" required>
                 </div>
                 <div class="mb-4">
                     <label for="ac" class="block mb-2 text-sm">AC</label>
-                    <input type="text" v-model="ac" name="ac" id="ac" class="p-2 w-72 rounded-lg outline-none">
+                    <input type="text" v-model="ac" name="ac" id="ac" class="p-2 w-72 rounded-lg outline-none" required>
                 </div>
                 <div class="mb-4">
                     <label for="ups" class="block mb-2 text-sm">UPS</label>
-                    <input type="text" v-model="ups" name="ups" id="ups" class="p-2 w-72 rounded-lg outline-none">
+                    <input type="text" v-model="ups" name="ups" id="ups" class="p-2 w-72 rounded-lg outline-none" required>
                 </div>
                 <div class="mb-4">
                     <label for="baterai" class="block mb-2 text-sm">baterai</label>
-                    <input type="text" v-model="baterai" name="baterai" id="baterai" class="p-2 w-72 rounded-lg outline-none">
+                    <input type="text" v-model="baterai" name="baterai" id="baterai" class="p-2 w-72 rounded-lg outline-none" required>
                 </div>
                 <div class="mb-4">
                     <label for="network" class="block mb-2 text-sm">network</label>
-                    <input type="text" v-model="network" name="network" id="network" class="p-2 w-72 rounded-lg outline-none">
+                    <input type="text" v-model="network" name="network" id="network" class="p-2 w-72 rounded-lg outline-none" required>
                 </div>
                 <div class="mb-4">
                     <label for="server" class="block mb-2 text-sm">server</label>
-                    <input type="text" v-model="server" name="server" id="server" class="p-2 w-72 rounded-lg outline-none">
+                    <input type="text" v-model="server" name="server" id="server" class="p-2 w-72 rounded-lg outline-none" required>
                 </div>
                 <div class="mb-4">
                     <label for="keterangan" class="block mb-2 text-sm">keterangan</label>

@@ -24,11 +24,11 @@
                 </div>
                 <div class="mb-4">
                     <label for="berat" class="block mb-2 text-sm">berat</label>
-                    <input type="date" :value="raks.berat" name="berat" id="berat" class="p-2 w-72 rounded-lg outline-none">
+                    <input type="text" :value="raks.berat" name="berat" id="berat" class="p-2 w-72 rounded-lg outline-none">
                 </div>
                 <div class="mb-4">
                     <label for="tahun" class="block mb-2 text-sm">tahun</label>
-                    <input type="date" :value="raks.tahun" name="tahun" id="tahun" class="p-2 w-72 rounded-lg outline-none">
+                    <input type="date" :value="$moment(raks.tahun).format('YYYY-MM-DD')" name="tahun" id="tahun" class="p-2 w-72 rounded-lg outline-none">
                 </div>
                 
             </div>
@@ -41,6 +41,7 @@
 
 <script>
 import axios from 'axios'
+import moment from 'moment'
 
 export default {
     data(){

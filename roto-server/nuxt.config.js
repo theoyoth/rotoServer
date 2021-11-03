@@ -61,17 +61,13 @@ export default {
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
     baseURL: 'http://localhost:3000',
-    // credentials :true,
+    // credentials: true,
   },
   auth: {
     strategies: {
       local: {
-        user: {
-          property: 'data',
-          autoFetch: true,
-        },
         token: {
-          property: 'token',
+          property: 'data',
           global: true,
           // /required: true,
           // type: 'Bearer',
@@ -80,26 +76,25 @@ export default {
           login: {
             url: '/server/login',
             method: 'post',
-            // propertyName : 'token',
+            propertyName: 'data',
           },
           user: {
             url: '/server/homepage',
             method: 'get',
-            // propertyName:false,
+            propertyName: 'data',
           },
           logout: false,
         },
       },
     },
     redirect: {
-      login: '/',
+      login: '/homepage',
       logout: '/',
       user: '/homepage',
     },
     // rewriteRedirects: true,
   },
 
-  // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
     extend(config, {}) {
       config.node = {

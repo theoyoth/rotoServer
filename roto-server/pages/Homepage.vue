@@ -1,7 +1,7 @@
 <template>
 <div class="bg-hero h-screen" >
     <div class="container mx-auto h-full py-5">
-        <header  v-if="isAuthenticated">
+        <header>
             <div class="flex justify-between items-center">
                 <div>
                     <p>{{user}}</p>

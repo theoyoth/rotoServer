@@ -36,11 +36,11 @@
                 </div>
                 <div class="mb-4">
                     <label for="tahun" class="block mb-2 text-sm">tahun</label>
-                    <input type="text" :value="nass.tahun" name="tahun" id="tahun" class="p-2 w-72 rounded-lg outline-none">
+                    <input type="date" :value="$moment(nass.tahun).format('YYYY-MM-DD')" name="tahun" id="tahun" class="p-2 w-72 rounded-lg outline-none">
                 </div>
                 <div class="mb-4">
                     <label for="garansi" class="block mb-2 text-sm">garansi</label>
-                    <input type="text" :value="nass.garansi" name="garansi" id="garansi" class="p-2 w-72 rounded-lg outline-none">
+                    <input type="date" :value="$moment(nass.garansi).format('YYYY-MM-DD')" name="garansi" id="garansi" class="p-2 w-72 rounded-lg outline-none">
                 </div>
             </div>
         </div>

@@ -41,9 +41,9 @@
         </thead>
         <tbody v-if="caribarang !== ''" class="text-center bg-white bg-opacity-40">
             
-            <tr class="container py-2 px-3 rounded block m-auto mt-2" v-if="caribarang != cariserver">
+            <!-- <tr class="container py-2 px-3 rounded block m-auto mt-2" v-if="cariserver == caribarang">
             <p class="text-center text-lg font-semibold">tidak ada data</p>
-            </tr>
+            </tr> -->
             
             <tr class="text-sm" v-for="(hasilcari,index) in cariserver" :key="index">
                 <td>{{hasilcari.produk}}</td>
@@ -147,13 +147,6 @@ export default {
         catch(err) {
             console.error(err);
         };
-
-        this.$nuxt.$on('msgberhasil',tambahdata=>{
-            this.datamsg = tambahdata
-        })
-
-
-        // this.datamsg = data.data.msg
 
     }
 }

@@ -237,11 +237,15 @@ module.exports.mastercctv = async (req, res) => {
   }
 }
 module.exports.inputmastercctv = async (req, res) => {
+  const errors = validationResult(req)
+  if (!errors.isEmpty()) {
+    return res.json({ errors: errors.array() })
+  }
+
   let conn
+
   try {
-    const merek = req.body.merek
-    const model = req.body.model
-    const garansi = req.body.garansi
+    const { merek, model, garansi } = req.body
 
     conn = await pool.getConnection()
     const data = await conn.query(
@@ -340,13 +344,14 @@ module.exports.mastermonitor = async (req, res) => {
   }
 }
 module.exports.inputmastermonitor = async (req, res) => {
+  const errors = validationResult(req)
+  if (!errors.isEmpty()) {
+    return res.json({ errors: errors.array() })
+  }
+
   let conn
   try {
-    const merek = req.body.merek
-    const model = req.body.model
-    const tipe = req.body.tipe
-    const tahun = req.body.tahun
-    const garansi = req.body.garansi
+    const { merek, model, tipe, tahun, garansi } = req.body
 
     conn = await pool.getConnection()
     const data = await conn.query(

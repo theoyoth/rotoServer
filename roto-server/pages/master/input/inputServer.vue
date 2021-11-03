@@ -2,7 +2,11 @@
 <div class="bg-bg-gen min-h-screen">
     <InputHeader item="server"/>
     <section class="container mx-auto mt-8">
-    <form v-on:submit.prevent="inputDataServer" class="w-11/12">
+    <div v-for="(err,index) in errors" :key="index" class="bg-white w-1/4 rounded-lg mb-1 bg-opacity-90">
+        <li class="text-red-400 text-xs p-2">{{err.msg}}</li>
+    </div>
+
+    <form v-on:submit.prevent="inputDataServer" class="w-11/12 mt-10">
         <div >
             <div class="grid grid-cols-3 grid-rows-4">
                 <div class="mb-4 has-tooltip">
@@ -114,8 +118,7 @@ export default {
     },
     methods:{
         async inputDataServer(){
-            try{
-                const data = await axios.post('http://localhost:3000/server/master/inputserver',{
+                const res = await axios.post('http://localhost:3000/server/master/inputserver',{
                     produk : this.inputServer.produk,
                     merek : this.inputServer.merek,
                     model : this.inputServer.model,
@@ -128,19 +131,15 @@ export default {
                     tahun: this.inputServer.tahun,
                     garansi : this.inputServer.garansi,
                 })
-                // console.log(data.data.msg)
-                // this.$nuxt.$emit('msgberhasil',data.data.msg)
-                this.$router.push('/master/server')
-            }
-            catch(err){
-                if(err.response){
-                    this.errormsg = err.response.data.errors
-                    // console.log(err.response.data.errors)
-                    
-                    console.log(this.errormsg)
-                
+               
+                if(res.data.errors){
+                    this.errors=res.data.errors
+                    console.log(this.errors)
+                    this.$router.push('/master/input/inputserver')
                 }
-            }
+                else{
+                    this.$router.push('/master/server')
+                }
         }
     },
     

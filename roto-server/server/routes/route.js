@@ -12,29 +12,32 @@ app.use(cors())
 // app.get('/', maintenanceController.users)
 // app.get('/lokasiserver', maintenanceController.lokasiserver)
 app.get('/masterserver', masterController.masterserver)
-app.post('/inputmaintenance', maintenanceController.inputmaintenance)
-app.get('/inputmaintenance', maintenanceController.getInputMaintenance)
+
 // app.post('/inputmaintenance/hapus/:id', maintenanceController.deleteMaintenance)
 app.post(
   '/master/inputserver',
   [
-    check('produk').isAlpha().withMessage('harus berupa huruf'),
-    check('merek').isAlpha().withMessage('harus berupa huruf'),
+    check('produk').isAlpha().withMessage('produk harus berupa huruf'),
+    check('merek').isAlpha().withMessage('produk harus berupa huruf'),
     check('model')
       .isAlphanumeric()
-      .withMessage('harus berupa angka dan huruf bukan simbol'),
+      .withMessage('model harus berupa angka dan huruf bukan simbol'),
     check('processor')
       .isAlpha()
-      .withMessage('harus berupa angka dan huruf bukan simbol'),
-    check('memori').isNumeric().withMessage('harus berupa angka'),
-    check('internalStorage').isNumeric().withMessage('harus angka'),
+      .withMessage('processor harus berupa angka dan huruf bukan simbol'),
+    check('memori').isNumeric().withMessage('memori harus berupa angka'),
+    check('internalStorage')
+      .isNumeric()
+      .withMessage('internal storage harus berupa angka'),
     check('networkController')
       .isAlphanumeric()
-      .withMessage('harus berupa huruf'),
-    check('storage').isNumeric().withMessage('harus berupa angka'),
-    check('sumberDayaListrik').isNumeric().withMessage('harus berupa angka'),
-    check('tahun').isDate(),
-    check('garansi').isDate(),
+      .withMessage('network controller harus berupa huruf'),
+    check('storage').isNumeric().withMessage('storage harus berupa angka'),
+    check('sumberDayaListrik')
+      .isNumeric()
+      .withMessage('power supply harus berupa angka'),
+    check('tahun').isDate().notEmpty(),
+    check('garansi').isDate().notEmpty(),
   ],
   masterController.inputmasterserver
 )
@@ -47,13 +50,46 @@ app.post('/master/inputbaterai', masterController.inputmasterbaterai)
 app.get('/masterac', masterController.masterac)
 app.post('/master/inputac', masterController.inputmasterac)
 app.get('/mastercctv', masterController.mastercctv)
-app.post('/master/inputcctv', masterController.inputmastercctv)
+
+app.post(
+  '/master/inputcctv',
+  [
+    check('merek')
+      .isAlphanumeric()
+      .withMessage('merek harus berupa huruf dan angka bukan simbol')
+      .notEmpty()
+      .withMessage('merek harap di isi')
+      .escape(),
+    check('model')
+      .isAlphanumeric()
+      .withMessage('model masukan huruf dan angka jangan simbol')
+      .notEmpty()
+      .withMessage('model harap di isi')
+      .escape(),
+  ],
+  masterController.inputmastercctv
+)
+
 app.get('/masternetwork', masterController.masternetwork)
 app.post('/master/inputnetwork', masterController.inputmasternetwork)
 app.get('/masterapar', masterController.masterapar)
 app.post('/master/inputapar', masterController.inputmasterapar)
 app.get('/mastermonitor', masterController.mastermonitor)
-app.post('/master/inputmonitor', masterController.inputmastermonitor)
+app.post(
+  '/master/inputmonitor',
+  [
+    check('merek').isAlpha().withMessage('merek berupa huruf'),
+    check('model')
+      .isAlphanumeric()
+      .withMessage('model berupa angka dan huruf bukan simbol'),
+    check('tipe')
+      .isAlphanumeric()
+      .withMessage('tipe berupa huruf dan angka bukan simbol'),
+    check('tahun').notEmpty().withMessage('tahun harap di isi'),
+    check('garansi').notEmpty().withMessage('garansi harap di isi'),
+  ],
+  masterController.inputmastermonitor
+)
 app.get('/masterkeyboard', masterController.masterkeyboard)
 app.post('/master/inputkeyboard', masterController.inputmasterkeyboard)
 app.get('/mastermouse', masterController.mastermouse)
@@ -171,3 +207,18 @@ app.get('/carinas', masterController.caribarangnas)
 app.get('/carigenset', masterController.caribaranggenset)
 
 module.exports = app
+
+// ===============================================
+// MAINTENANCE SERVER
+app.post('/inputmaintenance', maintenanceController.inputmaintenance)
+app.get('/inputmaintenance', maintenanceController.getAllMaintenance)
+app.post('/maintenance/delete/:id', maintenanceController.deleteMaintenance)
+app.get('/maintenance/carimaintenance', maintenanceController.carimaintenance)
+app.get(
+  '/maintenance/getdatamaintenanceupdate/:id',
+  maintenanceController.getdatamaintenanceupdate
+)
+app.post(
+  '/maintenance/update/updatemaintenance',
+  maintenanceController.updateMaintenance
+)

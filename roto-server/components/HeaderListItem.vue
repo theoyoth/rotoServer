@@ -17,9 +17,9 @@
             </nuxt-link>
             </div>
             
-            <div @click="showGuide" v-show="maintenance || ambilbarang ||tambahbarang || gantibarang" class="w-8 h-8 bg-white rounded-full flex items-center justify-center transform hover:scale-95 transition ease-in duration-200 cursor-pointer hover:shadow-lg">
+            <!-- <div @click="showGuide" v-show="maintenance || ambilbarang ||tambahbarang || gantibarang" class="w-8 h-8 bg-white rounded-full flex items-center justify-center transform hover:scale-95 transition ease-in duration-200 cursor-pointer hover:shadow-lg">
                 <font-awesome-icon :icon="['fas','question']" class="text-black" />
-            </div>
+            </div> -->
             
             <nuxt-link v-show="server" :to="'/master/input/'+server" class="logout-btn flex rounded-md items-center">
                 <p class="font-medium text-xl mr-2">input</p>

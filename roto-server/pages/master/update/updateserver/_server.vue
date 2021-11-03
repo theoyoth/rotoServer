@@ -67,12 +67,12 @@
                 <div class="mb-4 has-tooltip">
                     <span class="tooltip text-xs rounded shadow-lg p-1 bg-gray-700 text-white ml-24">masukan tahun dimasukkan</span>
                     <label for="tahun" class="block mb-2 text-sm">tahun</label>
-                    <input type="date" :value="servers.tahun" name="tahun" id="tahun" class="p-2 w-72 rounded-lg outline-none" >
+                    <input :value="$moment(servers.tahun).format('YYYY-MM-DD')" type="date" name="tahun" id="tahun" class="p-2 w-72 rounded-lg outline-none" >
                 </div>
                 <div class="mb-4 has-tooltip">
                     <span class="tooltip text-xs rounded shadow-lg p-1 bg-gray-700 text-white ml-20">masukan tahun garansi berakhir</span>
                     <label for="garansi" class="block mb-2 text-sm">garansi</label>
-                    <input type="date" name="garansi" id="garansi" :value="servers.garansi" class="p-2 w-72 rounded-lg outline-none">
+                    <input type="date" name="garansi" id="garansi" :value="$moment(servers.garansi).format('YYYY-MM-DD')" class="p-2 w-72 rounded-lg outline-none">
                 </div>
             </div>
         </div>
@@ -84,6 +84,7 @@
 
 <script>
 import axios from 'axios'
+import moment from 'moment'
 
 export default {
  data(){
@@ -101,6 +102,8 @@ export default {
         .catch(err =>{
             console.log(err)
         })
+
+
     },
     // methods:{
     //     updateData(id){

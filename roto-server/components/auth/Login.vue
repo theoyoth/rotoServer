@@ -40,8 +40,8 @@
         </div>
         <div class="form-login flex flex-col justify-center w-80 px-5">
             <h1 class="text-center mb-4 text-3xl font-semibold">Login</h1>
-            <div v-for="(error,index) in errors" :key="index" class="mb-2">
-            <p>{{ error[0] }}</p>
+            <div v-show="msg" class="bg-red-400 p-1 rounded mb-4 text-center font-semibold">
+                <p>{{msg}}</p>
             </div>
             <form @submit.prevent="userLogin">
                 <input type="text" name="nama" placeholder="nama" class="rounded-lg mb-2 p-2 w-full outline-none" v-model="login.nama" required>
@@ -69,39 +69,32 @@ export default {
                 sandi: '',
 
             },
-            errors:null,
+            msg : ""
         }
     },
     methods:{
         // ...mapMutations(['setisauth']),
         async userLogin() {
-        try {
-            const response = await this.$auth.loginWith("local", { 
-           data: this.login
-            })
-            this.$router.push('/homepage')
-            console.log(response)
-        // this.setisauth(true)
-        // if (this.$auth.loggedIn) {
-        //     console.log('Successfully Logged In');
-        // }
-
-        } catch (err) {
-          this.errors = err.response.data.msg
-        }
+            try{
+                const res = await this.$auth.loginWith("local", { data: this.login})
+                console.log(res)
+                this.$router.push('/homepage')
+                if(res.data.msg){
+                    this.msg = res.data.msg
+                }
+            }
+            catch(err){ 
+                console.log(err)
+            }
+        }         
     }
-
-    },
-  
 }
+  
+
 </script>
 
 <style lang="scss">
 .background-image{
-    // background-image:url('../../assets/img/login-form.png');
-    // background-repeat: no-repeat;
-    // background-size: cover;
-    // background-position:0 0;
 
     .maintenance-login{
         background-color:rgba(255,255,255,0.4);

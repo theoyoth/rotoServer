@@ -2,17 +2,17 @@
 <div class="bg-hero h-screen">
     <HeaderListItem maintenance="maintenance" />
     <div class="container mx-auto flex mt-8 ">
-        <form class="flex" method="post" ref="formcari" id="formcari">
-            <input type="search" placeholder="cari" name="cari" v-model="cari" class="rounded-l-lg p-2 outline-none">
-            <button class="p-2 rounded-r-lg bg-white flex items-center justify-center">
-                <font-awesome-icon :icon="['fas','search']" class="text-black-500"/>
+        <div class="flex">
+            <input type="text" placeholder="cari" name="cari" v-model.lazy="carimaintenance" class="rounded-l-lg p-2 outline-none" @keyup.enter="$fetch">
+            <button class="p-2 rounded-r-lg bg-gray-600 flex items-center justify-center w-12" @click="$fetch">
+                <font-awesome-icon :icon="['fas','search']" class="text-white"/>
             </button>
-        </form>
-        <select id="date" ref="date" class="rounded-lg p-2 outline-none ml-8 cursor-pointer">
+        </div>
+        <!-- <select id="date" ref="date" class="rounded-lg p-2 outline-none ml-8 cursor-pointer">
             <option value="hari">hari</option>
             <option value="bulan">bulan</option>
             <option value="tahun">tahun</option>
-        </select>
+        </select> -->
     </div>
     <table class="table space-y-6 container mx-auto table-auto border-collapse border border-white mt-7" ref="listitem" id="listitem">
         <thead class="bg-white text-sm">
@@ -30,7 +30,31 @@
                 <th class="font-semibold" >aksi</th>
             </tr>
         </thead>
-        <tbody class="text-center bg-white bg-opacity-40">
+        <tbody v-if="carimaintenance !== ''" class="text-center bg-white bg-opacity-40">
+            <tr class="text-sm" v-for="(hasilcari,index) in hasilcarimaintenance" :key="index">
+                <td class="py-3">{{hasilcari.nama}}</td>
+                <td>{{$moment(hasilcari.tanggal).format("DD-MM-YYYY")}}</td>
+                <td>{{hasilcari.suhu}}</td>
+                <td>{{hasilcari.kelembapan}}</td>
+                <td>{{hasilcari.ac}}</td>
+                <td>{{hasilcari.ups}}</td>
+                <td>{{hasilcari.baterai}}</td>
+                <td>{{hasilcari.network}}</td>
+                <td>{{hasilcari.server}}</td>
+                <td>{{hasilcari.keterangan}}</td>
+                <td class="py-3 flex w-4">
+                     <NuxtLink :to="{name : 'maintenance-updatemaintenance-maintenance', params:{id : hasilcari.id} }">
+                        <font-awesome-icon :icon="['fas','pencil-alt']" class="text-blue-500"/>
+                    </NuxtLink>
+                    <form @click="deleteData(hasilcari.id)" class="ml-4">
+                    <button type="submit">
+                        <font-awesome-icon :icon="['fas','trash']" class="text-red-500"/>
+                    </button> 
+                    </form>
+                </td>
+            </tr>
+        </tbody> 
+        <tbody v-else class="text-center bg-white bg-opacity-40">
             <tr class="text-sm" v-for="(main,index) in hasilMaintenance" :key="index">
                 <td class="py-3">{{main.nama}}</td>
                 <td>{{$moment(main.tanggal).format("DD-MM-YYYY")}}</td>
@@ -43,12 +67,14 @@
                 <td>{{main.server}}</td>
                 <td>{{main.keterangan}}</td>
                 <td class="py-3 flex w-4">
-                    <a href="#">
+                     <NuxtLink :to="{name : 'maintenance-updatemaintenance-maintenance', params:{id : main.id} }">
                         <font-awesome-icon :icon="['fas','pencil-alt']" class="text-blue-500"/>
-                    </a>
-                    <a href="#" class="ml-4">
+                    </NuxtLink>
+                    <form @click="deleteData(main.id)" class="ml-4">
+                    <button type="submit">
                         <font-awesome-icon :icon="['fas','trash']" class="text-red-500"/>
-                    </a>
+                    </button> 
+                    </form>
                 </td>
             </tr>
         </tbody>   
@@ -63,24 +89,41 @@ import moment from 'moment'
 export default {
     data(){
         return{
-            cari:"",
+            carimaintenance:"",
             hasilMaintenance:[],
+            hasilcarimaintenance:[],
+        }
+    },   
+   
+    async fetch(){
+        if(this.carimaintenance !== ''){
+            await this.caridimaintenance()
+        return
         }
     },
-    props:['monitor','server','ups','baterai','rak','ac','cctv','network','apar','monitor','keyboard','mouse','nas','genset'],
-    
+    methods:{
+        deleteData(id){
+            axios.post(`/server/maintenance/delete/${id}`)
+        },
+        async caridimaintenance(){
+            this.hasilcarimaintenance = []
+            const res = await axios.get(`http://localhost:3000/server/maintenance/carimaintenance?cari=${this.carimaintenance}`)
+            res.data.forEach(val =>{
+                this.hasilcarimaintenance.push(val)
+            })
+        },
+    },
     mounted(){
         axios.get('http://localhost:3000/server/inputmaintenance')
             .then(resp => {
               resp.data.forEach(maintenance => {
-                //   console.log(maintenance.nama)
                   this.hasilMaintenance.push(maintenance)
               })
             })
             .catch(err => {
-                console.error(err);
+                console.log(err);
             });
-    }
+    },
 }
 </script>
 
