@@ -25,9 +25,9 @@ module.exports.masterserver = async (req, res) => {
 module.exports.inputmasterserver = async (req, res) => {
   const errors = validationResult(req)
   if (!errors.isEmpty()) {
-    console.log(errors.array())
-    // return res.json({ errors: errors.array() })
+    return res.json({ errors: errors.array() })
   }
+
   let conn
   try {
     const produk = req.body.produk
@@ -90,14 +90,14 @@ module.exports.masterrak = async (req, res) => {
   }
 }
 module.exports.inputmasterrak = async (req, res) => {
+  const errors = validationResult(req)
+  if (!errors.isEmpty()) {
+    return res.json({ errors: errors.array() })
+  }
+
   let conn
   try {
-    const tipeRak = req.body.tipeRak
-    const tipePintu = req.body.tipePintu
-    const namaProduk = req.body.namaProduk
-    const dimensi = req.body.dimensi
-    const berat = req.body.berat
-    const tahun = req.body.tahun
+    const { tipeRak, tipePintu, namaProduk, dimensi, tahun, berat } = req.body
 
     conn = await pool.getConnection()
     const data = await conn.query(
@@ -105,6 +105,7 @@ module.exports.inputmasterrak = async (req, res) => {
     )
 
     res.redirect('/master/rak')
+    conn.release()
   } catch (err) {
     console.log(err)
   } finally {
@@ -124,20 +125,27 @@ module.exports.masterups = async (req, res) => {
   }
 }
 module.exports.inputmasterups = async (req, res) => {
+  const errors = validationResult(req)
+  if (!errors.isEmpty()) {
+    return res.json({ errors: errors.array() })
+  }
+
   let conn
   try {
-    const model = req.body.model
-    const upsCriticalLoad = req.body.upsCriticalLoad
-    const upsCriticalTemperature = req.body.upsCriticalTemperature
-    const upsCriticalCapacity = req.body.upsCriticalCapacity
-    const nomorSerial = req.body.nomorSerial
-    const namaSistem = req.body.namaSistem
-    const manufaktur = req.body.manufaktur
-    const peringkatTegangan = req.body.peringkatTegangan
-    const peringkatFrekuensi = req.body.peringkatFrekuensi
-    const peringkatTeganganBaterai = req.body.peringkatTeganganBaterai
-    const tahun = req.body.tahun
-    const garansi = req.body.garansi
+    const {
+      model,
+      upsCriticalLoad,
+      upsCriticalTemperature,
+      upsCriticalCapacity,
+      nomorSerial,
+      namaSistem,
+      manufaktur,
+      peringkatTegangan,
+      peringkatFrekuensi,
+      peringkatTeganganBaterai,
+      tahun,
+      garansi,
+    } = req.body
 
     conn = await pool.getConnection()
     const data = await conn.query(
@@ -165,20 +173,23 @@ module.exports.masterbaterai = async (req, res) => {
   }
 }
 module.exports.inputmasterbaterai = async (req, res) => {
+  const errors = validationResult(req)
+  if (!errors.isEmpty()) {
+    return res.json({ errors: errors.array() })
+  }
+
   let conn
   try {
-    const accu = req.body.accu
-    const kuantitas = req.body.kuantitas
-    const tegangan = req.body.tegangan
-    const tahun = req.body.tahun
-    const garansi = req.body.garansi
+    const { accu, kuantitas, tegangan, tahun, garansi } = req.body
 
     conn = await pool.getConnection()
     const data = await conn.query(
       `INSERT INTO master_baterai VALUES ('','${accu}','${kuantitas}','${tegangan}','${tahun}','${garansi}')`
     )
-
-    res.redirect('/master/baterai')
+    if (data.affectedRows) {
+      return res.json({ msg: 'data berhasil di input' })
+    }
+    // res.redirect('/master/baterai')
   } catch (err) {
     console.log(err)
   } finally {
@@ -199,16 +210,23 @@ module.exports.masterac = async (req, res) => {
   }
 }
 module.exports.inputmasterac = async (req, res) => {
+  const errors = validationResult(req)
+  if (!errors.isEmpty()) {
+    return res.json({ errors: errors.array() })
+  }
+
   let conn
   try {
-    const merek = req.body.merek
-    const model = req.body.model
-    const sumberDayaListrik = req.body.sumberDayaListrik
-    const dimensi = req.body.dimensi
-    const konsumsiDaya = req.body.konsumsiDaya
-    const kapasitasPendingin = req.body.kapasitasPendingin
-    const tahun = req.body.tahun
-    const garansi = req.body.garansi
+    const {
+      merek,
+      model,
+      sumberDayaListrik,
+      dimensi,
+      konsumsiDaya,
+      kapasitasPendingin,
+      tahun,
+      garansi,
+    } = req.body
 
     conn = await pool.getConnection()
     const data = await conn.query(
@@ -274,15 +292,14 @@ module.exports.masternetwork = async (req, res) => {
   }
 }
 module.exports.inputmasternetwork = async (req, res) => {
+  const errors = validationResult(req)
+  if (!errors.isEmpty()) {
+    return res.json({ errors: errors.array() })
+  }
+
   let conn
   try {
-    const merek = req.body.merek
-    const model = req.body.model
-    const tipe = req.body.tipe
-    const kuantitas = req.body.kuantitas
-    const kanal = req.body.kanal
-    const tahun = req.body.tahun
-    const garansi = req.body.garansi
+    const { merek, model, tipe, kuantitas, kanal, tahun, garansi } = req.body
 
     conn = await pool.getConnection()
     const data = await conn.query(
@@ -290,6 +307,7 @@ module.exports.inputmasternetwork = async (req, res) => {
     )
 
     res.redirect('/master/network')
+    conn.release()
   } catch (err) {
     console.log(err)
   } finally {
@@ -310,13 +328,14 @@ module.exports.masterapar = async (req, res) => {
   }
 }
 module.exports.inputmasterapar = async (req, res) => {
+  const errors = validationResult(req)
+  if (!errors.isEmpty()) {
+    return res.json({ errors: errors.array() })
+  }
+
   let conn
   try {
-    const merek = req.body.merek
-    const model = req.body.model
-    const tipe = req.body.tipe
-    const tahun = req.body.tahun
-    const garansi = req.body.garansi
+    const { merek, model, tipe, tahun, garansi } = req.body
 
     conn = await pool.getConnection()
     const data = await conn.query(
@@ -379,13 +398,14 @@ module.exports.masterkeyboard = async (req, res) => {
   }
 }
 module.exports.inputmasterkeyboard = async (req, res) => {
+  const errors = validationResult(req)
+  if (!errors.isEmpty()) {
+    return res.json({ errors: errors.array() })
+  }
+
   let conn
   try {
-    const merek = req.body.merek
-    const model = req.body.model
-    const tipe = req.body.tipe
-    const tahun = req.body.tahun
-    const garansi = req.body.garansi
+    const { merek, model, tipe, tahun, garansi } = req.body
 
     conn = await pool.getConnection()
     const data = await conn.query(
@@ -413,13 +433,14 @@ module.exports.mastermouse = async (req, res) => {
   }
 }
 module.exports.inputmastermouse = async (req, res) => {
+  const errors = validationResult(req)
+  if (!errors.isEmpty()) {
+    return res.json({ errors: errors.array() })
+  }
+
   let conn
   try {
-    const merek = req.body.merek
-    const model = req.body.model
-    const tipe = req.body.tipe
-    const tahun = req.body.tahun
-    const garansi = req.body.garansi
+    const { merek, model, tipe, tahun, garansi } = req.body
 
     conn = await pool.getConnection()
     const data = await conn.query(
@@ -447,17 +468,24 @@ module.exports.masternas = async (req, res) => {
   }
 }
 module.exports.inputmasternas = async (req, res) => {
+  const errors = validationResult(req)
+  if (!errors.isEmpty()) {
+    return res.json({ errors: errors.array() })
+  }
+
   let conn
   try {
-    const merek = req.body.merek
-    const model = req.body.model
-    const processor = req.body.processor
-    const storage = req.body.storage
-    const tipe = req.body.tipe
-    const cpu = req.body.cpu
-    const raid = req.body.raid
-    const tahun = req.body.tahun
-    const garansi = req.body.garansi
+    const {
+      merek,
+      model,
+      processor,
+      storage,
+      tipe,
+      cpu,
+      raid,
+      tahun,
+      garansi,
+    } = req.body
 
     conn = await pool.getConnection()
     const data = await conn.query(
@@ -485,13 +513,14 @@ module.exports.mastergenset = async (req, res) => {
   }
 }
 module.exports.inputmastergenset = async (req, res) => {
+  const errors = validationResult(req)
+  if (!errors.isEmpty()) {
+    return res.json({ errors: errors.array() })
+  }
+
   let conn
   try {
-    const merek = req.body.merek
-    const model = req.body.model
-    const tipe = req.body.tipe
-    const tahun = req.body.tahun
-    const garansi = req.body.garansi
+    const { merek, model, tipe, tahun, garansi } = req.body
 
     conn = await pool.getConnection()
     const data = await conn.query(
@@ -949,20 +978,22 @@ module.exports.masternasgetdata = async (req, res) => {
 module.exports.inputmasternasupdate = async (req, res) => {
   let conn
   try {
-    const id = req.body.id
-    const merek = req.body.merek
-    const model = req.body.model
-    const tipe = req.body.tipe
-    const storage = req.body.storage
-    const processor = req.body.processor
-    const cpu = req.body.cpu
-    const raid = req.body.raid
-    const tahun = req.body.tahun
-    const garansi = req.body.garansi
+    const {
+      id,
+      merek,
+      model,
+      tipe,
+      storage,
+      processor,
+      cpu,
+      raid,
+      tahun,
+      garansi,
+    } = req.body
 
     conn = await pool.getConnection()
     await conn.query(
-      `UPDATE master_nas SET '${merek}','${model}','${processor}','${storage}','${tipe}','${cpu}','${raid}','${tahun}','${garansi}' WHERE id=${id}`
+      `UPDATE master_nas SET merek='${merek}',model='${model}',processor='${processor}',storage='${storage}',tipe='${tipe}',cpu='${cpu}',raid='${raid}',tahun='${tahun}',garansi='${garansi}' WHERE id=${id}`
     )
     res.redirect('/master/nas')
     conn.release()
@@ -1029,7 +1060,6 @@ module.exports.caribarangserver = async (req, res) => {
 }
 module.exports.caribarangrak = async (req, res) => {
   let conn
-
   try {
     const value = req.query.cari
 

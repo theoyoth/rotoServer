@@ -2,11 +2,14 @@
 <div class="bg-bg-gen min-h-screen">
     <InputHeader item="server"/>
     <section class="container mx-auto mt-8">
-    <div v-for="(err,index) in errors" :key="index" class="bg-white w-1/4 rounded-lg mb-1 bg-opacity-90">
-        <li class="text-red-400 text-xs p-2">{{err.msg}}</li>
+    
+    <div class="grid grid-cols-3 w-4/5">
+        <div v-for="(err,index) in errors" :key="index" class="bg-white w-1/4 rounded-lg mb-1 bg-opacity-90">
+            <li class="text-red-400 text-xs p-2">{{err.msg}}</li>
+        </div>
     </div>
 
-    <form v-on:submit.prevent="inputDataServer" class="w-11/12 mt-10">
+    <form v-on:submit.prevent="postInputServer" class="w-11/12 mt-10">
         <div >
             <div class="grid grid-cols-3 grid-rows-4">
                 <div class="mb-4 has-tooltip">
@@ -37,8 +40,8 @@
                 <div class="mb-4 has-tooltip">
                     <span class="tooltip text-xs rounded shadow-lg p-1 bg-gray-700 text-white ml-32">masukan jumlah memori</span>
                     <label for="memori" class="block mb-2 text-sm">memori</label>
-                    <input type="number" name="memori" id="memori" class="p-2 w-72 rounded-lg outline-none" v-model="inputServer.memori" required >
-                    <select name="kapasitas" id="kapasitas" class="p-2 rounded">
+                    <input type="number" name="memori" id="memori" class="p-2 w-72 rounded-l-lg outline-none" v-model="inputServer.memori" required>
+                    <select name="kapasitas" id="kapasitas" class="p-2 rounded-r-lg outline-none -ml-2">
                         <option value="gb">GB</option>
                         <option value="tb">TB</option>
                     </select>
@@ -47,8 +50,8 @@
                 <div class="mb-4 has-tooltip">
                     <span class="tooltip text-xs rounded shadow-lg p-1 bg-gray-700 text-white ml-20">masukan jumlah internal storage</span>
                     <label for="internalStorage" class="block mb-2 text-sm">internal Storage</label>
-                    <input type="text" name="internalStorage" id="internalStorage" class="p-2 w-72 rounded-lg outline-none" v-model="inputServer.internalStorage" required>
-                    <select name="kapasitas" id="kapasitas" class="p-2 rounded">
+                    <input type="text" name="internalStorage" id="internalStorage" class="p-2 w-72 rounded-l-lg outline-none" v-model="inputServer.internalStorage" required>
+                    <select name="kapasitas" id="kapasitas" class="p-2 rounded-r-lg -ml-2 outline-none">
                         <option value="gb">GB</option>
                         <option value="tb">TB</option>
                     </select>
@@ -61,17 +64,17 @@
                 <div class="mb-4 has-tooltip">
                     <span class="tooltip text-xs rounded shadow-lg p-1 bg-gray-700 text-white ml-32">masukan jumlah storage</span>
                     <label for="storage" class="block mb-2 text-sm">Storage</label>
-                    <input type="text" name="storage" id="storage" class="p-2 w-72 rounded-lg outline-none" v-model="inputServer.storage" required>
-                    <select name="kapasitas" id="kapasitas" class="p-2 rounded">
+                    <input type="text" name="storage" id="storage" class="p-2 w-72 rounded-l-lg outline-none" v-model="inputServer.storage" required>
+                    <select name="kapasitas" id="kapasitas" class="p-2 outline-none rounded-r-lg -ml-2">
                         <option value="gb">GB</option>
                         <option value="tb">TB</option>
                     </select>
                 </div>
                 <div class="mb-4 has-tooltip relative">
                     <span class="tooltip text-xs rounded shadow-lg p-1 bg-gray-700 text-white ml-20">masukan besar sumber daya listrik</span>
-                    <label for="sumberDayaListrik" class="block mb-2 text-sm">power supply</label>
-                    <input type="text" name="sumberDayaListrik" id="sumberDayaListrik" class="p-2 w-72 rounded-lg outline-none" v-model="inputServer.sumberDayaListrik" required>
-                    <input type="text" value="watt" readonly="readonly" class="absolute w-14 right-28 bottom-2 p-1 rounded">
+                    <label for="sumberDayaListrik" class="block mb-2 text-sm">power supply (dalam watt)</label>
+                    <input type="text" name="sumberDayaListrik" id="sumberDayaListrik" class="p-2 w-72 rounded-lg outline-none " v-model="inputServer.sumberDayaListrik" required>
+                    <!-- <input type="text" value="watt" readonly="readonly" class="absolute w-14 right-28 bottom-2 p-1 rounded"> -->
                 </div>
                 <div class="mb-4 has-tooltip">
                     <span class="tooltip text-xs rounded shadow-lg p-1 bg-gray-700 text-white ml-24">masukan tahun dimasukkan</span>
@@ -94,12 +97,11 @@
 
 <script>
 import axios from 'axios'
+import moment from 'moment'
 export default {
     data(){
         return {
             item : "server",
-            errormsg :'',
-            datamsg:'',
             inputServer : {
                 produk:"",
                 merek : "",
@@ -112,12 +114,13 @@ export default {
                 sumberDayaListrik : "",
                 tahun : "",
                 garansi : "",
-            }
+            },
+            errors:"",
 
         }
     },
     methods:{
-        async inputDataServer(){
+        async postInputServer(){
                 const res = await axios.post('http://localhost:3000/server/master/inputserver',{
                     produk : this.inputServer.produk,
                     merek : this.inputServer.merek,
@@ -134,7 +137,6 @@ export default {
                
                 if(res.data.errors){
                     this.errors=res.data.errors
-                    console.log(this.errors)
                     this.$router.push('/master/input/inputserver')
                 }
                 else{
@@ -142,6 +144,9 @@ export default {
                 }
         }
     },
+    mounted(){
+        this.inputServer.tahun = moment().format('YYYY-MM-DD')
+    }
     
 }
 </script>

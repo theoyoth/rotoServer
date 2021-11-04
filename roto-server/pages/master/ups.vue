@@ -1,12 +1,12 @@
 <template>
 <div class="bg-hero min-h-screen">
-    <ListItem :ups="master" />
+    <HeaderListItem :ups="master.nama"/>
+    <p class="text-center text-lg">Halaman master UPS</p>
     <div class="container mx-auto flex mt-8">
         <div class="flex">
             <input type="text" placeholder="cari" name="cari" v-model.lazy="caribarang" @keyup.enter="$fetch" class="rounded-l-lg p-2 outline-none">
             <button class="p-2 rounded-r-lg bg-gray-400 flex items-center justify-center" @click="$fetch">
                 <font-awesome-icon :icon="['fas','search']" class="text-black-500"/>
-                <!-- <p>hapus</p> -->
             </button>
         </div>
         <!-- <select id="date" class="rounded-lg p-2 outline-none ml-8 cursor-pointer">

@@ -2,6 +2,13 @@
   <div class="bg-bg-gen min-h-screen">
     <InputHeader item="NAS"/>
     <section class="container mx-auto mt-8">
+
+    <!-- <div class="grid grid-cols-3 w-11/12">
+        <div v-for="(err,index) in errors" :key="index" class="bg-white w-11/12 rounded-lg mb-1 bg-opacity-90">
+            <li class="text-red-400 text-xs p-2">{{err.msg}}</li>
+        </div>
+    </div> -->
+
     <form action="/server/master/nas/update/updatenas" method="post" class="w-11/12">
         <div>
             <input type="hidden" name="id" :value="nass.id">
@@ -21,6 +28,10 @@
                 <div class="mb-4">
                     <label for="storage" class="block mb-2 text-sm">storage</label>
                     <input type="text" :value="nass.storage" name="storage" id="storage" class="p-2 w-72 rounded-lg outline-none">
+                    <select name="storage" id="storage" class="p-2 rounded-r-lg -ml-2">
+                        <option value="0">GB</option>
+                        <option value="1">TB</option>
+                    </select>
                 </div>
                 <div class="mb-4">
                     <label for="processor" class="block mb-2 text-sm">processor</label>
@@ -44,7 +55,7 @@
                 </div>
             </div>
         </div>
-        <button class="bg-blue-400 shadow-md rounded-lg w-28 h-10 mt-8" type="submit">ubah</button>
+        <button class="bg-blue-400 shadow-md rounded-lg w-28 h-10 mt-8 outline-none" type="submit">ubah</button>
     </form>
 </section>
 </div>
@@ -52,10 +63,12 @@
 
 <script>
 import axios from 'axios'
+import moment from 'moment'
 export default {
   data(){
         return{
             nass:'',
+            errors:"",
         }
     },
     mounted(){

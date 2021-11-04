@@ -1,6 +1,7 @@
 <template>
 <div class="bg-hero min-h-screen">
-    <ListItem :monitor="master"/>
+    <HeaderListItem :monitor="master.nama"/>
+    <p class="text-center text-lg">Halaman master Monitor</p>
     <div class="container mx-auto flex mt-8">
         <div class="flex">
             <input type="text" placeholder="cari" name="cari" v-model.lazy="caribarang" @keyup.enter="$fetch" class="rounded-l-lg p-2 outline-none">
