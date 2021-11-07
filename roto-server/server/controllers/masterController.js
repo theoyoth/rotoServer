@@ -30,24 +30,28 @@ module.exports.inputmasterserver = async (req, res) => {
 
   let conn
   try {
-    const produk = req.body.produk
-    const merek = req.body.merek
-    const model = req.body.model
-    const processor = req.body.processor
-    const memori = req.body.memori
-    const internalStorage = req.body.internalStorage
-    const networkController = req.body.networkController
-    const storage = req.body.storage
-    const sumberDayaListrik = req.body.sumberDayaListrik
-    const tahun = req.body.tahun
-    const garansi = req.body.garansi
+    const {
+      produk,
+      merek,
+      model,
+      processor,
+      memori,
+      internalStorage,
+      networkController,
+      storage,
+      sumberDayaListrik,
+      tahun,
+      garansi,
+    } = req.body
 
     conn = await pool.getConnection()
     const data = await conn.query(
       `INSERT INTO master_server VALUES ('','${produk}','${merek}','${model}','${processor}','${memori}','${internalStorage}','${networkController}','${storage}','${sumberDayaListrik}','${tahun}','${garansi}')`
     )
+    // console.log(data)
+    // req.flash('sukses', 'data ditambahkan')
     if (data.affectedRows > 0) {
-      return res.json({ msg: 'data ditambahkan' })
+      res.redirect('/master/server')
     } else {
       return res
         .json({ msg: 'gagal di input' })
@@ -270,7 +274,7 @@ module.exports.inputmastercctv = async (req, res) => {
       `INSERT INTO master_cctv VALUES ('','${merek}','${model}','${garansi}')`
     )
 
-    res.redirect('/master/cctv')
+    res.json({ msg: 'data berhasil di tambah' })
     conn.release()
   } catch (err) {
     console.log(err)

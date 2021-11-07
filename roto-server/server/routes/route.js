@@ -1,20 +1,19 @@
 const maintenanceController = require('../controllers/maintenanceController.js')
 const masterController = require('../controllers/masterController.js')
 const authController = require('../controllers/authController.js')
-const { auth } = require('../verifyToken.js')
-const { userEdp } = require('../middleware/userAuthorization')
+// const { auth } = require('../verifyToken.js')
+const { isAuth } = require('../middleware/userAuthorization.js')
 const { check, validationResult } = require('express-validator')
 const express = require('express')
-const app = express()
-const cors = require('cors')
-app.use(cors())
+const router = express.Router()
+// const app = express()
 
 // app.get('/', maintenanceController.users)
 // app.get('/lokasiserver', maintenanceController.lokasiserver)
-app.get('/masterserver', masterController.masterserver)
+router.get('/masterserver', masterController.masterserver)
 
-// app.post('/inputmaintenance/hapus/:id', maintenanceController.deleteMaintenance)
-app.post(
+// router.post('/inputmaintenance/hapus/:id', maintenanceController.deleteMaintenance)
+router.post(
   '/master/inputserver',
   [
     check('produk')
@@ -22,31 +21,44 @@ app.post(
       .withMessage('produk harus berupa huruf'),
     check('merek')
       .isAlpha('en-US', { ignore: '^s$' })
-      .withMessage('produk harus berupa huruf'),
+      .withMessage('merek harus berupa huruf'),
     check('model')
       .isAlphanumeric('en-US', { ignore: '^s$' })
       .withMessage('model harus berupa angka dan huruf bukan simbol'),
     check('processor')
-      .isAlpha('en-US', { ignore: '^s$' })
+      .isAlphanumeric('en-US', { ignore: '^s$' })
       .withMessage('processor harus berupa angka dan huruf bukan simbol'),
-    check('memori').isNumeric().withMessage('memori harus berupa angka'),
+    check('memori')
+      .isLength({ min: 1, max: 4 })
+      .withMessage('memori maksimal 4 digit')
+      .isNumeric()
+      .withMessage('memori harus berupa angka'),
     check('internalStorage')
+      .isLength({ min: 1, max: 4 })
+      .withMessage('internal storage maksimal 4 digit')
       .isNumeric()
       .withMessage('internal storage harus berupa angka'),
     check('networkController')
       .isAlphanumeric('en-US', { ignore: '^s$' })
       .withMessage('network controller harus berupa huruf'),
-    check('storage').isNumeric().withMessage('storage harus berupa angka'),
+    check('storage')
+      .isLength({ min: 1, max: 4 })
+      .withMessage('storage maksimal 4 digit')
+      .isNumeric()
+      .withMessage('storage harus berupa angka'),
     check('sumberDayaListrik')
       .isNumeric()
       .withMessage('power supply harus berupa angka'),
-    check('tahun').isDate().notEmpty(),
-    check('garansi').isDate().notEmpty(),
+    check('tahun').isDate().notEmpty().withMessage('tahun tidak boleh kosong'),
+    check('garansi')
+      .isDate()
+      .notEmpty()
+      .withMessage('garansi tidak boleh kosong'),
   ],
   masterController.inputmasterserver
 )
-app.get('/masterrak', masterController.masterrak)
-app.post(
+router.get('/masterrak', masterController.masterrak)
+router.post(
   '/master/inputrak',
   [
     check('tipeRak')
@@ -78,8 +90,8 @@ app.post(
   ],
   masterController.inputmasterrak
 )
-app.get('/masterups', masterController.masterups)
-app.post(
+router.get('/masterups', masterController.masterups)
+router.post(
   '/master/inputups',
   [
     check('model')
@@ -156,8 +168,8 @@ app.post(
   ],
   masterController.inputmasterups
 )
-app.get('/masterbaterai', masterController.masterbaterai)
-app.post(
+router.get('/masterbaterai', masterController.masterbaterai)
+router.post(
   '/master/inputbaterai',
   [
     check('accu')
@@ -186,8 +198,8 @@ app.post(
   ],
   masterController.inputmasterbaterai
 )
-app.get('/masterac', masterController.masterac)
-app.post(
+router.get('/masterac', masterController.masterac)
+router.post(
   '/master/inputac',
   [
     check('merek')
@@ -225,9 +237,9 @@ app.post(
   ],
   masterController.inputmasterac
 )
-app.get('/mastercctv', masterController.mastercctv)
+router.get('/mastercctv', masterController.mastercctv)
 
-app.post(
+router.post(
   '/master/inputcctv',
   [
     check('merek')
@@ -246,8 +258,8 @@ app.post(
   masterController.inputmastercctv
 )
 
-app.get('/masternetwork', masterController.masternetwork)
-app.post(
+router.get('/masternetwork', masterController.masternetwork)
+router.post(
   '/master/inputnetwork',
   [
     check('merek')
@@ -285,8 +297,8 @@ app.post(
   ],
   masterController.inputmasternetwork
 )
-app.get('/masterapar', masterController.masterapar)
-app.post(
+router.get('/masterapar', masterController.masterapar)
+router.post(
   '/master/inputapar',
   [
     check('merek')
@@ -309,8 +321,8 @@ app.post(
   ],
   masterController.inputmasterapar
 )
-app.get('/mastermonitor', masterController.mastermonitor)
-app.post(
+router.get('/mastermonitor', masterController.mastermonitor)
+router.post(
   '/master/inputmonitor',
   [
     check('merek')
@@ -336,8 +348,8 @@ app.post(
   ],
   masterController.inputmastermonitor
 )
-app.get('/masterkeyboard', masterController.masterkeyboard)
-app.post(
+router.get('/masterkeyboard', masterController.masterkeyboard)
+router.post(
   '/master/inputkeyboard',
   [
     check('merek')
@@ -360,8 +372,8 @@ app.post(
   ],
   masterController.inputmasterkeyboard
 )
-app.get('/mastermouse', masterController.mastermouse)
-app.post(
+router.get('/mastermouse', masterController.mastermouse)
+router.post(
   '/master/inputmouse',
   [
     check('merek')
@@ -387,8 +399,8 @@ app.post(
   ],
   masterController.inputmastermouse
 )
-app.get('/masternas', masterController.masternas)
-app.post(
+router.get('/masternas', masterController.masternas)
+router.post(
   '/master/inputnas',
   [
     check('merek')
@@ -440,8 +452,8 @@ app.post(
   ],
   masterController.inputmasternas
 )
-app.get('/mastergenset', masterController.mastergenset)
-app.post(
+router.get('/mastergenset', masterController.mastergenset)
+router.post(
   '/master/inputgenset',
   [
     check('merek')
@@ -468,126 +480,147 @@ app.post(
   masterController.inputmastergenset
 )
 
-app.post('/master/delete/:id/:nama', masterController.deletemaster)
+router.post('/master/delete/:id/:nama', masterController.deletemaster)
 
 // update master
-app.get('/master/update/updateserver/:id', masterController.masterservergetdata)
-app.post(
+router.get(
+  '/master/update/updateserver/:id',
+  masterController.masterservergetdata
+)
+router.post(
   '/master/server/update/updateserver',
   masterController.inputmasterserverupdate
 )
-app.get('/master/update/updaterak/:id', masterController.masterrakgetdata)
-app.post('/master/rak/update/updaterak', masterController.inputmasterrakupdate)
+router.get('/master/update/updaterak/:id', masterController.masterrakgetdata)
+router.post(
+  '/master/rak/update/updaterak',
+  masterController.inputmasterrakupdate
+)
 
-app.get('/master/update/updateups/:id', masterController.masterupsgetdata)
-app.post('/master/ups/update/updateups', masterController.inputmasterupsupdate)
+router.get('/master/update/updateups/:id', masterController.masterupsgetdata)
+router.post(
+  '/master/ups/update/updateups',
+  masterController.inputmasterupsupdate
+)
 
-app.get(
+router.get(
   '/master/update/updatebaterai/:id',
   masterController.masterbateraigetdata
 )
-app.post(
+router.post(
   '/master/baterai/update/updatebaterai',
   masterController.inputmasterbateraiupdate
 )
 
-app.get('/master/update/updateac/:id', masterController.masteracgetdata)
-app.post('/master/ac/update/updateac', masterController.inputmasteracupdate)
+router.get('/master/update/updateac/:id', masterController.masteracgetdata)
+router.post('/master/ac/update/updateac', masterController.inputmasteracupdate)
 
-app.get('/master/update/updatecctv/:id', masterController.mastercctvgetdata)
-app.post(
+router.get('/master/update/updatecctv/:id', masterController.mastercctvgetdata)
+router.post(
   '/master/cctv/update/updatecctv',
   masterController.inputmastercctvupdate
 )
 
-app.get(
+router.get(
   '/master/update/updatenetwork/:id',
   masterController.masternetworkgetdata
 )
-app.post(
+router.post(
   '/master/network/update/updatenetwork',
   masterController.inputmasternetworkupdate
 )
 
-app.get('/master/update/updateapar/:id', masterController.masterapargetdata)
-app.post(
+router.get('/master/update/updateapar/:id', masterController.masterapargetdata)
+router.post(
   '/master/apar/update/updateapar',
   masterController.inputmasteraparupdate
 )
 
-app.get(
+router.get(
   '/master/update/updatemonitor/:id',
   masterController.mastermonitorgetdata
 )
-app.post(
+router.post(
   '/master/monitor/update/updatemonitor',
   masterController.inputmastermonitorupdate
 )
 
-app.get(
+router.get(
   '/master/update/updatekeyboard/:id',
   masterController.masterkeyboardgetdata
 )
-app.post(
+router.post(
   '/master/keyboard/update/updatekeyboard',
   masterController.inputmasterkeyboardupdate
 )
 
-app.get('/master/update/updatemouse/:id', masterController.mastermousegetdata)
-app.post(
+router.get(
+  '/master/update/updatemouse/:id',
+  masterController.mastermousegetdata
+)
+router.post(
   '/master/mouse/update/updatemouse',
   masterController.inputmastermouseupdate
 )
 
-app.get('/master/update/updatenas/:id', masterController.masternasgetdata)
-app.post('/master/nas/update/updatenas', masterController.inputmasternasupdate)
+router.get('/master/update/updatenas/:id', masterController.masternasgetdata)
+router.post(
+  '/master/nas/update/updatenas',
+  masterController.inputmasternasupdate
+)
 
-app.get('/master/update/updategenset/:id', masterController.mastergensetgetdata)
-app.post(
+router.get(
+  '/master/update/updategenset/:id',
+  masterController.mastergensetgetdata
+)
+router.post(
   '/master/genset/update/updategenset',
   masterController.inputmastergensetupdate
 )
 // ===============================================================
 // login
-app.post('/login', authController.login)
+router.post('/login', authController.login)
 // homepage when login success
-app.get('/homepage', authController.homepage)
+router.get('/homepage', authController.homepage)
 // logout
-app.post('/logout', async (req, res) => {
-  res.cookie('authtoken', '', { maxAge: 0 })
-  res.send({
-    message: 'you are success to logout',
-  })
-})
+// router.post('/logout', async (req, res) => {
+//   res.cookie('authtoken', '', { maxAge: 0 })
+//   res.send({
+//     message: 'you are success to logout',
+//   })
+// })
 
-// cari barang
-app.get('/cariserver', masterController.caribarangserver)
-app.get('/carirak', masterController.caribarangrak)
-app.get('/cariups', masterController.caribarangups)
-app.get('/caribaterai', masterController.caribarangbaterai)
-app.get('/cariac', masterController.caribarangac)
-app.get('/caricctv', masterController.caribarangcctv)
-app.get('/carinetwork', masterController.caribarangnetwork)
-app.get('/cariapar', masterController.caribarangapar)
-app.get('/carimonitor', masterController.caribarangmonitor)
-app.get('/carikeyboard', masterController.caribarangkeyboard)
-app.get('/carimouse', masterController.caribarangmouse)
-app.get('/carinas', masterController.caribarangnas)
-app.get('/carigenset', masterController.caribaranggenset)
-
-module.exports = app
+// cari barang ===================================================
+router.get('/cariserver', masterController.caribarangserver)
+router.get('/carirak', masterController.caribarangrak)
+router.get('/cariups', masterController.caribarangups)
+router.get('/caribaterai', masterController.caribarangbaterai)
+router.get('/cariac', masterController.caribarangac)
+router.get('/caricctv', masterController.caribarangcctv)
+router.get('/carinetwork', masterController.caribarangnetwork)
+router.get('/cariapar', masterController.caribarangapar)
+router.get('/carimonitor', masterController.caribarangmonitor)
+router.get('/carikeyboard', masterController.caribarangkeyboard)
+router.get('/carimouse', masterController.caribarangmouse)
+router.get('/carinas', masterController.caribarangnas)
+router.get('/carigenset', masterController.caribaranggenset)
 
 // ===============================================
 // MAINTENANCE SERVER
-app.post('/inputmaintenance', maintenanceController.inputmaintenance)
-app.get('/inputmaintenance', maintenanceController.getAllMaintenance)
-app.post('/maintenance/delete/:id', maintenanceController.deleteMaintenance)
-app.get('/maintenance/carimaintenance', maintenanceController.carimaintenance)
-app.get(
+router.post('/inputmaintenance', maintenanceController.inputmaintenance)
+router.get('/inputmaintenance', maintenanceController.getAllMaintenance)
+router.post('/maintenance/delete/:id', maintenanceController.deleteMaintenance)
+router.get(
+  '/maintenance/carimaintenance',
+  maintenanceController.carimaintenance
+)
+router.get(
   '/maintenance/getdatamaintenanceupdate/:id',
   maintenanceController.getdatamaintenanceupdate
 )
-app.post(
+router.post(
   '/maintenance/update/updatemaintenance',
   maintenanceController.updateMaintenance
 )
+
+module.exports = router

@@ -96,7 +96,7 @@ export default {
     },
     methods:{
         deleteData(id,nama){
-            axios.post(`/server/master/delete/${id}/${nama}`)
+            axios.post(`http://localhost:3000/server/master/delete/${id}/${nama}`)
         },
         clearSearch(){
             this.caribarang = ''

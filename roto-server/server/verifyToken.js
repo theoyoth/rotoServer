@@ -3,7 +3,6 @@ const pool = require('./db.js')
 
 module.exports.auth = async (req, res, next) => {
   try {
-    const token = req.cookies['authtoken']
     const verified = jwt.verify(token, process.env.TOKEN_KEY)
 
     if (!verified) return res.status(401).send('unAuthenticated')

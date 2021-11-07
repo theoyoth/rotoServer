@@ -1,11 +1,12 @@
 const express = require('express')
 const cors = require('cors')
+const session = require('express-session')
 const cookieParser = require('cookie-parser')
-const { loadNuxt, build } = require('nuxt')
-const { flash } = require('express-flash-message')
+// const { loadNuxt, build } = require('nuxt')
+// const { flash } = require('express-flash-message')
+const flash = require('connect-flash')
 const rute = require('./routes/route')
 const app = express()
-const isDev = 'development' !== 'production'
 app.use(cookieParser())
 app.use(
   cors({
@@ -13,24 +14,26 @@ app.use(
     origin: 'http://localhost:3000',
   })
 )
-
+// app.use(
+//   session({
+//     secret: 'codesecret',
+//     saveUninitialized: true,
+//     resave: true,
+//   })
+// )
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
+// app.use((req, res, next) => {
+//   res.setHeader('Access-Control-Allow-Origin', '*')
+//   res.setHeader(
+//     'Access-Control-Allow-Methods',
+//     'OPTIONS, GET, POST, PUT, PATCH, DELETE'
+//   )
+//   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, authorization')
+//   next()
+// })
 app.use(rute)
-
-// async function start() {
-// // We get Nuxt instance
-// const nuxt = await loadNuxt('dev')
-
-// // Render every route with Nuxt
-// app.use(nuxt.render)
-
-// // Build only in dev mode with hot-reloading
-// if (isDev) {
-//   build(nuxt)
-// }
-// }
-// start()
+app.use(flash())
 
 module.exports = {
   path: '/server',

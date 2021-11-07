@@ -66,6 +66,8 @@ export default {
                 this.$router.push('/master/input/inputCctv')
             }
             else{
+                // console.log(res.data.msg)
+                this.$emit('msgberhasil',res.data.msg)
                 this.$router.push('/master/cctv')
             }
         }

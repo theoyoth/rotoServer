@@ -15,6 +15,8 @@
             <option value="tahun">tahun</option>
         </select> -->
     </div>
+    <p>{{msg}}</p>
+
     <table class="table space-y-6 container mx-auto table-auto border-collapse border border-white mt-7">
         <thead class="bg-white text-sm has-tooltip">
             <span class="tooltip rounded shadow-lg p-1 bg-gray-700 text-white -mt-10 absolute left-2/4 transform -translate-x-2/4">semua detail barang</span>
@@ -78,7 +80,8 @@ export default {
             },
             nama:{
                 nama_tabel:"master_cctv"
-            }
+            },
+            msg:"",
         }
     },
     async fetch(){
@@ -89,7 +92,7 @@ export default {
     },
     methods:{
         deleteData(id,nama){
-            axios.post(`/server/master/delete/${id}/${nama}`)
+            axios.post(`http:localhost:3000/server/master/delete/${id}/${nama}`)
         },
         async caribarangcctv(){
             this.caricctv = []
@@ -109,6 +112,9 @@ export default {
         catch(err){
             console.error(err);
         };
+        this.$nuxt.$on('msgberhasil',go=>{
+            this.msg = go
+        })
     }
 
 }

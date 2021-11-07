@@ -4,7 +4,7 @@
         <header>
             <div class="flex justify-between items-center">
                 <div>
-                    <p>{{user}}</p>
+                    <p>{{user.nama}}</p>
                 </div>
                 <div class="maintenance-result w-96 flex justify-between">
                     <div class="has-tooltip">
@@ -84,67 +84,35 @@
 
 <script>
 import axios from 'axios'
-import { mapGetters } from 'vuex'
 
 export default {
+    middleware: "isAuthenticated",
     data(){
         return{
-            user : '',
+            // user : '',
             message : '',
             errors:null,
         }
     },
-    // middleware: 'auth',
     computed: {
-        ...mapGetters([ 
-        'isAuthenticated','getUserInfo'
-    ])
-        // loggedIn() {
+        // loggedIn(){
         //     return this.$auth.loggedIn
         // },
-        // user() {
-        //     return this.$auth.user
+        user(){
+            return this.$auth.user
+        },
+        isAuthenticated(){
+            return this.$auth.getters.isAuthenticated
+        },
+        // getUserInfo(){
+        //     return this.$auth.getters.getUserInfo
         // }
     },
-    async mounted(){
-        // this.$nuxt.$on('auth',auth=>{
-        //     this.auth = auth
-        // })
-
-        // const cookie = document.cookie
-        // if(!cookie){
-        //     this.$router.push('/')
-        // }
-
-        try{
-            const resp = await axios.get('http://localhost:3000/server/homepage',{},{withCredentials: true})
-
-            this.user = resp.data.nama
-            // this.$nuxt.$emit('auth',true)
-            // console.log(resp.data)
-            // this.user = response.data.nama
-            // this.$nuxt.$emit('auth',true)
-            
-            
+    methods:{
+      async logout() {
+            await this.$auth.logout() 
+            this.$router.push('/') 
         }
-        catch (err){
-            this.message = 'you are not login'
-            // this.$nuxt.$emit('auth',false)
-        }
-  },
-  methods:{
-    //   ...mapMutations(['setisauth']),
-      logout(){
-          axios.post('/server/logout',{},{withCredentials : true})
-
-          this.$router.push('/')
-      }
-
-    //   async logout() {
-    //         await this.$auth.logout() 
-    //         this.setisauth(false) 
-    //         this.$router.push('/login') 
-    //     }
   }
 }
 </script>

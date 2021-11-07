@@ -54,45 +54,47 @@ export default {
     // '@nuxtjs/auth',
     '@nuxtjs/auth-next',
   ],
-  // router:{
-  //   middleware: ['auth']
+  // router: {
+  //   middleware: ['isAuthenticated'],
   // },
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
-    baseURL: 'http://localhost:3000',
-    // credentials: true,
+    baseURL: 'http://localhost:3000/',
+    credentials: true,
   },
   auth: {
     strategies: {
       local: {
         token: {
-          property: 'data',
-          global: true,
-          // /required: true,
-          // type: 'Bearer',
+          property: 'token',
         },
+        // user: {
+        //   autoFetch: true,
+        //   property: 'user',
+        // },
         endpoints: {
           login: {
-            url: '/server/login',
+            url: 'server/login',
             method: 'post',
-            propertyName: 'data',
-          },
-          user: {
-            url: '/server/homepage',
-            method: 'get',
-            propertyName: 'data',
+            propertyName: false,
           },
           logout: false,
+          user: {
+            url: 'server/homepage',
+            method: 'get',
+            propertyName: false,
+          },
         },
+        // tokenRequired: false,
+        // tokenType: false,
       },
     },
     redirect: {
-      login: '/homepage',
+      login: '/',
       logout: '/',
       user: '/homepage',
     },
-    // rewriteRedirects: true,
   },
 
   build: {

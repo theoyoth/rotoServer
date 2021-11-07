@@ -11,19 +11,23 @@ export default{
             datasets:[
               {
                 label: "suhu",
+                data:[10,20,30],
                 backgroundColor:['#005f80','#435f10','#435faa'],
-                data:[10,20,30]
               }
-            ]
+            ],
           },
           barChartOption:{
             responsive:true,
             legend:{
               display:true,
+              labels:{
+                fontColor:"#fff",
+              }
             },
             title:{
               display:true,
-              text: "suhu normal"
+              text: "suhu normal",
+              fontColor:"#fff",
             },
             scales:{
               yAxes:[
