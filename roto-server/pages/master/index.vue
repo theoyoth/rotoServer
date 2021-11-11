@@ -2,12 +2,15 @@
 <div class="bg-master h-screen">
     <div class="container mx-auto h-full py-5">
         <header class="flex justify-between">
-        <nuxt-link to="/homepage" class="logout-btn rounded-md flex items-center">
+            <nuxt-link to="/homepage" class="logout-btn rounded-md flex items-center">
                 <div class="bg-blue-400 w-8 h-8 rounded-full flex items-center justify-center">
                     <font-awesome-icon :icon="['fas','arrow-left']" class="text-white" />
                 </div>
                 <p class="font-medium text-xl ml-2">Kembali</p>
             </nuxt-link>
+            <p>{{user.nama}}</p>
+            <p>{{user.level}}</p>
+            <p>{{user.lokasi}}</p>
             <p class="text-xl font-medium">Pilih barang</p>
         </header>
         <section class="grid place-items-center h-5/6">
@@ -72,7 +75,15 @@
 
 <script>
 export default {
-
+    middleware:"isAuthenticated",
+    computed:{
+        loggedIn() {
+            return this.$auth.loggedIn
+        },
+        user() {
+            return this.$auth.user
+        },
+    }
 }
 </script>
 

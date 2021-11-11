@@ -4,10 +4,8 @@
     <section class="container mx-auto mt-8">
 
     <div class="grid grid-cols-3 w-10/12">
-        <div class="grid grid-cols-3 w-4/5">
-            <div v-for="(err,index) in errors" :key="index" class="bg-white w-11/12 rounded-lg mb-1 bg-opacity-90">
-                <li class="text-red-400 text-xs p-2">{{err.msg}}</li>
-            </div>
+        <div v-for="(err,index) in errors" :key="index" class="bg-white w-10/12 rounded-lg mb-1 bg-opacity-90">
+            <li class="text-red-400 text-xs p-2">{{err.msg}}</li>
         </div>
     </div>
 
@@ -54,7 +52,7 @@
                 
             </div>
         </div>
-        <button class="bg-blue-400 shadow-md rounded-lg w-28 h-10 mt-px" type="submit">kirim</button>
+        <button class="bg-blue-400 shadow-md rounded-lg w-28 h-10" type="submit">kirim</button>
     </form>
 </section>
 </div>

@@ -15,6 +15,11 @@
             <option value="tahun">tahun</option>
         </select> -->
     </div>
+
+    <div v-if="deletemsg" class="relative mt-5 w-1/4 text-center m-auto">
+      <p class="text-white bg-blue-500 font-semibold p-2 rounded-lg">{{ deletemsg }}</p>
+    </div>
+
     <table class="table space-y-6 container mx-auto table-auto border-collapse border border-white mt-7">
         <thead class="bg-white text-sm has-tooltip">
             <span class="tooltip rounded shadow-lg p-1 bg-gray-700 text-white -mt-10 absolute left-2/4 transform -translate-x-2/4">semua detail barang</span>
@@ -38,7 +43,7 @@
                     <NuxtLink :to="{name : 'master-update-updateapar-apar', params:{id : hasilcari.id} }">
                         <font-awesome-icon :icon="['fas','pencil-alt']" class="text-blue-500"/>
                     </NuxtLink>
-                     <form @click="deleteData(hasilcari.id,nama.nama_tabel)" class="ml-4">
+                     <form @click="deleteData(hasilcari.id)" class="ml-4">
                     <button type="submit">
                         <font-awesome-icon :icon="['fas','trash']" class="text-red-500"/>
                     </button> 
@@ -57,7 +62,7 @@
                     <NuxtLink :to="{name : 'master-update-updateapar-apar', params:{id : apar.id} }">
                         <font-awesome-icon :icon="['fas','pencil-alt']" class="text-blue-500"/>
                     </NuxtLink>
-                     <form @click="deleteData(apar.id,nama.nama_tabel)" class="ml-4">
+                     <form @click="deleteData(apar.id)" class="ml-4">
                     <button type="submit">
                         <font-awesome-icon :icon="['fas','trash']" class="text-red-500"/>
                     </button> 
@@ -72,6 +77,7 @@
 import axios from 'axios'
 import moment from 'moment'
 export default {
+    middleware:"isAuthenticated",
     data(){
         return{
             caribarang:"",
@@ -80,9 +86,7 @@ export default {
             master:{
                 nama : "inputApar",
             },
-            nama:{
-                nama_tabel:"master_apar"
-            }
+            deletemsg:"",
         }
     },
     async fetch(){
@@ -91,9 +95,13 @@ export default {
         return
         }
     },
-    methos:{
-         deleteData(id,nama){
-            axios.post(`/server/master/delete/${id}/${nama}`)
+    methods:{
+        async deleteData(id){
+            const resp = await axios.post(`http://localhost:3000/server/master/deleteapar/${id}`)
+            this.$router.push('/master/apar')
+            if(resp.data.msg){
+                this.deletemsg = resp.data.msg
+            }
         },
          async caribarangapar(){
             this.cariapar = []
@@ -105,7 +113,8 @@ export default {
     },
     async mounted(){
         try{
-            const resp = await axios.get('http://localhost:3000/server/masterapar')
+            const lokasi = this.$auth.user.lokasi
+            const resp = await axios.get(`http://localhost:3000/server/masterapar?lokasi=${lokasi}`)
             resp.data.forEach(apar => {
                 this.apars.push(apar)
             })

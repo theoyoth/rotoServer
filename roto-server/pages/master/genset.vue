@@ -15,6 +15,11 @@
             <option value="tahun">tahun</option>
         </select> -->
     </div>
+
+    <div v-if="deletemsg" class="relative mt-5 w-1/4 text-center m-auto">
+      <p class="text-white bg-blue-500 font-semibold p-2 rounded-lg">{{ deletemsg }}</p>
+    </div>
+
     <table class="table space-y-6 container mx-auto table-auto border-collapse border border-white mt-7">
         <thead class="bg-white text-sm has-tooltip">
             <span class="tooltip rounded shadow-lg p-1 bg-gray-700 text-white -mt-10 absolute left-2/4 transform -translate-x-2/4">semua detail barang</span>
@@ -38,7 +43,7 @@
                     <NuxtLink :to="{name : 'master-update-updategenset-genset', params:{id : hasilcari.id} }">
                         <font-awesome-icon :icon="['fas','pencil-alt']" class="text-blue-500"/>
                     </NuxtLink>
-                     <form @click="deleteData(hasilcari.id,nama.nama_tabel)" class="ml-4">
+                     <form @click="deleteData(hasilcari.id)" class="ml-4">
                     <button type="submit">
                         <font-awesome-icon :icon="['fas','trash']" class="text-red-500"/>
                     </button> 
@@ -57,11 +62,9 @@
                     <NuxtLink :to="{name : 'master-update-updategenset-genset', params:{id : genset.id} }">
                         <font-awesome-icon :icon="['fas','pencil-alt']" class="text-blue-500"/>
                     </NuxtLink>
-                     <form @click="deleteData(genset.id,nama.nama_tabel)" class="ml-4">
-                    <button type="submit">
+                    <button @click="deleteData(genset.id,user.lokasi)">
                         <font-awesome-icon :icon="['fas','trash']" class="text-red-500"/>
                     </button> 
-                    </form>
                 </td>
             </tr>
         </tbody>
@@ -72,6 +75,7 @@
 import axios from 'axios'
 import moment from 'moment'
 export default {
+    middleware:"isAuthenticated",
     data(){
         return{
             caribarang:"",
@@ -80,9 +84,12 @@ export default {
             master:{
                 nama : "inputGenset",
             },
-            nama:{
-                nama_tabel:"master_genset"
-            }
+            deletemsg:"",
+        }
+    },
+    computed:{
+        user(){
+            return this.$auth.user
         }
     },
     async fetch(){
@@ -92,20 +99,68 @@ export default {
         }
     },
     methods:{
-    deleteData(id,nama){
-        axios.post(`/server/master/delete/${id}/${nama}`)
+        deleteData(id,lokasi){
+            // try{
+            // const confirm = await swal({
+            //     title: 'Are you sure?',
+            //     text: 'Once deleted, you will not be able to recover this Music!',
+            //     icon: 'warning',
+            //     buttons: true,
+            //     dangerMode: true
+            // })
+            
+            //     if(confirm){
+            //         const resp = await axios.delete(`/server/master/deletegenset/${lokasi}/${id}`)
+            //         this.$router.push('/master/genset')
+            //         swal('data dihapus', {
+            //             icon: 'success'
+            //         })
+            //         if(resp.data.err){
+            //             swal('Error',resp.data.err , 'error')
+            //         }
+            //     }
+                
+            // }catch(err){
+            //     swal('data tidak dihapus')
+            // }
+
+            swal({
+                title: 'Are you sure?',
+                text: 'Once deleted, you will not be able to recover this Music!',
+                icon: 'warning',
+                buttons: true,
+                dangerMode: true
+            }).then(willDelete => {
+            if (willDelete) {
+                this.$axios
+                .$post(`/server/master/deletegenset/${lokasi}/${id}`)
+                .then(response => {
+                    swal('Poof! Your Music file has been deleted!', {
+                    icon: 'success'
+                    })
+                    this.$router.push('/master/genset')
+                })
+                .catch(err => {
+                    swal('Error', 'Somethimg went wrong', 'error')
+                })
+            } else {
+                swal('Your Music file is safe!')
+            }
+            })
+                
     },
-    async caribaranggenset(){
-        this.carigenset = []
-        const res = await axios.get(`http://localhost:3000/server/carigenset?cari=${this.caribarang}`)
-        res.data.forEach(val =>{
-            this.carigenset.push(val)
-        })
-    },
+        async caribaranggenset(){
+            this.carigenset = []
+            const res = await axios.get(`http://localhost:3000/server/carigenset?cari=${this.caribarang}`)
+            res.data.forEach(val =>{
+                this.carigenset.push(val)
+            })
+        },
     },
     async mounted(){
         try{
-            const resp = await axios.get('http://localhost:3000/server/mastergenset')
+            const lokasi = this.$auth.user.lokasi
+            const resp = await axios.get(`http://localhost:3000/server/mastergenset?lokasi=${lokasi}`)
             resp.data.forEach(genset => {
                 this.gensets.push(genset)
             })

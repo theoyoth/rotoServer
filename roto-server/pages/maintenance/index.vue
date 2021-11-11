@@ -14,6 +14,12 @@
             <option value="tahun">tahun</option>
         </select> -->
     </div>
+
+     <div v-if="deletemsg" class="relative mt-5 w-1/4 text-center m-auto">
+      <p class="text-white bg-blue-500 font-semibold p-2 rounded-lg">{{ deletemsg }}</p>
+    </div>
+
+
     <table class="table space-y-6 container mx-auto table-auto border-collapse border border-white mt-7" ref="listitem" id="listitem">
         <thead class="bg-white text-sm">
             <tr class="text-xs"> 
@@ -87,11 +93,13 @@ import axios from 'axios'
 import moment from 'moment'
 
 export default {
+    middleware:"isAuthenticated",
     data(){
         return{
             carimaintenance:"",
             hasilMaintenance:[],
             hasilcarimaintenance:[],
+            deletemsg:"",
         }
     },   
    
@@ -102,8 +110,12 @@ export default {
         }
     },
     methods:{
-        deleteData(id){
-            axios.post(`/server/maintenance/delete/${id}`)
+        async deleteData(id){
+            const resp = await axios.post(`/server/maintenance/delete/${id}`)
+            this.$router.push('/maintenance')
+            if(resp.data.msg){
+              this.deletemsg = resp.data.msg
+            }
         },
         async caridimaintenance(){
             this.hasilcarimaintenance = []

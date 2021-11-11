@@ -1,6 +1,7 @@
 <template>
   <div>
-    <AuthLogin/>
+    <!-- <AuthLogin/> -->
+    <Login/>
   </div>
 </template>
 
@@ -14,7 +15,9 @@ export default {
     }
   },
   // computed:{
-  //   ...mapState(['isAuth'])
+  //   isLoggedin() {
+  //     this.$store.$auth.isLoggedin
+  //   }
   // },
   // mounted(){
     // this.$nuxt.$on('auth',auth => {

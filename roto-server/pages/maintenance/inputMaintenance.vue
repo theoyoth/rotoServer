@@ -7,7 +7,7 @@
             <div class="grid grid-cols-3">
                 <div class="mb-4">
                     <label for="nama" class="block mb-2 text-sm">nama</label>
-                    <input type="text" v-model="nama" name="nama" id="nama" class="p-2 w-72 rounded-lg outline-none">
+                    <input type="text" v-model="user.nama" name="nama" id="nama" class="p-2 w-72 rounded-lg outline-none">
                 </div>
                 <div class="mb-4">
                     <label for="tanggal" class="block mb-2 text-sm">tanggal</label>
@@ -55,7 +55,15 @@
 
 <script>
 export default {
-
+    middleware:"isAuthenticated",
+    computed: {
+        loggedIn() {
+        return this.$auth.loggedIn
+        },
+        user() {
+        return this.$auth.user
+        },
+    }
 }
 </script>
 

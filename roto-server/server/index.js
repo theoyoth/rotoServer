@@ -16,9 +16,12 @@ app.use(
 )
 // app.use(
 //   session({
-//     secret: 'codesecret',
+//     secret: 'codesecretforauth',
 //     saveUninitialized: true,
 //     resave: true,
+//     cookie: {
+//       maxAge: 3600000,
+//     },
 //   })
 // )
 app.use(express.json())

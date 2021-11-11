@@ -34,8 +34,8 @@
         </select> -->
     </div>
 
-    <div v-if="databerhasil" class="relative mt-5 w-1/4 text-center m-auto">
-      <p class="text-white bg-blue-500 font-semibold p-2 rounded-lg">{{ databerhasil.msg }}</p>
+    <div v-if="deletemsg" class="relative mt-5 w-1/4 text-center m-auto">
+      <p class="text-white bg-blue-500 font-semibold p-2 rounded-lg">{{ deletemsg }}</p>
     </div>
 
     <table
@@ -83,17 +83,8 @@
       </thead>
       <tbody
         v-if="caribarang !== ''"
-        class="text-center bg-white bg-opacity-40"
-      >
-        <!-- <tr class="container py-2 px-3 rounded block m-auto mt-2" v-if="cariserver == caribarang">
-            <p class="text-center text-lg font-semibold">tidak ada data</p>
-            </tr> -->
-
-        <tr
-          class="text-sm"
-          v-for="(hasilcari, index) in hasilcariserver"
-          :key="index"
-        >
+        class="text-center bg-white bg-opacity-40">
+        <tr class="text-sm" v-for="(hasilcari, index) in hasilcariserver" :key="index">
           <td>{{ hasilcari.produk }}</td>
           <td>{{ hasilcari.merek }}</td>
           <td>{{ hasilcari.model }}</td>
@@ -122,7 +113,7 @@
               />
             </NuxtLink>
             <form
-              @click="deleteData(hasilcari.id, nama.nama_tabel)"
+              @click="deleteData(hasilcari.id)"
               class="ml-2"
             >
               <button type="submit">
@@ -165,7 +156,7 @@
                 class="text-blue-500"
               />
             </NuxtLink>
-            <form @click="deleteData(server.id, nama.nama_tabel)" class="ml-2">
+            <form @click="deleteData(server.id)" class="ml-2">
               <button type="submit">
                 <font-awesome-icon
                   :icon="['fas', 'trash']"
@@ -184,15 +175,14 @@
 import axios from "axios"
 import moment from "moment"
 export default {
+  middleware:"isAuthenticated",
     data(){
         return{
             caribarang:"",
             master:{
                 nama : "inputServer",
             },
-            nama:{
-                nama_tabel : 'master_server',
-            },
+            deletemsg:"",
         }
     },
     computed: {
@@ -207,10 +197,14 @@ export default {
         }
     },
     methods:{
-        deleteData(id,nama){
-            axios.post(`http://localhost:3000/server/master/delete/${id}/${nama}`)
+        async deleteData(id){
+            const resp = await axios.post(`http://localhost:3000/server/master/deleteserver/${id}`)
+            this.$router.push('/master/server')
+            if(resp.data.msg){
+              this.deletemsg = resp.data.msg
+            }
         },
-        caribarangserver(){
+      caribarangserver(){
             if(this.caribarang !== ""){
                 this.$store.dispatch('masterbarang/caribarangserver',this.caribarang)
             return
@@ -218,7 +212,8 @@ export default {
         }
     },
     mounted(){
-        this.$store.dispatch('masterbarang/getServersData')
+        const lokasi = this.$auth.user.lokasi
+        this.$store.dispatch('masterbarang/getServersData',lokasi)
     }
 }
 </script>

@@ -28,7 +28,7 @@ export default {
   css: ['~/assets/default.scss'],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: [],
+  plugins: [{ src: '~/plugins/sweetalert' }],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
@@ -53,6 +53,7 @@ export default {
     '@nuxtjs/axios',
     // '@nuxtjs/auth',
     '@nuxtjs/auth-next',
+    'cookie-universal-nuxt',
   ],
   // router: {
   //   middleware: ['isAuthenticated'],

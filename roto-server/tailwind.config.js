@@ -15,12 +15,15 @@ module.exports = {
         'gr-red':
           'linear-gradient(to bottom right, rgba(219,136,118,1) 0%, rgba(246,223,216,1) 100%)',
         'gr-black-opac':
-          "linear-gradient(30deg, rgba(4,9,20,1) 40%, rgba(2,4,41,0.7) 100%),url('~/assets/img/server.jpg')",
+          "linear-gradient(30deg, rgba(4,9,20,0.6) 40%, rgba(2,4,41,0.6) 40%),url('~/assets/img/server.jpg')",
       },
       width: {
         widthLogin: '35%',
         widthGraphic: '62%',
         widthLoginLokasiPeran: '45%',
+      },
+      height: {
+        heightChart: '500px',
       },
     },
   },

@@ -15,6 +15,11 @@
             <option value="tahun">tahun</option>
         </select> -->
     </div>
+
+    <div v-if="deletemsg" class="relative mt-5 w-1/4 text-center m-auto">
+      <p class="text-white bg-blue-500 font-semibold p-2 rounded-lg">{{ deletemsg }}</p>
+    </div>
+
     <table class="table space-y-6 container mx-auto table-auto border-collapse border border-white mt-7">
         <thead class="bg-white text-sm has-tooltip">
             <span class="tooltip rounded shadow-lg p-1 bg-gray-700 text-white -mt-10 absolute left-2/4 transform -translate-x-2/4">semua detail barang</span>
@@ -38,7 +43,7 @@
                     <NuxtLink :to="{name : 'master-update-updatekeyboard-keyboard', params:{id : hasilcari.id} }">
                         <font-awesome-icon :icon="['fas','pencil-alt']" class="text-blue-500"/>
                     </NuxtLink>
-                     <form @click="deleteData(hasilcari.id,nama.nama_tabel)" class="ml-4">
+                     <form @click="deleteData(hasilcari.id)" class="ml-4">
                     <button type="submit">
                         <font-awesome-icon :icon="['fas','trash']" class="text-red-500"/>
                     </button> 
@@ -57,7 +62,7 @@
                    <NuxtLink :to="{name : 'master-update-updatekeyboard-keyboard', params:{id : keyboard.id} }">
                         <font-awesome-icon :icon="['fas','pencil-alt']" class="text-blue-500"/>
                     </NuxtLink>
-                     <form @click="deleteData(keyboard.id,nama.nama_tabel)" class="ml-4">
+                     <form @click="deleteData(keyboard.id)" class="ml-4">
                     <button type="submit">
                         <font-awesome-icon :icon="['fas','trash']" class="text-red-500"/>
                     </button> 
@@ -73,6 +78,7 @@ import axios from 'axios'
 import moment from 'moment'
 
 export default {
+    middleware:"isAuthenticated",
     data(){
         return{
             caribarang:"",
@@ -81,9 +87,7 @@ export default {
             master:{
                 nama : "inputKeyboard",
             },
-            nama:{
-                nama_tabel : "master_keyboard"
-            }
+            deletemsg:"",
         }
     },
     async fetch(){
@@ -93,8 +97,12 @@ export default {
         }
     },
     methods:{
-        deleteData(id,nama){
-            axios.post(`/server/master/delete/${id}/${nama}`)
+        async deleteData(id){
+            const resp = await axios.post(`/server/master/deletekeyboard/${id}`)
+            this.$router.push('/master/keyboard')
+            if(resp.data.msg){
+                this.deletemsg = resp.data.msg
+            }
         },
          async caribarangkeyboard(){
              this.carikeyboard = []
@@ -106,7 +114,8 @@ export default {
     },
     async mounted(){
         try{
-            const resp = await axios.get('http://localhost:3000/server/masterkeyboard')
+            const lokasi = this.$auth.user.lokasi
+            const resp = await axios.get(`http://localhost:3000/server/masterkeyboard?lokasi=${lokasi}`)
             resp.data.forEach(keyboard => {
                 this.keyboards.push(keyboard)
             })

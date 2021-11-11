@@ -99,6 +99,7 @@
 import axios from 'axios'
 import moment from 'moment'
 export default {
+    middleware:"isAuthenticated",
     data(){
         return {
             item : "server",
@@ -119,11 +120,12 @@ export default {
 
         }
     },
-    // computed: {
-    //     errors(){
-    //         return this.$store.state.inputmasterbarang.errors
-    //     },
-    // },
+    computed: {
+        // errors(){
+        //     return this.$store.state.inputmasterbarang.errors
+        // },
+        
+    },
     methods:{
         // postInputServer(){
         //     this.$store.dispatch('inputmasterbarang/postInputServer',this.inputServer)

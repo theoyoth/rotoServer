@@ -7,36 +7,69 @@ export default{
     data(){
         return{
           barChartData:{
-            labels:['january','february','maret'],
+            labels:['january','february','maret',"March","April","May","June"],
             datasets:[
               {
                 label: "suhu",
-                data:[10,20,30],
-                backgroundColor:['#005f80','#435f10','#435faa'],
+                backgroundColor:"#4c51bf",
+                borderColor: "#ed64a6",
+                data:[10,20,30,10,22,21,10],
               }
-            ],
+            ]
           },
           barChartOption:{
             responsive:true,
+            maintainAspectRatio: false,
             legend:{
-              display:true,
-              labels:{
-                fontColor:"#fff",
-              }
+              labels: {
+                fontColor: "rgba(0,0,0,.4)",
+              },
+              align: "end",
+              position: "bottom",
             },
             title:{
               display:true,
-              text: "suhu normal",
-              fontColor:"#fff",
+              text: "suhu"
             },
             scales:{
-              yAxes:[
-                {
-                  ticks:{
+              yAxes: [
+              {
+                ticks:{
                     beginAtZero:true
-                  }
-                }
-              ]
+                  },
+                display: true,
+                scaleLabel: {
+                  display: false,
+                  labelString: "Value",
+                },
+                // gridLines: {
+                //   borderDash: [2],
+                //   drawBorder: false,
+                //   borderDashOffset: [2],
+                //   color: "rgba(33, 37, 41, 0.2)",
+                //   zeroLineColor: "rgba(33, 37, 41, 0.15)",
+                //   zeroLineBorderDash: [2],
+                //   zeroLineBorderDashOffset: [2],
+                // },
+              },
+              ],
+              xAxes: [
+              {
+                display: true,
+                scaleLabel: {
+                  display: true,
+                  labelString: "Month",
+                },
+                // gridLines: {
+                //   borderDash: [2],
+                //   borderDashOffset: [2],
+                //   color: "rgba(33, 37, 41, 0.3)",
+                //   zeroLineColor: "rgba(33, 37, 41, 0.3)",
+                //   zeroLineBorderDash: [2],
+                //   zeroLineBorderDashOffset: [2],
+                // },
+              },
+            ],
             }
           }
         }

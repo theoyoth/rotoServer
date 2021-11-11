@@ -9,6 +9,9 @@
                 <p class="font-medium text-xl ml-2">Kembali</p>
             </NuxtLink>
             </div>
+            <p>{{user.nama}}</p>
+            <p>{{user.level}}</p>
+            <p>{{user.lokasi}}</p>
             <!-- <p class="text-xl font-medium" v-show="ambilbarang">formulir input data {{ambilbarang}}</p>
             <p class="text-xl font-medium" v-show="gantibarang">formulir input data {{gantibarang}}</p>
             <p class="text-xl font-medium" v-show="tambahbarang">formulir input data {{tambahbarang}}</p>
@@ -21,7 +24,15 @@
 
 <script>
 export default {
-    props:['ambilbarang','gantibarang','tambahbarang','dokumen','maintenance','map']
+    props:['ambilbarang','gantibarang','tambahbarang','dokumen','maintenance','map'],
+    computed: {
+        isLoggedin(){
+            return this.$auth.loggedin
+        },
+        user(){
+            return this.$auth.user
+        }
+    }
 }
 </script>
 

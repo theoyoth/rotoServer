@@ -1,8 +1,9 @@
 const maintenanceController = require('../controllers/maintenanceController.js')
 const masterController = require('../controllers/masterController.js')
 const authController = require('../controllers/authController.js')
+const lokasiServer = require('../controllers/lokasiServer.js')
 // const { auth } = require('../verifyToken.js')
-const { isAuth } = require('../middleware/userAuthorization.js')
+const { isAuthent } = require('../middleware/userAuthorization.js')
 const { check, validationResult } = require('express-validator')
 const express = require('express')
 const router = express.Router()
@@ -12,7 +13,6 @@ const router = express.Router()
 // app.get('/lokasiserver', maintenanceController.lokasiserver)
 router.get('/masterserver', masterController.masterserver)
 
-// router.post('/inputmaintenance/hapus/:id', maintenanceController.deleteMaintenance)
 router.post(
   '/master/inputserver',
   [
@@ -480,9 +480,26 @@ router.post(
   masterController.inputmastergenset
 )
 
-router.post('/master/delete/:id/:nama', masterController.deletemaster)
+// delete master ========================================
+router.post('/master/deleteserver/:id', masterController.deletemasterserver)
+router.post('/master/deleterak/:id', masterController.deletemasterrak)
+router.post('/master/deleteups/:id', masterController.deletemasterups)
+router.post('/master/deletebaterai/:id', masterController.deletemasterbaterai)
+router.post('/master/deleteac/:id', masterController.deletemasterac)
+router.post('/master/deletecctv/:id', masterController.deletemastercctv)
+router.post('/master/deletenetwork/:id', masterController.deletemasternetwork)
+router.post('/master/deleteapar/:id', masterController.deletemasterapar)
+router.post('/master/deletemonitor/:id', masterController.deletemastermonitor)
+router.post('/master/deletekeyboard/:id', masterController.deletemasterkeyboard)
+router.post('/master/deletemouse/:id', masterController.deletemastermouse)
+router.post('/master/deletenas/:id', masterController.deletemasternas)
+router.post(
+  '/master/deletegenset/:lokasi/:id',
+  isAuthent,
+  masterController.deletemastergenset
+)
 
-// update master
+// update master ========================================
 router.get(
   '/master/update/updateserver/:id',
   masterController.masterservergetdata
@@ -581,7 +598,7 @@ router.post(
 // login
 router.post('/login', authController.login)
 // homepage when login success
-router.get('/homepage', authController.homepage)
+router.get('/homepage', isAuthent, authController.homepage)
 // logout
 // router.post('/logout', async (req, res) => {
 //   res.cookie('authtoken', '', { maxAge: 0 })
@@ -622,5 +639,7 @@ router.post(
   '/maintenance/update/updatemaintenance',
   maintenanceController.updateMaintenance
 )
+
+router.get('/lokasi', lokasiServer.lokasiserver)
 
 module.exports = router

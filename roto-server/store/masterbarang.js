@@ -24,9 +24,9 @@ export const mutations = {
   },
 }
 export const actions = {
-  async getServersData({ commit }) {
+  async getServersData({ commit }, lokasiserver) {
     const response = await axios.get(
-      'http://localhost:3000/server/masterserver'
+      `http://localhost:3000/server/masterserver?lokasi=${lokasiserver}`
     )
     commit('serversData', response.data)
   },

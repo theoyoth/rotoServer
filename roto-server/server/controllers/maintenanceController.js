@@ -71,8 +71,14 @@ module.exports.deleteMaintenance = async (req, res) => {
   const id = req.params.id
   try {
     const conn = await pool.getConnection()
-    await conn.query(`DELETE FROM maintenance WHERE id=${req.params.id}`)
-
+    const data = await conn.query(
+      `DELETE FROM maintenance WHERE id=${req.params.id}`
+    )
+    if (data.affectedRows > 0) {
+      res.json({ msg: 'data dihapus' })
+    } else {
+      res.json({ msg: 'data tidak terhapus' })
+    }
     res.redirect('/maintenance')
     conn.release()
   } catch (err) {

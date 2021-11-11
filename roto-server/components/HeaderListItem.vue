@@ -8,18 +8,19 @@
                 <p class="font-medium text-xl ml-2">Kembali</p>
             </nuxt-link>
         
-            <div @click="$router.back()" id="kembali" v-show="maintenance || ambilbarang || gantibarang || tambahbarang || dokumen">
-            <nuxt-link to="" class="flex rounded-md justify-between items-center ">
+            <div @click="$router.go(-1)" id="kembali" v-show="maintenance || ambilbarang || gantibarang || tambahbarang || dokumen" class="flex rounded-md justify-between items-center cursor-pointer">
                 <div class="bg-blue-400 w-8 h-8 rounded-full flex items-center justify-center">
                     <font-awesome-icon :icon="['fas','arrow-left']" class="text-white" />
                 </div>
                 <p class="font-medium text-xl ml-2">Kembali</p>
-            </nuxt-link>
             </div>
             
             <!-- <div @click="showGuide" v-show="maintenance || ambilbarang ||tambahbarang || gantibarang" class="w-8 h-8 bg-white rounded-full flex items-center justify-center transform hover:scale-95 transition ease-in duration-200 cursor-pointer hover:shadow-lg">
                 <font-awesome-icon :icon="['fas','question']" class="text-black" />
             </div> -->
+            <p>{{user.nama}}</p>
+            <p>{{user.level}}</p>
+            <p>{{user.lokasi}}</p>
             
             <nuxt-link v-show="server" :to="'/master/input/'+server" class="logout-btn flex rounded-md items-center">
                 <p class="font-medium text-xl mr-2">input</p>
@@ -296,6 +297,14 @@ export default {
                 this.$tours['myTour'].start()
         }
     },
+    computed:{
+        loggedIn() {
+            return this.$auth.loggedIn
+        },
+        user() {
+            return this.$auth.user
+        },
+    }
 }
 </script>
 

@@ -1,5 +1,4 @@
 const pool = require('../db.js')
-const mariadb = require('mariadb')
 const { check, validationResult } = require('express-validator')
 
 // const conn = pool.getConnection()
@@ -12,9 +11,21 @@ const { check, validationResult } = require('express-validator')
 module.exports.masterserver = async (req, res) => {
   let conn
   try {
+    const lokasiServer = req.query.lokasi
     conn = await pool.getConnection()
-    const rows = await conn.query('SELECT * FROM master_Server')
-    res.send(rows)
+    if (lokasiServer == 'roto 1') {
+      const rows = await conn.query('SELECT * FROM master_server')
+      res.send(rows)
+    } else if (lokasiServer == 'roto 2') {
+      const rows = await conn.query('SELECT * FROM master_server_roto_2')
+      res.send(rows)
+    } else if (lokasiServer == 'roto 3') {
+      const rows = await conn.query('SELECT * FROM master_server_roto_3')
+      res.send(rows)
+    } else if (lokasiServer == 'tinta') {
+      const rows = await conn.query('SELECT * FROM master_server_tinta')
+      res.send(rows)
+    }
   } catch (err) {
     console.log(err)
   } finally {
@@ -57,42 +68,38 @@ module.exports.inputmasterserver = async (req, res) => {
         .json({ msg: 'gagal di input' })
         .redirect('/master/server/inputserver')
     }
-    conn.release()
   } catch (err) {
     console.log(err)
   } finally {
     if (conn) return conn.end()
   }
 }
-
-module.exports.deletemaster = async (req, res) => {
-  let conn
-  try {
-    const id = req.params.id
-    const nama = req.params.nama
-    conn = await pool.getConnection()
-    const data = await conn.query(`DELETE FROM ${nama} WHERE id=${id}`)
-
-    res.send(data)
-  } catch (err) {
-    console.log(err)
-  } finally {
-    if (conn) return conn.end()
-  }
-}
-
 module.exports.masterrak = async (req, res) => {
   let conn
   try {
+    const lokasiServer = req.query.lokasi
     conn = await pool.getConnection()
-    const rows = await conn.query('SELECT * FROM master_rak')
-    res.send(rows)
+
+    if (lokasiServer == 'roto 1') {
+      const rows = await conn.query('SELECT * FROM master_rak')
+      res.send(rows)
+    } else if (lokasiServer == 'roto 2') {
+      const rows = await conn.query('SELECT * FROM master_rak_roto_2')
+      res.send(rows)
+    } else if (lokasiServer == 'roto 3') {
+      const rows = await conn.query('SELECT * FROM master_rak_roto_3')
+      res.send(rows)
+    } else if (lokasiServer == 'tinta') {
+      const rows = await conn.query('SELECT * FROM master_rak_tinta')
+      res.send(rows)
+    }
   } catch (err) {
     console.log(err)
   } finally {
     if (conn) return conn.end()
   }
 }
+
 module.exports.inputmasterrak = async (req, res) => {
   const errors = validationResult(req)
   if (!errors.isEmpty()) {
@@ -119,9 +126,21 @@ module.exports.inputmasterrak = async (req, res) => {
 module.exports.masterups = async (req, res) => {
   let conn
   try {
+    const lokasiServer = req.query.lokasi
     conn = await pool.getConnection()
-    const rows = await conn.query('SELECT * FROM master_ups')
-    res.send(rows)
+    if (lokasiServer == 'roto 1') {
+      const rows = await conn.query('SELECT * FROM master_ups')
+      res.send(rows)
+    } else if (lokasiServer == 'roto 2') {
+      const rows = await conn.query('SELECT * FROM master_ups_roto_2')
+      res.send(rows)
+    } else if (lokasiServer == 'roto 3') {
+      const rows = await conn.query('SELECT * FROM master_ups_roto_3')
+      res.send(rows)
+    } else if (lokasiServer == 'tinta') {
+      const rows = await conn.query('SELECT * FROM master_ups_tinta')
+      res.send(rows)
+    }
   } catch (err) {
     console.log(err)
   } finally {
@@ -167,9 +186,22 @@ module.exports.inputmasterups = async (req, res) => {
 module.exports.masterbaterai = async (req, res) => {
   let conn
   try {
+    const lokasiServer = req.query.lokasi
     conn = await pool.getConnection()
-    const rows = await conn.query('SELECT * FROM master_baterai')
-    res.send(rows)
+
+    if (lokasiServer == 'roto 1') {
+      const rows = await conn.query('SELECT * FROM master_baterai')
+      res.send(rows)
+    } else if (lokasiServer == 'roto 2') {
+      const rows = await conn.query('SELECT * FROM master_baterai_roto_2')
+      res.send(rows)
+    } else if (lokasiServer == 'roto 3') {
+      const rows = await conn.query('SELECT * FROM master_baterai_roto_3')
+      res.send(rows)
+    } else if (lokasiServer == 'tinta') {
+      const rows = await conn.query('SELECT * FROM master_baterai_tinta')
+      res.send(rows)
+    }
   } catch (err) {
     console.log(err)
   } finally {
@@ -204,9 +236,22 @@ module.exports.inputmasterbaterai = async (req, res) => {
 module.exports.masterac = async (req, res) => {
   let conn
   try {
+    const lokasiServer = req.query.lokasi
     conn = await pool.getConnection()
-    const rows = await conn.query('SELECT * FROM master_ac')
-    res.send(rows)
+
+    if (lokasiServer == 'roto 1') {
+      const rows = await conn.query('SELECT * FROM master_ac')
+      res.send(rows)
+    } else if (lokasiServer == 'roto 2') {
+      const rows = await conn.query('SELECT * FROM master_ac_roto_2')
+      res.send(rows)
+    } else if (lokasiServer == 'roto 3') {
+      const rows = await conn.query('SELECT * FROM master_ac_roto_3')
+      res.send(rows)
+    } else if (lokasiServer == 'tinta') {
+      const rows = await conn.query('SELECT * FROM master_ac_tinta')
+      res.send(rows)
+    }
   } catch (err) {
     console.log(err)
   } finally {
@@ -248,10 +293,22 @@ module.exports.inputmasterac = async (req, res) => {
 module.exports.mastercctv = async (req, res) => {
   let conn
   try {
+    const lokasiServer = req.query.lokasi
     conn = await pool.getConnection()
-    const rows = await conn.query('SELECT * FROM master_cctv')
-    res.send(rows)
-    conn.release()
+
+    if (lokasiServer == 'roto 1') {
+      const rows = await conn.query('SELECT * FROM master_cctv')
+      res.send(rows)
+    } else if (lokasiServer == 'roto 2') {
+      const rows = await conn.query('SELECT * FROM master_cctv_roto_2')
+      res.send(rows)
+    } else if (lokasiServer == 'roto 3') {
+      const rows = await conn.query('SELECT * FROM master_cctv_roto_3')
+      res.send(rows)
+    } else if (lokasiServer == 'tinta') {
+      const rows = await conn.query('SELECT * FROM master_cctv_tinta')
+      res.send(rows)
+    }
   } catch (err) {
     console.log(err)
   } finally {
@@ -286,9 +343,22 @@ module.exports.inputmastercctv = async (req, res) => {
 module.exports.masternetwork = async (req, res) => {
   let conn
   try {
+    const lokasiServer = req.query.lokasi
     conn = await pool.getConnection()
-    const rows = await conn.query('SELECT * FROM master_network')
-    res.send(rows)
+
+    if (lokasiServer == 'roto 1') {
+      const rows = await conn.query('SELECT * FROM master_network')
+      res.send(rows)
+    } else if (lokasiServer == 'roto 2') {
+      const rows = await conn.query('SELECT * FROM master_network_roto_2')
+      res.send(rows)
+    } else if (lokasiServer == 'roto 3') {
+      const rows = await conn.query('SELECT * FROM master_network_roto_3')
+      res.send(rows)
+    } else if (lokasiServer == 'tinta') {
+      const rows = await conn.query('SELECT * FROM master_network_tinta')
+      res.send(rows)
+    }
   } catch (err) {
     console.log(err)
   } finally {
@@ -322,9 +392,22 @@ module.exports.inputmasternetwork = async (req, res) => {
 module.exports.masterapar = async (req, res) => {
   let conn
   try {
+    const lokasiServer = req.query.lokasi
     conn = await pool.getConnection()
-    const rows = await conn.query('SELECT * FROM master_apar')
-    res.send(rows)
+
+    if (lokasiServer == 'roto 1') {
+      const rows = await conn.query('SELECT * FROM master_apar')
+      res.send(rows)
+    } else if (lokasiServer == 'roto 2') {
+      const rows = await conn.query('SELECT * FROM master_apar_roto_2')
+      res.send(rows)
+    } else if (lokasiServer == 'roto 3') {
+      const rows = await conn.query('SELECT * FROM master_apar_roto_3')
+      res.send(rows)
+    } else if (lokasiServer == 'tinta') {
+      const rows = await conn.query('SELECT * FROM master_apar_tinta')
+      res.send(rows)
+    }
   } catch (err) {
     console.log(err)
   } finally {
@@ -357,9 +440,22 @@ module.exports.inputmasterapar = async (req, res) => {
 module.exports.mastermonitor = async (req, res) => {
   let conn
   try {
+    const lokasiServer = req.query.lokasi
     conn = await pool.getConnection()
-    const rows = await conn.query('SELECT * FROM master_monitor')
-    res.send(rows)
+
+    if (lokasiServer == 'roto 1') {
+      const rows = await conn.query('SELECT * FROM master_monitor')
+      res.send(rows)
+    } else if (lokasiServer == 'roto 2') {
+      const rows = await conn.query('SELECT * FROM master_monitor_roto_2')
+      res.send(rows)
+    } else if (lokasiServer == 'roto 3') {
+      const rows = await conn.query('SELECT * FROM master_monitor_roto_3')
+      res.send(rows)
+    } else if (lokasiServer == 'tinta') {
+      const rows = await conn.query('SELECT * FROM master_monitor_tinta')
+      res.send(rows)
+    }
   } catch (err) {
     console.log(err)
   } finally {
@@ -392,9 +488,22 @@ module.exports.inputmastermonitor = async (req, res) => {
 module.exports.masterkeyboard = async (req, res) => {
   let conn
   try {
+    const lokasiServer = req.query.lokasi
     conn = await pool.getConnection()
-    const rows = await conn.query('SELECT * FROM master_keyboard')
-    res.send(rows)
+
+    if (lokasiServer == 'roto 1') {
+      const rows = await conn.query('SELECT * FROM master_keyboard')
+      res.send(rows)
+    } else if (lokasiServer == 'roto 2') {
+      const rows = await conn.query('SELECT * FROM master_keyboard_roto_2')
+      res.send(rows)
+    } else if (lokasiServer == 'roto 3') {
+      const rows = await conn.query('SELECT * FROM master_keyboard_roto_3')
+      res.send(rows)
+    } else if (lokasiServer == 'tinta') {
+      const rows = await conn.query('SELECT * FROM master_keyboard_tinta')
+      res.send(rows)
+    }
   } catch (err) {
     console.log(err)
   } finally {
@@ -427,9 +536,22 @@ module.exports.inputmasterkeyboard = async (req, res) => {
 module.exports.mastermouse = async (req, res) => {
   let conn
   try {
+    const lokasiServer = req.query.lokasi
     conn = await pool.getConnection()
-    const rows = await conn.query('SELECT * FROM master_mouse')
-    res.send(rows)
+
+    if (lokasiServer == 'roto 1') {
+      const rows = await conn.query('SELECT * FROM master_mouse')
+      res.send(rows)
+    } else if (lokasiServer == 'roto 2') {
+      const rows = await conn.query('SELECT * FROM master_mouse_roto_2')
+      res.send(rows)
+    } else if (lokasiServer == 'roto 3') {
+      const rows = await conn.query('SELECT * FROM master_mouse_roto_3')
+      res.send(rows)
+    } else if (lokasiServer == 'tinta') {
+      const rows = await conn.query('SELECT * FROM master_mouse_tinta')
+      res.send(rows)
+    }
   } catch (err) {
     console.log(err)
   } finally {
@@ -462,9 +584,22 @@ module.exports.inputmastermouse = async (req, res) => {
 module.exports.masternas = async (req, res) => {
   let conn
   try {
+    const lokasiServer = req.query.lokasi
     conn = await pool.getConnection()
-    const rows = await conn.query('SELECT * FROM master_nas')
-    res.send(rows)
+
+    if (lokasiServer == 'roto 1') {
+      const rows = await conn.query('SELECT * FROM master_nas')
+      res.send(rows)
+    } else if (lokasiServer == 'roto 2') {
+      const rows = await conn.query('SELECT * FROM master_nas_roto_2')
+      res.send(rows)
+    } else if (lokasiServer == 'roto 3') {
+      const rows = await conn.query('SELECT * FROM master_nas_roto_3')
+      res.send(rows)
+    } else if (lokasiServer == 'tinta') {
+      const rows = await conn.query('SELECT * FROM master_nas_tinta')
+      res.send(rows)
+    }
   } catch (err) {
     console.log(err)
   } finally {
@@ -507,9 +642,22 @@ module.exports.inputmasternas = async (req, res) => {
 module.exports.mastergenset = async (req, res) => {
   let conn
   try {
+    const lokasiServer = req.query.lokasi
     conn = await pool.getConnection()
-    const rows = await conn.query('SELECT * FROM master_genset')
-    res.send(rows)
+
+    if (lokasiServer == 'roto 1') {
+      const rows = await conn.query('SELECT * FROM master_genset')
+      res.send(rows)
+    } else if (lokasiServer == 'roto 2') {
+      const rows = await conn.query('SELECT * FROM master_genset_roto_2')
+      res.send(rows)
+    } else if (lokasiServer == 'roto 3') {
+      const rows = await conn.query('SELECT * FROM master_genset_roto_3')
+      res.send(rows)
+    } else if (lokasiServer == 'tinta') {
+      const rows = await conn.query('SELECT * FROM master_genset_tinta')
+      res.send(rows)
+    }
   } catch (err) {
     console.log(err)
   } finally {
@@ -532,6 +680,277 @@ module.exports.inputmastergenset = async (req, res) => {
     )
 
     res.redirect('/master/genset')
+  } catch (err) {
+    console.log(err)
+  } finally {
+    if (conn) return conn.end()
+  }
+}
+
+// delete master ====================================
+
+module.exports.deletemasterserver = async (req, res) => {
+  let conn
+  try {
+    const id = req.params.id
+    conn = await pool.getConnection()
+    const data = await conn.query(`DELETE FROM master_server WHERE id=${id}`)
+
+    if (data.affectedRows > 0) {
+      res.json({ msg: 'data dihapus' })
+    } else {
+      res.json({ msg: 'data tidak terhapus' })
+    }
+  } catch (err) {
+    console.log(err)
+  } finally {
+    if (conn) return conn.end()
+  }
+}
+module.exports.deletemasterrak = async (req, res) => {
+  let conn
+  try {
+    const id = req.params.id
+    conn = await pool.getConnection()
+    const data = await conn.query(`DELETE FROM master_rak WHERE id=${id}`)
+
+    if (data.affectedRows > 0) {
+      res.json({ msg: 'data dihapus' })
+    } else {
+      res.json({ msg: 'data tidak terhapus' })
+    }
+  } catch (err) {
+    console.log(err)
+  } finally {
+    if (conn) return conn.end()
+  }
+}
+module.exports.deletemasterups = async (req, res) => {
+  let conn
+  try {
+    const id = req.params.id
+    conn = await pool.getConnection()
+    const data = await conn.query(`DELETE FROM master_ups WHERE id=${id}`)
+
+    if (data.affectedRows > 0) {
+      res.json({ msg: 'data dihapus' })
+    } else {
+      res.json({ msg: 'data tidak terhapus' })
+    }
+  } catch (err) {
+    console.log(err)
+  } finally {
+    if (conn) return conn.end()
+  }
+}
+module.exports.deletemasterbaterai = async (req, res) => {
+  let conn
+  try {
+    const id = req.params.id
+    conn = await pool.getConnection()
+    const data = await conn.query(`DELETE FROM master_baterai WHERE id=${id}`)
+
+    if (data.affectedRows > 0) {
+      res.json({ msg: 'data dihapus' })
+    } else {
+      res.json({ msg: 'data tidak terhapus' })
+    }
+  } catch (err) {
+    console.log(err)
+  } finally {
+    if (conn) return conn.end()
+  }
+}
+module.exports.deletemasterac = async (req, res) => {
+  let conn
+  try {
+    const id = req.params.id
+    conn = await pool.getConnection()
+    const data = await conn.query(`DELETE FROM master_ac WHERE id=${id}`)
+
+    if (data.affectedRows > 0) {
+      res.json({ msg: 'data dihapus' })
+    } else {
+      res.json({ msg: 'data tidak terhapus' })
+    }
+  } catch (err) {
+    console.log(err)
+  } finally {
+    if (conn) return conn.end()
+  }
+}
+module.exports.deletemastercctv = async (req, res) => {
+  let conn
+  try {
+    const id = req.params.id
+    conn = await pool.getConnection()
+    const data = await conn.query(`DELETE FROM master_cctv WHERE id=${id}`)
+
+    if (data.affectedRows > 0) {
+      res.json({ msg: 'data dihapus' })
+    } else {
+      res.json({ msg: 'data tidak terhapus' })
+    }
+  } catch (err) {
+    console.log(err)
+  } finally {
+    if (conn) return conn.end()
+  }
+}
+module.exports.deletemasternetwork = async (req, res) => {
+  let conn
+  try {
+    const id = req.params.id
+    conn = await pool.getConnection()
+    const data = await conn.query(`DELETE FROM master_network WHERE id=${id}`)
+
+    if (data.affectedRows > 0) {
+      res.json({ msg: 'data dihapus' })
+    } else {
+      res.json({ msg: 'data tidak terhapus' })
+    }
+  } catch (err) {
+    console.log(err)
+  } finally {
+    if (conn) return conn.end()
+  }
+}
+module.exports.deletemasterapar = async (req, res) => {
+  let conn
+  try {
+    const id = req.params.id
+    conn = await pool.getConnection()
+    const data = await conn.query(`DELETE FROM master_apar WHERE id=${id}`)
+
+    if (data.affectedRows > 0) {
+      res.json({ msg: 'data dihapus' })
+    } else {
+      res.json({ msg: 'data tidak terhapus' })
+    }
+  } catch (err) {
+    console.log(err)
+  } finally {
+    if (conn) return conn.end()
+  }
+}
+module.exports.deletemastermonitor = async (req, res) => {
+  let conn
+  try {
+    const id = req.params.id
+    conn = await pool.getConnection()
+    const data = await conn.query(`DELETE FROM master_monitor WHERE id=${id}`)
+
+    if (data.affectedRows > 0) {
+      res.json({ msg: 'data dihapus' })
+    } else {
+      res.json({ msg: 'data tidak terhapus' })
+    }
+  } catch (err) {
+    console.log(err)
+  } finally {
+    if (conn) return conn.end()
+  }
+}
+module.exports.deletemasterkeyboard = async (req, res) => {
+  let conn
+  try {
+    const id = req.params.id
+    conn = await pool.getConnection()
+    const data = await conn.query(`DELETE FROM master_keyboard WHERE id=${id}`)
+
+    if (data.affectedRows > 0) {
+      res.json({ msg: 'data dihapus' })
+    } else {
+      res.json({ msg: 'data tidak terhapus' })
+    }
+  } catch (err) {
+    console.log(err)
+  } finally {
+    if (conn) return conn.end()
+  }
+}
+module.exports.deletemastermouse = async (req, res) => {
+  let conn
+  try {
+    const id = req.params.id
+    conn = await pool.getConnection()
+    const data = await conn.query(`DELETE FROM master_mouse WHERE id=${id}`)
+
+    if (data.affectedRows > 0) {
+      res.json({ msg: 'data dihapus' })
+    } else {
+      res.json({ msg: 'data tidak terhapus' })
+    }
+  } catch (err) {
+    console.log(err)
+  } finally {
+    if (conn) return conn.end()
+  }
+}
+module.exports.deletemasternas = async (req, res) => {
+  let conn
+  try {
+    const id = req.params.id
+    conn = await pool.getConnection()
+    const data = await conn.query(`DELETE FROM master_nas WHERE id=${id}`)
+
+    if (data.affectedRows > 0) {
+      res.json({ msg: 'data dihapus' })
+    } else {
+      res.json({ msg: 'data tidak terhapus' })
+    }
+  } catch (err) {
+    console.log(err)
+  } finally {
+    if (conn) return conn.end()
+  }
+}
+module.exports.deletemastergenset = async (req, res) => {
+  let conn
+  try {
+    const lokasiServer = req.params.lokasi
+    const id = req.params.id
+    conn = await pool.getConnection()
+
+    if (lokasiServer == 'roto 1') {
+      const data = await conn.query(`DELETE FROM master_genset WHERE id=${id}`)
+      if (data.affectedRows > 0) {
+        res.json({ msg: 'data dihapus' })
+        // res.json(data)
+      } else {
+        res.json({ err: 'data tidak terhapus' })
+      }
+    } else if (lokasiServer == 'roto 2') {
+      const data = await conn.query(
+        `DELETE FROM master_genset_roto_2 WHERE id=${id}`
+      )
+      if (data.affectedRows > 0) {
+        // res.json({ msg: 'data dihapus' })
+        res.json(data)
+      } else {
+        res.json({ msg: 'data tidak terhapus' })
+      }
+    } else if (lokasiServer == 'roto 3') {
+      const data = await conn.query(
+        `DELETE FROM master_genset_roto_3 WHERE id=${id}`
+      )
+      if (data.affectedRows > 0) {
+        // res.json({ msg: 'data dihapus' })
+        res.json(data)
+      } else {
+        res.json({ msg: 'data tidak terhapus' })
+      }
+    } else if (lokasiServer == 'tinta') {
+      const data = await conn.query(
+        `DELETE FROM master_genset_tinta WHERE id=${id}`
+      )
+      if (data.affectedRows > 0) {
+        // res.json({ msg: 'data dihapus' })
+        res.json(data)
+      } else {
+        res.json({ msg: 'data tidak terhapus' })
+      }
+    }
   } catch (err) {
     console.log(err)
   } finally {
