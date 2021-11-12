@@ -17,29 +17,26 @@ module.exports.masterserver = async (req, res) => {
 
     if (lokasiServer == 'roto 1') {
       const rows = await conn.query(
-        `SELECT * FROM master_server INNER JOIN users ON master_server.id_users=users.id WHERE users.id=${idlogin}`
+        `SELECT * FROM master_server INNER JOIN users ON master_server.id_users=users.id_user WHERE users.id_user=${idlogin}`
       )
-      // const data = await conn.query(
-      //   'SELECT * FROM `master_server` INNER JOIN `users` WHERE master_server.id_users = users.id'
-      // )
-      // console.log(rows)
       res.send(rows)
     } else if (lokasiServer == 'roto 2') {
       const rows = await conn.query(
-        `SELECT * FROM master_server_roto_2 INNER JOIN users ON master_server_roto_2.id_users=users.id WHERE users.id=${idlogin}`
+        `SELECT * FROM master_server_roto_2 INNER JOIN users ON master_server_roto_2.id_users=users.id_user WHERE users.id_user=${idlogin}`
       )
       res.send(rows)
     } else if (lokasiServer == 'roto 3') {
       const rows = await conn.query(
-        `SELECT * FROM master_server_roto_3 INNER JOIN users ON master_server_roto_3.id_users=users.id WHERE users.id=${idlogin}`
+        `SELECT * FROM master_server_roto_3 INNER JOIN users ON master_server_roto_3.id_users=users.id_user WHERE users.id_user=${idlogin}`
       )
       res.send(rows)
     } else if (lokasiServer == 'tinta') {
       const rows = await conn.query(
-        `SELECT * FROM master_server_tinta INNER JOIN users ON master_server_tinta.id_users=users.id WHERE users.id=${idlogin}`
+        `SELECT * FROM master_server_tinta INNER JOIN users ON master_server_tinta.id_users=users.id_user WHERE users.id_user=${idlogin}`
       )
       res.send(rows)
     }
+    conn.release()
   } catch (err) {
     console.log(err)
   } finally {
@@ -118,6 +115,7 @@ module.exports.inputmasterserver = async (req, res) => {
           .redirect('/master/server/inputserver')
       }
     }
+    conn.release()
   } catch (err) {
     console.log(err)
   } finally {
@@ -127,22 +125,32 @@ module.exports.inputmasterserver = async (req, res) => {
 module.exports.masterrak = async (req, res) => {
   let conn
   try {
-    const lokasiServer = req.query.lokasi
+    const lokasiServer = req.params.lokasi
+    const idlogin = req.params.id
     conn = await pool.getConnection()
 
     if (lokasiServer == 'roto 1') {
-      const rows = await conn.query('SELECT * FROM master_rak')
+      const rows = await conn.query(
+        `SELECT * FROM master_rak INNER JOIN users ON master_rak.id_users=users.id_user WHERE users.id_user=${idlogin}`
+      )
       res.send(rows)
     } else if (lokasiServer == 'roto 2') {
-      const rows = await conn.query('SELECT * FROM master_rak_roto_2')
+      const rows = await conn.query(
+        `SELECT * FROM master_rak_roto_2 INNER JOIN users ON master_rak_roto_2.id_users=users.id_user WHERE users.id_user=${idlogin}`
+      )
       res.send(rows)
     } else if (lokasiServer == 'roto 3') {
-      const rows = await conn.query('SELECT * FROM master_rak_roto_3')
+      const rows = await conn.query(
+        `SELECT * FROM master_rak_roto_3 INNER JOIN users ON master_rak_roto_3.id_users=users.id_user WHERE users.id_user=${idlogin}`
+      )
       res.send(rows)
     } else if (lokasiServer == 'tinta') {
-      const rows = await conn.query('SELECT * FROM master_rak_tinta')
+      const rows = await conn.query(
+        `SELECT * FROM master_rak_tinta INNER JOIN users ON master_rak_tinta.id_users=users.id_user WHERE users.id_user=${idlogin}`
+      )
       res.send(rows)
     }
+    conn.release()
   } catch (err) {
     console.log(err)
   } finally {
@@ -158,14 +166,64 @@ module.exports.inputmasterrak = async (req, res) => {
 
   let conn
   try {
-    const { tipeRak, tipePintu, namaProduk, dimensi, tahun, berat } = req.body
+    const {
+      iduser,
+      lokasiServer,
+      tipeRak,
+      tipePintu,
+      namaProduk,
+      dimensi,
+      tahun,
+      berat,
+    } = req.body
 
     conn = await pool.getConnection()
-    const data = await conn.query(
-      `INSERT INTO master_rak VALUES ('','${tipeRak}','${tipePintu}','${namaProduk}','${dimensi}','${berat}','${tahun}')`
-    )
 
-    res.redirect('/master/rak')
+    if (lokasiServer == 'roto 1') {
+      const data = await conn.query(
+        `INSERT INTO master_rak VALUES ('','${tipeRak}','${tipePintu}','${namaProduk}','${dimensi}','${berat}','${tahun}','${iduser}')`
+      )
+      if (data.affectedRows > 0) {
+        res.redirect('/master/rak')
+      } else {
+        return res
+          .json({ msg: 'gagal di input' })
+          .redirect('/master/rak/inputRak')
+      }
+    } else if (lokasiServer == 'roto 2') {
+      const data = await conn.query(
+        `INSERT INTO master_rak_roto_2 VALUES ('','${tipeRak}','${tipePintu}','${namaProduk}','${dimensi}','${berat}','${tahun}','${iduser}')`
+      )
+      if (data.affectedRows > 0) {
+        res.redirect('/master/rak')
+      } else {
+        return res
+          .json({ msg: 'gagal di input' })
+          .redirect('/master/rak/inputRak')
+      }
+    } else if (lokasiServer == 'roto 3') {
+      const data = await conn.query(
+        `INSERT INTO master_rak_roto_3 VALUES ('','${tipeRak}','${tipePintu}','${namaProduk}','${dimensi}','${berat}','${tahun}','${iduser}')`
+      )
+      if (data.affectedRows > 0) {
+        res.redirect('/master/rak')
+      } else {
+        return res
+          .json({ msg: 'gagal di input' })
+          .redirect('/master/rak/inputRak')
+      }
+    } else if (lokasiServer == 'tinta') {
+      const data = await conn.query(
+        `INSERT INTO master_rak_tinta VALUES ('','${tipeRak}','${tipePintu}','${namaProduk}','${dimensi}','${berat}','${tahun}','${iduser}')`
+      )
+      if (data.affectedRows > 0) {
+        res.redirect('/master/rak')
+      } else {
+        return res
+          .json({ msg: 'gagal di input' })
+          .redirect('/master/rak/inputRak')
+      }
+    }
     conn.release()
   } catch (err) {
     console.log(err)
@@ -191,6 +249,7 @@ module.exports.masterups = async (req, res) => {
       const rows = await conn.query('SELECT * FROM master_ups_tinta')
       res.send(rows)
     }
+    conn.release()
   } catch (err) {
     console.log(err)
   } finally {
@@ -226,6 +285,7 @@ module.exports.inputmasterups = async (req, res) => {
     )
 
     res.redirect('/master/ups')
+    conn.release()
   } catch (err) {
     console.log(err)
   } finally {
@@ -252,6 +312,7 @@ module.exports.masterbaterai = async (req, res) => {
       const rows = await conn.query('SELECT * FROM master_baterai_tinta')
       res.send(rows)
     }
+    conn.release()
   } catch (err) {
     console.log(err)
   } finally {
@@ -275,7 +336,8 @@ module.exports.inputmasterbaterai = async (req, res) => {
     if (data.affectedRows) {
       return res.json({ msg: 'data berhasil di input' })
     }
-    // res.redirect('/master/baterai')
+    res.redirect('/master/baterai')
+    conn.release()
   } catch (err) {
     console.log(err)
   } finally {
@@ -302,6 +364,7 @@ module.exports.masterac = async (req, res) => {
       const rows = await conn.query('SELECT * FROM master_ac_tinta')
       res.send(rows)
     }
+    conn.release()
   } catch (err) {
     console.log(err)
   } finally {
@@ -333,6 +396,7 @@ module.exports.inputmasterac = async (req, res) => {
     )
 
     res.redirect('/master/ac')
+    conn.release()
   } catch (err) {
     console.log(err)
   } finally {
@@ -359,6 +423,7 @@ module.exports.mastercctv = async (req, res) => {
       const rows = await conn.query('SELECT * FROM master_cctv_tinta')
       res.send(rows)
     }
+    conn.release()
   } catch (err) {
     console.log(err)
   } finally {
@@ -381,7 +446,7 @@ module.exports.inputmastercctv = async (req, res) => {
       `INSERT INTO master_cctv VALUES ('','${merek}','${model}','${garansi}')`
     )
 
-    res.json({ msg: 'data berhasil di tambah' })
+    res.redirect('/master/cctv')
     conn.release()
   } catch (err) {
     console.log(err)
@@ -409,6 +474,7 @@ module.exports.masternetwork = async (req, res) => {
       const rows = await conn.query('SELECT * FROM master_network_tinta')
       res.send(rows)
     }
+    conn.release()
   } catch (err) {
     console.log(err)
   } finally {
@@ -458,6 +524,7 @@ module.exports.masterapar = async (req, res) => {
       const rows = await conn.query('SELECT * FROM master_apar_tinta')
       res.send(rows)
     }
+    conn.release()
   } catch (err) {
     console.log(err)
   } finally {
@@ -480,6 +547,7 @@ module.exports.inputmasterapar = async (req, res) => {
     )
 
     res.redirect('/master/apar')
+    conn.release()
   } catch (err) {
     console.log(err)
   } finally {
@@ -506,6 +574,7 @@ module.exports.mastermonitor = async (req, res) => {
       const rows = await conn.query('SELECT * FROM master_monitor_tinta')
       res.send(rows)
     }
+    conn.release()
   } catch (err) {
     console.log(err)
   } finally {
@@ -528,6 +597,7 @@ module.exports.inputmastermonitor = async (req, res) => {
     )
 
     res.redirect('/master/monitor')
+    conn.release()
   } catch (err) {
     console.log(err)
   } finally {
@@ -554,6 +624,7 @@ module.exports.masterkeyboard = async (req, res) => {
       const rows = await conn.query('SELECT * FROM master_keyboard_tinta')
       res.send(rows)
     }
+    conn.release()
   } catch (err) {
     console.log(err)
   } finally {
@@ -576,6 +647,7 @@ module.exports.inputmasterkeyboard = async (req, res) => {
     )
 
     res.redirect('/master/keyboard')
+    conn.release()
   } catch (err) {
     console.log(err)
   } finally {
@@ -602,6 +674,7 @@ module.exports.mastermouse = async (req, res) => {
       const rows = await conn.query('SELECT * FROM master_mouse_tinta')
       res.send(rows)
     }
+    conn.release()
   } catch (err) {
     console.log(err)
   } finally {
@@ -624,6 +697,7 @@ module.exports.inputmastermouse = async (req, res) => {
     )
 
     res.redirect('/master/mouse')
+    conn.release()
   } catch (err) {
     console.log(err)
   } finally {
@@ -650,6 +724,7 @@ module.exports.masternas = async (req, res) => {
       const rows = await conn.query('SELECT * FROM master_nas_tinta')
       res.send(rows)
     }
+    conn.release()
   } catch (err) {
     console.log(err)
   } finally {
@@ -682,6 +757,7 @@ module.exports.inputmasternas = async (req, res) => {
     )
 
     res.redirect('/master/nas')
+    conn.release()
   } catch (err) {
     console.log(err)
   } finally {
@@ -708,6 +784,7 @@ module.exports.mastergenset = async (req, res) => {
       const rows = await conn.query('SELECT * FROM master_genset_tinta')
       res.send(rows)
     }
+    conn.release()
   } catch (err) {
     console.log(err)
   } finally {
@@ -730,6 +807,7 @@ module.exports.inputmastergenset = async (req, res) => {
     )
 
     res.redirect('/master/genset')
+    conn.release()
   } catch (err) {
     console.log(err)
   } finally {
@@ -743,14 +821,51 @@ module.exports.deletemasterserver = async (req, res) => {
   let conn
   try {
     const id = req.params.id
+    const lokasiServer = req.params.lokasi
     conn = await pool.getConnection()
-    const data = await conn.query(`DELETE FROM master_server WHERE id=${id}`)
 
-    if (data.affectedRows > 0) {
-      res.json({ msg: 'data dihapus' })
-    } else {
-      res.json({ msg: 'data tidak terhapus' })
+    if (lokasiServer == 'roto 1') {
+      const data = await conn.query(
+        `DELETE FROM master_server WHERE id_server=${id}`
+      )
+
+      if (data.affectedRows > 0) {
+        res.json({ msg: 'data dihapus' })
+      } else {
+        res.json({ msg: 'data tidak terhapus' })
+      }
+    } else if (lokasiServer == 'roto 2') {
+      const data = await conn.query(
+        `DELETE FROM master_server_roto_2 WHERE id_server_roto_2=${id}`
+      )
+
+      if (data.affectedRows > 0) {
+        res.json({ msg: 'data dihapus' })
+      } else {
+        res.json({ msg: 'data tidak terhapus' })
+      }
+    } else if (lokasiServer == 'roto 3') {
+      const data = await conn.query(
+        `DELETE FROM master_server_roto_3 WHERE id_server_roto_3=${id}`
+      )
+
+      if (data.affectedRows > 0) {
+        res.json({ msg: 'data dihapus' })
+      } else {
+        res.json({ msg: 'data tidak terhapus' })
+      }
+    } else if (lokasiServer == 'tinta') {
+      const data = await conn.query(
+        `DELETE FROM master_server_tinta WHERE id_server_tinta=${id}`
+      )
+
+      if (data.affectedRows > 0) {
+        res.json({ msg: 'data dihapus' })
+      } else {
+        res.json({ msg: 'data tidak terhapus' })
+      }
     }
+    conn.release()
   } catch (err) {
     console.log(err)
   } finally {
@@ -769,6 +884,7 @@ module.exports.deletemasterrak = async (req, res) => {
     } else {
       res.json({ msg: 'data tidak terhapus' })
     }
+    conn.release()
   } catch (err) {
     console.log(err)
   } finally {
@@ -1011,11 +1127,34 @@ module.exports.deletemastergenset = async (req, res) => {
 // ============== update barang master =============
 module.exports.masterservergetdata = async (req, res) => {
   const id = req.params.id
+  const lokasiServer = req.params.lokasi
+  console.log(id)
+  console.log(lokasiServer)
   let conn
   try {
     conn = await pool.getConnection()
-    const rows = await conn.query(`SELECT * FROM master_server WHERE id=${id}`)
-    res.send(rows)
+    if (lokasiServer == 'roto 1') {
+      const rows = await conn.query(
+        `SELECT * FROM master_server WHERE id_server=${id}`
+      )
+      res.send(rows)
+    } else if (lokasiServer == 'roto 2') {
+      const rows = await conn.query(
+        `SELECT * FROM master_server_roto_2 WHERE id_server_roto_2=${id}`
+      )
+      res.send(rows)
+    } else if (lokasiServer == 'roto 3') {
+      const rows = await conn.query(
+        `SELECT * FROM master_server_roto_3 WHERE id_server_roto_3=${id}`
+      )
+      res.send(rows)
+    } else if (lokasiServer == 'tinta') {
+      const rows = await conn.query(
+        `SELECT * FROM master_server_tinta WHERE id_server_tinta=${id}`
+      )
+      res.send(rows)
+    }
+
     conn.release()
   } catch (err) {
     console.log(err)
@@ -1026,24 +1165,61 @@ module.exports.masterservergetdata = async (req, res) => {
 module.exports.inputmasterserverupdate = async (req, res) => {
   let conn
   try {
-    const id = req.body.id
-    const produk = req.body.produk
-    const merek = req.body.merek
-    const model = req.body.model
-    const processor = req.body.processor
-    const memori = req.body.memori
-    const internalStorage = req.body.internalStorage
-    const networkController = req.body.networkController
-    const storage = req.body.storage
-    const sumberDayaListrik = req.body.sumberDayaListrik
-    const tahun = req.body.tahun
-    const garansi = req.body.garansi
+    const {
+      idproduk,
+      produk,
+      merek,
+      model,
+      processor,
+      memori,
+      internalStorage,
+      networkController,
+      storage,
+      sumberDayaListrik,
+      tahun,
+      garansi,
+      lokasiServer,
+    } = req.body
 
     conn = await pool.getConnection()
-    await conn.query(
-      `UPDATE master_server SET produk='${produk}', merek='${merek}', model='${model}', processor='${processor}', memori='${memori}',internal_storage='${internalStorage}', network_controller='${networkController}', storage='${storage}', sumber_daya_listrik='${sumberDayaListrik}', tahun='${tahun}', garansi='${garansi}' WHERE id = ${id}`
-    )
-    res.redirect('/master/server')
+    if (lokasiServer == 'roto 1') {
+      const resp = await conn.query(
+        `UPDATE master_server SET produk='${produk}', merek='${merek}', model='${model}', processor='${processor}', memori='${memori}',internal_storage='${internalStorage}', network_controller='${networkController}', storage='${storage}', sumber_daya_listrik='${sumberDayaListrik}', tahun='${tahun}', garansi='${garansi}' WHERE id_server = ${idproduk}`
+      )
+      if (resp.affectedRows > 0) {
+        res.redirect('/master/server')
+      } else {
+        res.json({ msg: 'data tidak diupdate' })
+      }
+    } else if (lokasiServer == 'roto 2') {
+      const resp = await conn.query(
+        `UPDATE master_server_roto_2 SET produk='${produk}', merek='${merek}', model='${model}', processor='${processor}', memori='${memori}',internal_storage='${internalStorage}', network_controller='${networkController}', storage='${storage}', sumber_daya_listrik='${sumberDayaListrik}', tahun='${tahun}', garansi='${garansi}' WHERE id_server_roto_2 = ${idproduk}`
+      )
+      if (resp.affectedRows > 0) {
+        res.redirect('/master/server')
+      } else {
+        res.json({ msg: 'data tidak diupdate' })
+      }
+    } else if (lokasiServer == 'roto 3') {
+      const resp = await conn.query(
+        `UPDATE master_server_roto_3 SET produk='${produk}', merek='${merek}', model='${model}', processor='${processor}', memori='${memori}',internal_storage='${internalStorage}', network_controller='${networkController}', storage='${storage}', sumber_daya_listrik='${sumberDayaListrik}', tahun='${tahun}', garansi='${garansi}' WHERE id_server_roto_3 = ${idproduk}`
+      )
+      if (resp.affectedRows > 0) {
+        res.redirect('/master/server')
+      } else {
+        res.json({ msg: 'data tidak diupdate' })
+      }
+    } else if (lokasiServer == 'tinta') {
+      const resp = await conn.query(
+        `UPDATE master_server_tinta SET produk='${produk}', merek='${merek}', model='${model}', processor='${processor}', memori='${memori}',internal_storage='${internalStorage}', network_controller='${networkController}', storage='${storage}', sumber_daya_listrik='${sumberDayaListrik}', tahun='${tahun}', garansi='${garansi}' WHERE id_server_tinta = ${idproduk}`
+      )
+      if (resp.affectedRows > 0) {
+        res.redirect('/master/server')
+      } else {
+        res.json({ msg: 'data tidak diupdate' })
+      }
+    }
+
     conn.release()
   } catch (err) {
     console.log(err)

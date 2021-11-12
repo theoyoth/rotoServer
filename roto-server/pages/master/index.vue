@@ -75,7 +75,7 @@
 
 <script>
 export default {
-    middleware:"isAuthenticated",
+    middleware:["isAuthenticated","cookieRestrict"],
     computed:{
         loggedIn() {
             return this.$auth.loggedIn
@@ -83,7 +83,14 @@ export default {
         user() {
             return this.$auth.user
         },
-    }
+    },
+    // async mounted(){
+    //     const cook = await this.$cookies.get('aksestoken')
+    //     if(cook){
+    //         this.$cookies.remove('aksestoken')
+    //         this.$router.push('/')
+    //     }
+    // },
 }
 </script>
 

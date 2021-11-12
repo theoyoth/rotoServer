@@ -23,10 +23,10 @@ module.exports.login = async (req, res) => {
 
         const token = jwt.sign(
           {
-            id: user.id,
+            id: user.id_user,
             nama: user.nama,
             level: user.level,
-            lokasiid: lokasi.id,
+            lokasiid: lokasi.id_lokasi,
             lokasi: lokasi.nama_lokasi,
           },
           process.env.TOKEN_KEY,
@@ -41,6 +41,7 @@ module.exports.login = async (req, res) => {
       } else {
         return res.json({ errmsg: 'data yang dimasukan tidak terdaftar' })
       }
+      conn.release()
     } else {
       return res.json({ errmsg: 'masukan nama, sandi, dan lokasi' })
     }
@@ -73,21 +74,23 @@ module.exports.homepage = async (req, res) => {
       res.json({ msg: 'not match' })
     } else {
       const data = await conn.query(
-        `SELECT * FROM users WHERE id=${verified.id}`
+        `SELECT * FROM users WHERE id_user = ${verified.id}`
       )
       const lok = await conn.query(
-        `SELECT * FROM lokasi_server WHERE id = '${verified.lokasiid}'`
+        `SELECT * FROM lokasi_server WHERE id_lokasi = ${verified.lokasiid}`
       )
       const userdata = data[0]
       const lokasi = lok[0]
       res.status(200).json({
         user: {
-          id: userdata.id,
+          id: userdata.id_user,
           nama: userdata.nama,
-          // level: userdata.level,
+          level: userdata.level,
           lokasi: lokasi.nama_lokasi,
+          token: token,
         },
       })
+      conn.release()
     }
   } catch (err) {
     console.log(err)

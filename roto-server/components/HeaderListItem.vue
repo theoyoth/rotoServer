@@ -65,7 +65,7 @@
                 <font-awesome-icon :icon="['fas','question']" class="text-black" />
             </div> -->
       <p>{{ user.nama }}</p>
-      <!-- <p>{{user.level}}</p> -->
+      <p>{{user.level}}</p>
       <p>{{ user.lokasi }}</p>
 
       <nuxt-link

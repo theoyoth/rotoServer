@@ -6,7 +6,7 @@
           <div class="flex justify-between w-56 text-sm">
             <p>{{ user.nama }}</p>
             <p>|</p>
-            <!-- <p>{{ user.level }}</p> -->
+            <p>{{ user.level }}</p>
             <p>|</p>
             <p>{{user.lokasi}}</p>
           </div>

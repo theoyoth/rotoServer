@@ -117,7 +117,8 @@ export default {
     async mounted(){
         try{
             const lokasi = this.$auth.user.lokasi
-            const resp = await axios.get(`http://localhost:3000/server/masterrak?lokasi=${lokasi}`)
+            const idlogin = this.$auth.user.id
+            const resp = await axios.get(`http://localhost:3000/server/masterrak/${lokasi}/${idlogin}`)
             resp.data.forEach(rak =>{
                 this.raks.push(rak)
             })

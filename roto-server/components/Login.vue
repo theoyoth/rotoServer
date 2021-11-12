@@ -106,7 +106,7 @@ export default {
         async userLogin() {
             try{
                 const resp = await this.$auth.loginWith("local", { data: this.login})
-                const token = resp.data.token
+                // const token = resp.data.token
                 // this.$cookies.set('token',token,{expires:3600000})
                 
                 // this.$auth.$storage.setLocalStorage("authtoken", token)

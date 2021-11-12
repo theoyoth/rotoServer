@@ -77,7 +77,10 @@ export default {
     },
     methods:{
         async postInputRak(){
-            const res = await axios.post('http://localhost:3000/server/master/inputrak',{tipeRak:this.inputRak.tipeRak,
+            const res = await axios.post('http://localhost:3000/server/master/inputrak',{
+            iduser:this.$auth.user.id,
+            lokasiServer:this.$auth.user.lokasi,
+            tipeRak:this.inputRak.tipeRak,
             tipePintu:this.inputRak.tipePintu,
             namaProduk:this.inputRak.namaProduk,
             dimensi:this.inputRak.dimensi,

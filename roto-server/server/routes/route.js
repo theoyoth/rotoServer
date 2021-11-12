@@ -57,7 +57,7 @@ router.post(
   ],
   masterController.inputmasterserver
 )
-router.get('/masterrak', masterController.masterrak)
+router.get('/masterrak/:lokasi/:id', masterController.masterrak)
 router.post(
   '/master/inputrak',
   [
@@ -481,7 +481,10 @@ router.post(
 )
 
 // delete master ========================================
-router.post('/master/deleteserver/:id', masterController.deletemasterserver)
+router.post(
+  '/master/server/delete/:id/:lokasi',
+  masterController.deletemasterserver
+)
 router.post('/master/deleterak/:id', masterController.deletemasterrak)
 router.post('/master/deleteups/:id', masterController.deletemasterups)
 router.post('/master/deletebaterai/:id', masterController.deletemasterbaterai)
@@ -501,16 +504,13 @@ router.post(
 
 // update master ========================================
 router.get(
-  '/master/update/updateserver/:id',
+  '/master/update/updateserver/:id/:lokasi',
   masterController.masterservergetdata
 )
-router.post(
-  '/master/server/update/updateserver',
-  masterController.inputmasterserverupdate
-)
+router.post('/master/server/update', masterController.inputmasterserverupdate)
 router.get('/master/update/updaterak/:id', masterController.masterrakgetdata)
 router.post(
-  '/master/rak/update/updaterak',
+  '/master/rak/update/updaterak/:id',
   masterController.inputmasterrakupdate
 )
 
