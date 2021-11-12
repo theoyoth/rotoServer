@@ -76,6 +76,7 @@ export default {
                 this.$router.push('/master/input/inputMouse')
             }
             else{
+                swal('data berhasil ditambahkan',{icon:'success'})
                 this.$router.push('/master/mouse')
             }
         }

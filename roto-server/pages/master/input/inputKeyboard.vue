@@ -77,6 +77,7 @@ export default {
                 this.$router.push('/master/input/inputKeyboard')
             }
             else{
+                swal('data berhasil ditambahkan',{icon:'success'})
                 this.$router.push('/master/keyboard')
             }
         }

@@ -212,8 +212,11 @@ export default {
         }
     },
     mounted(){
-        const lokasi = this.$auth.user.lokasi
-        this.$store.dispatch('masterbarang/getServersData',lokasi)
+        const data = {
+          lokasiserver : this.$auth.user.lokasi,
+          idlogin : this.$auth.user.id
+        }
+        this.$store.dispatch('masterbarang/getServersData',data)
     }
 }
 </script>

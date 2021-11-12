@@ -15,7 +15,7 @@ module.exports.login = async (req, res) => {
         `SELECT * FROM users WHERE nama='${nama}' AND sandi='${sandi}'`
       )
       const lok = await conn.query(
-        `SELECT * FROM lokasi_server WHERE nama='${lokasi}'`
+        `SELECT * FROM lokasi_server WHERE nama_lokasi='${lokasi}'`
       )
       if (data.length > 0 && lok.length > 0) {
         let user = data[0]
@@ -27,16 +27,16 @@ module.exports.login = async (req, res) => {
             nama: user.nama,
             level: user.level,
             lokasiid: lokasi.id,
-            lokasi: lokasi.nama,
+            lokasi: lokasi.nama_lokasi,
           },
           process.env.TOKEN_KEY,
           { expiresIn: '30m' }
         )
-        // res.cookie('aksestoken', token, {
-        //   httpOnly: true,
-        //   sameSite: 'strict',
-        //   secure: true,
-        // })
+        res.cookie('aksestoken', token, {
+          httpOnly: true,
+          sameSite: 'strict',
+          secure: true,
+        })
         res.json({ token })
       } else {
         return res.json({ errmsg: 'data yang dimasukan tidak terdaftar' })
@@ -84,12 +84,17 @@ module.exports.homepage = async (req, res) => {
         user: {
           id: userdata.id,
           nama: userdata.nama,
-          level: userdata.level,
-          lokasi: lokasi.nama,
+          // level: userdata.level,
+          lokasi: lokasi.nama_lokasi,
         },
       })
     }
   } catch (err) {
     console.log(err)
   }
+}
+
+module.exports.logout = async (req, res) => {
+  res.clearCookie('aksestoken')
+  res.redirect('/')
 }

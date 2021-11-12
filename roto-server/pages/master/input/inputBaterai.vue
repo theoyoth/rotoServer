@@ -79,7 +79,7 @@ export default {
                 this.$router.push('/master/input/inputBaterai')
             }
             else{
-                console.log(res)
+                swal('data berhasil ditambahkan',{icon:'success'})
                 this.$router.push('/master/baterai')
             }
         },

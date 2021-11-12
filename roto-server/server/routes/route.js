@@ -11,7 +11,7 @@ const router = express.Router()
 
 // app.get('/', maintenanceController.users)
 // app.get('/lokasiserver', maintenanceController.lokasiserver)
-router.get('/masterserver', masterController.masterserver)
+router.get('/masterserver/:lokasi/:id', masterController.masterserver)
 
 router.post(
   '/master/inputserver',
@@ -600,12 +600,7 @@ router.post('/login', authController.login)
 // homepage when login success
 router.get('/homepage', isAuthent, authController.homepage)
 // logout
-// router.post('/logout', async (req, res) => {
-//   res.cookie('authtoken', '', { maxAge: 0 })
-//   res.send({
-//     message: 'you are success to logout',
-//   })
-// })
+router.post('/logout', authController.logout)
 
 // cari barang ===================================================
 router.get('/cariserver', masterController.caribarangserver)

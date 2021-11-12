@@ -89,6 +89,7 @@ export default {
                 this.$router.push('/master/input/inputRak')
             }
             else{
+                swal('data berhasil ditambahkan',{icon:'success'})
                 this.$router.push('/master/rak')
             }
         }

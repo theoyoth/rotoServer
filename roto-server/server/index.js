@@ -14,16 +14,17 @@ app.use(
     origin: 'http://localhost:3000',
   })
 )
-// app.use(
-//   session({
-//     secret: 'codesecretforauth',
-//     saveUninitialized: true,
-//     resave: true,
-//     cookie: {
-//       maxAge: 3600000,
-//     },
-//   })
-// )
+app.use(
+  session({
+    secret: 'codesecretforauth',
+    saveUninitialized: true,
+    resave: true,
+    cookie: {
+      maxAge: 360000,
+      secure: true,
+    },
+  })
+)
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 // app.use((req, res, next) => {

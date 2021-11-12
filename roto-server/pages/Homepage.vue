@@ -6,7 +6,7 @@
           <div class="flex justify-between w-56 text-sm">
             <p>{{ user.nama }}</p>
             <p>|</p>
-            <p>{{ user.level }}</p>
+            <!-- <p>{{ user.level }}</p> -->
             <p>|</p>
             <p>{{user.lokasi}}</p>
           </div>
@@ -87,7 +87,7 @@
               </nuxt-link>
             </div>
           </div>
-          <div @click="logout"
+          <button @click.prevent="logout"
             class="
               logout-btn
               px-2
@@ -98,7 +98,7 @@
               items-center
             "
           >
-            <button class="font-medium">Logout</button>
+            <h2 class="font-medium">Logout</h2>
             <div
               class="
                 bg-blue-400
@@ -115,7 +115,7 @@
                 class="text-white"
               />
             </div>
-          </div>
+          </button>
         </div>
       </header>
       <!-- <div v-for="(error,index) in errors" :key="index">
@@ -406,16 +406,12 @@ export default {
   methods: {
     async logout() {
       await this.$auth.logout()
-      this.$router.push('/')
-      this.$cookies.remove('aksestoken')
+      // this.$auth.$storage.removeCookie("authtoken")
+      // this.$cookies.remove('aksestoken')
+      // this.$cookies.remove('aksestoken')
+      // this.$router.push('/')
     },
   },
-  // mounted() {
-  //   const tok = this.$cookies.get('aksestoken')
-  //   if(!tok){
-  //     this.$router.push('/')
-  //   }
-  // }
 }
 </script>
 

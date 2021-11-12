@@ -106,6 +106,7 @@ export default {
                     this.$router.push('/master/input/inputAc')
                 }
                 else{
+                    swal('data berhasil ditambahkan',{icon:'success'})
                     this.$router.push('/master/ac')
                 }
         }

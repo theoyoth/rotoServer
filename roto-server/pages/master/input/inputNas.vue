@@ -117,6 +117,7 @@ export default {
                     this.$router.push('/master/input/inputNas')
                 }
                 else{
+                    swal('data berhasil ditambahkan',{icon:'success'})
                     this.$router.push('/master/nas')
                 }
         }

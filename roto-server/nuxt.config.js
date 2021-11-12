@@ -80,7 +80,11 @@ export default {
             method: 'post',
             propertyName: false,
           },
-          logout: false,
+          logout: {
+            url: 'server/logout',
+            method: 'post',
+            propertyName: false,
+          },
           user: {
             url: 'server/homepage',
             method: 'get',

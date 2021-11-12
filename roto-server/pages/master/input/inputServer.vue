@@ -133,6 +133,8 @@ export default {
         // },
         async postInputServer(){
                 const res = await axios.post('http://localhost:3000/server/master/inputserver',{
+                    iduser : this.$auth.user.id,
+                    lokasiServer : this.$auth.user.lokasi,
                     produk : this.inputServer.produk,
                     merek : this.inputServer.merek,
                     model : this.inputServer.model,
@@ -151,6 +153,7 @@ export default {
                     this.$router.push('/master/input/inputServer')
                 }
                 else{
+                    swal('data berhasil ditambahkan',{icon:'success'})
                     this.$router.push('/master/server')
                 }
         }

@@ -11,19 +11,33 @@ const { check, validationResult } = require('express-validator')
 module.exports.masterserver = async (req, res) => {
   let conn
   try {
-    const lokasiServer = req.query.lokasi
+    const lokasiServer = req.params.lokasi
+    const idlogin = req.params.id
     conn = await pool.getConnection()
+
     if (lokasiServer == 'roto 1') {
-      const rows = await conn.query('SELECT * FROM master_server')
+      const rows = await conn.query(
+        `SELECT * FROM master_server INNER JOIN users ON master_server.id_users=users.id WHERE users.id=${idlogin}`
+      )
+      // const data = await conn.query(
+      //   'SELECT * FROM `master_server` INNER JOIN `users` WHERE master_server.id_users = users.id'
+      // )
+      // console.log(rows)
       res.send(rows)
     } else if (lokasiServer == 'roto 2') {
-      const rows = await conn.query('SELECT * FROM master_server_roto_2')
+      const rows = await conn.query(
+        `SELECT * FROM master_server_roto_2 INNER JOIN users ON master_server_roto_2.id_users=users.id WHERE users.id=${idlogin}`
+      )
       res.send(rows)
     } else if (lokasiServer == 'roto 3') {
-      const rows = await conn.query('SELECT * FROM master_server_roto_3')
+      const rows = await conn.query(
+        `SELECT * FROM master_server_roto_3 INNER JOIN users ON master_server_roto_3.id_users=users.id WHERE users.id=${idlogin}`
+      )
       res.send(rows)
     } else if (lokasiServer == 'tinta') {
-      const rows = await conn.query('SELECT * FROM master_server_tinta')
+      const rows = await conn.query(
+        `SELECT * FROM master_server_tinta INNER JOIN users ON master_server_tinta.id_users=users.id WHERE users.id=${idlogin}`
+      )
       res.send(rows)
     }
   } catch (err) {
@@ -42,6 +56,8 @@ module.exports.inputmasterserver = async (req, res) => {
   let conn
   try {
     const {
+      iduser,
+      lokasiServer,
       produk,
       merek,
       model,
@@ -56,17 +72,51 @@ module.exports.inputmasterserver = async (req, res) => {
     } = req.body
 
     conn = await pool.getConnection()
-    const data = await conn.query(
-      `INSERT INTO master_server VALUES ('','${produk}','${merek}','${model}','${processor}','${memori}','${internalStorage}','${networkController}','${storage}','${sumberDayaListrik}','${tahun}','${garansi}')`
-    )
-    // console.log(data)
-    // req.flash('sukses', 'data ditambahkan')
-    if (data.affectedRows > 0) {
-      res.redirect('/master/server')
-    } else {
-      return res
-        .json({ msg: 'gagal di input' })
-        .redirect('/master/server/inputserver')
+
+    if (lokasiServer == 'roto 1') {
+      const data = await conn.query(
+        `INSERT INTO master_server VALUES ('','${produk}','${merek}','${model}','${processor}','${memori}','${internalStorage}','${networkController}','${storage}','${sumberDayaListrik}','${tahun}','${garansi}','${iduser}')`
+      )
+      if (data.affectedRows > 0) {
+        res.redirect('/master/server')
+      } else {
+        return res
+          .json({ msg: 'gagal di input' })
+          .redirect('/master/server/inputserver')
+      }
+    } else if (lokasiServer == 'roto 2') {
+      const data = await conn.query(
+        `INSERT INTO master_server_roto_2 VALUES ('','${produk}','${merek}','${model}','${processor}','${memori}','${internalStorage}','${networkController}','${storage}','${sumberDayaListrik}','${tahun}','${garansi}','${iduser}')`
+      )
+      if (data.affectedRows > 0) {
+        res.redirect('/master/server')
+      } else {
+        return res
+          .json({ msg: 'gagal di input' })
+          .redirect('/master/server/inputserver')
+      }
+    } else if (lokasiServer == 'roto 3') {
+      const data = await conn.query(
+        `INSERT INTO master_server_roto_3 VALUES ('','${produk}','${merek}','${model}','${processor}','${memori}','${internalStorage}','${networkController}','${storage}','${sumberDayaListrik}','${tahun}','${garansi}','${iduser}')`
+      )
+      if (data.affectedRows > 0) {
+        res.redirect('/master/server')
+      } else {
+        return res
+          .json({ msg: 'gagal di input' })
+          .redirect('/master/server/inputserver')
+      }
+    } else if (lokasiServer == 'tinta') {
+      const data = await conn.query(
+        `INSERT INTO master_server_tinta VALUES ('','${produk}','${merek}','${model}','${processor}','${memori}','${internalStorage}','${networkController}','${storage}','${sumberDayaListrik}','${tahun}','${garansi}','${iduser}')`
+      )
+      if (data.affectedRows > 0) {
+        res.redirect('/master/server')
+      } else {
+        return res
+          .json({ msg: 'gagal di input' })
+          .redirect('/master/server/inputserver')
+      }
     }
   } catch (err) {
     console.log(err)
