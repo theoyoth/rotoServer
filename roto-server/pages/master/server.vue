@@ -159,14 +159,12 @@
                 class="text-blue-500"
               />
             </NuxtLink>
-            <form @click="deleteData(server.id_server)">
-              <button type="submit">
+            <button @click="deleteData(server.id_server)">
                 <font-awesome-icon
                   :icon="['fas', 'trash']"
                   class="text-red-500"
                 />
-              </button>
-            </form>
+            </button>
           </td>
         </tr>
       </tbody>

@@ -406,6 +406,8 @@ export default {
   methods: {
     async logout() {
       await this.$auth.logout()
+      localStorage.setItem("app-logout", 'logout' + Math.random())
+      return true
       // this.$auth.$storage.removeCookie("authtoken")
       // this.$cookies.remove('aksestoken')
       // this.$cookies.remove('aksestoken')

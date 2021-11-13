@@ -109,8 +109,8 @@ export default {
     async mounted(){
         try{
             const lokasi = this.$auth.user.lokasi
-            const id = this.$route.params.id
-            const resp = await axios.get(`http://localhost:3000/server/master/update/updateserver/${id}/${lokasi}`)
+            const idserver = this.$route.params.id
+            const resp = await axios.get(`http://localhost:3000/server/master/update/updateserver/${idserver}/${lokasi}`)
             if(resp){
                 resp.data.forEach(servers=>{
                     this.updateServer.produk = servers.produk

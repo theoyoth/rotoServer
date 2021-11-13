@@ -110,6 +110,11 @@ export default {
                 // this.$cookies.set('token',token,{expires:3600000})
                 
                 // this.$auth.$storage.setLocalStorage("authtoken", token)
+                window.addEventListener('storage', function(event){
+                  if (event.key == "app-logout") {
+                    window.location.assign("http://localhost:3000")
+                  }
+                }, false);
                 this.$router.push('/homepage')
                 if(resp.data.errmsg){
                     this.err = resp.data.errmsg

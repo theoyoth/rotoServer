@@ -75,7 +75,7 @@
 
 <script>
 export default {
-    middleware:["isAuthenticated","cookieRestrict"],
+    middleware:["isAuthenticated"],
     computed:{
         loggedIn() {
             return this.$auth.loggedIn
