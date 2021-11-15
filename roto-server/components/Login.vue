@@ -1,5 +1,5 @@
 <template>
-  <div class="px-4 h-screen w-full relative">
+  <div class="px-4 h-screen w-screen relative">
     <div class="background absolute top-0 left-0 bg-gray-800 w-full h-screen"></div>
     <div class="flex content-center items-center justify-center h-full">
       <div class="w-full lg:w-4/12 px-4">

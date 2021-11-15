@@ -1,6 +1,6 @@
 <template>
   <nav
-    class="md:left-0 md:block md:fixed md:top-0 md:bottom-0 md:overflow-y-auto md:flex-row md:flex-nowrap md:overflow-hidden shadow-xl bg-white flex flex-wrap items-center justify-between relative md:w-64 z-10 py-4 px-6"
+    class="md:left-0 md:block  md:top-0 md:bottom-0 md:overflow-y-auto md:flex-row md:flex-nowrap md:overflow-hidden shadow-xl flex flex-wrap items-center justify-between fixed z-10 py-4 bg-sidebar-color text-white w-widthSidebar"
   >
     <div
       class="md:flex-col md:items-stretch md:min-h-full md:flex-nowrap px-0 flex flex-wrap items-center justify-between w-full mx-auto"
@@ -9,7 +9,6 @@
       <button
         class="cursor-pointer text-black opacity-50 md:hidden px-3 py-1 text-xl leading-none bg-transparent rounded border border-solid border-transparent"
         type="button"
-        v-on:click="toggleCollapseShow('bg-white m-2 py-3 px-6')"
       >
         <i class="fas fa-bars"></i>
       </button>
@@ -18,7 +17,6 @@
       <!-- Collapse -->
       <div
         class="md:flex md:flex-col md:items-stretch md:opacity-100 md:relative md:mt-4 md:shadow-none shadow absolute top-0 left-0 right-0 z-40 overflow-y-auto overflow-x-hidden h-auto items-center flex-1 rounded"
-        v-bind:class="collapseShow"
       >
         <!-- Collapse header -->
         <div
@@ -37,7 +35,6 @@
               <button
                 type="button"
                 class="cursor-pointer text-black opacity-50 md:hidden px-3 py-1 text-xl leading-none bg-transparent rounded border border-solid border-transparent"
-                v-on:click="toggleCollapseShow('hidden')"
               >
                 <i class="fas fa-times"></i>
               </button>
@@ -56,176 +53,139 @@
         </form>
 
         <!-- Divider -->
-        <hr class="my-4 md:min-w-full" />
+        <hr class="my-4 px-6 md:min-w-full" />
         <!-- Heading -->
-        <h6
-          class="md:min-w-full text-blueGray-500 text-xs uppercase font-bold block pt-1 pb-4 no-underline"
+        <h2
+          class="md:min-w-full text-blueGray-500 uppercase font-bold block pt-1 pb-4 px-6 no-underline"
         >
-          Admin Layout Pages
-        </h6>
+          MENU
+        </h2>
         <!-- Navigation -->
 
-        <ul class="md:flex-col md:min-w-full flex flex-col list-none">
-          <li class="items-center">
-            <router-link
-              to="/admin/dashboard"
-              v-slot="{ href, navigate, isActive }"
-            >
-              <a
-                :href="href"
-                @click="navigate"
-                class="text-xs uppercase py-3 font-bold block"
-                :class="[
-                  isActive
-                    ? 'text-emerald-500 hover:text-emerald-600'
-                    : 'text-blueGray-700 hover:text-blueGray-500',
-                ]"
-              >
-                <i
-                  class="fas fa-tv mr-2 text-sm"
-                  :class="[isActive ? 'opacity-75' : 'text-blueGray-300']"
-                ></i>
-                Dashboard
-              </a>
-            </router-link>
+        <ul class="md:flex-col md:min-w-full flex flex-col list-none relative cursor-pointer" >
+          <li class="items-center" >
+            <div class="flex py-3 px-6 justify-between items-center group hover:bg-gray-600" @click="isActive = !isActive">
+              <div class="flex">
+                <font-awesome-icon
+                  :icon="['fas', 'tv']"
+                  class="text-gray-500 mr-3 text-xs group-hover:text-white"
+                />
+                <p class="font-bold text-xs group-hover:text-white">MASTER</p>
+              </div>
+              <font-awesome-icon
+                :icon="['fas', 'chevron-right']"
+                class="text-gray-500 mr-0 group-hover:text-white" :class="[isActive ? 'arrowDownInOut' : 'arrowNotDown']"
+              />
+            </div>
+            <ul class="relative px-16 text-xs" :class="[isActive ? 'active' : 'notActive']" >
+              <li class="py-1 hover:text-gray-400"><NuxtLink to="/master/server">server</NuxtLink></li>
+              <li class="py-1 hover:text-gray-400"><NuxtLink to="/master/rak">rak</NuxtLink></li>
+              <li class="py-1 hover:text-gray-400"><NuxtLink to="/master/ups">ups</NuxtLink></li>
+              <li class="py-1 hover:text-gray-400"><NuxtLink to="/master/baterai">baterai</NuxtLink></li>
+              <li class="py-1 hover:text-gray-400"><NuxtLink to="/master/ac">ac</NuxtLink></li>
+              <li class="py-1 hover:text-gray-400"><NuxtLink to="/master/cctv">cctv</NuxtLink></li>
+              <li class="py-1 hover:text-gray-400"><NuxtLink to="/master/network">network</NuxtLink></li>
+              <li class="py-1 hover:text-gray-400"><NuxtLink to="/master/apar">apar</NuxtLink></li>
+              <li class="py-1 hover:text-gray-400"><NuxtLink to="/master/monitor">monitor</NuxtLink></li>
+              <li class="py-1 hover:text-gray-400"><NuxtLink to="/master/keyboard">keyboard</NuxtLink></li>
+              <li class="py-1 hover:text-gray-400"><NuxtLink to="/master/mouse">mouse</NuxtLink></li>
+              <li class="py-1 hover:text-gray-400"><NuxtLink to="/master/nas">nas</NuxtLink></li>
+              <li class="py-1 hover:text-gray-400"><NuxtLink to="/master/genset">genset</NuxtLink></li>
+            </ul>
           </li>
 
           <li class="items-center">
-            <router-link
-              to="/admin/settings"
-              v-slot="{ href, navigate, isActive }"
-            >
-              <a
-                :href="href"
-                @click="navigate"
-                class="text-xs uppercase py-3 font-bold block"
-                :class="[
-                  isActive
-                    ? 'text-emerald-500 hover:text-emerald-600'
-                    : 'text-blueGray-700 hover:text-blueGray-500',
-                ]"
-              >
-                <i
-                  class="fas fa-tools mr-2 text-sm"
-                  :class="[isActive ? 'opacity-75' : 'text-blueGray-300']"
-                ></i>
-                Settings
-              </a>
-            </router-link>
+            <div class="flex justify-between items-center py-3 px-6 group hover:bg-gray-600" @click="isMainActive = !isMainActive">
+              <div class="flex">
+                <font-awesome-icon
+                  :icon="['fas', 'cog']"
+                  class="text-gray-500 mr-4 text-xs group-hover:text-white"
+                />
+                <p class="text-xs font-bold group-hover:text-white">MAINTENANCE</p>
+              </div>
+              <font-awesome-icon
+                :icon="['fas', 'chevron-right']"
+                class="text-gray-500 mr-0 group-hover:text-white" :class="[isMainActive ? 'arrowDownInOut' : 'arrowNotDown']"
+              />
+            </div>
+             <ul class="relative px-16 py-1 hidden transition ease-in-out duration-300 text-xs" :class="{activemaintenance : isMainActive}" >
+              <li class="py-1 hover:text-gray-400"><NuxtLink to="/maintenance">maintenance</NuxtLink></li>
+            </ul>
+          </li>
+
+          <li class="items-center relative">
+           <div class="flex justify-between items-center py-3 px-6 group hover:bg-gray-600" @click="isInOutActive = !isInOutActive">
+             <div class="flex">
+                  <font-awesome-icon
+                    :icon="['fas', 'suitcase']"
+                    class="text-gray-500 mr-4 text-xs group-hover:text-white"
+                  />
+                <p class="text-xs font-bold group-hover:text-white">IN/OUT BARANG</p>
+              </div>
+              <font-awesome-icon
+                :icon="['fas', 'chevron-right']"
+                class="text-gray-500 mr-0 group-hover:text-white" :class="[isInOutActive ? 'arrowDownInOut' : 'arrowNotDown']"
+              />
+            </div>
+            <ul class="relative hidden px-16 py-1 text-xs" :class="{activeinout : isInOutActive}">
+                <li class="py-1 w-full hover:text-gray-400"><NuxtLink to="/inout/tambahbarang">tambah barang</NuxtLink></li>
+                <li class="py-1 hover:text-gray-400"><NuxtLink to="/inout/ambilbarang">ambil barang</NuxtLink></li>
+                <li class="py-1 hover:text-gray-400"><NuxtLink to="/inout/gantibarang">ganti barang</NuxtLink></li>
+            </ul>
+          </li>
+          <li class="items-center">
+            <div class="flex justify-between items-center py-3 px-6 group hover:bg-gray-600">
+              <NuxtLink to="/document">
+                <div class="flex">
+                    <font-awesome-icon
+                      :icon="['fas', 'file-alt']"
+                      class="text-gray-500 mr-5 text-xs group-hover:text-white"
+                    />
+                  <p class="text-xs font-bold group-hover:text-white">DOKUMENTASI</p>
+                </div>
+              </NuxtLink>
+              <font-awesome-icon
+                :icon="['fas', 'chevron-right']"
+                class="text-gray-500 mr-0 group-hover:text-white"
+              />
+            </div>
           </li>
 
           <li class="items-center">
-            <router-link
-              to="/admin/tables"
-              v-slot="{ href, navigate, isActive }"
-            >
-              <a
-                :href="href"
-                @click="navigate"
-                class="text-xs uppercase py-3 font-bold block"
-                :class="[
-                  isActive
-                    ? 'text-emerald-500 hover:text-emerald-600'
-                    : 'text-blueGray-700 hover:text-blueGray-500',
-                ]"
-              >
-                <i
-                  class="fas fa-table mr-2 text-sm"
-                  :class="[isActive ? 'opacity-75' : 'text-blueGray-300']"
-                ></i>
-                Tables
-              </a>
-            </router-link>
+            <div class="flex justify-between items-center py-3 px-6 group hover:bg-gray-600">
+              <NuxtLink to="/map">
+                <div class="flex">
+                  <font-awesome-icon
+                    :icon="['fas', 'map']"
+                    class="text-gray-500 mr-4 text-xs group-hover:text-white"
+                  />
+                  <p class="text-xs font-bold group-hover:text-white">MAP</p>
+                </div>
+              </NuxtLink>
+              <font-awesome-icon
+                :icon="['fas', 'chevron-right']"
+                class="text-gray-500 mr-0 group-hover:text-white"
+              />
+            </div>
           </li>
-
-          <li class="items-center">
-            <router-link to="/admin/maps" v-slot="{ href, navigate, isActive }">
-              <a
-                :href="href"
-                @click="navigate"
-                class="text-xs uppercase py-3 font-bold block"
-                :class="[
-                  isActive
-                    ? 'text-emerald-500 hover:text-emerald-600'
-                    : 'text-blueGray-700 hover:text-blueGray-500',
-                ]"
-              >
-                <i
-                  class="fas fa-map-marked mr-2 text-sm"
-                  :class="[isActive ? 'opacity-75' : 'text-blueGray-300']"
-                ></i>
-                Maps
-              </a>
-            </router-link>
-          </li>
-        </ul>
-
-        <!-- Divider -->
-        <hr class="my-4 md:min-w-full" />
-        <!-- Heading -->
-        <h6
-          class="md:min-w-full text-blueGray-500 text-xs uppercase font-bold block pt-1 pb-4 no-underline"
-        >
-          Auth Layout Pages
-        </h6>
-        <!-- Navigation -->
-
-        <ul class="md:flex-col md:min-w-full flex flex-col list-none md:mb-4">
-          <li class="items-center">
-            <router-link
-              class="text-blueGray-700 hover:text-blueGray-500 text-xs uppercase py-3 font-bold block"
-              to="/auth/login"
-            >
-              <i class="fas fa-fingerprint text-blueGray-300 mr-2 text-sm"></i>
-              Login
-            </router-link>
-          </li>
-
-          <li class="items-center">
-            <router-link
-              class="text-blueGray-700 hover:text-blueGray-500 text-xs uppercase py-3 font-bold block"
-              to="/auth/register"
-            >
-              <i
-                class="fas fa-clipboard-list text-blueGray-300 mr-2 text-sm"
-              ></i>
-              Register
-            </router-link>
+          <li class="items-center" v-if="user.level == 'PA'">
+            <div class="flex justify-between items-center py-3 px-6 group hover:bg-gray-600">
+              <NuxtLink to="/infouser">
+                <div class="flex">
+                  <font-awesome-icon
+                    :icon="['fas', 'users']"
+                    class="text-gray-500 mr-3 text-xs group-hover:text-white"
+                  />
+                  <p class="text-xs font-bold group-hover:text-white">INFO USER</p>
+                </div>
+              </NuxtLink>
+              <font-awesome-icon
+                :icon="['fas', 'chevron-right']"
+                class="text-gray-500 mr-0 group-hover:text-white"
+              />
+            </div>
           </li>
         </ul>
-
-        <!-- Divider -->
-        <hr class="my-4 md:min-w-full" />
-        <!-- Heading -->
-        <h6
-          class="md:min-w-full text-blueGray-500 text-xs uppercase font-bold block pt-1 pb-4 no-underline"
-        >
-          No Layout Pages
-        </h6>
-        <!-- Navigation -->
-
-        <ul class="md:flex-col md:min-w-full flex flex-col list-none md:mb-4">
-          <li class="items-center">
-            <router-link
-              class="text-blueGray-700 hover:text-blueGray-500 text-xs uppercase py-3 font-bold block"
-              to="/landing"
-            >
-              <i class="fas fa-newspaper text-blueGray-300 mr-2 text-sm"></i>
-              Landing Page
-            </router-link>
-          </li>
-
-          <li class="items-center">
-            <router-link
-              class="text-blueGray-700 hover:text-blueGray-500 text-xs uppercase py-3 font-bold block"
-              to="/profile"
-            >
-              <i class="fas fa-user-circle text-blueGray-300 mr-2 text-sm"></i>
-              Profile Page
-            </router-link>
-          </li>
-        </ul>
-
        
       </div>
     </div>
@@ -234,23 +194,79 @@
 ); }
 
 <script>
-import NotificationDropdown from "@/components/Dropdowns/NotificationDropdown.vue";
-import UserDropdown from "@/components/Dropdowns/UserDropdown.vue";
 
 export default {
+  middleware:"isAuthenticated",
   data() {
     return {
-      collapseShow: "hidden",
+      isActive : false,
+      isMainActive : false,
+      isInOutActive: false,
+      isMasterSubActive: false,
+      datamasterlink : [
+        {name:"server"},
+        {name:"rak"},
+        {name:"ups"},
+        {name:"baterai"},
+        {name:"ac"},
+        {name:"cctv"},
+        {name:"network"},
+        {name:"apar"},
+        {name:"monitor"},
+        {name:"keyboard"},
+        {name:"mouse"},
+        {name:"nas"},
+        {name:"genset"},
+      ]
     };
   },
-  methods: {
-    toggleCollapseShow: function (classes) {
-      this.collapseShow = classes;
-    },
-  },
-  components: {
-    NotificationDropdown,
-    UserDropdown,
-  },
+  computed:{
+    user(){
+      return this.$auth.user
+    }
+  }
 };
 </script>
+
+<style lang="scss">
+  .notActive{
+    display: none;
+    transition : all ease-in-out .2s;
+    transform : scale(0) translateX(-20px);
+    transform-origin:top;
+  }
+  .active {
+    display: block;
+    transition:all ease .2s;
+    transform : scale(1) translateX(0);
+    transform-origin:top;
+  }
+  .activemaintenance{
+    display: block;
+    transform: scaleY(1);
+  }
+  .noactiveinout{
+    display: none;
+    transform: translateY(-100px);
+    transform-origin: top;
+    transition:all ease-in-out .5s;
+  }
+  .activeinout{
+    display: block;
+    transform: scaleY(1);
+  }
+  a.nuxt-link-active {
+    font-weight: bold;
+  }
+  a.nuxt-link-exact-active {
+    color: #d39d13;
+  }
+  .arrowNotDown{
+    transition:all ease-in-out .2s;
+  }
+  .arrowDownInOut{
+    transition:all ease-in-out .2s;
+    transform:rotate(90deg);
+  }
+
+</style>

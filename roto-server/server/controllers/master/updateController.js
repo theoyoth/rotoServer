@@ -108,10 +108,30 @@ module.exports.masterrakgetdata = async (req, res) => {
   let conn
   try {
     const id = req.params.id
+    const lokasiServer = req.params.lokasi
     conn = await pool.getConnection()
 
-    const rows = await conn.query(`SELECT * FROM master_rak WHERE id=1`)
-    res.send(rows)
+    if (lokasiServer == 'roto 1') {
+      const rows = await conn.query(
+        `SELECT * FROM master_rak WHERE id_rak=${id}`
+      )
+      res.send(rows)
+    } else if (lokasiServer == 'roto_2') {
+      const rows = await conn.query(
+        `SELECT * FROM master_rak_roto_2 WHERE id_rak=${id}`
+      )
+      res.send(rows)
+    } else if (lokasiServer == 'roto_3') {
+      const rows = await conn.query(
+        `SELECT * FROM master_rak_roto_3 WHERE id_rak=${id}`
+      )
+      res.send(rows)
+    } else if (lokasiServer == 'tinta') {
+      const rows = await conn.query(
+        `SELECT * FROM master_rak_tinta WHERE id_rak=${id}`
+      )
+      res.send(rows)
+    }
     conn.release()
   } catch (err) {
     console.log(err)
@@ -143,12 +163,33 @@ module.exports.inputmasterrakupdate = async (req, res) => {
   }
 }
 module.exports.masterupsgetdata = async (req, res) => {
-  const id = req.params.id
   let conn
   try {
+    const id = req.params.id
+    const lokasiServer = req.params.lokasi
     conn = await pool.getConnection()
-    const rows = await conn.query(`SELECT * FROM master_ups WHERE id=${id}`)
-    res.send(rows)
+
+    if (lokasiServer == 'roto 1') {
+      const rows = await conn.query(
+        `SELECT * FROM master_ups WHERE id_ups=${id}`
+      )
+      res.send(rows)
+    } else if (lokasiServer == 'roto 2') {
+      const rows = await conn.query(
+        `SELECT * FROM master_ups_roto_2 WHERE id_ups=${id}`
+      )
+      res.send(rows)
+    } else if (lokasiServer == 'roto 3') {
+      const rows = await conn.query(
+        `SELECT * FROM master_ups_roto_3 WHERE id_ups=${id}`
+      )
+      res.send(rows)
+    } else if (lokasiServer == 'tinta') {
+      const rows = await conn.query(
+        `SELECT * FROM master_ups_tinta WHERE id_ups=${id}`
+      )
+      res.send(rows)
+    }
     conn.release()
   } catch (err) {
     console.log(err)
@@ -187,12 +228,34 @@ module.exports.inputmasterupsupdate = async (req, res) => {
 }
 
 module.exports.masterbateraigetdata = async (req, res) => {
-  const id = req.params.id
   let conn
   try {
+    const id = req.params.id
+    const lokasiServer = req.params.lokasi
     conn = await pool.getConnection()
-    const rows = await conn.query(`SELECT * FROM master_baterai WHERE id=${id}`)
-    res.send(rows)
+
+    if (lokasiServer == 'roto 1') {
+      const rows = await conn.query(
+        `SELECT * FROM master_baterai WHERE id_baterai=${id}`
+      )
+      res.send(rows)
+    } else if (lokasiServer == 'roto_2') {
+      const rows = await conn.query(
+        `SELECT * FROM master_baterai_roto_2 WHERE id_baterai=${id}`
+      )
+      res.send(rows)
+    } else if (lokasiServer == 'roto_3') {
+      const rows = await conn.query(
+        `SELECT * FROM master_baterai_roto_3 WHERE id_baterai=${id}`
+      )
+      res.send(rows)
+    } else if (lokasiServer == 'tinta') {
+      const rows = await conn.query(
+        `SELECT * FROM master_baterai_tinta WHERE id_baterai=${id}`
+      )
+      res.send(rows)
+    }
+
     conn.release()
   } catch (err) {
     console.log(err)
@@ -224,12 +287,31 @@ module.exports.inputmasterbateraiupdate = async (req, res) => {
 }
 
 module.exports.masteracgetdata = async (req, res) => {
-  const id = req.params.id
   let conn
   try {
+    const id = req.params.id
+    const lokasiServer = req.params.lokasi
     conn = await pool.getConnection()
-    const rows = await conn.query(`SELECT * FROM master_ac WHERE id=${id}`)
-    res.send(rows)
+
+    if (lokasiServer == 'roto 1') {
+      const rows = await conn.query(`SELECT * FROM master_ac WHERE id_ac=${id}`)
+      res.send(rows)
+    } else if (lokasiServer == 'roto_2') {
+      const rows = await conn.query(
+        `SELECT * FROM master_ac_roto_2 WHERE id_ac=${id}`
+      )
+      res.send(rows)
+    } else if (lokasiServer == 'roto_3') {
+      const rows = await conn.query(
+        `SELECT * FROM master_ac_roto_3 WHERE id_ac=${id}`
+      )
+      res.send(rows)
+    } else if (lokasiServer == 'tinta') {
+      const rows = await conn.query(
+        `SELECT * FROM master_ac_tinta WHERE id_ac=${id}`
+      )
+      res.send(rows)
+    }
     conn.release()
   } catch (err) {
     console.log(err)

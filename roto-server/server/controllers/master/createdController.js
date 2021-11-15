@@ -36,7 +36,7 @@ module.exports.inputmasterserver = async (req, res) => {
       } else {
         return res
           .json({ msg: 'gagal di input' })
-          .redirect('/master/server/inputserver')
+          .redirect('/master/server/inputServer')
       }
     } else if (lokasiServer == 'roto 2') {
       const data = await conn.query(
@@ -47,7 +47,7 @@ module.exports.inputmasterserver = async (req, res) => {
       } else {
         return res
           .json({ msg: 'gagal di input' })
-          .redirect('/master/server/inputserver')
+          .redirect('/master/server/inputServer')
       }
     } else if (lokasiServer == 'roto 3') {
       const data = await conn.query(
@@ -58,7 +58,7 @@ module.exports.inputmasterserver = async (req, res) => {
       } else {
         return res
           .json({ msg: 'gagal di input' })
-          .redirect('/master/server/inputserver')
+          .redirect('/master/server/inputServer')
       }
     } else if (lokasiServer == 'tinta') {
       const data = await conn.query(
@@ -69,7 +69,7 @@ module.exports.inputmasterserver = async (req, res) => {
       } else {
         return res
           .json({ msg: 'gagal di input' })
-          .redirect('/master/server/inputserver')
+          .redirect('/master/server/inputServer')
       }
     }
     conn.release()
@@ -161,6 +161,8 @@ module.exports.inputmasterups = async (req, res) => {
   let conn
   try {
     const {
+      iduser,
+      lokasiServer,
       model,
       upsCriticalLoad,
       upsCriticalTemperature,
@@ -176,11 +178,52 @@ module.exports.inputmasterups = async (req, res) => {
     } = req.body
 
     conn = await pool.getConnection()
-    const data = await conn.query(
-      `INSERT INTO master_ups VALUES ('','${model}','${upsCriticalLoad}','${upsCriticalTemperature}','${upsCriticalCapacity}','${nomorSerial}','${namaSistem}','${manufaktur}','${peringkatTegangan}','${peringkatFrekuensi}','${peringkatTeganganBaterai}','${tahun}','${garansi}')`
-    )
+    if (lokasiServer == 'roto 1') {
+      const data = await conn.query(
+        `INSERT INTO master_ups VALUES ('','${model}','${upsCriticalLoad}','${upsCriticalTemperature}','${upsCriticalCapacity}','${nomorSerial}','${namaSistem}','${manufaktur}','${peringkatTegangan}','${peringkatFrekuensi}','${peringkatTeganganBaterai}','${tahun}','${garansi}','${iduser}')`
+      )
+      if (data.affectedRows > 0) {
+        res.redirect('/master/ups')
+      } else {
+        return res
+          .json({ msg: 'gagal di input' })
+          .redirect('/master/ups/inputups')
+      }
+    } else if (lokasiServer == 'roto 2') {
+      const data = await conn.query(
+        `INSERT INTO master_ups_roto_2 VALUES ('','${model}','${upsCriticalLoad}','${upsCriticalTemperature}','${upsCriticalCapacity}','${nomorSerial}','${namaSistem}','${manufaktur}','${peringkatTegangan}','${peringkatFrekuensi}','${peringkatTeganganBaterai}','${tahun}','${garansi}','${iduser}')`
+      )
+      if (data.affectedRows > 0) {
+        res.redirect('/master/ups')
+      } else {
+        return res
+          .json({ msg: 'gagal di input' })
+          .redirect('/master/ups/inputups')
+      }
+    } else if (lokasiServer == 'roto 3') {
+      const data = await conn.query(
+        `INSERT INTO master_ups_roto_3 VALUES ('','${model}','${upsCriticalLoad}','${upsCriticalTemperature}','${upsCriticalCapacity}','${nomorSerial}','${namaSistem}','${manufaktur}','${peringkatTegangan}','${peringkatFrekuensi}','${peringkatTeganganBaterai}','${tahun}','${garansi}','${iduser}')`
+      )
+      if (data.affectedRows > 0) {
+        res.redirect('/master/ups')
+      } else {
+        return res
+          .json({ msg: 'gagal di input' })
+          .redirect('/master/ups/inputups')
+      }
+    } else if (lokasiServer == 'tinta') {
+      const data = await conn.query(
+        `INSERT INTO master_ups_tinta VALUES ('','${model}','${upsCriticalLoad}','${upsCriticalTemperature}','${upsCriticalCapacity}','${nomorSerial}','${namaSistem}','${manufaktur}','${peringkatTegangan}','${peringkatFrekuensi}','${peringkatTeganganBaterai}','${tahun}','${garansi}','${iduser}')`
+      )
+      if (data.affectedRows > 0) {
+        res.redirect('/master/ups')
+      } else {
+        return res
+          .json({ msg: 'gagal di input' })
+          .redirect('/master/ups/inputups')
+      }
+    }
 
-    res.redirect('/master/ups')
     conn.release()
   } catch (err) {
     console.log(err)
@@ -196,16 +239,57 @@ module.exports.inputmasterbaterai = async (req, res) => {
 
   let conn
   try {
-    const { accu, kuantitas, tegangan, tahun, garansi } = req.body
+    const { iduser, lokasiServer, accu, kuantitas, tegangan, tahun, garansi } =
+      req.body
 
     conn = await pool.getConnection()
-    const data = await conn.query(
-      `INSERT INTO master_baterai VALUES ('','${accu}','${kuantitas}','${tegangan}','${tahun}','${garansi}')`
-    )
-    if (data.affectedRows) {
-      return res.json({ msg: 'data berhasil di input' })
+
+    if (lokasiServer == 'roto 1') {
+      const data = await conn.query(
+        `INSERT INTO master_baterai VALUES ('','${accu}','${kuantitas}','${tegangan}','${tahun}','${garansi}','${iduser}')`
+      )
+      if (data.affectedRows > 0) {
+        res.redirect('/master/baterai')
+      } else {
+        return res
+          .json({ msg: 'gagal di input' })
+          .redirect('/master/baterai/inputBaterai')
+      }
+    } else if (lokasiServer == 'roto 2') {
+      const data = await conn.query(
+        `INSERT INTO master_baterai_roto_2 VALUES ('','${accu}','${kuantitas}','${tegangan}','${tahun}','${garansi}','${iduser}')`
+      )
+      if (data.affectedRows > 0) {
+        res.redirect('/master/baterai')
+      } else {
+        return res
+          .json({ msg: 'gagal di input' })
+          .redirect('/master/baterai/inputBaterai')
+      }
+    } else if (lokasiServer == 'roto 3') {
+      const data = await conn.query(
+        `INSERT INTO master_baterai_roto_3 VALUES ('','${accu}','${kuantitas}','${tegangan}','${tahun}','${garansi}','${iduser}')`
+      )
+      if (data.affectedRows > 0) {
+        res.redirect('/master/baterai')
+      } else {
+        return res
+          .json({ msg: 'gagal di input' })
+          .redirect('/master/baterai/inputBaterai')
+      }
+    } else if (lokasiServer == 'tinta') {
+      const data = await conn.query(
+        `INSERT INTO master_baterai_tinta VALUES ('','${accu}','${kuantitas}','${tegangan}','${tahun}','${garansi}','${iduser}')`
+      )
+      if (data.affectedRows > 0) {
+        res.redirect('/master/baterai')
+      } else {
+        return res
+          .json({ msg: 'gagal di input' })
+          .redirect('/master/baterai/inputBaterai')
+      }
     }
-    res.redirect('/master/baterai')
+
     conn.release()
   } catch (err) {
     console.log(err)

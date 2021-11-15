@@ -71,7 +71,14 @@ export default {
     },
     methods:{
         async postInputBaterai(){
-            const res = await axios.post('http://localhost:3000/server/master/inputbaterai',{accu:this.inputBaterai.accu,kuantitas:this.inputBaterai.kuantitas,tegangan:this.inputBaterai.tegangan,tahun:this.inputBaterai.tahun, garansi:this.inputBaterai.garansi})
+            const res = await axios.post('http://localhost:3000/server/master/inputbaterai',{
+                iduser:this.$auth.user.id,
+                lokasiServer:this.$auth.user.lokasi,
+                accu:this.inputBaterai.accu,
+                kuantitas:this.inputBaterai.kuantitas,
+                tegangan:this.inputBaterai.tegangan,
+                tahun:this.inputBaterai.tahun, 
+                garansi:this.inputBaterai.garansi})
 
             if(res.data.errors){
                 this.errors=res.data.errors

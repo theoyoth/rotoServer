@@ -21,14 +21,23 @@ module.exports = {
         widthLogin: '35%',
         widthGraphic: '62%',
         widthLoginLokasiPeran: '45%',
+        widthContent: '81%',
+        widthSidebar: 'calc(100% - 81%)',
+        widthContentField: '95%',
+        widthFormInput: 'calc(100% - 20%)',
       },
       height: {
         heightChart: '500px',
       },
+      backgroundColor: {
+        'sidebar-color': '#272a34',
+      },
     },
   },
   variants: {
-    extend: {},
+    extend: {
+      color: ['hover'],
+    },
   },
   plugins: [],
 }

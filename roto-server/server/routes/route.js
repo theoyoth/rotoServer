@@ -18,41 +18,41 @@ router.get('/masterserver/:lokasi/:id', readController.masterserver)
 router.post(
   '/master/inputserver',
   [
-    check('produk')
+    body('produk')
       .isAlpha('en-US', { ignore: '^s$' })
       .withMessage('produk harus berupa huruf'),
-    check('merek')
+    body('merek')
       .isAlpha('en-US', { ignore: '^s$' })
       .withMessage('merek harus berupa huruf'),
-    check('model')
+    body('model')
       .isAlphanumeric('en-US', { ignore: '^s$' })
       .withMessage('model harus berupa angka dan huruf bukan simbol'),
-    check('processor')
+    body('processor')
       .isAlphanumeric('en-US', { ignore: '^s$' })
       .withMessage('processor harus berupa angka dan huruf bukan simbol'),
-    check('memori')
+    body('memori')
       .isLength({ min: 1, max: 4 })
       .withMessage('memori maksimal 4 digit')
       .isNumeric()
       .withMessage('memori harus berupa angka'),
-    check('internalStorage')
+    body('internalStorage')
       .isLength({ min: 1, max: 4 })
       .withMessage('internal storage maksimal 4 digit')
       .isNumeric()
       .withMessage('internal storage harus berupa angka'),
-    check('networkController')
+    body('networkController')
       .isAlphanumeric('en-US', { ignore: '^s$' })
       .withMessage('network controller harus berupa huruf'),
-    check('storage')
+    body('storage')
       .isLength({ min: 1, max: 4 })
       .withMessage('storage maksimal 4 digit')
       .isNumeric()
       .withMessage('storage harus berupa angka'),
-    check('sumberDayaListrik')
+    body('sumberDayaListrik')
       .isNumeric()
       .withMessage('power supply harus berupa angka'),
-    check('tahun').isDate().notEmpty().withMessage('tahun tidak boleh kosong'),
-    check('garansi')
+    body('tahun').isDate().notEmpty().withMessage('tahun tidak boleh kosong'),
+    body('garansi')
       .isDate()
       .notEmpty()
       .withMessage('garansi tidak boleh kosong'),
@@ -92,7 +92,7 @@ router.post(
   ],
   createdController.inputmasterrak
 )
-router.get('/masterups', readController.masterups)
+router.get('/masterups/:lokasi/:id', readController.masterups)
 router.post(
   '/master/inputups',
   [
@@ -170,7 +170,7 @@ router.post(
   ],
   createdController.inputmasterups
 )
-router.get('/masterbaterai', readController.masterbaterai)
+router.get('/masterbaterai/:lokasi/:id', readController.masterbaterai)
 router.post(
   '/master/inputbaterai',
   [
@@ -481,6 +481,14 @@ router.post(
   ],
   createdController.inputmastergenset
 )
+// detail master server =======================
+router.get(
+  '/master/server/detail/:lokasi/:id',
+  readController.detailmasterserver
+)
+router.get('/master/ups/detail/:lokasi/:id', readController.detailmasterups)
+router.get('/master/nas/detail/:lokasi/:id', readController.detailmasternas)
+router.get('/master/ac/detail/:lokasi/:id', readController.detailmasterac)
 
 // delete master ========================================
 router.post(
@@ -510,20 +518,26 @@ router.get(
   updateController.masterservergetdata
 )
 router.post('/master/server/update', updateController.inputmasterserverupdate)
-router.get('/master/update/updaterak/:id', updateController.masterrakgetdata)
+router.get(
+  '/master/update/updaterak/:id/:lokasi',
+  updateController.masterrakgetdata
+)
 router.post(
   '/master/rak/update/updaterak/:id',
   updateController.inputmasterrakupdate
 )
 
-router.get('/master/update/updateups/:id', updateController.masterupsgetdata)
+router.get(
+  '/master/update/updateups/:id/:lokasi',
+  updateController.masterupsgetdata
+)
 router.post(
   '/master/ups/update/updateups',
   updateController.inputmasterupsupdate
 )
 
 router.get(
-  '/master/update/updatebaterai/:id',
+  '/master/update/updatebaterai/:id/:lokasi',
   updateController.masterbateraigetdata
 )
 router.post(
@@ -531,7 +545,10 @@ router.post(
   updateController.inputmasterbateraiupdate
 )
 
-router.get('/master/update/updateac/:id', updateController.masteracgetdata)
+router.get(
+  '/master/update/updateac/:id/:lokasi',
+  updateController.masteracgetdata
+)
 router.post('/master/ac/update/updateac', updateController.inputmasteracupdate)
 
 router.get('/master/update/updatecctv/:id', updateController.mastercctvgetdata)

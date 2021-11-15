@@ -55,16 +55,12 @@ export default {
             acs:'',
         }
     },
-    mounted(){
-        axios.get(`http://localhost:3000/server/master/update/updateac/${this.$route.params.id}`)
-        .then(res => {
-            const result = res
-            this.acs = result.data[0]
-        })
-        .catch(err=>{
-            console.log(err)
-        }) 
-        
+    async mounted(){
+        const lokasi = this.$auth.user.lokasi
+        const id = this.$route.params.id
+
+        const resp = await axios.get(`http://localhost:3000/server/master/update/updateac/${id}/${lokasi}`)
+        this.acs = resp.data[0]
     }
 }
 </script>

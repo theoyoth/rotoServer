@@ -119,6 +119,8 @@ export default {
     methods:{
         async postInputUps(){
                 const res = await axios.post('http://localhost:3000/server/master/inputups',{
+                    iduser:this.$auth.user.id,
+                    lokasiServer:this.$auth.user.lokasi,
                     model : this.inputUps.model,
                     upsCriticalLoad : this.inputUps.upsCriticalLoad,
                     upsCriticalTemperature : this.inputUps.upsCriticalTemperature,

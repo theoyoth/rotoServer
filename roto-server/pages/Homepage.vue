@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-hero h-screen">
+  <div class="bg-hero h-screen w-widthContent ml-auto">
     <div class="container mx-auto h-full py-5">
       <header>
         <div class="flex justify-between items-center">
@@ -362,7 +362,6 @@
 <script>
 
 export default {
-  layout:"SidebarDefault",
   middleware: 'isAuthenticated',
   data() {
     return {

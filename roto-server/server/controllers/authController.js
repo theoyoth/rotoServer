@@ -30,7 +30,7 @@ module.exports.login = async (req, res) => {
             lokasi: lokasi.nama_lokasi,
           },
           process.env.TOKEN_KEY,
-          { expiresIn: '30m' }
+          { expiresIn: '1h' }
         )
         res.cookie('aksestoken', token, {
           httpOnly: true,

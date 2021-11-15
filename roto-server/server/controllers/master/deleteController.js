@@ -13,9 +13,9 @@ module.exports.deletemasterserver = async (req, res) => {
       )
 
       if (data.affectedRows > 0) {
-        res.json({ msg: 'data dihapus' })
+        res.send('j')
       } else {
-        res.json({ msg: 'data tidak terhapus' })
+        res.json({ errmsg: 'data tidak terhapus' })
       }
     } else if (lokasiServer == 'roto 2') {
       const data = await conn.query(
@@ -23,9 +23,9 @@ module.exports.deletemasterserver = async (req, res) => {
       )
 
       if (data.affectedRows > 0) {
-        res.json({ msg: 'data dihapus' })
+        res.redirect('/master/server')
       } else {
-        res.json({ msg: 'data tidak terhapus' })
+        res.json({ errmsg: 'data tidak terhapus' })
       }
     } else if (lokasiServer == 'roto 3') {
       const data = await conn.query(
@@ -33,9 +33,9 @@ module.exports.deletemasterserver = async (req, res) => {
       )
 
       if (data.affectedRows > 0) {
-        res.json({ msg: 'data dihapus' })
+        res.redirect('/master/server')
       } else {
-        res.json({ msg: 'data tidak terhapus' })
+        res.json({ errmsg: 'data tidak terhapus' })
       }
     } else if (lokasiServer == 'tinta') {
       const data = await conn.query(
@@ -43,9 +43,9 @@ module.exports.deletemasterserver = async (req, res) => {
       )
 
       if (data.affectedRows > 0) {
-        res.json({ msg: 'data dihapus' })
+        res.redirect('/master/server')
       } else {
-        res.json({ msg: 'data tidak terhapus' })
+        res.json({ errmsg: 'data tidak terhapus' })
       }
     }
     conn.release()
