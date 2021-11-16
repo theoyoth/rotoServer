@@ -22,6 +22,9 @@ export const mutations = {
   datacari(state, data) {
     state.cariserver = data
   },
+  errormsg(state, data) {
+    state.errormsg = data
+  },
 }
 export const actions = {
   async getServersData({ commit }, { lokasiserver, idlogin }) {
@@ -30,10 +33,15 @@ export const actions = {
     )
     commit('serversData', response.data)
   },
-  async caribarangserver({ commit }, cari) {
+  async caribarangserver({ commit }, { lokasi, cari }) {
     const res = await axios.get(
-      `http://localhost:3000/server/cariserver?cari=${cari}`
+      `http://localhost:3000/server/cariserver/${cari}/${lokasi}`
     )
     commit('datacari', res.data)
+  },
+  async deleteData({ commit }, { lokasi, id }) {
+    const response = await axios.delete(
+      `http://localhost:3000/server/master/server/delete/${lokasi}/${id}`
+    )
   },
 }

@@ -13,7 +13,7 @@ module.exports.deletemasterserver = async (req, res) => {
       )
 
       if (data.affectedRows > 0) {
-        res.send('j')
+        res.redirect('/master/server')
       } else {
         res.json({ errmsg: 'data tidak terhapus' })
       }

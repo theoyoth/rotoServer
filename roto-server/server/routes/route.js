@@ -6,7 +6,7 @@ const createdController = require('../controllers/master/createdController.js')
 const readController = require('../controllers/master/readController.js')
 const lokasiServer = require('../controllers/lokasiServer.js')
 const { isAuthent } = require('../middleware/userAuthorization.js')
-const { check, validationResult } = require('express-validator')
+const { body, check, validationResult } = require('express-validator')
 const express = require('express')
 const router = express.Router()
 // const app = express()
@@ -18,41 +18,41 @@ router.get('/masterserver/:lokasi/:id', readController.masterserver)
 router.post(
   '/master/inputserver',
   [
-    body('produk')
+    check('produk')
       .isAlpha('en-US', { ignore: '^s$' })
       .withMessage('produk harus berupa huruf'),
-    body('merek')
+    check('merek')
       .isAlpha('en-US', { ignore: '^s$' })
       .withMessage('merek harus berupa huruf'),
-    body('model')
+    check('model')
       .isAlphanumeric('en-US', { ignore: '^s$' })
       .withMessage('model harus berupa angka dan huruf bukan simbol'),
-    body('processor')
+    check('processor')
       .isAlphanumeric('en-US', { ignore: '^s$' })
       .withMessage('processor harus berupa angka dan huruf bukan simbol'),
-    body('memori')
+    check('memori')
       .isLength({ min: 1, max: 4 })
       .withMessage('memori maksimal 4 digit')
       .isNumeric()
       .withMessage('memori harus berupa angka'),
-    body('internalStorage')
+    check('internalStorage')
       .isLength({ min: 1, max: 4 })
       .withMessage('internal storage maksimal 4 digit')
       .isNumeric()
       .withMessage('internal storage harus berupa angka'),
-    body('networkController')
+    check('networkController')
       .isAlphanumeric('en-US', { ignore: '^s$' })
       .withMessage('network controller harus berupa huruf'),
-    body('storage')
+    check('storage')
       .isLength({ min: 1, max: 4 })
       .withMessage('storage maksimal 4 digit')
       .isNumeric()
       .withMessage('storage harus berupa angka'),
-    body('sumberDayaListrik')
+    check('sumberDayaListrik')
       .isNumeric()
       .withMessage('power supply harus berupa angka'),
-    body('tahun').isDate().notEmpty().withMessage('tahun tidak boleh kosong'),
-    body('garansi')
+    check('tahun').isDate().notEmpty().withMessage('tahun tidak boleh kosong'),
+    check('garansi')
       .isDate()
       .notEmpty()
       .withMessage('garansi tidak boleh kosong'),
@@ -491,8 +491,8 @@ router.get('/master/nas/detail/:lokasi/:id', readController.detailmasternas)
 router.get('/master/ac/detail/:lokasi/:id', readController.detailmasterac)
 
 // delete master ========================================
-router.post(
-  '/master/server/delete/:id/:lokasi',
+router.delete(
+  '/master/server/delete/:lokasi/:id',
   deleteController.deletemasterserver
 )
 router.post('/master/deleterak/:id', deleteController.deletemasterrak)
@@ -622,8 +622,8 @@ router.get('/homepage', isAuthent, authController.homepage)
 router.post('/logout', authController.logout)
 
 // cari barang ===================================================
-router.get('/cariserver', readController.caribarangserver)
-router.get('/carirak', readController.caribarangrak)
+router.get('/cariserver/:cari/:lokasi', readController.caribarangserver)
+router.get('/carirak/:cari/:lokasi', readController.caribarangrak)
 router.get('/cariups', readController.caribarangups)
 router.get('/caribaterai', readController.caribarangbaterai)
 router.get('/cariac', readController.caribarangac)
@@ -639,10 +639,13 @@ router.get('/carigenset', readController.caribaranggenset)
 // ===============================================
 // MAINTENANCE SERVER
 router.post('/inputmaintenance', maintenanceController.inputmaintenance)
-router.get('/inputmaintenance', maintenanceController.getAllMaintenance)
+router.get(
+  '/inputmaintenance/:lokasi/:id',
+  maintenanceController.getAllMaintenance
+)
 router.post('/maintenance/delete/:id', maintenanceController.deleteMaintenance)
 router.get(
-  '/maintenance/carimaintenance',
+  '/maintenance/carimaintenance/:value/:lokasi/:id',
   maintenanceController.carimaintenance
 )
 router.get(
@@ -652,6 +655,10 @@ router.get(
 router.post(
   '/maintenance/update/updatemaintenance',
   maintenanceController.updateMaintenance
+)
+router.get(
+  '/maintenance/detail/:lokasi/:id',
+  maintenanceController.detailMaintenance
 )
 
 router.get('/lokasi', lokasiServer.lokasiserver)

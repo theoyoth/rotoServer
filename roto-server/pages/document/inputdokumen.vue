@@ -1,6 +1,7 @@
 <template>
-<div class="bg-bg-gen min-h-screen">
-    <InputHeader dokumen="dokumen"/>
+<div class="bg-gray-300 min-h-screen w-widthContent ml-auto overflow-x-hidden">
+    <!-- <InputHeader dokumen="dokumen"/> -->
+    <Navbar/>
     <section class="container mx-auto w-1/2 mt-8 grid place-items-center">
     <form action="" method="post" class="text-center">
         <div class="mb-4">

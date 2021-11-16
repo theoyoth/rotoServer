@@ -39,6 +39,7 @@
     "net": "^1.0.2",
     "nuxt": "^2.15.7",
     "sweetalert": "^2.1.2",
+    "vee-validate": "^3.4.14",
     "vue-chartjs": "^3.5.1",
     "vue-tour": "^2.0.0"
   },

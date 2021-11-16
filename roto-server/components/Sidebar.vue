@@ -4,59 +4,34 @@
   >
     <div
       class="md:flex-col md:items-stretch md:min-h-full md:flex-nowrap px-0 flex flex-wrap items-center justify-between w-full mx-auto"
-    >
-      <!-- Toggler -->
-      <button
-        class="cursor-pointer text-black opacity-50 md:hidden px-3 py-1 text-xl leading-none bg-transparent rounded border border-solid border-transparent"
-        type="button"
-      >
-        <i class="fas fa-bars"></i>
-      </button>
-    
+    >   
 
       <!-- Collapse -->
       <div
         class="md:flex md:flex-col md:items-stretch md:opacity-100 md:relative md:mt-4 md:shadow-none shadow absolute top-0 left-0 right-0 z-40 overflow-y-auto overflow-x-hidden h-auto items-center flex-1 rounded"
       >
-        <!-- Collapse header -->
-        <div
-          class="md:min-w-full md:hidden block pb-4 mb-4 border-b border-solid border-blueGray-200"
-        >
-          <div class="flex flex-wrap">
-            <div class="w-6/12">
-              <router-link
-                class="md:block text-left md:pb-2 text-blueGray-600 mr-0 inline-block whitespace-nowrap text-sm uppercase font-bold p-4 px-0"
-                to="/"
-              >
-                Vue Notus
-              </router-link>
-            </div>
-            <div class="w-6/12 flex justify-end">
-              <button
-                type="button"
-                class="cursor-pointer text-black opacity-50 md:hidden px-3 py-1 text-xl leading-none bg-transparent rounded border border-solid border-transparent"
-              >
-                <i class="fas fa-times"></i>
-              </button>
-            </div>
+      <div class="flex justify-around items-center w-1/2 mx-auto">
+        <div class="rounded rounded-full w-16 h-16 bg-gray-500 flex justify-center items-center">
+          <font-awesome-icon
+            :icon="['fas', 'user']"
+            class="text-yellow-500 text-lg"
+          />
+        </div>
+        <div class="text-sm">
+          <div class="font-semibold">
+            <p>{{user.nama}}</p>
+          </div>
+          <div class="text-gray-500">
+            <p>{{user.level}}</p>
           </div>
         </div>
-        <!-- Form -->
-        <form class="mt-6 mb-4 md:hidden">
-          <div class="mb-3 pt-0">
-            <input
-              type="text"
-              placeholder="Search"
-              class="border-0 px-3 py-2 h-12 border border-solid border-blueGray-500 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-base leading-snug shadow-none outline-none focus:outline-none w-full font-normal"
-            />
-          </div>
-        </form>
+      </div>
 
         <!-- Divider -->
-        <hr class="my-4 px-6 md:min-w-full" />
+        <hr class="my-4 mx-auto px-6 w-3/4" />
         <!-- Heading -->
         <h2
-          class="md:min-w-full text-blueGray-500 uppercase font-bold block pt-1 pb-4 px-6 no-underline"
+          class="md:min-w-full font-bold block pt-1 pb-4 px-6 no-underline text-yellow-500"
         >
           MENU
         </h2>
@@ -65,12 +40,12 @@
         <ul class="md:flex-col md:min-w-full flex flex-col list-none relative cursor-pointer" >
           <li class="items-center" >
             <div class="flex py-3 px-6 justify-between items-center group hover:bg-gray-600" @click="isActive = !isActive">
-              <div class="flex">
+              <div class="flex items-center">
                 <font-awesome-icon
                   :icon="['fas', 'tv']"
                   class="text-gray-500 mr-3 text-xs group-hover:text-white"
                 />
-                <p class="font-bold text-xs group-hover:text-white">MASTER</p>
+                <p class="font-bold text-gray-300 text-sm group-hover:text-white">Master</p>
               </div>
               <font-awesome-icon
                 :icon="['fas', 'chevron-right']"
@@ -96,12 +71,12 @@
 
           <li class="items-center">
             <div class="flex justify-between items-center py-3 px-6 group hover:bg-gray-600" @click="isMainActive = !isMainActive">
-              <div class="flex">
+              <div class="flex items-center">
                 <font-awesome-icon
                   :icon="['fas', 'cog']"
                   class="text-gray-500 mr-4 text-xs group-hover:text-white"
                 />
-                <p class="text-xs font-bold group-hover:text-white">MAINTENANCE</p>
+                <p class="text-sm text-gray-300 font-bold group-hover:text-white">Maintenance</p>
               </div>
               <font-awesome-icon
                 :icon="['fas', 'chevron-right']"
@@ -115,12 +90,12 @@
 
           <li class="items-center relative">
            <div class="flex justify-between items-center py-3 px-6 group hover:bg-gray-600" @click="isInOutActive = !isInOutActive">
-             <div class="flex">
+             <div class="flex items-center">
                   <font-awesome-icon
                     :icon="['fas', 'suitcase']"
                     class="text-gray-500 mr-4 text-xs group-hover:text-white"
                   />
-                <p class="text-xs font-bold group-hover:text-white">IN/OUT BARANG</p>
+                <p class="text-sm text-gray-300 font-bold group-hover:text-white">In/Out Barang</p>
               </div>
               <font-awesome-icon
                 :icon="['fas', 'chevron-right']"
@@ -128,20 +103,20 @@
               />
             </div>
             <ul class="relative hidden px-16 py-1 text-xs" :class="{activeinout : isInOutActive}">
-                <li class="py-1 w-full hover:text-gray-400"><NuxtLink to="/inout/tambahbarang">tambah barang</NuxtLink></li>
-                <li class="py-1 hover:text-gray-400"><NuxtLink to="/inout/ambilbarang">ambil barang</NuxtLink></li>
-                <li class="py-1 hover:text-gray-400"><NuxtLink to="/inout/gantibarang">ganti barang</NuxtLink></li>
+                <li class="py-2 w-full hover:text-gray-400"><NuxtLink to="/inout/tambahbarang">tambah barang</NuxtLink></li>
+                <li class="py-2 hover:text-gray-400"><NuxtLink to="/inout/ambilbarang">ambil barang</NuxtLink></li>
+                <li class="py-2 hover:text-gray-400"><NuxtLink to="/inout/gantibarang">ganti barang</NuxtLink></li>
             </ul>
           </li>
           <li class="items-center">
             <div class="flex justify-between items-center py-3 px-6 group hover:bg-gray-600">
               <NuxtLink to="/document">
-                <div class="flex">
+                <div class="flex items-center">
                     <font-awesome-icon
                       :icon="['fas', 'file-alt']"
                       class="text-gray-500 mr-5 text-xs group-hover:text-white"
                     />
-                  <p class="text-xs font-bold group-hover:text-white">DOKUMENTASI</p>
+                  <p class="text-sm text-gray-300 font-bold group-hover:text-white">Dokumentasi</p>
                 </div>
               </NuxtLink>
               <font-awesome-icon
@@ -154,12 +129,12 @@
           <li class="items-center">
             <div class="flex justify-between items-center py-3 px-6 group hover:bg-gray-600">
               <NuxtLink to="/map">
-                <div class="flex">
+                <div class="flex items-center">
                   <font-awesome-icon
                     :icon="['fas', 'map']"
                     class="text-gray-500 mr-4 text-xs group-hover:text-white"
                   />
-                  <p class="text-xs font-bold group-hover:text-white">MAP</p>
+                  <p class="text-sm text-gray-300 font-bold group-hover:text-white">Map</p>
                 </div>
               </NuxtLink>
               <font-awesome-icon
@@ -259,7 +234,7 @@ export default {
     font-weight: bold;
   }
   a.nuxt-link-exact-active {
-    color: #d39d13;
+    color: #f5a819;
   }
   .arrowNotDown{
     transition:all ease-in-out .2s;

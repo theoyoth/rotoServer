@@ -1,7 +1,7 @@
 <template>
-  <div class="bg-gray-200 min-h-screen w-widthContent ml-auto">
+  <div class="bg-gray-300 min-h-screen w-widthContent ml-auto">
     <Navbar/>
-    <section class="bg-white min-h-screen w-widthContentField m-auto mt-7 py-4 px-6 relative">
+    <section class="bg-gray-100 min-h-screen w-widthContentField m-auto mt-7 py-4 px-6 relative">
         <NuxtLink to="/master/server"
           class="flex items-center justify-between rounded-md w-28 px-4 py-2 bg-gray-700">
           <div>
@@ -19,7 +19,7 @@
               <p class="py-2 px-6">processor</p>
               <p class="py-2 px-6">memori</p>
               <p class="py-2 px-6">internal storage</p>
-              <p class="py-2 px-6">network conpoller</p>
+              <p class="py-2 px-6">network controller</p>
               <p class="py-2 px-6">storage</p>
               <p class="py-2 px-6">sumber daya lispik</p>
               <p class="py-2 px-6">tahun</p>

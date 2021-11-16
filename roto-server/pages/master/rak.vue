@@ -6,7 +6,7 @@
     <p class="text-center text-lg text-gray-700 font-semibold">Halaman master rak</p>
     <div class="flex justify-between mt-8">
         <div class="flex">
-            <input type="text" placeholder="cari" name="cari" v-model.lazy="caribarang" @keyup.enter="$fetch" class="rounded-l-lg p-2 outline-none bg-gray-200">
+            <input type="text" placeholder="cari" name="cari" v-model.lazy="caribarang" @keyup.enter="$fetch" class="rounded-l-lg p-2 outline-none bg-gray-200 w-52">
             <button class="p-2
               rounded-r-lg
               bg-gray-700
@@ -45,9 +45,9 @@
             <thead class="bg-gray-700 text-sm has-tooltip">
                 <span class="tooltip rounded shadow-lg p-1 bg-gray-700 text-white -mt-10 absolute left-2/4 transform -translate-x-2/4">semua detail barang</span>
                 <tr class="text-xs text-gray-200"> 
+                    <th class="font-semibold">nama produk</th>
                     <th class="font-semibold py-3">tipe rak</th>
                     <th class="font-semibold">tipe pintu</th>
-                    <th class="font-semibold">nama produk</th>
                     <th class="font-semibold">dimensi</th>
                     <th class="font-semibold">berat</th>
                     <th class="font-semibold">tahun</th>
@@ -56,9 +56,9 @@
             </thead>
             <tbody v-if="caribarang !== ''" class="text-center bg-white bg-opacity-40 divide-y divide-gray-300">
                 <tr class="text-sm" v-for="(hasilcari,index) in carirak" :key="index">
-                    <td class="py-3">{{hasilcari.tipe_rak}}</td>
+                    <td class="w-44">{{hasilcari.nama_produk}}</td>
+                    <td class="py-3 w-36">{{hasilcari.tipe_rak}}</td>
                     <td>{{hasilcari.tipe_pintu}}</td>
-                    <td>{{hasilcari.nama_produk}}</td>
                     <td>{{hasilcari.dimensi}}</td>
                     <td>{{hasilcari.berat}}</td>
                     <td class="w-32">{{$moment(hasilcari.tahun).format('DD-MM-YYYY')}}</td>
@@ -76,9 +76,9 @@
             </tbody>
             <tbody v-else class="text-center bg-white bg-opacity-40 divide-y divide-gray-300" >
                 <tr class="text-sm" v-for="(rak,index) in raks" :key="index">
-                    <td class="py-3">{{rak.tipe_rak}}</td>
+                    <td class="w-44">{{rak.nama_produk}}</td>
+                    <td class="py-3 w-36">{{rak.tipe_rak}}</td>
                     <td>{{rak.tipe_pintu}}</td>
-                    <td>{{rak.nama_produk}}</td>
                     <td>{{rak.dimensi}}</td>
                     <td>{{rak.berat}}</td>
                     <td class="w-32">{{$moment(rak.tahun).format('DD-MM-YYYY')}}</td>
@@ -130,7 +130,7 @@ export default {
         },
         async caribarangrak(){
             this.carirak = []
-            const res = await axios.get(`http://localhost:3000/server/carirak?cari=${this.caribarang}`)
+            const res = await axios.get(`http://localhost:3000/server/carirak/${this.caribarang}/${this.$auth.user.lokasi}`)
             res.data.forEach(val =>{
                 this.carirak.push(val)
             })

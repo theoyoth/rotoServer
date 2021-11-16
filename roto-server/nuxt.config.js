@@ -13,12 +13,11 @@ export default {
       { hid: 'description', name: 'description', content: '' },
       { name: 'format-detection', content: 'telephone=no' },
     ],
-    script: [{ src: '/dist/driver.min.js' }],
+    script: [],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
       {
         rel: 'stylesheet',
-        href: '/dist/driver.min.css',
         href: 'https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap',
       },
     ],
@@ -28,7 +27,10 @@ export default {
   css: ['~/assets/default.scss'],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: [{ src: '~/plugins/sweetalert' }],
+  plugins: [
+    { src: '~/plugins/sweetalert' },
+    { src: '~/plugins/vee-validate.js' },
+  ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
@@ -108,6 +110,7 @@ export default {
         fs: 'empty',
       }
     },
+    transpile: ['vee-validate/dist/rules'],
   },
   serverMiddleware: [
     // {path: '/server',handler:'~/server'},

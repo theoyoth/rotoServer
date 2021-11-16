@@ -1,8 +1,8 @@
 <template>
-  <div class="bg-gray-200 min-h-screen w-widthContent ml-auto">
+  <div class="bg-gray-300 min-h-screen w-widthContent ml-auto overflow-x-hidden">
     <!-- <HeaderListItem :server="master.nama" /> -->
     <Navbar />
-    <section class="bg-white min-h-screen w-widthContentField m-auto mt-7 p-4">
+    <section class="bg-gray-100 min-h-screen w-widthContentField m-auto mt-7 p-4">
       <p class="text-center text-lg text-gray-700 font-semibold">Halaman master server</p>
 
       <div class="flex justify-between mt-8">
@@ -12,7 +12,7 @@
             placeholder="cari"
             name="cari"
             v-model.lazy="caribarang"
-            class="rounded-l-lg p-2 outline-none bg-gray-200" @keyup.enter="caribarangserver"
+            class="rounded-l-lg p-2 w-52 outline-none bg-gray-200" @keyup.enter="caribarangserver"
           />
           <button
             class="
@@ -76,12 +76,12 @@
             >semua detail barang</span
           >
           <tr class="text-xs text-gray-200">
-            <th class="font-semibold py-3 w-12">Tanggal input</th>
+            <th class="font-semibold py-3 w-24">Tanggal input</th>
             <th class="font-semibold py-3">Merek</th>
             <th class="font-semibold py-3">Model</th>
             <th class="font-semibold" >Processor</th>
             <th class="font-semibold">memori</th>
-            <th class="font-semibold">tahun</th>
+            <th class="font-semibold">garansi</th>
             <th class="font-semibold w-20">aksi</th>
           </tr>
         </thead>
@@ -190,6 +190,7 @@ export default {
     data(){
         return{
             caribarang:"",
+            cariserver:[],
             master:{
                 nama : "inputServer",
             },
@@ -211,22 +212,30 @@ export default {
         }
     },
     methods:{
+        // async deleteData(id){
+        //   const lokasi = this.$auth.user.lokasi
+        //     const resp = await axios.post(`http://localhost:3000/server/master/server/delete/${id}/${lokasi}`)
+        //     // this.$router.push('/master/server')
+        //     swal('data dihapus',{icon:'success'})
+        //     if(resp.data.errmsg){
+        //       swal('Error','gagal dihapus',{icon:'error'})
+        //       this.deletemsg = resp.data.errmsg
+        //     }
+        // },
         async deleteData(id){
-          const lokasi = this.$auth.user.lokasi
-            const resp = await axios.post(`http://localhost:3000/server/master/server/delete/${id}/${lokasi}`)
-            // this.$router.push('/master/server')
-            this.$forceUpdate()
-            swal('data dihapus',{icon:'success'})
-            if(resp.data.errmsg){
-              swal('Error','gagal dihapus',{icon:'error'})
-              this.deletemsg = resp.data.errmsg
-            }
+          const data = {
+            lokasi : this.$auth.user.lokasi,
+            id : id,
+          }
+          await this.$store.dispatch('masterbarang/deleteData',data)
+
         },
-      caribarangserver(){
-            if(this.caribarang !== ""){
-                this.$store.dispatch('masterbarang/caribarangserver',this.caribarang)
-            return
-            }
+        async caribarangserver(){
+          this.cariserver = []
+            const res = await axios.get(`http://localhost:3000/server/cariserver/${this.caribarang}/${this.$auth.user.lokasi}`)
+            res.data.forEach(val =>{
+                this.cariserver.push(val)
+          })
         }
     },
     mounted(){
