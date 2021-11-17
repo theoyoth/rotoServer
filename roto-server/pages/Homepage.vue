@@ -50,7 +50,7 @@
                         class="text-gray-200 text-lg z-10"
                     />
                   </div>
-                  <h1 class="text-xl font-semibold">21°c</h1>
+                  <h1 class="text-xl font-semibold">{{hasilMaintenanceSecurity.suhu}}°c</h1>
                   <p class="text-xs">Suhu</p>
                 </div>
               </div>
@@ -95,7 +95,7 @@
                         class="text-gray-200 text-lg z-10"
                     />
                   </div>
-                  <h1 class="text-xl font-semibold">30%</h1>
+                  <h1 class="text-xl font-semibold">{{hasilMaintenanceSecurity.kelembapan}}%</h1>
                   <p class="text-xs">Kelembapan</p>
                 </div>
               </div>
@@ -140,7 +140,7 @@
                         class="text-gray-200 text-lg z-10"
                     />
                   </div>
-                  <h1 class="text-xl font-semibold">30%</h1>
+                  <h1 class="text-xl font-semibold">{{hasilMaintenanceSecurity.baterai}}%</h1>
                   <p class="text-xs">Baterai</p>
                 </div>
               </div>
@@ -193,6 +193,9 @@ export default {
     isTeknisiac() {
       return this.$store.getters.isTeknisiac
     },
+    hasilMaintenanceSecurity() {
+      return this.$store.state.maintenanceSecurity.hasilMaintenanceSecurity
+    },
   },
   methods: {
     async logout() {
@@ -205,6 +208,12 @@ export default {
       // this.$router.push('/')
     },
   },
+  mounted(){
+    const data = {
+      lokasi : this.$auth.user.lokasi
+    }
+    this.$store.dispatch('maintenanceSecurity/getSecurity',data)
+  }
 }
 </script>
 

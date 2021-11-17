@@ -12,7 +12,6 @@ const express = require('express')
 const router = express.Router()
 // const app = express()
 
-// app.get('/lokasiserver', maintenanceController.lokasiserver)
 router.get('/masterserver/:lokasi/:id', readController.masterserver)
 
 router.post(
@@ -660,7 +659,10 @@ router.get(
   '/maintenance/detail/:lokasi/:id',
   maintenanceController.detailMaintenance
 )
-router.get('/maintenance/security/:lokasi')
+router.get(
+  '/maintenance/security/:lokasi',
+  maintenanceController.mainteananceuser
+)
 
 router.get('/lokasi', lokasiServer.lokasiserver)
 router.get('/users', userController.getAllUsers)

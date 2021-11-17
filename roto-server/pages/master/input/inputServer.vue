@@ -1,5 +1,5 @@
 <template>
-<div class="bg-gray-200 min-h-screen w-widthContent ml-auto">
+<div class="bg-gray-300 min-h-screen w-widthContent ml-auto">
     <!-- <InputHeader item="server"/> -->
     <Navbar/>
     <section class="bg-white min-h-screen w-widthContentField m-auto mt-7 p-4 ">
@@ -17,107 +17,174 @@
             <li class="text-red-400 text-xs p-2">{{err.msg}}</li>
         </div>
     </div> -->
-
-    <form @submit.prevent="postInputServer" class="mt-8 min-w-min">
+    <ValidationObserver v-slot={invalid,valid}>
+    <form @submit.prevent="postInputServer" class="min-w-min mt-10">
         <div class="grid grid-cols-2">
             <div>
                 <div class="has-tooltip ">
                     <span class="tooltip text-xs rounded shadow-lg p-1 bg-gray-700 text-white ml-36">masukan nama produk</span>
-                   
+
                     <label for="produk" class="block mb-2 text-sm">produk</label>
-                    <input type="text" name="produk" id="produk" class="p-2 w-72 rounded-lg ring-blue-500 bg-gray-200" focus:ring-blue-500 v-model="inputServer.produk" >
-                    <p v-if="errproduk" class="text-xs px-4 py-1 text-red-400 mt-1">{{errproduk}}</p>
+                    
+                    <div class="flex flex-col w-72">
+                        <ValidationProvider rules="required|alpha_dash" v-slot={errors}>
+                            <input type="text" name="produk" id="produk" class="p-2 w-full rounded-lg bg-gray-300" v-model="inputServer.produk" >
+                            <p class="text-xs mt-1 text-right text-red-500">{{ errors[0] }}</p>
+                        </ValidationProvider>
+                    </div>
                 </div>
             </div>
-            <div class="mt-2" v-show="inputServer.produk !== ''">
+            <div class="mt-2" :class="[inputServer.produk !== '' ? 'incop' : 'decop']">
                 <div class="has-tooltip">
                     <span class="tooltip text-xs rounded shadow-lg p-1 bg-gray-700 text-white ml-36">masukan nama merek</span>
                     <label for="merek" class="block mb-2 text-sm">merek</label>
-                    <input type="text" name="merek" id="merek" class="p-2 w-72 rounded-lg ring-blue-500 bg-gray-200" v-model="inputServer.merek" >
-                    <!-- <p v-if="errormsg.param='merek'" class="text-xs texst-red-400 mt-1">{{errormsg.msg}}</p> -->
+                    <div class="flex flex-col w-72">
+                        <ValidationProvider rules="required|alpha_spaces" v-slot={errors}>
+                            <input type="text" name="merek" id="merek" class="p-2 w-full rounded-lg bg-gray-300" v-model="inputServer.merek" :disabled="inputServer.produk === ''">
+                            <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
+                        </ValidationProvider>
+                    </div>
                 </div>
             </div>
-            <div class="mt-2" v-show="inputServer.merek !== ''">
+            <div class="mt-2" :class="[inputServer.merek !== '' ? 'incop' : 'decop']">
                 <div class="has-tooltip">
                     <span class="tooltip text-xs rounded shadow-lg p-1 bg-gray-700 text-white ml-32">masukan nama modelnya</span>
                     <label for="model" class="block mb-2 text-sm">model</label>
-                    <input type="text" name="model" id="model" class="p-2 w-72 rounded-lg ring-blue-500 bg-gray-200" v-model="inputServer.model" >
-                    <!-- <p v-if="errormsg.param='model'" class="text-xs text-red-400 mt-1">{{errormsg.msg}}</p> -->
+
+                    <div class="flex flex-col w-72">
+                        <ValidationProvider rules="required|alpha_spaces" v-slot={errors}>
+                            <input type="text" name="model" id="model" class="p-2 w-full rounded-lg bg-gray-300" v-model="inputServer.model" :disabled="inputServer.merek === ''" >
+                            <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
+                        </ValidationProvider>
+                    </div>
                 </div>  
             </div>
-            <div class="mt-2" v-show="inputServer.model !== ''">
+            <div class="mt-2" :class="[inputServer.model !== '' ? 'incop' : 'decop']">
                 <div class="has-tooltip">
                     <span class="tooltip text-xs rounded shadow-lg p-1 bg-gray-700 text-white ml-24">masukan jenis processor-nya</span>
                     <label for="processor" class="block mb-2 text-sm">processor</label>
-                    <input type="text" name="processor" id="processor" class="p-2 w-72 rounded-lg ring-blue-500 bg-gray-200" v-model="inputServer.processor" >
-                    <!-- <p v-if="errormsg.param='processor'" class="text-xs text-red-400 mt-1">{{errormsg.msg}}</p> -->
+
+                    <div class="flex flex-col w-72">
+                        <ValidationProvider rules="required|alpha_dash" v-slot={errors}>
+                            <input type="text" name="processor" id="processor" class="p-2 w-full rounded-lg bg-gray-300" v-model="inputServer.processor" :disabled="inputServer.model === ''" >
+                            <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
+                        </ValidationProvider>
+                    </div>
                 </div>
             </div>              
-            <div class="mt-2" v-show="inputServer.processor !== ''">
+            <div class="mt-2" :class="[inputServer.processor !== '' ? 'incop' : 'decop']">
                 <div class="has-tooltip">
                     <span class="tooltip text-xs rounded shadow-lg p-1 bg-gray-700 text-white ml-32">masukan jumlah memori</span>
                     <label for="memori" class="block mb-2 text-sm">memori</label>
-                    <input type="text" name="memori" id="memori" class="p-2 w-72 rounded-l-lg ring-blue-500 bg-gray-200" v-model="inputServer.memori" >
-                    <select name="kapasitas" id="kapasitas" class="p-2 rounded-r-lg ring-blue-500 -ml-2">
-                        <option value="gb">GB</option>
-                        <option value="tb">TB</option>
-                    </select> 
+
+                    <div class="flex flex-col w-72">
+                        <ValidationProvider rules="required|numeric" v-slot={errors}>
+                            <div class="flex">
+                            <input type="text" name="memori" id="memori" class="p-2 w-full rounded-lg bg-gray-300" v-model="inputServer.memori" :disabled="inputServer.processor === ''" >
+                            <select name="kapasitas" id="kapasitas" class="p-2 rounded-r-lg ring-blue-500 -ml-2" :disabled="inputServer.processor === ''" >
+                                <option value="gb">GB</option>
+                                <option value="tb">TB</option>
+                            </select> 
+                            </div>
+                            <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
+                        </ValidationProvider>
+                    </div>
                 </div>
             </div>
-            <div class="mt-2" v-show="inputServer.memori !== ''">
+            <div class="mt-2" :class="[inputServer.memori !== '' ? 'incop' : 'decop']">
                 <div class="has-tooltip">
                     <span class="tooltip text-xs rounded shadow-lg p-1 bg-gray-700 text-white ml-24">masukan jumlah internal storage</span>
                     <label for="internalStorage" class="block mb-2 text-sm">internal Storage</label>
-                    <input type="text" name="internalStorage" id="internalStorage" class="p-2 w-72 rounded-l-lg ring-blue-500 bg-gray-200" v-model="inputServer.internalStorage" >
-                    <select name="kapasitas" id="kapasitas" class="p-2 rounded-r-lg -ml-2 ring-blue-500">
-                        <option value="gb">GB</option>
-                        <option value="tb">TB</option>
-                    </select>
+                    
+                    <div class="flex flex-col w-72">
+                        <ValidationProvider rules="required|numeric" v-slot={errors}>
+                            <div class="flex">
+                            <input type="text" name="internalStorage" id="internalStorage" class="p-2 w-full rounded-lg bg-gray-300" v-model="inputServer.internalStorage" :disabled="inputServer.memori === ''" >
+                            <select name="kapasitas" id="kapasitas" class="p-2 rounded-r-lg -ml-2 ring-blue-500" :disabled="inputServer.memori === ''" >
+                                <option value="gb">GB</option>
+                                <option value="tb">TB</option>
+                            </select>
+                            </div>
+                            <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
+                        </ValidationProvider>
+                    </div>
                 </div>
             </div>
-            <div class="mt-2" v-show="inputServer.internalStorage !== ''">
+            <div class="mt-2" :class="[inputServer.internalStorage !== '' ? 'incop' : 'decop']">
                 <div class="has-tooltip">
                     <span class="tooltip text-xs rounded shadow-lg p-1 bg-gray-700 text-white ml-20">masukan nama network controller</span>
                     <label for="netwokController" class="block mb-2 text-sm">network Controller</label>
-                    <input type="text" name="networkController" id="netwokController" class="p-2 w-72 rounded-lg ring-blue-500 bg-gray-200" v-model="inputServer.networkController" >
+
+                    <div class="flex flex-col w-72">
+                        <ValidationProvider rules="required|numeric" v-slot={errors}>
+                            <input type="text" name="networkController" id="netwokController" class="p-2 w-full rounded-lg bg-gray-300" v-model="inputServer.networkController" :disabled="inputServer.internalStorage === ''" >
+                            <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
+                        </ValidationProvider>
+                    </div>
                 </div>
             </div>
-            <div class="mt-2" v-show="inputServer.networkController !== ''">
+            <div class="mt-2" :class="[inputServer.internalStorage !== '' ? 'incop' : 'decop']">
                 <div class="has-tooltip">
                     <span class="tooltip text-xs rounded shadow-lg p-1 bg-gray-700 text-white ml-32">masukan jumlah storage</span>
                     <label for="storage" class="block mb-2 text-sm">Storage</label>
-                    <input type="text" name="storage" id="storage" class="p-2 w-72 rounded-l-lg ring-blue-500 bg-gray-200" v-model="inputServer.storage" >
-                    <select name="kapasitas" id="kapasitas" class="p-2 ring-blue-500 rounded-r-lg -ml-2">
-                        <option value="gb">GB</option>
-                        <option value="tb">TB</option>
-                    </select>
+
+                    <div class="flex flex-col w-72">
+                        <ValidationProvider rules="required|numeric" v-slot={errors}>
+                            <div class="flex">
+                            <input type="text" name="storage" id="storage" class="p-2 w-full rounded-lg bg-gray-300" v-model="inputServer.storage" :disabled="inputServer.networkController === ''" >
+                            <select name="kapasitas" id="kapasitas" class="p-2 ring-blue-500 rounded-r-lg -ml-2" :disabled="inputServer.networkController === ''" >
+                                <option value="gb">GB</option>
+                                <option value="tb">TB</option>
+                            </select>
+                            </div>
+                            <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
+                        </ValidationProvider>
+                    </div>
                 </div>
             </div>
-            <div class="mt-2" v-show="inputServer.storage !== ''">
+            <div class="mt-2" :class="[inputServer.storage !== '' ? 'incop' : 'decop']">
                 <div class="has-tooltip relative">
                     <span class="tooltip text-xs rounded shadow-lg p-1 bg-gray-700 text-white ml-20">masukan besar sumber daya listrik</span>
                     <label for="sumberDayaListrik" class="block mb-2 text-sm">power supply (dalam watt)</label>
-                    <input type="text" name="sumberDayaListrik" id="sumberDayaListrik" class="p-2 w-72 rounded-lg ring-blue-500 bg-gray-200 bg-gray-200" v-model="inputServer.sumberDayaListrik" >
-                    <!-- <input type="text" value="watt" readonly="readonly" class="absolute w-14 right-28 bottom-2 p-1 rounded"> -->
+
+                    <div class="flex flex-col w-72">
+                        <ValidationProvider rules="required|numeric" v-slot={errors}>
+                            <input type="text" name="sumberDayaListrik" id="sumberDayaListrik" class="p-2 w-full rounded-lg bg-gray-300" v-model="inputServer.sumberDayaListrik" :disabled="inputServer.storage === ''">
+                            <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
+                        </ValidationProvider>
+                    </div>
                 </div>
             </div>
-            <div class="mt-2" v-show="inputServer.sumberDayaListrik !== ''">
+            <div class="mt-2" :class="[inputServer.sumberDayaListrik !== '' ? 'incop' : 'decop']">
                 <div class="has-tooltip">
                     <span class="tooltip text-xs rounded shadow-lg p-1 bg-gray-700 text-white ml-24">masukan tahun dimasukkan</span>
                     <label for="tahun" class="block mb-2 text-sm">tahun</label>
-                    <input type="date" name="tahun" id="tahun" class="p-2 w-72 rounded-lg ring-blue-500 bg-gray-200" v-model="inputServer.tahun" >
+
+                    <div class="flex flex-col w-72">
+                        <ValidationProvider rules="required" v-slot={errors}>
+                            <input type="date" name="tahun" id="tahun" class="p-2 w-full rounded-lg bg-gray-300" v-model="inputServer.tahun" :disabled="inputServer.sumberDayaListrik === ''">
+                            <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
+                        </ValidationProvider>
+                    </div>
                 </div>
             </div>
-            <div class="mt-2" v-show="inputServer.sumberDayaListrik !== ''">
+            <div class="mt-2" :class="[inputServer.sumberDayaListrik !== '' ? 'incop' : 'decop']">
                 <div class="has-tooltip">
                     <span class="tooltip text-xs rounded shadow-lg p-1 bg-gray-700 text-white ml-20">masukan tahun garansi berakhir</span>
                     <label for="garansi" class="block mb-2 text-sm">garansi</label>
-                    <input type="date" name="garansi" id="garansi" ref="garansi" class="p-2 w-72 rounded-lg ring-blue-500 bg-gray-200" v-model="inputServer.garansi" >
+
+                    <div class="flex flex-col w-72">
+                        <ValidationProvider rules="required" v-slot={errors}>
+                            <input type="date" name="garansi" id="garansi" ref="garansi" class="p-2 w-full rounded-lg bg-gray-300" v-model="inputServer.garansi" :disabled="inputServer.sumberDayaListrik === ''">
+                            <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
+                        </ValidationProvider>
+                    </div>
                 </div>
             </div>
         </div>
-        <button class="bg-gray-700 text-gray-200 rounded-lg w-28 h-10 mt-8" type="submit">kirim</button>
+        <button class="mt-10 opacity-10 bg-gray-700 text-gray-200 w-24 py-2 rounded cursor-default" type="submit" :class="{activesubmit : valid}" :disabled="invalid">kirim</button>
     </form>
+    </ValidationObserver>
 </section>
 </div>
 </template>
@@ -125,8 +192,14 @@
 <script>
 import axios from 'axios'
 import moment from 'moment'
+import { ValidationObserver, ValidationProvider } from "vee-validate";
+
 export default {
     middleware:"isAuthenticated",
+    components:{
+        ValidationObserver,
+        ValidationProvider,
+    },
     data(){
         return {
             item : "server",
@@ -212,5 +285,22 @@ export default {
 .btnpreviousactive{
     transform:translateX(0);
     transition:all ease-in-out .5s;
+}
+.incop{
+    opacity:1,
+}
+.decop{
+    opacity: 0.1;
+}
+.activesubmit {
+    background-color: rgb(39, 39, 39);
+    color:whitesmoke;
+    width:6rem;
+    cursor:pointer;
+    opacity:1;
+    padding-top: .5rem;
+    padding-bottom: .5rem;
+    transition: all 0.5s;
+    transform:translateY(-2px);
 }
 </style>

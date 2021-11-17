@@ -27,5 +27,5 @@ extend('alpha_spaces', {
 
 extend('alpha_dash', {
   ...alpha_dash,
-  message: 'isian berupa huruf dan angka',
+  message: 'isikan huruf dan angka',
 })

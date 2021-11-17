@@ -300,13 +300,43 @@ module.exports.mainteananceuser = async (req, res) => {
     // menggabungkan tabel maintenance dengan tabel users lalu cocokan id users di maintenance dengan id user di users lalu cari yang id role-nya 6
     // id role 6 adalah security
     if (lokasiServer == 'roto 1') {
-      const rows = await conn.query(`SELECT * FROM maintenance INNER JOIN users ON maintenance.id_users = users.id_user WHERE id_role=6`)
-      if(rows){
+      const rows = await conn.query(
+        'SELECT suhu,kelembapan,baterai FROM maintenance INNER JOIN users ON maintenance.id_users = users.id_user WHERE id_role=6 ORDER BY maintenance.id_maintenance DESC LIMIT 1'
+      )
+      if (rows) {
         res.send(rows)
+      } else {
+        res.json({ msg: 'no data' })
       }
-      else{
-        res.json({msg : 'no data'})
+    } else if (lokasiServer == 'roto 2') {
+      const rows = await conn.query(
+        'SELECT suhu,kelembapan,baterai FROM maintenance_roto_2 INNER JOIN users ON maintenance_roto_2.id_users = users.id_user WHERE id_role=6 ORDER BY maintenance_roto_2.id_maintenance DESC LIMIT 1'
+      )
+      if (rows) {
+        res.send(rows)
+      } else {
+        res.json({ msg: 'no data' })
+      }
+    } else if (lokasiServer == 'roto 3') {
+      const rows = await conn.query(
+        'SELECT suhu,kelembapan,baterai FROM maintenance_roto_3 INNER JOIN users ON maintenance_roto_3.id_users = users.id_user WHERE id_role=6 ORDER BY maintenance_roto_3.id_maintenance DESC LIMIT 1'
+      )
+      if (rows) {
+        res.send(rows)
+      } else {
+        res.json({ msg: 'no data' })
+      }
+    } else if (lokasiServer == 'tinta') {
+      const rows = await conn.query(
+        'SELECT suhu,kelembapan,baterai FROM maintenance_tinta INNER JOIN users ON maintenance_tinta.id_users = users.id_user WHERE id_role=6 ORDER BY maintenance_tinta.id_maintenance DESC LIMIT 1'
+      )
+      if (rows) {
+        res.send(rows)
+      } else {
+        res.json({ msg: 'no data' })
       }
     }
+  } catch (err) {
+    console.log(err)
   }
 }
