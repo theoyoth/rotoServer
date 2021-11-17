@@ -1,5 +1,6 @@
 const maintenanceController = require('../controllers/maintenanceController.js')
 const authController = require('../controllers/authController.js')
+const userController = require('../controllers/userController.js')
 const deleteController = require('../controllers/master/deleteController.js')
 const updateController = require('../controllers/master/updateController.js')
 const createdController = require('../controllers/master/createdController.js')
@@ -11,7 +12,6 @@ const express = require('express')
 const router = express.Router()
 // const app = express()
 
-// app.get('/', maintenanceController.users)
 // app.get('/lokasiserver', maintenanceController.lokasiserver)
 router.get('/masterserver/:lokasi/:id', readController.masterserver)
 
@@ -660,7 +660,10 @@ router.get(
   '/maintenance/detail/:lokasi/:id',
   maintenanceController.detailMaintenance
 )
+router.get('/maintenance/security/:lokasi')
 
 router.get('/lokasi', lokasiServer.lokasiserver)
+router.get('/users', userController.getAllUsers)
+router.get('/cariuser', userController.cariuser)
 
 module.exports = router

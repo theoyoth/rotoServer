@@ -290,3 +290,23 @@ module.exports.detailMaintenance = async (req, res) => {
     console.log(err)
   }
 }
+
+module.exports.mainteananceuser = async (req, res) => {
+  let conn
+  try {
+    const lokasiServer = req.params.lokasi
+
+    conn = await pool.getConnection()
+    // menggabungkan tabel maintenance dengan tabel users lalu cocokan id users di maintenance dengan id user di users lalu cari yang id role-nya 6
+    // id role 6 adalah security
+    if (lokasiServer == 'roto 1') {
+      const rows = await conn.query(`SELECT * FROM maintenance INNER JOIN users ON maintenance.id_users = users.id_user WHERE id_role=6`)
+      if(rows){
+        res.send(rows)
+      }
+      else{
+        res.json({msg : 'no data'})
+      }
+    }
+  }
+}

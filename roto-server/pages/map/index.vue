@@ -1,6 +1,6 @@
 <template>
-<div class="bg-hero h-screen">
-    <InputHeader map="map"/>
+<div class="bg-gray-300 h-screen">
+    <Navbar/>
 </div>
   
 </template>

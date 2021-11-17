@@ -1,5 +1,5 @@
 <template>
-<div class="bg-gray-300 h-screen w-widthContent ml-auto">
+<div class="bg-gray-300 w-widthContent ml-auto">
     <!-- <HeaderListItem maintenance="maintenance" /> -->
     <Navbar/>
     <section class="bg-gray-100 min-h-screen w-widthContentField m-auto mt-7 p-4">
@@ -33,10 +33,10 @@
         <table class="table space-y-6 container mx-auto table-auto border-collapse border border-white mt-7 divide-y divide-gray-300" ref="listitem" id="listitem">
             <thead class="bg-white text-sm bg-gray-700">
                 <tr class="text-xs text-gray-200"> 
-                    <th class="font-semibold py-3 w-44">nama</th>
-                    <th class="font-semibold py-3 w-32">tanggal</th>
+                    <th class="font-semibold py-3">nama</th>
+                    <th class="font-semibold py-3 w-32">tanggal input</th>
                     <th class="font-semibold" >suhu</th>
-                    <th class="font-semibold" >kelembapan</th>
+                    <th class="font-semibold w-32">kelembapan</th>
                     <th class="font-semibold" >AC</th>
                     <th class="font-semibold" >UPS</th>
                     <th class="font-semibold w-28" >aksi</th>
@@ -75,7 +75,7 @@
             </tbody> 
             <tbody v-else class="text-center bg-white bg-opacity-40 divide-y divide-gray-300">
                 <tr class="text-sm" v-for="(main,index) in hasilMaintenance" :key="index">
-                    <td class="py-3">{{main.nama}}</td>
+                    <td class="py-3">{{main.nama_pemeriksa}}</td>
                     <td>{{$moment(main.tanggal).format("DD-MM-YYYY")}}</td>
                     <td>{{main.suhu}}</td>
                     <td>{{main.kelembapan}}</td>
