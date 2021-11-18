@@ -1,8 +1,8 @@
 <template>
-<div class="bg-gray-200 min-h-screen w-widthContent ml-auto">
+<div class="bg-gray-300 min-h-screen w-widthContent ml-auto">
     <!-- <InputHeader item="Genset"/> -->
     <Navbar/>
-    <section class="bg-white min-h-screen w-widthContentField m-auto mt-7 p-4 ">
+    <section class="bg-gray-200 min-h-screen w-widthContentField m-auto mt-7 p-4 ">
         <NuxtLink to="/master/genset"
           class="flex items-center justify-between rounded-md w-28 px-4 py-2 bg-gray-700">
           <div>
@@ -18,6 +18,7 @@
         </div>
     </div>
 
+    <ValidationObserver v-slot={invalid,valid}>
     <form @submit.prevent="postinputGenset" class="min-w-min mt-6">
         <div >
             <div class="grid grid-cols-2">
@@ -25,36 +26,62 @@
                     <span class="tooltip text-xs rounded shadow-lg p-1 bg-gray-700 text-white ml-32">masukan nama merek</span>
 
                     <label for="merek" class="block mb-2 text-sm">merek</label>
-                    <input type="text" v-model="inputGenset.merek" name="merek" id="merek" class="p-2 w-72 rounded-lg focus:ring-blue-500 bg-gray-200">
+                    <div class="flex flex-col w-72">
+                        <ValidationProvider rules="required|alpha_spaces" v-slot={errors}>
+                            <input type="text" v-model="inputGenset.merek" name="merek" id="merek" class="p-2 w-72 rounded-lg bg-gray-300 outline-none">
+                            <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
+                        </ValidationProvider>
+                    </div>
                 </div>
-                <div class="mb-4 has-tooltip">
+                <div class="mb-4 has-tooltip" :class="[inputGenset.merek !== '' ? 'incop' : 'decop']">
                     <span class="tooltip text-xs rounded shadow-lg p-1 bg-gray-700 text-white ml-32">masukan nama model</span>
 
                     <label for="model" class="block mb-2 text-sm">model</label>
-                    <input type="text" v-model="inputGenset.model" name="model" id="model" class="p-2 w-72 rounded-lg focus:ring-blue-500 bg-gray-200">
+                    <div class="flex flex-col w-72">
+                        <ValidationProvider rules="required|alpha_dash" v-slot={errors}>
+                            <input type="text" v-model="inputGenset.model" name="model" id="model" class="p-2 w-full rounded-lg bg-gray-300 outline-none" :disabled="inputGenset.merek === ''">
+                            <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
+                        </ValidationProvider>
+                    </div>
                 </div>
-                <div class="mb-4 has-tooltip">
+                <div class="mb-4 has-tooltip" :class="[inputGenset.model !== '' ? 'incop' : 'decop']">
                     <span class="tooltip text-xs rounded shadow-lg p-1 bg-gray-700 text-white ml-32">masukan nama tipe barang</span>
 
                     <label for="tipe" class="block mb-2 text-sm">tipe</label>
-                    <input type="text" v-model="inputGenset.tipe" name="tipe" id="tipe" class="p-2 w-72 rounded-lg focus:ring-blue-500 bg-gray-200">
+                    <div class="flex flex-col w-72">
+                        <ValidationProvider rules="required|alpha_dash" v-slot={errors}>
+                            <input type="text" v-model="inputGenset.tipe" name="tipe" id="tipe" class="p-2 w-full rounded-lg bg-gray-300 outline-none" :disabled="inputGenset.model === ''">
+                            <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
+                        </ValidationProvider>
+                    </div>
                 </div>
-                <div class="mb-4 has-tooltip">
+                <div class="mb-4 has-tooltip" :class="[inputGenset.tipe !== '' ? 'incop' : 'decop']">
                     <span class="tooltip text-xs rounded shadow-lg p-1 bg-gray-700 text-white ml-32">masukan tahun masuk</span>
 
                     <label for="tahun" class="block mb-2 text-sm">tahun</label>
-                    <input type="date" v-model="inputGenset.tahun" name="tahun" id="tahun" class="p-2 w-72 rounded-lg focus:ring-blue-500 bg-gray-200">
+                    <div class="flex flex-col w-72">
+                        <ValidationProvider rules="required" v-slot={errors}>
+                            <input type="date" v-model="inputGenset.tahun" name="tahun" id="tahun" class="p-2 w-full rounded-lg bg-gray-300 outline-none" :disabled="inputGenset.tipe === ''">
+                            <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
+                        </ValidationProvider>
+                    </div>
                 </div>
-                <div class="mb-4 has-tooltip">
+                <div class="mb-4 has-tooltip" :class="[inputGenset.tipe !== '' ? 'incop' : 'decop']">
                     <span class="tooltip text-xs rounded shadow-lg p-1 bg-gray-700 text-white ml-32">masukan batas garansi</span>
 
                     <label for="garansi" class="block mb-2 text-sm">garansi</label>
-                    <input type="date" v-model="inputGenset.garansi" name="garansi" id="garansi" class="p-2 w-72 rounded-lg focus:ring-blue-500 bg-gray-200" >
+                     <div class="flex flex-col w-72">
+                        <ValidationProvider rules="required" v-slot={errors}>
+                            <input type="date" v-model="inputGenset.garansi" name="garansi" id="garansi" class="p-2 w-72 rounded-lg bg-gray-300 outline-none" :disabled="inputGenset.tipe === ''">
+                            <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
+                        </ValidationProvider>
+                    </div>
                 </div>
             </div>
         </div>
-        <button class="bg-gray-700 text-gray-200 shadow-md rounded-lg w-28 h-10 mt-6" type="submit">kirim</button>
+        <button class="mt-10 opacity-10 bg-gray-700 text-gray-200 w-24 py-2 rounded cursor-default" type="submit" :class="{activesubmit : valid}" :disabled="invalid">kirim</button>
     </form>
+    </ValidationObserver>
 </section>
 </div>
 </template>
@@ -62,8 +89,14 @@
 <script>
 import axios from 'axios'
 import moment from 'moment'
+import { ValidationObserver, ValidationProvider } from "vee-validate";
+
 export default {
     middleware:"isAuthenticated",
+    components:{
+        ValidationObserver,
+        ValidationProvider
+    },
     data(){
         return{
             inputGenset:{
@@ -79,7 +112,14 @@ export default {
     },
     methods:{
         async postinputGenset(){
-            const res = await axios.post('http://localhost:3000/server/master/inputgenset',{model:this.inputGenset.model,merek:this.inputGenset.merek,tipe:this.inputGenset.tipe,tahun:this.inputGenset.tahun, garansi:this.inputGenset.garansi})
+            const res = await axios.post('http://localhost:3000/server/master/inputgenset',{
+                iduser: this.$auth.user.id,
+                lokasiServer: this.$auth.user.lokasi,
+                model:this.inputGenset.model,
+                merek:this.inputGenset.merek,
+                tipe:this.inputGenset.tipe,
+                tahun:this.inputGenset.tahun,
+                garansi:this.inputGenset.garansi})
 
             if(res.data.errors){
                 this.errors=res.data.errors
@@ -99,5 +139,21 @@ export default {
 </script>
 
 <style>
-
+.incop{
+    opacity:1,
+}
+.decop{
+    opacity: 0.1;
+}
+.activesubmit {
+    background-color: rgb(37, 45, 56);
+    color:whitesmoke;
+    width:6rem;
+    cursor:pointer;
+    opacity:1;
+    padding-top: .5rem;
+    padding-bottom: .5rem;
+    transition: all 0.5s;
+    transform:translateY(-2px);
+}
 </style>

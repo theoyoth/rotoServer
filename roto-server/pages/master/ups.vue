@@ -2,11 +2,11 @@
 <div class="bg-gray-200 min-h-screen w-widthContent ml-auto">
     <!-- <HeaderListItem :ups="master.nama"/> -->
     <Navbar/>
-    <section class="bg-white min-h-screen w-widthContentField m-auto mt-7 p-4">
+    <section class="bg-gray-100 min-h-screen w-widthContentField m-auto mt-7 p-4">
         <p class="text-center text-lg text-gray-700 font-semibold">Halaman master UPS</p>
         <div class="flex justify-between mt-8">
             <div class="flex">
-                <input type="text" placeholder="cari" name="cari" v-model.lazy="caribarang" @keyup.enter="$fetch" class="rounded-l-lg p-2 outline-none bg-gray-200">
+                <input type="text" placeholder="cari" name="cari" v-model.lazy="caribarang" @keyup.enter="$fetch" class="rounded-l-lg p-2 w-52 outline-none bg-gray-200">
                 <button class="p-2 rounded-r-lg bg-gray-700 flex items-center justify-center w-12" @click="$fetch">
                     <font-awesome-icon :icon="['fas','search']" class="text-yellow-500"/>
                 </button>
@@ -29,10 +29,11 @@
         <p class="text-white bg-blue-500 font-semibold p-2 rounded-lg">{{ deletemsg }}</p>
         </div> -->
 
-        <table class="table space-y-6 container mx-auto table-auto border-collapse border border-white mt-7 divide-y divide-gray-300">
+        <table class="table space-y-6 container mx-auto table-auto border-collapse mt-7 divide-y divide-gray-300">
             <thead class="bg-gray-700 text-sm has-tooltip">
                 <span class="tooltip rounded shadow-lg p-1 bg-gray-700 text-white -mt-10 absolute left-2/4 transform -translate-x-2/4">semua detail barang</span>
                 <tr class="text-xs text-gray-200"> 
+                    <th class="font-semibold py-3 px-2 w-4">no.</th>     
                     <th class="font-semibold py-3">Model</th>     
                     <th class="font-semibold">UPS critical load</th>
                     <th class="font-semibold">nomor serial</th>
@@ -44,6 +45,7 @@
             </thead>
             <tbody v-if="caribarang !== ''" class="text-center bg-white bg-opacity-40 divide-y divide-gray-300">
                 <tr class="text-sm" v-for="(hasilcari,index) in cariups" :key="index">
+                    <td>{{index+1}}</td>
                     <td class="32">{{hasilcari.model}}</td>
                     <td class="w-28">{{hasilcari.ups_critical_load}}</td>
                     <td class="w-32">{{hasilcari.nomor_serial}}</td>
@@ -53,7 +55,7 @@
                     <td class="py-3 flex justify-around w-full bg-gray-700">
                         <NuxtLink 
                         :to="{name:'master-detail-detailups-detailups',
-                            params: { id: hasilcari.id },
+                            params: { id: hasilcari.id_ups },
                         }">
                             <font-awesome-icon
                             :icon="['fas', 'eye']"
@@ -63,16 +65,15 @@
                         <NuxtLink :to="{name : 'master-update-updateups-ups', params:{id : hasilcari.id_ups} }">
                             <font-awesome-icon :icon="['fas','pencil-alt']" class="text-yellow-500"/>
                         </NuxtLink>
-                        <form @click="deleteData(hasilcari.id)">
-                        <button type="submit">
+                        <button @click.prevent="deleteData(hasilcari.id_ups)">
                             <font-awesome-icon :icon="['fas','trash']" class="text-yellow-500"/>
                         </button> 
-                        </form>
                     </td>
                 </tr>
             </tbody>
             <tbody v-else class="text-center bg-white bg-opacity-40 divide-y divide-gray-300">
                 <tr class="text-sm" v-for="(ups,index) in upss" :key="index">
+                    <td>{{index+1}}</td>
                     <td class="w-32">{{ups.model}}</td>
                     <td class="w-28">{{ups.ups_critical_load}}</td>
                     <td class="w-32">{{ups.nomor_serial}}</td>
@@ -92,11 +93,9 @@
                         <NuxtLink :to="{name : 'master-update-updateups-ups', params:{id : ups.id_ups} }">
                             <font-awesome-icon :icon="['fas','pencil-alt']" class="text-yellow-500"/>
                         </NuxtLink>
-                        <form @click="deleteData(ups.id_ups)">
-                        <button type="submit">
+                        <button @click.prevent="deleteData(ups.id_ups)">
                             <font-awesome-icon :icon="['fas','trash']" class="text-yellow-500"/>
                         </button> 
-                        </form>
                     </td>
                 </tr>
             </tbody>
@@ -129,12 +128,18 @@ export default {
     },
     methods:{
         async deleteData(id){
-        const resp = await axios.post(`/server/master/deleteups/${id}`)
-         this.$router.push('/master/ups')
-            if(resp.data.msg){
-              this.deletemsg = resp.data.msg
-            }
-        },
+        const lokasi = this.$auth.user.lokasi
+        const resp = await axios.delete(`/server/master/deleteups/${id}/${lokasi}`)
+        if(resp){
+            this.upss.splice(this.upss.indexOf(id), 1);
+            this.$router.push('/master/ups')
+            swal('data dihapus',{icon:'success'})
+        }
+        if(resp.data.errmsg){
+            this.$router.push('/master/ups')
+            swal('Error',resp.data.errmsg,{icon:'error'})
+        }
+    },
         
         async caribarangups(){
             this.cariups = []

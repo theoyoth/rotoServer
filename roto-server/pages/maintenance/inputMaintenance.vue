@@ -24,7 +24,7 @@
                     <label for="suhu" class="block mb-2 text-sm">suhu</label>
                     <div class="flex flex-col w-72">
                         <ValidationProvider rules="required|numeric" v-slot={errors}>
-                        <input type="text" v-model="inputMaintenance.suhu" name="suhu" id="suhu" class="p-2 w-full rounded-lg bg-gray-300" >
+                        <input type="text" v-model="inputMaintenance.suhu" name="suhu" id="suhu" class="p-2 w-full rounded-lg bg-gray-300 outline-none" >
                         <p class="text-xs mt-1 text-right text-red-500">{{ errors[0] }}</p>
                         </ValidationProvider>
                     </div>
@@ -33,7 +33,7 @@
                     <label for="kelembapan" class="block mb-2 text-sm">kelembapan</label>
                     <div class="flex flex-col w-72">
                         <ValidationProvider rules="required|numeric" v-slot={errors}>
-                        <input type="text" v-model="inputMaintenance.kelembapan" name="kelembapan" id="kelembapan" class="p-2 w-full rounded-lg  bg-gray-300" :disabled="inputMaintenance.suhu === ''">
+                        <input type="text" v-model="inputMaintenance.kelembapan" name="kelembapan" id="kelembapan" class="p-2 w-full rounded-lg outline-none bg-gray-300" :disabled="inputMaintenance.suhu === ''">
                         <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
                         </ValidationProvider>
                     </div>
@@ -42,7 +42,7 @@
                     <label for="ac" class="block mb-2 text-sm">AC</label>
                     <div class="flex flex-col w-72">
                         <ValidationProvider rules="required|numeric" v-slot={errors}>
-                        <input type="text" v-model="inputMaintenance.ac" name="ac" id="ac" class="p-2 w-full rounded-lg  bg-gray-300" :disabled="inputMaintenance.kelembapan === ''">
+                        <input type="text" v-model="inputMaintenance.ac" name="ac" id="ac" class="p-2 w-full rounded-lg  bg-gray-300 outline-none" :disabled="inputMaintenance.kelembapan === ''">
                         <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
                         </ValidationProvider>
                     </div>
@@ -51,7 +51,7 @@
                     <label for="ups" class="block mb-2 text-sm">UPS</label>
                     <div class="flex flex-col w-72">
                         <ValidationProvider rules="required|numeric" v-slot={errors}>
-                        <input type="text" v-model="inputMaintenance.ups" name="ups" id="ups" class="p-2 w-full rounded-lg bg-gray-300" :disabled="inputMaintenance.ac === ''">
+                        <input type="text" v-model="inputMaintenance.ups" name="ups" id="ups" class="p-2 w-full rounded-lg bg-gray-300 outline-none" :disabled="inputMaintenance.ac === ''">
                         <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
                         </ValidationProvider>
                     </div>
@@ -60,7 +60,7 @@
                     <label for="baterai" class="block mb-2 text-sm">baterai</label>
                     <div class="flex flex-col w-72">
                         <ValidationProvider rules="required|numeric" v-slot={errors}>
-                        <input type="text" v-model="inputMaintenance.baterai" name="baterai" id="baterai" class="p-2 w-full rounded-lg bg-gray-300" :disabled="inputMaintenance.ups === ''">
+                        <input type="text" v-model="inputMaintenance.baterai" name="baterai" id="baterai" class="p-2 w-full rounded-lg bg-gray-300 outline-none" :disabled="inputMaintenance.ups === ''">
                         <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
                         </ValidationProvider>
                     </div>
@@ -69,7 +69,7 @@
                     <label for="network" class="block mb-2 text-sm">network</label>
                     <div class="flex flex-col w-72">
                         <ValidationProvider rules="required|numeric" v-slot={errors}>
-                        <input type="text" v-model="inputMaintenance.network" name="network" id="network" class="p-2 w-full rounded-lg bg-gray-300" :disabled="inputMaintenance.baterai === ''">
+                        <input type="text" v-model="inputMaintenance.network" name="network" id="network" class="p-2 w-full rounded-lg bg-gray-300 outline-none" :disabled="inputMaintenance.baterai === ''">
                         <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
                         </ValidationProvider>
                     </div>
@@ -78,7 +78,7 @@
                     <label for="server" class="block mb-2 text-sm">server</label>
                     <div class="flex flex-col w-72">
                         <ValidationProvider rules="required|alpha_spaces" v-slot={errors}>
-                        <input type="text" v-model="inputMaintenance.server" name="server" id="server" class="p-2 w-full rounded-lg bg-gray-300" :disabled="inputMaintenance.network === ''">
+                        <input type="text" v-model="inputMaintenance.server" name="server" id="server" class="p-2 w-full rounded-lg bg-gray-300 outline-none" :disabled="inputMaintenance.network === ''">
                         <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
                         </ValidationProvider>
                     </div>
@@ -87,7 +87,7 @@
                     <label for="keterangan" class="block mb-2 text-sm">keterangan</label>
                     <div class="flex flex-col w-72">
                         <ValidationProvider rules="required|alpha_spaces" v-slot={errors}>
-                        <textarea rows="4" form="inputmaintenance" type="text" v-model="inputMaintenance.keterangan" name="keterangan" id="keterangan" class="p-2 w-full rounded-lg bg-gray-300" :disabled="inputMaintenance.server === ''"></textarea>
+                        <textarea rows="4" form="inputmaintenance" type="text" v-model="inputMaintenance.keterangan" name="keterangan" id="keterangan" class="p-2 w-full rounded-lg bg-gray-300 outline-none" :disabled="inputMaintenance.server === ''"></textarea>
                         <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
                         </ValidationProvider>
                     </div>
@@ -171,7 +171,7 @@ export default {
 
 <style>
     .activesubmit {
-        background-color: rgb(39, 39, 39);
+        background-color: rgb(55, 65, 81);
         color:whitesmoke;
         width:6rem;
         cursor:pointer;

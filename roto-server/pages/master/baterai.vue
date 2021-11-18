@@ -1,8 +1,8 @@
 <template>
-<div class="min-h-screen bg-gray-200 w-widthContent ml-auto">
+<div class="min-h-screen bg-gray-300 w-widthContent ml-auto">
     <!-- <ListItem :baterai="master" /> -->
     <Navbar/>
-    <section class="bg-white min-h-screen w-widthContentField m-auto mt-7 p-4">
+    <section class="bg-gray-100 min-h-screen w-widthContentField m-auto mt-7 p-4">
         <p class="text-center text-lg text-gray-700 font-semibold">Halaman master UPS</p>
         <div class="flex justify-between mt-8">
             <div class="flex">
@@ -53,11 +53,9 @@
                         <NuxtLink :to="{name : 'master-update-updatebaterai-baterai', params:{id : hasilcari.id_baterai} }">
                             <font-awesome-icon :icon="['fas','pencil-alt']" class="text-yellow-500"/>
                         </NuxtLink>
-                        <form @click="deleteData(hasilcari.id)" class="ml-4">
-                        <button type="submit">
+                        <button @click.prevent="deleteData(hasilcari.id_baterai)">
                             <font-awesome-icon :icon="['fas','trash']" class="text-yellow-500"/>
                         </button> 
-                        </form>
                     </td>
                 </tr>
             </tbody>
@@ -72,11 +70,9 @@
                         <NuxtLink :to="{name : 'master-update-updatebaterai-baterai', params:{id : baterai.id_baterai} }">
                             <font-awesome-icon :icon="['fas','pencil-alt']" class="text-yellow-500"/>
                         </NuxtLink>
-                        <form @click="deleteData(baterai.id)" class="ml-4">
-                        <button type="submit">
+                        <button @click.prevent="deleteData(baterai.id_baterai)">
                             <font-awesome-icon :icon="['fas','trash']" class="text-yellow-500"/>
                         </button> 
-                        </form>
                     </td>
                 </tr>
             </tbody>
@@ -108,10 +104,16 @@ export default {
     },
     methods:{
         async deleteData(id){
-            const resp = await axios.post(`/server/master/deletebaterai/${id}`)
-            this.$router.push('/master/baterai')
-            if(resp.data.msg){
-              this.deletemsg = resp.data.msg
+            const lokasi = this.$auth.user.lokasi
+            const resp = await axios.delete(`/server/master/deletebaterai/${id}/${lokasi}`)
+            if(resp){
+                this.baterais.splice(this.baterais.indexOf(id), 1);
+                this.$router.push('/master/baterai')
+                swal('data dihapus',{icon:'success'})
+            }
+            if(resp.data.errmsg){
+                this.$router.push('/master/ups')
+                swal("Error", resp.data.errmsg,{icon:'error'})
             }
         },
         

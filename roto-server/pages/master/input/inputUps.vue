@@ -17,7 +17,7 @@
                 <li class="text-red-400 text-xs p-2">{{err.msg}}</li>
             </div>
         </div>
-
+    <ValidationObserver v-slot={invalid,valid}>
     <form class="mt-8 min-w-min" @submit.prevent="postInputUps">
         <div>
             <div class="grid grid-cols-3">
@@ -25,79 +25,139 @@
                      <span class="tooltip text-xs rounded shadow-lg p-1 bg-gray-700 text-white ml-32">masukan beban kritis ups-nya</span>
 
                     <label for="upsCriticalLoad" class="block mb-2 text-sm">ups critical load</label>
-                    <input type="text" v-model="inputUps.upsCriticalLoad" name="upsCriticalLoad" id="upsCriticalLoad" class="p-2 w-72 rounded-lg focus:ring-blue-500 bg-gray-200">
+                    <div class="flex flex-col w-72">
+                        <ValidationProvider rules="required|numeric" v-slot={errors}>
+                            <input type="text" v-model="inputUps.upsCriticalLoad" name="upsCriticalLoad" id="upsCriticalLoad" class="p-2 w-full rounded-lg outline-none bg-gray-200">
+                            <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
+                        </ValidationProvider>
+                    </div>
                 </div>
-                <div class="mb-4 has-tooltip">
+                <div class="mb-4 has-tooltip" :class="[inputUps.upsCriticalLoad !== '' ? 'incop' : 'decop']">
                      <span class="tooltip text-xs rounded shadow-lg p-1 bg-gray-700 text-white ml-32">masukan suhu kritis-nya</span>
 
                     <label for="upsCriticalTemperature" class="block mb-2 text-sm">ups critical temperature</label>
-                    <input type="text" v-model="inputUps.upsCriticalTemperature" name="upsCriticalTemperature" id="upsCriticalTemperature" class="p-2 w-72 rounded-lg focus:ring-blue-500 bg-gray-200">
+                    <div class="flex flex-col w-72">
+                        <ValidationProvider rules="required|numeric" v-slot={errors}>
+                            <input type="text" v-model="inputUps.upsCriticalTemperature" name="upsCriticalTemperature" id="upsCriticalTemperature" class="p-2 w-full rounded-lg outline-none bg-gray-200" :disabled="inputUps.upsCriticalLoad === ''">
+                            <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
+                        </ValidationProvider>
+                    </div>
                 </div>
-                <div class="mb-4 has-tooltip">
+                <div class="mb-4 has-tooltip" :class="[inputUps.upsCriticalTemperature !== '' ? 'incop' : 'decop']">
                      <span class="tooltip text-xs rounded shadow-lg p-1 bg-gray-700 text-white ml-32">masukan kapasitas kritis</span>
 
                     <label for="upsCriticalCapacity" class="block mb-2 text-sm">ups critical capacity</label>
-                    <input type="text" v-model="inputUps.upsCriticalCapacity" name="upsCriticalCapacity" id="upsCriticalCapacity" class="p-2 w-72 rounded-lg focus:ring-blue-500 bg-gray-200">
+                    <div class="flex flex-col w-72">
+                        <ValidationProvider rules="required|numeric" v-slot={errors}>
+                            <input type="text" v-model="inputUps.upsCriticalCapacity" name="upsCriticalCapacity" id="upsCriticalCapacity" class="p-2 w-full rounded-lg outline-none bg-gray-200" :disabled="inputUps.upsCriticalTemperature === ''">
+                            <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
+                        </ValidationProvider>
+                    </div>
                 </div>
-                <div class="mb-4 has-tooltip">
+                <div class="mb-4 has-tooltip" :class="[inputUps.upsCriticalCapacity !== '' ? 'incop' : 'decop']">
                      <span class="tooltip text-xs rounded shadow-lg p-1 bg-gray-700 text-white ml-32">masukan nomor serial ups-nya</span>
 
                     <label for="nomorSerial" class="block mb-2 text-sm">nomor serial</label>
-                    <input type="text" v-model="inputUps.nomorSerial" name="nomorSerial" id="nomorSerial" class="p-2 w-72 rounded-lg focus:ring-blue-500 bg-gray-200">
+                    <div class="flex flex-col w-72">
+                        <ValidationProvider rules="required|alpha_dash" v-slot={errors}>
+                            <input type="text" v-model="inputUps.nomorSerial" name="nomorSerial" id="nomorSerial" class="p-2 w-full rounded-lg outline-none bg-gray-200" :disabled="inputUps.upsCriticalCapacity === ''">
+                            <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
+                        </ValidationProvider>
+                    </div>
                 </div>
-                <div class="mb-4 has-tooltip">
+                <div class="mb-4 has-tooltip" :class="[inputUps.nomorSerial !== '' ? 'incop' : 'decop']">
                      <span class="tooltip text-xs rounded shadow-lg p-1 bg-gray-700 text-white ml-32">masukan nama sistem ups-nya</span>
 
                     <label for="namaSistem" class="block mb-2 text-sm">nama sistem</label>
-                    <input type="text" v-model="inputUps.namaSistem" name="namaSistem" id="namaSistem" class="p-2 w-72 rounded-lg focus:ring-blue-500 bg-gray-200">
+                    <div class="flex flex-col w-72">
+                        <ValidationProvider rules="required|alpha_spaces" v-slot={errors}>
+                            <input type="text" v-model="inputUps.namaSistem" name="namaSistem" id="namaSistem" class="p-2 w-full rounded-lg outline-none bg-gray-200" :disabled="inputUps.nomorSerial === ''">
+                            <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
+                        </ValidationProvider>
+                    </div>
                 </div>
-                <div class="mb-4 has-tooltip">
+                <div class="mb-4 has-tooltip" :class="[inputUps.namaSistem !== '' ? 'incop' : 'decop']">
                      <span class="tooltip text-xs rounded shadow-lg p-1 bg-gray-700 text-white ml-32">masukan model ups</span>
 
                     <label for="model" class="block mb-2 text-sm">model</label>
-                    <input type="text" v-model="inputUps.model" name="model" id="model" class="p-2 w-72 rounded-lg focus:ring-blue-500 bg-gray-200">
+                    <div class="flex flex-col w-72">
+                        <ValidationProvider rules="required|alpha_spaces" v-slot={errors}>
+                            <input type="text" v-model="inputUps.model" name="model" id="model" class="p-2 w-full rounded-lg outline-none bg-gray-200" :disabled="inputUps.namaSistem === ''">
+                            <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
+                        </ValidationProvider>
+                    </div>
                 </div>
-                <div class="mb-4 has-tooltip">
+                <div class="mb-4 has-tooltip" :class="[inputUps.model !== '' ? 'incop' : 'decop']">
                      <span class="tooltip text-xs rounded shadow-lg p-1 bg-gray-700 text-white ml-32">masukan manufaktur ups</span>
 
                     <label for="manufaktur" class="block mb-2 text-sm">manufaktur</label>
-                    <input type="text" v-model="inputUps.manufaktur" name="manufaktur" id="manufaktur" class="p-2 w-72 rounded-lg focus:ring-blue-500 bg-gray-200">
+                    <div class="flex flex-col w-72">
+                        <ValidationProvider rules="required|alpha_dash" v-slot={errors}>
+                            <input type="text" v-model="inputUps.manufaktur" name="manufaktur" id="manufaktur" class="p-2 w-full rounded-lg outline-none bg-gray-200" :disabled="inputUps.model === ''">
+                            <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
+                        </ValidationProvider>
+                    </div>
                 </div>
-                <div class="mb-4 has-tooltip">
+                <div class="mb-4 has-tooltip" :class="[inputUps.manufaktur !== '' ? 'incop' : 'decop']">
                      <span class="tooltip text-xs rounded shadow-lg p-1 bg-gray-700 text-white ml-32">masukan peringkat tegangan atau voltage rating</span>
 
                     <label for="peringkatTegangan" class="block mb-2 text-sm">peringkat tegangan</label>
-                    <input type="text" v-model="inputUps.peringkatTegangan" name="peringkatTegangan" id="peringkatTegangan" class="p-2 w-72 rounded-lg focus:ring-blue-500 bg-gray-200">
+                    <div class="flex flex-col w-72">
+                        <ValidationProvider rules="required|numeric" v-slot={errors}>
+                            <input type="text" v-model="inputUps.peringkatTegangan" name="peringkatTegangan" id="peringkatTegangan" class="p-2 w-full rounded-lg outline-none bg-gray-200" :disabled="inputUps.manufaktur === ''">
+                            <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
+                        </ValidationProvider>
+                    </div>
                 </div>
-                <div class="mb-4 has-tooltip">
+                <div class="mb-4 has-tooltip" :class="[inputUps.peringkatTegangan !== '' ? 'incop' : 'decop']">
                      <span class="tooltip text-xs rounded shadow-lg p-1 bg-gray-700 text-white ml-32">masukan peringkat frekuensi atau rating frequency</span>
 
                     <label for="peringkatFrekuensi" class="block mb-2 text-sm">peringkat frekuensi</label>
-                    <input type="text" v-model="inputUps.peringkatFrekuensi" name="peringkatFrekuensi" id="peringkatFrekuensi" class="p-2 w-72 rounded-lg focus:ring-blue-500 bg-gray-200">
+                    <div class="flex flex-col w-72">
+                        <ValidationProvider rules="required|numeric" v-slot={errors}>
+                            <input type="text" v-model="inputUps.peringkatFrekuensi" name="peringkatFrekuensi" id="peringkatFrekuensi" class="p-2 w-full rounded-lg outline-none bg-gray-200" :disabled="inputUps.peringkatTegangan === ''">
+                            <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
+                        </ValidationProvider>
+                    </div>
                 </div>
-                <div class="mb-4 has-tooltip">
+                <div class="mb-4 has-tooltip" :class="[inputUps.peringkatFrekuensi !== '' ? 'incop' : 'decop']">
                      <span class="tooltip text-xs rounded shadow-lg p-1 bg-gray-700 text-white ml-32">masukan peringkat tegangan baterai atau voltage rating battery</span>
 
                     <label for="peringkatTeganganBaterai" class="block mb-2 text-sm">peringkat tegangan baterai</label>
-                    <input type="text" v-model="inputUps.peringkatTeganganBaterai" name="peringkatTeganganBaterai" id="peringkatTeganganBaterai" class="p-2 w-72 rounded-lg focus:ring-blue-500 bg-gray-200">
+                    <div class="flex flex-col w-72">
+                        <ValidationProvider rules="required|numeric" v-slot={errors}>
+                            <input type="text" v-model="inputUps.peringkatTeganganBaterai" name="peringkatTeganganBaterai" id="peringkatTeganganBaterai" class="p-2 w-full rounded-lg outline-none bg-gray-200" :disabled="inputUps.peringkatFrekuensi === ''">
+                            <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
+                        </ValidationProvider>
+                    </div>
                 </div>
-                <div class="mb-4 has-tooltip">
+                <div class="mb-4 has-tooltip" :class="[inputUps.peringkatTeganganBaterai !== '' ? 'incop' : 'decop']">
                      <span class="tooltip text-xs rounded shadow-lg p-1 bg-gray-700 text-white ml-32">masukan tahun masuk barang</span>
 
                     <label for="tahun" class="block mb-2 text-sm">tahun</label>
-                    <input type="date" v-model="inputUps.tahun" name="tahun" id="tahun" class="p-2 w-72 rounded-lg focus:ring-blue-500 bg-gray-200">
+                    <div class="flex flex-col w-72">
+                        <ValidationProvider rules="required" v-slot={errors}>
+                            <input type="date" v-model="inputUps.tahun" name="tahun" id="tahun" class="p-2 w-full rounded-lg outline-none bg-gray-200" :disabled="inputUps.peringkatTeganganBaterai === ''">
+                            <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
+                        </ValidationProvider>
+                    </div>
                 </div>
-                <div class="mb-4 has-tooltip">
+                <div class="mb-4 has-tooltip" :class="[inputUps.peringkatTeganganBaterai !== '' ? 'incop' : 'decop']">
                      <span class="tooltip text-xs rounded shadow-lg p-1 bg-gray-700 text-white ml-32">masukan batas garansi</span>
 
                     <label for="garansi" class="block mb-2 text-sm">garansi</label>
-                    <input type="date" v-model="inputUps.garansi" name="garansi" id="garansi" class="p-2 w-72 rounded-lg focus:ring-blue-500 bg-gray-200">
+                    <div class="flex flex-col w-72">
+                        <ValidationProvider rules="required" v-slot={errors}>
+                            <input type="date" v-model="inputUps.garansi" name="garansi" id="garansi" class="p-2 w-full rounded-lg outline-none bg-gray-200" :disabled="inputUps.peringkatTeganganBaterai === ''">
+                            <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
+                        </ValidationProvider>
+                    </div>
                 </div>
-                
             </div>
         </div>
-        <button class="bg-gray-700 text-gray-200 shadow-md rounded-lg w-28 h-10 mt-8">kirim</button>
+        <button class="mt-10 opacity-10 bg-gray-700 text-gray-200 w-24 py-2 rounded cursor-default" type="submit" :class="{activesubmit : valid}" :disabled="invalid">kirim</button>
     </form>
+    </ValidationObserver>
 </section>
 </div>
 </template>
@@ -105,7 +165,14 @@
 <script>
 import axios from 'axios'
 import moment from 'moment'
+import { ValidationObserver, ValidationProvider } from "vee-validate";
+
 export default {
+    middleware:"isAuthenticated",
+    components:{
+        ValidationObserver,
+        ValidationProvider
+    },
     data(){
         return{
             inputUps:{
@@ -162,5 +229,21 @@ export default {
 </script>
 
 <style>
-
+.incop{
+    opacity:1,
+}
+.decop{
+    opacity: 0.1;
+}
+.activesubmit {
+    background-color: rgb(37, 45, 56);
+    color:whitesmoke;
+    width:6rem;
+    cursor:pointer;
+    opacity:1;
+    padding-top: .5rem;
+    padding-bottom: .5rem;
+    transition: all 0.5s;
+    transform:translateY(-2px);
+}
 </style>

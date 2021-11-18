@@ -18,6 +18,7 @@
         </div>
     </div>
 
+    <ValidationObserver v-slot={invalid,valid}>
     <form class="mt-8 min-w-min" @submit.prevent="postInputAc">
         <div>
             <div class="grid grid-cols-2">
@@ -25,55 +26,96 @@
                     <span class="tooltip text-xs rounded shadow-lg p-1 bg-gray-700 text-white ml-32">masukan nama merek AC</span>
 
                     <label for="merek" class="block mb-2 text-sm">merek</label>
-                    <input type="text" v-model="inputAc.merek" name="merek" id="merek" class="p-2 w-72 rounded-lg focus:ring-blue-500 bg-gray-200">
+                    <div class="flex flex-col w-72">
+                        <ValidationProvider rules="required|alpha_spaces" v-slot={errors}>
+                            <input type="text" v-model="inputAc.merek" name="merek" id="merek" class="p-2 w-full rounded-lg focus:ring-blue-500 bg-gray-200">
+                            <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
+                        </ValidationProvider>
+                    </div>
                 </div>
-                <div class="mb-4 has-tooltip">
+                <div class="mb-4 has-tooltip" :class="[inputAc.merek !== '' ? 'incop' : 'decop']">
                     <span class="tooltip text-xs rounded shadow-lg p-1 bg-gray-700 text-white ml-32">masukan model barang</span>
 
                     <label for="model" class="block mb-2 text-sm">model</label>
-                    <input type="text" v-model="inputAc.model" name="model" id="model" class="p-2 w-72 rounded-lg focus:ring-blue-500 bg-gray-200">
+                    <div class="flex flex-col w-72">
+                        <ValidationProvider rules="required|alpha_spaces" v-slot={errors}>
+                            <input type="text" v-model="inputAc.model" name="model" id="model" class="p-2 w-72 rounded-lg focus:ring-blue-500 bg-gray-200" :disabled="inputAc.merek === ''">
+                        <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
+                        </ValidationProvider>
+                    </div>
                 </div>
-                <div class="mb-4 has-tooltip">
+                <div class="mb-4 has-tooltip" :class="[inputAc.model !== '' ? 'incop' : 'decop']">
                     <span class="tooltip text-xs rounded shadow-lg p-1 bg-gray-700 text-white ml-32">masukan sumber daya listrik</span>
 
                     <label for="sumberDayaListrik" class="block mb-2 text-sm">sumber daya listrik</label>
-                    <input type="text" v-model="inputAc.sumberDayaListrik" name="sumberDayaListrik" id="sumberDayaListrik" class="p-2 w-72 rounded-lg focus:ring-blue-500 bg-gray-200">
+                    <div class="flex flex-col w-72">
+                        <ValidationProvider rules="required|numeric" v-slot={errors}>
+                            <input type="text" v-model="inputAc.sumberDayaListrik" name="sumberDayaListrik" id="sumberDayaListrik" class="p-2 w-full rounded-lg focus:ring-blue-500 bg-gray-200" :disabled="inputAc.model === ''">
+                            <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
+                        </ValidationProvider>
+                    </div>
                 </div>
-                 <div class="mb-4 has-tooltip">
+                 <div class="mb-4 has-tooltip" :class="[inputAc.sumberDayaListrik !== '' ? 'incop' : 'decop']">
                      <span class="tooltip text-xs rounded shadow-lg p-1 bg-gray-700 text-white ml-32">masukan dimensi AC</span>
 
                     <label for="dimensi" class="block mb-2 text-sm">dimensi</label>
-                    <input type="text" v-model="inputAc.dimensi" name="dimensi" id="dimensi" class="p-2 w-72 rounded-lg focus:ring-blue-500 bg-gray-200">
+                    <div class="flex flex-col w-72">
+                        <ValidationProvider rules="required|numeric" v-slot={errors}>
+                            <input type="text" v-model="inputAc.dimensi" name="dimensi" id="dimensi" class="p-2 w-full rounded-lg focus:ring-blue-500 bg-gray-200" :disabled="inputAc.sumberDayaListrik === ''">
+                            <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
+                        </ValidationProvider>
+                    </div>
                 </div>
-                <div class="mb-4 has-tooltip">
+                <div class="mb-4 has-tooltip" :class="[inputAc.dimensi !== '' ? 'incop' : 'decop']">
                     <span class="tooltip text-xs rounded shadow-lg p-1 bg-gray-700 text-white ml-32">masukan konsumsi daya</span>
 
                     <label for="konsumsiDaya" class="block mb-2 text-sm">konsumsi daya</label>
-                    <input type="text" v-model="inputAc.konsumsiDaya" name="konsumsiDaya" id="konsumsiDaya" class="p-2 w-72 rounded-lg focus:ring-blue-500 bg-gray-200">
+                    <div class="flex flex-col w-72">
+                        <ValidationProvider rules="required|numeric" v-slot={errors}>
+                            <input type="text" v-model="inputAc.konsumsiDaya" name="konsumsiDaya" id="konsumsiDaya" class="p-2 w-full rounded-lg focus:ring-blue-500 bg-gray-200" :disabled="inputAc.dimensi === ''">
+                            <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
+                        </ValidationProvider>
+                    </div>
                 </div>
-                <div class="mb-4 has-tooltip">
+                <div class="mb-4 has-tooltip" :class="[inputAc.konsumsiDaya !== '' ? 'incop' : 'decop']">
                     <span class="tooltip text-xs rounded shadow-lg p-1 bg-gray-700 text-white ml-32">masukan kapasitas pendingin</span>
 
                     <label for="kapasitasPendingin" class="block mb-2 text-sm">kapasitas pendingin</label>
-                    <input type="text" v-model="inputAc.kapasitasPendingin" name="kapasitasPendingin" id="kapasitasPendingin" class="p-2 w-72 rounded-lg focus:ring-blue-500 bg-gray-200">
+                    <div class="flex flex-col w-72">
+                        <ValidationProvider rules="required|numeric" v-slot={errors}>
+                            <input type="text" v-model="inputAc.kapasitasPendingin" name="kapasitasPendingin" id="kapasitasPendingin" class="p-2 w-full rounded-lg focus:ring-blue-500 bg-gray-200" :disabled="inputAc.konsumsiDaya === ''">
+                            <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
+                        </ValidationProvider>
+                    </div>
                 </div>
-                <div class="mb-4 has-tooltip">
+                <div class="mb-4 has-tooltip" :class="[inputAc.kapasitasPendingin !== '' ? 'incop' : 'decop']">
                     <span class="tooltip text-xs rounded shadow-lg p-1 bg-gray-700 text-white ml-32">masukan tahun masuk AC</span>
 
                     <label for="tahun" class="block mb-2 text-sm">tahun</label>
-                    <input type="date" v-model="inputAc.tahun" name="tahun" id="tahun" class="p-2 w-72 rounded-lg focus:ring-blue-500 bg-gray-200">
+                    <div class="flex flex-col w-72">
+                        <ValidationProvider rules="required" v-slot={errors}>
+                            <input type="date" v-model="inputAc.tahun" name="tahun" id="tahun" class="p-2 w-full rounded-lg focus:ring-blue-500 bg-gray-200" :disabled="inputAc.kapasitasPendingin === ''">
+                            <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
+                        </ValidationProvider>
+                    </div>
                 </div>
-                <div class="mb-4 has-tooltip">
+                <div class="mb-4 has-tooltip" :class="[inputAc.kapasitasPendingin !== '' ? 'incop' : 'decop']">
                     <span class="tooltip text-xs rounded shadow-lg p-1 bg-gray-700 text-white ml-32">masukan batas garansi</span>
 
                     <label for="garansi" class="block mb-2 text-sm">garansi</label>
-                    <input type="date" v-model="inputAc.garansi" name="garansi" id="garansi" class="p-2 w-72 rounded-lg focus:ring-blue-500 bg-gray-200">
+                    <div class="flex flex-col w-72">
+                        <ValidationProvider rules="required" v-slot={errors}>
+                            <input type="date" v-model="inputAc.garansi" name="garansi" id="garansi" class="p-2 w-full rounded-lg focus:ring-blue-500 bg-gray-200" :disabled="inputAc.kapasitasPendingin === ''">
+                            <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
+                        </ValidationProvider>
+                    </div>
                 </div>
                 
             </div>
         </div>
-        <button class="bg-gray-700 text-gray-200 shadow-md rounded-lg w-28 h-10 mt-6" type="submit">kirim</button>
+        <button class="mt-10 opacity-10 bg-gray-700 text-gray-200 w-24 py-2 rounded cursor-default" type="submit" :class="{activesubmit : valid}" :disabled="invalid">kirim</button>
     </form>
+    </ValidationObserver>
 </section>
 </div>
 </template>
@@ -81,7 +123,14 @@
 <script>
 import axios from 'axios'
 import moment from 'moment'
+import { ValidationObserver, ValidationProvider } from "vee-validate";
+
 export default {
+    middleware:"isAuthenticated",
+    components:{
+        ValidationObserver,
+        ValidationProvider
+    },
     data(){
         return {
             inputAc:{
@@ -128,5 +177,21 @@ export default {
 </script>
 
 <style>
-
+.incop{
+    opacity:1,
+}
+.decop{
+    opacity: 0.1;
+}
+.activesubmit {
+    background-color: rgb(37, 45, 56);
+    color:whitesmoke;
+    width:6rem;
+    cursor:pointer;
+    opacity:1;
+    padding-top: .5rem;
+    padding-bottom: .5rem;
+    transition: all 0.5s;
+    transform:translateY(-2px);
+}
 </style>

@@ -423,11 +423,6 @@ module.exports.inputmastermonitor = async (req, res) => {
   }
 }
 module.exports.inputmasterkeyboard = async (req, res) => {
-  const errors = validationResult(req)
-  if (!errors.isEmpty()) {
-    return res.json({ errors: errors.array() })
-  }
-
   let conn
   try {
     const { merek, model, tipe, tahun, garansi } = req.body
@@ -502,21 +497,41 @@ module.exports.inputmasternas = async (req, res) => {
   }
 }
 module.exports.inputmastergenset = async (req, res) => {
-  const errors = validationResult(req)
-  if (!errors.isEmpty()) {
-    return res.json({ errors: errors.array() })
-  }
-
   let conn
   try {
-    const { merek, model, tipe, tahun, garansi } = req.body
-
+    const { iduser, lokasiServer, merek, model, tipe, tahun, garansi } =
+      req.body
     conn = await pool.getConnection()
-    const data = await conn.query(
-      `INSERT INTO master_genset VALUES ('','${merek}','${model}','${tipe}','${tahun}','${garansi}')`
-    )
 
-    res.redirect('/master/genset')
+    if (lokasiServer == 'roto 1') {
+      const data = await conn.query(
+        `INSERT INTO master_genset VALUES ('','${merek}','${model}','${tipe}','${tahun}','${garansi}','${iduser}')`
+      )
+      if (data.affectedRows > 0) {
+        res.redirect('/master/genset')
+      }
+    } else if (lokasiServer === 'roto 2') {
+      const data = await conn.query(
+        `INSERT INTO master_genset_roto_2 VALUES ('','${merek}','${model}','${tipe}','${tahun}','${garansi}','${iduser}')`
+      )
+      if (data.affectedRows > 0) {
+        res.redirect('/master/genset')
+      }
+    } else if (lokasiServer === 'roto 3') {
+      const data = await conn.query(
+        `INSERT INTO master_genset_roto_3 VALUES ('','${merek}','${model}','${tipe}','${tahun}','${garansi}','${iduser}')`
+      )
+      if (data.affectedRows > 0) {
+        res.redirect('/master/genset')
+      }
+    } else if (lokasiServer === 'tinta') {
+      const data = await conn.query(
+        `INSERT INTO master_genset_tinta VALUES ('','${merek}','${model}','${tipe}','${tahun}','${garansi}','${iduser}')`
+      )
+      if (data.affectedRows > 0) {
+        res.redirect('/master/genset')
+      }
+    }
     conn.release()
   } catch (err) {
     console.log(err)

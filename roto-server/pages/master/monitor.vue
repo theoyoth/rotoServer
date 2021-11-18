@@ -1,12 +1,12 @@
 <template>
-<div class="bg-gray-200 min-h-screen w-widthContent ml-auto">
+<div class="bg-gray-300 min-h-screen w-widthContent ml-auto">
     <!-- <HeaderListItem :monitor="master.nama"/> -->
     <Navbar/>
-    <section class="bg-white min-h-screen w-widthContentField m-auto mt-7 p-4">
+    <section class="bg-gray-100 min-h-screen w-widthContentField m-auto mt-7 p-4">
         <p class="text-center text-lg text-gray-700 font-semibold">Halaman master Monitor</p>
         <div class="flex justify-between mt-8">
             <div class="flex">
-                <input type="text" placeholder="cari" name="cari" v-model.lazy="caribarang" @keyup.enter="$fetch" class="rounded-l-lg p-2 outline-none bg-gray-200">
+                <input type="text" placeholder="cari" name="cari" v-model.lazy="caribarang" @keyup.enter="$fetch" class="rounded-l-lg w-52 p-2 outline-none bg-gray-200">
                 <button class="p-2 rounded-r-lg bg-gray-700 flex items-center justify-center w-12" @click="$fetch">
                     <font-awesome-icon :icon="['fas','search']" class="text-yellow-500"/>
                 </button>
@@ -33,6 +33,7 @@
             <thead class="bg-gray-700 text-sm has-tooltip">
                 <span class="tooltip rounded shadow-lg p-1 bg-gray-700 text-white -mt-10 absolute left-2/4 transform -translate-x-2/4">semua detail barang</span>
                 <tr class="text-xs text-gray-200"> 
+                    <th class="font-semibold py-3 px-2 w-4">no.</th>
                     <th class="font-semibold py-3">Merek</th>
                     <th class="font-semibold py-3">Model</th>   
                     <th class="font-semibold">tipe</th>    
@@ -43,6 +44,7 @@
             </thead>
             <tbody v-if="caribarang !== ''" class="text-center bg-white bg-opacity-40 divide-y divide-gray-300">
                 <tr class="text-sm" v-for="(hasilcari,index) in carimonitor" :key="index">
+                    <td>{{index+1}}</td>
                     <td class="py-3">{{hasilcari.merek}}</td>
                     <td>{{hasilcari.model}}</td>
                     <td>{{hasilcari.tipe}}</td>
@@ -52,16 +54,15 @@
                         <NuxtLink :to="{name : 'master-update-updatemonitor-monitor', params:{id : hasilcari.id} }">
                             <font-awesome-icon :icon="['fas','pencil-alt']" class="text-yellow-500"/>
                         </NuxtLink>
-                        <form @click="deleteData(hasilcari.id)" class="ml-4">
-                        <button type="submit">
+                        <button @click.prevent="deleteData(hasilcari.id_monitor)">
                             <font-awesome-icon :icon="['fas','trash']" class="text-yellow-500"/>
                         </button> 
-                        </form>
                     </td>
                 </tr>
             </tbody>
             <tbody v-else class="text-center bg-white bg-opacity-40 divide-y divide-gray-300">
                 <tr v-show="monitor" class="text-sm" v-for="(monitor,index) in monitors" :key="index">
+                    <td>{{index+1}}</td>
                     <td class="py-3">{{monitor.merek}}</td>
                     <td>{{monitor.model}}</td>
                     <td>{{monitor.tipe}}</td>
@@ -71,11 +72,9 @@
                         <NuxtLink :to="{name : 'master-update-updatemonitor-monitor', params:{id : monitor.id} }">
                             <font-awesome-icon :icon="['fas','pencil-alt']" class="text-yellow-500"/>
                         </NuxtLink>
-                        <form @click="deleteData(monitor.id)" class="ml-4">
-                        <button type="submit">
+                        <button @click.prevent="deleteData(monitor.id_monitor)">
                             <font-awesome-icon :icon="['fas','trash']" class="text-yellow-500"/>
                         </button> 
-                        </form>
                     </td>
                 </tr>
             </tbody>
@@ -107,10 +106,18 @@ export default {
     },
     methods:{
         async deleteData(id){
-            const resp = await axios.post(`/server/master/deletemonitor/${id}`)
-            this.$router.push('/master/monitor')
-            if(resp.data.msg){
-                this.deletemsg = resp.data.msg
+            let indexOfArrayItem = this.monitors.findIndex(i => i.id_monitor === id)
+
+            const lokasi = this.$auth.user.lokasi
+            const resp = await axios.delete(`/server/master/deletemonitor/${id}/${lokasi}`)
+            if(resp){
+                this.monitors.splice(indexOfArrayItem, 1);
+                this.$router.push('/master/monitor')
+                swal('data dihapus',{icon:'success'})
+            }
+            if(resp.data.errmsg){
+                this.$router.push('/master/monitor')
+                swal("Error", resp.data.errmsg,{icon:'error'})
             }
         },
         async caribarangmonitor(){

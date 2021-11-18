@@ -1,8 +1,8 @@
 <template>
-<div class="bg-gray-200 min-h-screen w-widthContent ml-auto">
+<div class="bg-gray-300 min-h-screen w-widthContent ml-auto">
     <!-- <HeaderListItem :rak="master.nama"/> -->
     <Navbar/>
-    <section class="bg-white min-h-screen w-widthContentField m-auto mt-7 p-4">
+    <section class="bg-gray-100 min-h-screen w-widthContentField m-auto mt-7 p-4">
     <p class="text-center text-lg text-gray-700 font-semibold">Halaman master rak</p>
     <div class="flex justify-between mt-8">
         <div class="flex">
@@ -66,11 +66,9 @@
                         <NuxtLink :to="{name : 'master-update-updaterak-rak', params:{id : hasilcari.id_rak} }">
                             <font-awesome-icon :icon="['fas','pencil-alt']" class="text-yellow-500"/>
                         </NuxtLink>
-                        <form @click="deleteData(hasilcari.id)" class="ml-4">
-                        <button type="submit">
+                        <button @click.prevent="deleteData(hasilcari.id_rak)">
                             <font-awesome-icon :icon="['fas','trash']" class="text-yellow-500"/>
                         </button> 
-                        </form>
                     </td>
                 </tr>
             </tbody>
@@ -86,11 +84,9 @@
                         <NuxtLink :to="{name : 'master-update-updaterak-rak', params:{id : rak.id_rak} }">
                             <font-awesome-icon :icon="['fas','pencil-alt']" class="text-yellow-500"/>
                         </NuxtLink>
-                        <form @click="deleteData(rak.id)" class="ml-4">
-                        <button type="submit">
+                        <button @click.prevent="deleteData(rak.id_rak)">
                             <font-awesome-icon :icon="['fas','trash']" class="text-yellow-500"/>
                         </button> 
-                        </form>
                     </td>
                 </tr>
             </tbody>
@@ -122,10 +118,18 @@ export default {
     },
     methods:{
         async deleteData(id){
-            const resp = await axios.post(`http://localhost:3000/server/master/deleterak/${id}`)
-            this.$router.push('/master/rak')
-            if(resp.data.msg){
-              this.deletemsg = resp.data.msg
+            let indexOfArrayItem = this.raks.findIndex(i => i.id_rak === id)
+            
+            const lokasi = this.$auth.user.lokasi
+            const resp = await axios.delete(`http://localhost:3000/server/master/deleterak/${id}/${lokasi}`)
+            if(resp) {
+              this.raks.splice(indexOfArrayItem, 1);
+              this.$router.push('/master/rak')
+              swal('data dihapus',{icon:'success'})
+            }
+            if(resp.data.errmsg){
+                this.$router.push('/master/rak')
+                swal('Error',resp.data.errmsg,{icon:'error'})
             }
         },
         async caribarangrak(){

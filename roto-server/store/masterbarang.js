@@ -40,7 +40,7 @@ export const actions = {
     commit('datacari', res.data)
   },
   async deleteData({ commit }, { lokasi, id }) {
-    const response = await axios.delete(
+    const response = await axios.post(
       `http://localhost:3000/server/master/server/delete/${lokasi}/${id}`
     )
   },

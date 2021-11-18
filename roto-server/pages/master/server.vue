@@ -12,7 +12,7 @@
             placeholder="cari"
             name="cari"
             v-model.lazy="caribarang"
-            class="rounded-l-lg p-2 w-52 outline-none bg-gray-200" @keyup.enter="caribarangserver"
+            class="rounded-l-lg p-2 w-52 outline-none bg-gray-200" @keyup.enter="$fetch"
           />
           <button
             class="
@@ -24,7 +24,7 @@
               justify-center
               w-12
             "
-            @click="caribarangserver"
+            @click="$fetch"
           >
             <font-awesome-icon :icon="['fas', 'search']" class="text-yellow-500" />
           </button>
@@ -42,10 +42,6 @@
           </div>
         </NuxtLink>
       </div>
-
-      <!-- <div v-if="deletemsg" class="relative mt-5 w-1/4 text-center m-auto">
-        <p class="text-white bg-blue-500 font-semibold p-2 rounded-lg">{{ deletemsg }}</p>
-      </div> -->
 
       <table
         class="
@@ -76,6 +72,7 @@
             >semua detail barang</span
           >
           <tr class="text-xs text-gray-200">
+            <th class="font-semibold py-3 px-2 w-4">no.</th>
             <th class="font-semibold py-3 w-24">Tanggal input</th>
             <th class="font-semibold py-3">Merek</th>
             <th class="font-semibold py-3">Model</th>
@@ -89,7 +86,8 @@
           v-if="caribarang !== ''"
           class="text-center bg-white bg-opacity-40 divide-y divide-gray-300">
           <tr class="text-sm" v-for="(hasilcari, index) in hasilcariserver" :key="index">
-            <td class="w-20">{{ $moment().format('YYYY-MM-DD') }}</td>
+            <td>{{index+1}}</td>
+            <td>{{ $moment().format('YYYY-MM-DD') }}</td>
             <td class="w-32">{{ hasilcari.merek }}</td>
             <td class="w-32">{{ hasilcari.model }}</td>
             <td class="w-20">{{ hasilcari.processor }}</td>
@@ -101,7 +99,7 @@
               <NuxtLink
                 :to="{
                   name: 'master-detail-detailserver-detailserver',
-                  params: { id: hasilcari.id },
+                  params: { id: hasilcari.id_server },
                 }"
               >
                 <font-awesome-icon
@@ -112,7 +110,7 @@
               <NuxtLink
                 :to="{
                   name: 'master-update-updateserver-server',
-                  params: { id: hasilcari.id },
+                  params: { id: hasilcari.id_server },
                 }"
               >
                 <font-awesome-icon
@@ -121,7 +119,7 @@
                 />
               </NuxtLink>
               <form
-                @click="deleteData(hasilcari.id)"
+                @click="deleteData(hasilcari.id_server)"
                 class="ml-2"
               >
                 <button type="submit">
@@ -137,7 +135,8 @@
 
         <tbody v-else class="text-center bg-white bg-opacity-40 divide-y divide-gray-300">
           <tr class="text-sm" v-for="(server, index) in servers" :key="index">
-            <td class="w-20">{{ $moment().format('YYYY-MM-DD') }}</td>
+            <td>{{index+1}}</td>
+            <td>{{ $moment().format('YYYY-MM-DD') }}</td>
             <td class="w-32">{{ server.merek }}</td>
             <td class="w-32">{{ server.model }}</td>
             <td class="w-20">{{ server.processor }}</td>
@@ -168,7 +167,7 @@
                   class="text-yellow-500"
                 />
               </NuxtLink>
-              <button @click="deleteData(server.id_server)">
+              <button @click.prevent="deleteData(server.id_server)">
                   <font-awesome-icon
                     :icon="['fas', 'trash']"
                     class="text-yellow-500"
@@ -211,25 +210,38 @@ export default {
           return this.$auth.user
         }
     },
+    async fetch(){
+        if(this.caribarang !== ""){
+            await this.caribarangserver()
+        return
+        }
+    },
     methods:{
-        // async deleteData(id){
-        //   const lokasi = this.$auth.user.lokasi
-        //     const resp = await axios.post(`http://localhost:3000/server/master/server/delete/${id}/${lokasi}`)
-        //     // this.$router.push('/master/server')
-        //     swal('data dihapus',{icon:'success'})
-        //     if(resp.data.errmsg){
-        //       swal('Error','gagal dihapus',{icon:'error'})
-        //       this.deletemsg = resp.data.errmsg
-        //     }
-        // },
         async deleteData(id){
-          const data = {
-            lokasi : this.$auth.user.lokasi,
-            id : id,
-          }
-          await this.$store.dispatch('masterbarang/deleteData',data)
+           let indexOfArrayItem = this.servers.findIndex(i => i.id_server === id)
 
+          const lokasi = this.$auth.user.lokasi
+            const resp = await axios.delete(`http://localhost:3000/server/master/server/delete/${id}/${lokasi}`)
+            if(resp) {
+              this.servers.splice(indexOfArrayItem, 1);
+              this.$router.push('/master/server')
+              swal('data dihapus',{icon:'success'})
+            }
+            
+            if(resp.data.errmsg){
+              swal('Error','gagal dihapus',{icon:'error'})
+              this.deletemsg = resp.data.errmsg
+            }
         },
+        // async deleteData(id){
+        //     const lokasi = this.$auth.user.lokasi
+        //     const id = id
+
+        //   const response = await axios.post(
+        //     `http://localhost:3000/server/master/server/delete/${lokasi}/${id}`
+        //   )
+
+        // },
         async caribarangserver(){
           this.cariserver = []
             const res = await axios.get(`http://localhost:3000/server/cariserver/${this.caribarang}/${this.$auth.user.lokasi}`)

@@ -116,9 +116,8 @@ module.exports.deleteMaintenance = async (req, res) => {
       if (data.affectedRows > 0) {
         res.json({ msg: 'data dihapus' })
       } else {
-        res.json({ msg: 'data tidak terhapus' })
+        res.json({ errmsg: 'data tidak terhapus' })
       }
-      res.redirect('/maintenance')
     } else if (lokasiServer == 'roto 2') {
       const data = await conn.query(
         `DELETE FROM maintenance_roto_2 WHERE id_maintenance=${id}`
@@ -126,9 +125,8 @@ module.exports.deleteMaintenance = async (req, res) => {
       if (data.affectedRows > 0) {
         res.json({ msg: 'data dihapus' })
       } else {
-        res.json({ msg: 'data tidak terhapus' })
+        res.json({ errmsg: 'data tidak terhapus' })
       }
-      res.redirect('/maintenance')
     } else if (lokasiServer == 'roto 3') {
       const data = await conn.query(
         `DELETE FROM maintenance_roto_3 WHERE id_maintenance=${id}`
@@ -136,9 +134,8 @@ module.exports.deleteMaintenance = async (req, res) => {
       if (data.affectedRows > 0) {
         res.json({ msg: 'data dihapus' })
       } else {
-        res.json({ msg: 'data tidak terhapus' })
+        res.json({ errmsg: 'data tidak terhapus' })
       }
-      res.redirect('/maintenance')
     } else if (lokasiServer == 'tinta') {
       const data = await conn.query(
         `DELETE FROM maintenance_tinta WHERE id_maintenance=${id}`
@@ -146,9 +143,8 @@ module.exports.deleteMaintenance = async (req, res) => {
       if (data.affectedRows > 0) {
         res.json({ msg: 'data dihapus' })
       } else {
-        res.json({ msg: 'data tidak terhapus' })
+        res.json({ errmsg: 'data tidak terhapus' })
       }
-      res.redirect('/maintenance')
     }
 
     conn.release()
@@ -162,29 +158,101 @@ module.exports.deleteMaintenance = async (req, res) => {
 module.exports.updateMaintenance = async (req, res) => {
   let conn
   try {
-    const id = req.body.id
-    const nama = req.body.nama
-    const tanggal = req.body.tanggal
-    const suhu = req.body.suhu
-    const kelembapan = req.body.kelembapan
-    const ac = req.body.ac
-    const ups = req.body.ups
-    const baterai = req.body.baterai
-    const network = req.body.network
-    const server = req.body.server
-    const keterangan = req.body.keterangan
+    const {
+      iduser,
+      lokasiServer,
+      idmaintenance,
+      nama,
+      tanggal,
+      suhu,
+      kelembapan,
+      ac,
+      ups,
+      baterai,
+      network,
+      server,
+      keterangan,
+    } = req.body
 
     conn = await pool.getConnection()
-    await conn.query(
-      `UPDATE maintenance SET nama_pemeriksa='${nama}',tanggal='${tanggal}',suhu='${suhu}',kelembapan='${kelembapan}',ac='${ac}',ups='${ups}',baterai='${baterai}',network='${network}',server='${server}',keterangan='${keterangan}' WHERE id_maintenance=${id}`
-    )
 
-    res.redirect('/maintenance')
+    if (lokasiServer == 'roto 1') {
+      const resp = await conn.query(
+        `UPDATE maintenance SET nama_pemeriksa='${nama}',tanggal='${tanggal}',suhu='${suhu}',kelembapan='${kelembapan}',ac='${ac}',ups='${ups}',baterai='${baterai}',network='${network}',server='${server}',keterangan='${keterangan}',id_users='${iduser}' WHERE id_maintenance=${idmaintenance}`
+      )
+      if (resp.affectedRows > 0) {
+        res.redirect('/maintenance')
+      } else {
+        res.json({ msg: 'data tidak diupdate' })
+      }
+    } else if (lokasiServer == 'roto 2') {
+      const resp = await conn.query(
+        `UPDATE maintenance_roto_2 SET nama_pemeriksa='${nama}',tanggal='${tanggal}',suhu='${suhu}',kelembapan='${kelembapan}',ac='${ac}',ups='${ups}',baterai='${baterai}',network='${network}',server='${server}',keterangan='${keterangan}',id_users='${iduser}' WHERE id_maintenance=${idmaintenance}`
+      )
+      if (resp.affectedRows > 0) {
+        res.redirect('/maintenance')
+      } else {
+        res.json({ msg: 'data tidak diupdate' })
+      }
+    } else if (lokasiServer == 'roto 3') {
+      const resp = await conn.query(
+        `UPDATE maintenance_roto_3 SET nama_pemeriksa='${nama}',tanggal='${tanggal}',suhu='${suhu}',kelembapan='${kelembapan}',ac='${ac}',ups='${ups}',baterai='${baterai}',network='${network}',server='${server}',keterangan='${keterangan}',id_users='${iduser}' WHERE id_maintenance=${idmaintenance}`
+      )
+      if (resp.affectedRows > 0) {
+        res.redirect('/maintenance')
+      } else {
+        res.json({ msg: 'data tidak diupdate' })
+      }
+    } else if (lokasiServer == 'tinta') {
+      const resp = await conn.query(
+        `UPDATE maintenance_tinta SET nama_pemeriksa='${nama}',tanggal='${tanggal}',suhu='${suhu}',kelembapan='${kelembapan}',ac='${ac}',ups='${ups}',baterai='${baterai}',network='${network}',server='${server}',keterangan='${keterangan}',id_users='${iduser}' WHERE id_maintenance=${idmaintenance}`
+      )
+      if (resp.affectedRows > 0) {
+        res.redirect('/maintenance')
+      } else {
+        res.json({ msg: 'data tidak diupdate' })
+      }
+    }
+
     conn.release()
   } catch (err) {
     console.log(err)
   } finally {
     if (conn) return conn.end()
+  }
+}
+
+module.exports.getdatamaintenanceupdate = async (req, res) => {
+  let conn
+  try {
+    const id = req.params.id
+    const lokasiServer = req.params.lokasi
+    conn = await pool.getConnection()
+
+    if (lokasiServer == 'roto 1') {
+      const resp = await conn.query(
+        `SELECT * FROM maintenance WHERE id_maintenance=${id}`
+      )
+      res.send(resp)
+    } else if (lokasiServer == 'roto 2') {
+      const resp = await conn.query(
+        `SELECT * FROM maintenance_roto_2 WHERE id_maintenance=${id}`
+      )
+      res.send(resp)
+    } else if (lokasiServer == 'roto 3') {
+      const resp = await conn.query(
+        `SELECT * FROM maintenance_roto_3 WHERE id_maintenance=${id}`
+      )
+      res.send(resp)
+    } else if (lokasiServer == 'tinta') {
+      const resp = await conn.query(
+        `SELECT * FROM maintenance_tinta WHERE id_maintenance=${id}`
+      )
+      res.send(resp)
+    }
+    conn.release()
+  } catch (err) {
+    console.log(err)
   }
 }
 
@@ -222,21 +290,6 @@ module.exports.carimaintenance = async (req, res) => {
     console.log(err)
   } finally {
     if (conn) return conn.end()
-  }
-}
-module.exports.getdatamaintenanceupdate = async (req, res) => {
-  let conn
-  try {
-    const id = req.params.id
-
-    conn = await pool.getConnection()
-    const resp = await conn.query(
-      `SELECT * FROM maintenance WHERE id_maintenance=${id}`
-    )
-    res.send(resp)
-    conn.release()
-  } catch (err) {
-    console.log(err)
   }
 }
 

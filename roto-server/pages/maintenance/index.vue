@@ -6,7 +6,7 @@
         <p class="text-center text-lg text-gray-700 font-semibold">Halaman maintenance</p>
         <div class="flex justify-between mt-8 ">
             <div class="flex">
-                <input type="text" placeholder="cari" name="cari" v-model.lazy="carimaintenance" class="rounded-l-lg w-52 p-2 focus:ring-blue-500 bg-gray-200" @keyup.enter="$fetch">
+                <input type="text" placeholder="cari" name="cari" v-model.lazy="carimaintenance" class="rounded-l-lg w-52 p-2 outline-none bg-gray-200" @keyup.enter="$fetch">
                 <button class="p-2 rounded-r-lg bg-gray-700 flex items-center justify-center w-12" @click="$fetch">
                     <font-awesome-icon :icon="['fas','search']" class="text-yellow-500"/>
                 </button>
@@ -30,9 +30,10 @@
         </div> -->
 
 
-        <table class="table space-y-6 container mx-auto table-auto border-collapse border border-white mt-7 divide-y divide-gray-300" ref="listitem" id="listitem">
+        <table class="table space-y-6 container mx-auto table-auto border-collapse mt-7 divide-y divide-gray-300" ref="listitem" id="listitem">
             <thead class="bg-white text-sm bg-gray-700">
                 <tr class="text-xs text-gray-200"> 
+                    <th class="font-semibold py-3 px-2 w-4">no.</th>
                     <th class="font-semibold py-3">nama</th>
                     <th class="font-semibold py-3 w-32">tanggal input</th>
                     <th class="font-semibold" >suhu</th>
@@ -44,6 +45,7 @@
             </thead>
             <tbody v-if="carimaintenance !== ''" class="text-center bg-white bg-opacity-40 divide-y divide-gray-300">
                 <tr class="text-sm" v-for="(hasilcari,index) in hasilcarimaintenance" :key="index">
+                    <td>{{index+1}}</td>
                     <td class="py-3">{{hasilcari.nama_pemeriksa}}</td>
                     <td>{{$moment(hasilcari.tanggal).format("DD-MM-YYYY")}}</td>
                     <td>{{hasilcari.suhu}}</td>
@@ -65,16 +67,15 @@
                         <NuxtLink :to="{name : 'maintenance-updatemaintenance-maintenance', params:{id : hasilcari.id_maintenance} }">
                             <font-awesome-icon :icon="['fas','pencil-alt']" class="text-yellow-500"/>
                         </NuxtLink>
-                        <form @click="deleteData(hasilcari.id_maintenance)" >
-                        <button type="submit">
+                        <button @click.prevent="deleteData(hasilcari.id_maintenance)">
                             <font-awesome-icon :icon="['fas','trash']" class="text-yellow-500"/>
                         </button> 
-                        </form>
                     </td>
                 </tr>
             </tbody> 
             <tbody v-else class="text-center bg-white bg-opacity-40 divide-y divide-gray-300">
                 <tr class="text-sm" v-for="(main,index) in hasilMaintenance" :key="index">
+                    <td>{{index+1}}</td>
                     <td class="py-3">{{main.nama_pemeriksa}}</td>
                     <td>{{$moment(main.tanggal).format("DD-MM-YYYY")}}</td>
                     <td>{{main.suhu}}</td>
@@ -96,11 +97,9 @@
                         <NuxtLink :to="{name : 'maintenance-updatemaintenance-maintenance', params:{id : main.id_maintenance} }">
                             <font-awesome-icon :icon="['fas','pencil-alt']" class="text-yellow-500"/>
                         </NuxtLink>
-                        <form @click="deleteData(main.id_maintenance)" >
-                        <button type="submit">
+                        <button @click.prevent="deleteData(main.id_maintenance)">
                             <font-awesome-icon :icon="['fas','trash']" class="text-yellow-500"/>
                         </button> 
-                        </form>
                     </td>
                 </tr>
             </tbody>   
@@ -132,16 +131,24 @@ export default {
     },
     methods:{
         async deleteData(id){
-            const resp = await axios.post(`/server/maintenance/delete/${id}`)
-            this.$router.push('/maintenance')
-            if(resp.data.msg){
-              this.deletemsg = resp.data.msg
+            let indexOfArrayItem = this.hasilMaintenance.findIndex(i => i.id_maintenance === id)
+
+            const lokasi = this.$auth.user.lokasi
+            const resp = await axios.delete(`/server/maintenance/delete/${id}/${lokasi}`)
+            if(resp){
+                this.hasilMaintenance.splice(indexOfArrayItem, 1);
+                this.$router.push('/maintenance')
+                swal('data dihapus',{icon:'success'})
+            }
+            if(resp.data.errmsg){
+                this.$router.push('/maintenance')
+                swal('Error', resp.data.errmsg,{icon:'error'})
             }
         },
         async caridimaintenance(){
             this.hasilcarimaintenance = []
-            const res = await axios.get(`http://localhost:3000/server/maintenance/carimaintenance/${this.carimaintenance}/${this.$auth.user.lokasi}/${this.$auth.user.id}`)
-            res.data.forEach(val =>{
+            const resp = await axios.get(`http://localhost:3000/server/maintenance/carimaintenance/${this.carimaintenance}/${this.$auth.user.lokasi}/${this.$auth.user.id}`)
+            resp.data.forEach(val =>{
                 this.hasilcarimaintenance.push(val)
             })
         },

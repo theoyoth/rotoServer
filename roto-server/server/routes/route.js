@@ -14,472 +14,33 @@ const router = express.Router()
 
 router.get('/masterserver/:lokasi/:id', readController.masterserver)
 
-router.post(
-  '/master/inputserver',
-  [
-    check('produk')
-      .isAlpha('en-US', { ignore: '^s$' })
-      .withMessage('produk harus berupa huruf'),
-    check('merek')
-      .isAlpha('en-US', { ignore: '^s$' })
-      .withMessage('merek harus berupa huruf'),
-    check('model')
-      .isAlphanumeric('en-US', { ignore: '^s$' })
-      .withMessage('model harus berupa angka dan huruf bukan simbol'),
-    check('processor')
-      .isAlphanumeric('en-US', { ignore: '^s$' })
-      .withMessage('processor harus berupa angka dan huruf bukan simbol'),
-    check('memori')
-      .isLength({ min: 1, max: 4 })
-      .withMessage('memori maksimal 4 digit')
-      .isNumeric()
-      .withMessage('memori harus berupa angka'),
-    check('internalStorage')
-      .isLength({ min: 1, max: 4 })
-      .withMessage('internal storage maksimal 4 digit')
-      .isNumeric()
-      .withMessage('internal storage harus berupa angka'),
-    check('networkController')
-      .isAlphanumeric('en-US', { ignore: '^s$' })
-      .withMessage('network controller harus berupa huruf'),
-    check('storage')
-      .isLength({ min: 1, max: 4 })
-      .withMessage('storage maksimal 4 digit')
-      .isNumeric()
-      .withMessage('storage harus berupa angka'),
-    check('sumberDayaListrik')
-      .isNumeric()
-      .withMessage('power supply harus berupa angka'),
-    check('tahun').isDate().notEmpty().withMessage('tahun tidak boleh kosong'),
-    check('garansi')
-      .isDate()
-      .notEmpty()
-      .withMessage('garansi tidak boleh kosong'),
-  ],
-  createdController.inputmasterserver
-)
+router.post('/master/inputserver', createdController.inputmasterserver)
 router.get('/masterrak/:lokasi/:id', readController.masterrak)
-router.post(
-  '/master/inputrak',
-  [
-    check('tipeRak')
-      .isAlpha('en-US', { ignore: '^s$' })
-      .withMessage('tipe rak berupa huruf dan angka bukan simbol')
-      .notEmpty()
-      .withMessage('tipe rak tidak boleh kosong'),
-    check('tipePintu')
-      .isAlphanumeric('en-US', { ignore: '^s$' })
-      .withMessage('tipe pintu berupa angka dan huruf bukan simbol')
-      .notEmpty()
-      .withMessage('tipe pintu tidak boleh kosong'),
-    check('namaProduk')
-      .isAlphanumeric('en-US', { ignore: '^s$' })
-      .withMessage('nama produk berupa huruf dan angka bukan simbol')
-      .notEmpty()
-      .withMessage('nama produk tidak boleh kosong'),
-    check('dimensi')
-      .isNumeric()
-      .withMessage('dimensi berupa angka')
-      .notEmpty()
-      .withMessage('dimensi tidak boleh kosong'),
-    check('tahun').notEmpty().withMessage('tahun harap di isi'),
-    check('berat')
-      .isNumeric()
-      .withMessage('berat berupa angka')
-      .notEmpty()
-      .withMessage('berat harap di isi'),
-  ],
-  createdController.inputmasterrak
-)
+router.post('/master/inputrak', createdController.inputmasterrak)
 router.get('/masterups/:lokasi/:id', readController.masterups)
-router.post(
-  '/master/inputups',
-  [
-    check('model')
-      .isAlphanumeric('en-US', { ignore: '^s$' })
-      .withMessage('model berupa angka dan huruf bukan simbol')
-      .notEmpty()
-      .withMessage('model tidak boleh kosong')
-      .escape(),
-    check('upsCriticalLoad')
-      .isNumeric()
-      .withMessage('ups critical load berupa angka')
-      .notEmpty()
-      .withMessage('ups critical load tidak boleh kosong')
-      .escape(),
-    check('upsCriticalCapacity')
-      .isNumeric()
-      .withMessage('ups critical capacity berupa angka')
-      .notEmpty()
-      .withMessage('ups critical capacity tidak boleh kosong')
-      .escape(),
-    check('upsCriticalTemperature')
-      .isNumeric()
-      .withMessage('ups critical temperature berupa angka')
-      .notEmpty()
-      .withMessage('ups critical temperature tidak boleh kosong')
-      .escape(),
-    check('upsCriticalCapacity')
-      .isNumeric()
-      .withMessage('ups critical capacity berupa angka')
-      .notEmpty()
-      .withMessage('ups critical capacity tidak boleh kosong')
-      .escape(),
-    check('peringkatTegangan')
-      .isNumeric()
-      .withMessage('peringkat tegangan berupa angka')
-      .notEmpty()
-      .withMessage('peringkat tegangan tidak boleh kosong')
-      .escape(),
-    check('peringkatFrekuensi')
-      .isNumeric()
-      .withMessage('peringkat frekuensi berupa angka')
-      .notEmpty()
-      .withMessage('peringkat frekuensi tidak boleh kosong')
-      .escape(),
-    check('peringkatTeganganBaterai')
-      .isNumeric()
-      .withMessage('peringkat tegangan baterai berupa angka')
-      .notEmpty()
-      .withMessage('peringkat tegangan baterai tidak boleh kosong')
-      .escape(),
-    check('manufaktur')
-      .isAlpha('en-US', { ignore: '^s$' })
-      .withMessage('manufaktur berupa huruf')
-      .notEmpty()
-      .withMessage('manufaktur tidak boleh kosong')
-      .escape(),
-    check('nomorSerial')
-      .isAlphanumeric('en-US', { ignore: '^s$' })
-      .withMessage('nomor serial berupa angka dan huruf')
-      .notEmpty()
-      .withMessage('nomor serial tidak boleh kosong')
-      .escape(),
-    check('namaSistem')
-      .isAlpha('en-US', { ignore: '^s$' })
-      .withMessage('nama sistem berupa huruf')
-      .notEmpty()
-      .withMessage('nama sistem tidak boleh kosong')
-      .escape(),
-    check('tahun').notEmpty().withMessage('tahun harap di isi').escape(),
-    check('garansi')
-      .notEmpty()
-      .withMessage('tahun garansi harap di isi')
-      .escape(),
-  ],
-  createdController.inputmasterups
-)
+router.post('/master/inputups', createdController.inputmasterups)
 router.get('/masterbaterai/:lokasi/:id', readController.masterbaterai)
-router.post(
-  '/master/inputbaterai',
-  [
-    check('accu')
-      .isNumeric()
-      .withMessage('accu berupa angka')
-      .notEmpty()
-      .withMessage('accu tidak boleh kosong')
-      .escape(),
-    check('kuantitas')
-      .isNumeric()
-      .withMessage('kuantitas berupa angka')
-      .notEmpty()
-      .withMessage('kuantitas tidak boleh kosong')
-      .escape(),
-    check('tegangan')
-      .isNumeric()
-      .withMessage('tegangan berupa angka')
-      .notEmpty()
-      .withMessage('tegangan tidak boleh kosong')
-      .escape(),
-    check('tahun').notEmpty().withMessage('tahun harap di isi').escape(),
-    check('garansi')
-      .notEmpty()
-      .withMessage('tahun garansi harap di isi')
-      .escape(),
-  ],
-  createdController.inputmasterbaterai
-)
+router.post('/master/inputbaterai', createdController.inputmasterbaterai)
 router.get('/masterac', readController.masterac)
-router.post(
-  '/master/inputac',
-  [
-    check('merek')
-      .isAlpha('en-US', { ignore: '^s$' })
-      .withMessage('merek berupa huruf')
-      .notEmpty()
-      .withMessage('merek tidak boleh kosong'),
-    check('model')
-      .isAlphanumeric('en-US', { ignore: '^s$' })
-      .withMessage('model berupa angka dan huruf bukan simbol')
-      .notEmpty()
-      .withMessage('model tidak boleh kosong'),
-    check('sumberDayaListrik')
-      .isNumeric()
-      .withMessage('sumber daya listrik berupa angka')
-      .notEmpty()
-      .withMessage('sumber daya listrik tidak boleh kosong'),
-    check('dimensi')
-      .isNumeric()
-      .withMessage('dimensi berupa angka')
-      .notEmpty()
-      .withMessage('dimensi tidak boleh kosong'),
-    check('konsumsiDaya')
-      .isNumeric()
-      .withMessage('konsumsi daya berupa angka')
-      .notEmpty()
-      .withMessage('konsumsi daya tidak boleh kosong'),
-    check('kapasitasPendingin')
-      .isNumeric()
-      .withMessage('kapasitas pendingin berupa angka')
-      .notEmpty()
-      .withMessage('kapasitas pendingin tidak boleh kosong'),
-    check('tahun').notEmpty().withMessage('tahun harap di isi'),
-    check('garansi').notEmpty().withMessage('garansi harap di isi'),
-  ],
-  createdController.inputmasterac
-)
+router.post('/master/inputac', createdController.inputmasterac)
 router.get('/mastercctv', readController.mastercctv)
 
-router.post(
-  '/master/inputcctv',
-  [
-    check('merek')
-      .isAlphanumeric('en-US', { ignore: '^s$' })
-      .withMessage('merek harus berupa huruf dan angka bukan simbol')
-      .notEmpty()
-      .withMessage('merek harap di isi')
-      .escape(),
-    check('model')
-      .isAlphanumeric('en-US', { ignore: '^s$' })
-      .withMessage('model masukan huruf dan angka jangan simbol')
-      .notEmpty()
-      .withMessage('model harap di isi')
-      .escape(),
-  ],
-  createdController.inputmastercctv
-)
+router.post('/master/inputcctv', createdController.inputmastercctv)
 
 router.get('/masternetwork', readController.masternetwork)
-router.post(
-  '/master/inputnetwork',
-  [
-    check('merek')
-      .isAlpha('en-US', { ignore: '^s$' })
-      .withMessage('merek berupa huruf')
-      .notEmpty()
-      .withMessage('merek tidak boleh kosong')
-      .escape(),
-    check('model')
-      .isAlphanumeric('en-US', { ignore: '^s$' })
-      .withMessage('model berupa angka dan huruf bukan simbol')
-      .notEmpty()
-      .withMessage('model tidak boleh kosong')
-      .escape(),
-    check('tipe')
-      .isAlphanumeric('en-US', { ignore: '^s$' })
-      .withMessage('tipe berupa huruf dan angka bukan simbol')
-      .notEmpty()
-      .withMessage('tipe tidak boleh kosong')
-      .escape(),
-    check('kuantitas')
-      .isNumeric()
-      .withMessage('kuantitas berupa angka')
-      .notEmpty()
-      .withMessage('kuantitas tidak boleh kosong')
-      .escape(),
-    check('kanal')
-      .isNumeric()
-      .withMessage('kanal di isi dengan angka')
-      .notEmpty()
-      .withMessage('kanal tidak boleh kosong')
-      .escape(),
-    check('tahun').notEmpty().withMessage('tahun harap di isi'),
-    check('garansi').notEmpty().withMessage('garansi harap di isi'),
-  ],
-  createdController.inputmasternetwork
-)
+router.post('/master/inputnetwork', createdController.inputmasternetwork)
 router.get('/masterapar', readController.masterapar)
-router.post(
-  '/master/inputapar',
-  [
-    check('merek')
-      .isAlpha('en-US', { ignore: '^s$' })
-      .withMessage('merek berupa huruf')
-      .notEmpty()
-      .withMessage('merek tidak boleh kosong'),
-    check('model')
-      .isAlphanumeric('en-US', { ignore: '^s$' })
-      .withMessage('model berupa angka dan huruf bukan simbol')
-      .notEmpty()
-      .withMessage('model tidak boleh kosong'),
-    check('tipe')
-      .isAlphanumeric('en-US', { ignore: '^s$' })
-      .withMessage('tipe berupa huruf dan angka bukan simbol')
-      .notEmpty()
-      .withMessage('tipe tidak boleh kosong'),
-    check('tahun').notEmpty().withMessage('tahun harap di isi'),
-    check('garansi').notEmpty().withMessage('garansi harap di isi'),
-  ],
-  createdController.inputmasterapar
-)
+router.post('/master/inputapar', createdController.inputmasterapar)
 router.get('/mastermonitor', readController.mastermonitor)
-router.post(
-  '/master/inputmonitor',
-  [
-    check('merek')
-      .isAlphanumeric('en-US', { ignore: '^s$' })
-      .withMessage('merek berupa huruf')
-      .notEmpty()
-      .withMessage('merek tidak boleh kosong')
-      .escape(),
-    check('model')
-      .isAlphanumeric('en-US', { ignore: '^s$' })
-      .withMessage('model berupa angka dan huruf bukan simbol')
-      .notEmpty()
-      .withMessage('model tidak boleh kosong')
-      .escape(),
-    check('tipe')
-      .isAlphanumeric('en-US', { ignore: '^s$' })
-      .withMessage('tipe berupa huruf dan angka bukan simbol')
-      .notEmpty()
-      .withMessage('tipe tidak boleh kosong')
-      .escape(),
-    check('tahun').notEmpty().withMessage('tahun harap di isi').escape(),
-    check('garansi').notEmpty().withMessage('garansi harap di isi').escape(),
-  ],
-  createdController.inputmastermonitor
-)
+router.post('/master/inputmonitor', createdController.inputmastermonitor)
 router.get('/masterkeyboard', readController.masterkeyboard)
-router.post(
-  '/master/inputkeyboard',
-  [
-    check('merek')
-      .isAlpha('en-US', { ignore: '^s$' })
-      .withMessage('merek berupa huruf')
-      .notEmpty()
-      .withMessage('merek tidak boleh kosong'),
-    check('model')
-      .isAlphanumeric('en-US', { ignore: '^s$' })
-      .withMessage('model berupa angka dan huruf bukan simbol')
-      .notEmpty()
-      .withMessage('model tidak boleh kosong'),
-    check('tipe')
-      .isAlphanumeric('en-US', { ignore: '^s$' })
-      .withMessage('tipe berupa huruf dan angka bukan simbol')
-      .notEmpty()
-      .withMessage('tipe tidak boleh kosong'),
-    check('tahun').notEmpty().withMessage('tahun harap di isi'),
-    check('garansi').notEmpty().withMessage('garansi harap di isi'),
-  ],
-  createdController.inputmasterkeyboard
-)
+router.post('/master/inputkeyboard', createdController.inputmasterkeyboard)
 router.get('/mastermouse', readController.mastermouse)
-router.post(
-  '/master/inputmouse',
-  [
-    check('merek')
-      .isAlphanumeric('en-US', { ignore: '^s$' })
-      .withMessage('merek berupa huruf')
-      .notEmpty()
-      .withMessage('merek tidak boleh kosong')
-      .escape(),
-    check('model')
-      .isAlphanumeric('en-US', { ignore: '^s$' })
-      .withMessage('model berupa angka dan huruf bukan simbol')
-      .notEmpty()
-      .withMessage('model tidak boleh kosong')
-      .escape(),
-    check('tipe')
-      .isAlphanumeric('en-US', { ignore: '^s$' })
-      .withMessage('tipe berupa huruf dan angka bukan simbol')
-      .notEmpty()
-      .withMessage('tipe tidak boleh kosong')
-      .escape(),
-    check('tahun').notEmpty().withMessage('tahun harap di isi').escape(),
-    check('garansi').notEmpty().withMessage('garansi harap di isi').escape(),
-  ],
-  createdController.inputmastermouse
-)
+router.post('/master/inputmouse', createdController.inputmastermouse)
 router.get('/masternas', readController.masternas)
-router.post(
-  '/master/inputnas',
-  [
-    check('merek')
-      .isAlpha('en-US', { ignore: '^s$' })
-      .withMessage('merek berupa huruf')
-      .notEmpty()
-      .withMessage('merek tidak boleh kosong')
-      .trim(),
-    check('model')
-      .isAlphanumeric('en-US', { ignore: '^s$' })
-      .withMessage('model berupa angka dan huruf bukan simbol')
-      .notEmpty()
-      .withMessage('model tidak boleh kosong')
-      .trim(),
-    check('processor')
-      .isAlphanumeric('en-US', { ignore: '^s$' })
-      .withMessage('processor berupa angka dan huruf bukan simbol')
-      .notEmpty()
-      .withMessage('processor tidak boleh kosong')
-      .trim()
-      .escape(),
-    check('storage')
-      .isNumeric()
-      .withMessage('storage berupa angka')
-      .notEmpty()
-      .withMessage('storage tidak boleh kosong')
-      .trim()
-      .escape(),
-    check('tipe')
-      .isAlphanumeric('en-US', { ignore: '^s$' })
-      .withMessage('tipe berupa huruf dan angka bukan simbol')
-      .notEmpty()
-      .withMessage('tipe tidak boleh kosong')
-      .trim(),
-    check('cpu')
-      .isAlphanumeric('en-US', { ignore: '^s$' })
-      .withMessage('cpu berupa huruf dan angka bukan simbol')
-      .notEmpty()
-      .withMessage('cpu tidak boleh kosong')
-      .trim(),
-    check('raid')
-      .isAlphanumeric('en-US', { ignore: '^s$' })
-      .withMessage('raid berupa huruf dan angka bukan simbol')
-      .notEmpty()
-      .withMessage('raid tidak boleh kosong')
-      .trim(),
-    check('tahun').notEmpty().withMessage('tahun harap di isi'),
-    check('garansi').notEmpty().withMessage('garansi harap di isi'),
-  ],
-  createdController.inputmasternas
-)
+router.post('/master/inputnas', createdController.inputmasternas)
 router.get('/mastergenset', readController.mastergenset)
-router.post(
-  '/master/inputgenset',
-  [
-    check('merek')
-      .isAlphanumeric('en-US', { ignore: '^s$' })
-      .withMessage('merek berupa huruf')
-      .notEmpty()
-      .withMessage('merek tidak boleh kosong')
-      .escape(),
-    check('model')
-      .isAlphanumeric('en-US', { ignore: '^s$' })
-      .withMessage('model berupa angka dan huruf bukan simbol')
-      .notEmpty()
-      .withMessage('model tidak boleh kosong')
-      .escape(),
-    check('tipe')
-      .isAlphanumeric('en-US', { ignore: '^s$' })
-      .withMessage('tipe berupa huruf dan angka bukan simbol')
-      .notEmpty()
-      .withMessage('tipe tidak boleh kosong')
-      .escape(),
-    check('tahun').notEmpty().withMessage('tahun harap di isi').escape(),
-    check('garansi').notEmpty().withMessage('garansi harap di isi').escape(),
-  ],
-  createdController.inputmastergenset
-)
+router.post('/master/inputgenset', createdController.inputmastergenset)
 // detail master server =======================
 router.get(
   '/master/server/detail/:lokasi/:id',
@@ -491,22 +52,43 @@ router.get('/master/ac/detail/:lokasi/:id', readController.detailmasterac)
 
 // delete master ========================================
 router.delete(
-  '/master/server/delete/:lokasi/:id',
+  '/master/server/delete/:id/:lokasi',
   deleteController.deletemasterserver
 )
-router.post('/master/deleterak/:id', deleteController.deletemasterrak)
-router.post('/master/deleteups/:id', deleteController.deletemasterups)
-router.post('/master/deletebaterai/:id', deleteController.deletemasterbaterai)
-router.post('/master/deleteac/:id', deleteController.deletemasterac)
-router.post('/master/deletecctv/:id', deleteController.deletemastercctv)
-router.post('/master/deletenetwork/:id', deleteController.deletemasternetwork)
-router.post('/master/deleteapar/:id', deleteController.deletemasterapar)
-router.post('/master/deletemonitor/:id', deleteController.deletemastermonitor)
-router.post('/master/deletekeyboard/:id', deleteController.deletemasterkeyboard)
-router.post('/master/deletemouse/:id', deleteController.deletemastermouse)
-router.post('/master/deletenas/:id', deleteController.deletemasternas)
-router.post(
-  '/master/deletegenset/:lokasi/:id',
+router.delete('/master/deleterak/:id/:lokasi', deleteController.deletemasterrak)
+router.delete('/master/deleteups/:id/:lokasi', deleteController.deletemasterups)
+router.delete(
+  '/master/deletebaterai/:id/:lokasi',
+  deleteController.deletemasterbaterai
+)
+router.delete('/master/deleteac/:id/:lokasi', deleteController.deletemasterac)
+router.delete(
+  '/master/deletecctv/:id/:lokasi',
+  deleteController.deletemastercctv
+)
+router.delete(
+  '/master/deletenetwork/:id/:lokasi',
+  deleteController.deletemasternetwork
+)
+router.delete(
+  '/master/deleteapar/:id/:lokasi',
+  deleteController.deletemasterapar
+)
+router.delete(
+  '/master/deletemonitor/:id/:lokasi',
+  deleteController.deletemastermonitor
+)
+router.delete(
+  '/master/deletekeyboard/:id/:lokasi',
+  deleteController.deletemasterkeyboard
+)
+router.delete(
+  '/master/deletemouse/:id/:lokasi',
+  deleteController.deletemastermouse
+)
+router.delete('/master/deletenas/:id/:lokasi', deleteController.deletemasternas)
+router.delete(
+  '/master/deletegenset/:lokasi/:id/:lokasi',
   isAuthent,
   deleteController.deletemastergenset
 )
@@ -642,13 +224,16 @@ router.get(
   '/inputmaintenance/:lokasi/:id',
   maintenanceController.getAllMaintenance
 )
-router.post('/maintenance/delete/:id', maintenanceController.deleteMaintenance)
+router.delete(
+  '/maintenance/delete/:id/:lokasi',
+  maintenanceController.deleteMaintenance
+)
 router.get(
   '/maintenance/carimaintenance/:value/:lokasi/:id',
   maintenanceController.carimaintenance
 )
 router.get(
-  '/maintenance/getdatamaintenanceupdate/:id',
+  '/maintenance/getdatamaintenanceupdate/:id/:lokasi',
   maintenanceController.getdatamaintenanceupdate
 )
 router.post(

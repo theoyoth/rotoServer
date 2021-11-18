@@ -1,12 +1,12 @@
 <template>
-<div class="min-h-screen bg-gray-200 w-widthContent ml-auto">
+<div class="min-h-screen bg-gray-300 w-widthContent ml-auto">
     <!-- <HeaderListItem :ac="master.nama"/> -->
     <Navbar/>
-    <section class="bg-white min-h-screen w-widthContentField m-auto mt-7 p-4">
+    <section class="bg-gray-100 min-h-screen w-widthContentField m-auto mt-7 p-4">
         <p class="text-center text-lg text-gray-700 font-semibold">Halaman master AC</p>
         <div class="flex justify-between mt-8">
             <div class="flex">
-                <input type="text" placeholder="cari" name="cari" v-model.lazy="caribarang" @keyup.enter="$fetch" class="rounded-l-lg p-2 outline-none bg-gray-200">
+                <input type="text" placeholder="cari" name="cari" v-model.lazy="caribarang" @keyup.enter="$fetch" class="rounded-l-lg p-2 outline-none w-52 bg-gray-200">
                 <button class="p-2 rounded-r-lg bg-gray-700 flex items-center justify-center w-12" @click="$fetch">
                     <font-awesome-icon :icon="['fas','search']" class="text-yellow-500"/>
                 </button>
@@ -65,11 +65,9 @@
                         <NuxtLink :to="{name : 'master-update-updateac-ac', params:{id : hasilcari.id_ac} }">
                             <font-awesome-icon :icon="['fas','pencil-alt']" class="text-yellow-500"/>
                         </NuxtLink>
-                        <form @click="deleteData(hasilcari.id)">
-                        <button type="submit">
+                        <button @click.prevent="deleteData(hasilcari.id_ac)">
                             <font-awesome-icon :icon="['fas','trash']" class="text-yellow-500"/>
                         </button> 
-                        </form>
                     </td>
                 </tr>
             </tbody>
@@ -95,11 +93,9 @@
                         <NuxtLink :to="{name : 'master-update-updateac-ac', params:{id : ac.id_ac} }">
                             <font-awesome-icon :icon="['fas','pencil-alt']" class="text-yellow-500"/>
                         </NuxtLink>
-                        <form @click="deleteData(ac.id)">
-                        <button type="submit">
+                        <button @click.prevent="deleteData(ac.id_ac)">
                             <font-awesome-icon :icon="['fas','trash']" class="text-yellow-500"/>
                         </button> 
-                        </form>
                     </td>
                 </tr>
             </tbody>
@@ -130,11 +126,17 @@ export default {
         }
     },
     methods:{
-    async deleteData(id,nama){
-        const resp = await axios.post(`/server/master/deleteac/${id}`)
-        this.$router.push('/master/baterai')
-        if(resp.data.msg){
-            this.deletemsg = resp.data.msg
+    async deleteData(id){
+        const lokasi = this.$auth.user.lokasi
+        const resp = await axios.delete(`/server/master/deleteac/${id}/${lokasi}`)
+        if(resp){
+            this.acs.splice(this.acs.indexOf(id), 1);
+            this.$router.push('/master/ac')
+            swal('data dihapus',{icon:'success'})
+        }
+        if(resp.data.errmsg){
+            this.$router.push('/master/ac')
+            swal("error", resp.data.errmsg,{icon:'error'})
         }
     },
     async caribarangac(){

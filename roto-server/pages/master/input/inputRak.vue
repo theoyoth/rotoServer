@@ -19,51 +19,85 @@
         </div>
     </div>
 
-    <form class="mt-8 min-w-min" @submit.prevent="postInputRak">
+    <ValidationObserver v-slot={invalid,valid}>
+    <form class="mt-10 min-w-min" @submit.prevent="postInputRak">
         <div>
             <div class="grid grid-cols-2">
                 <div class="mb-4 has-tooltip">
                      <span class="tooltip text-xs rounded shadow-lg p-1 bg-gray-700 text-white ml-32">masukan tipe rak</span>
 
                     <label for="tipeRak" class="block mb-2 text-sm">tipe rak</label>
-                    <input type="text" v-model="inputRak.tipeRak" name="tipeRak" id="tipeRak" class="p-2 w-72 rounded-lg focus:ring-blue-500 bg-gray-200">
+                    <div class="flex flex-col w-72">
+                        <ValidationProvider rules="required|alpha_spaces" v-slot={errors}>
+                            <input type="text" v-model="inputRak.tipeRak" name="tipeRak" id="tipeRak" class="p-2 w-full rounded-lg outline-none bg-gray-200">
+                            <p class="text-xs mt-1 text-right text-red-500">{{ errors[0] }}</p>
+                        </ValidationProvider>
+                    </div>
                 </div>
-                <div class="mb-4 has-tooltip">
+                <div class="mb-4 has-tooltip" :class="[inputRak.tipeRak !== '' ? 'incop' : 'decop']">
                      <span class="tooltip text-xs rounded shadow-lg p-1 bg-gray-700 text-white ml-32">masukan tipe pintu</span>
 
                     <label for="tipePintu" class="block mb-2 text-sm">tipe pintu</label>
-                    <input type="text" v-model="inputRak.tipePintu" name="tipePintu" id="tipePintu" class="p-2 w-72 rounded-lg focus:ring-blue-500 bg-gray-200">
+
+                    <div class="flex flex-col w-72">
+                        <ValidationProvider rules="required|alpha_spaces" v-slot={errors}>
+                            <input type="text" v-model="inputRak.tipePintu" name="tipePintu" id="tipePintu" class="p-2 w-full rounded-lg outline-none  bg-gray-200" :disabled="inputRak.tipeRak === ''">
+                            <p class="text-xs mt-1 text-right text-red-500">{{ errors[0] }}</p>
+                        </ValidationProvider>
+                    </div>
+
                 </div>
-                <div class="mb-4 has-tooltip">
+                <div class="mb-4 has-tooltip" :class="[inputRak.tipePintu !== '' ? 'incop' : 'decop']">
                      <span class="tooltip text-xs rounded shadow-lg p-1 bg-gray-700 text-white ml-32">masukan nama produk</span>
 
                     <label for="namaProduk" class="block mb-2 text-sm">nama produk</label>
-                    <input type="text" v-model="inputRak.namaProduk" name="namaProduk" id="namaProduk" class="p-2 w-72 rounded-lg focus:ring-blue-500 bg-gray-200">
+
+                    <div class="flex flex-col w-72">
+                        <ValidationProvider rules="required|alpha_dash" v-slot={errors}>
+                            <input type="text" v-model="inputRak.namaProduk" name="namaProduk" id="namaProduk" class="p-2 w-full rounded-lg outline-none bg-gray-200" :disabled="inputRak.tipePintu === ''">
+                            <p class="text-xs mt-1 text-right text-red-500">{{ errors[0] }}</p>
+                        </ValidationProvider>
+                    </div>
                 </div>
-                <div class="mb-4 has-tooltip">
+                <div class="mb-4 has-tooltip" :class="[inputRak.namaProduk !== '' ? 'incop' : 'decop']">
                      <span class="tooltip text-xs rounded shadow-lg p-1 bg-gray-700 text-white ml-32">masukan ukuran rak</span>
 
                     <label for="dimensi" class="block mb-2 text-sm">dimensi</label>
-                    <input type="text" v-model="inputRak.dimensi" name="dimensi" id="dimensi" class="p-2 w-72 rounded-lg focus:ring-blue-500 bg-gray-200">
+                    <div class="flex flex-col w-72">
+                    <ValidationProvider rules="required|numeric" v-slot={errors}>
+                        <input type="text" v-model="inputRak.dimensi" name="dimensi" id="dimensi" class="p-2 w-full rounded-lg outline-none bg-gray-200" :disabled="inputRak.namaProduk === ''">
+                        <p class="text-xs mt-1 text-right text-red-500">{{ errors[0] }}</p>
+                    </ValidationProvider>
+                    </div>
                 </div>
-                <div class="mb-4 has-tooltip relative">
+                <div class="mb-4 has-tooltip relative" :class="[inputRak.dimensi !== '' ? 'incop' : 'decop']">
                      <span class="tooltip text-xs rounded shadow-lg p-1 bg-gray-700 text-white ml-32">masukan berat rak</span>
 
                     <label for="berat" class="block mb-2 text-sm">berat (dalam KG)</label>
-                    <input type="text" v-model="inputRak.berat" name="berat" id="berat" class="p-2 w-72 rounded-lg focus:ring-blue-500 bg-gray-200">
-                    <!-- <input type="text" value="KG" readonly="readonly" class="absolute w-14 right-28 text-center bottom-1 p-1 rounded"> -->
+                    <div class="flex flex-col w-72">
+                    <ValidationProvider rules="required|numeric" v-slot={errors}>
+                        <input type="text" v-model="inputRak.berat" name="berat" id="berat" class="p-2 w-full rounded-lg outline-none bg-gray-200" :disabled="inputRak.dimensi === ''">
+                        <p class="text-xs mt-1 text-right text-red-500">{{ errors[0] }}</p>
+                    </ValidationProvider>
+                    </div>
+                    
                 </div>
-                <div class="mb-4 has-tooltip">
+                <div class="mb-4 has-tooltip" :class="[inputRak.berat !== '' ? 'incop' : 'decop']">
                      <span class="tooltip text-xs rounded shadow-lg p-1 bg-gray-700 text-white ml-32">masukan tahun masuk</span>
 
                     <label for="tahun" class="block mb-2 text-sm">tahun</label>
-                    <input type="date" v-model="inputRak.tahun" name="tahun" id="tahun" class="p-2 w-72 rounded-lg focus:ring-blue-500 bg-gray-200">
+                    <div class="flex flex-col w-72">
+                        <ValidationProvider rules="required" v-slot={errors}>
+                            <input type="date" v-model="inputRak.tahun" name="tahun" id="tahun" class="p-2 w-full rounded-lg outline-none bg-gray-200" >
+                            <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
+                        </ValidationProvider>
+                    </div>
                 </div>
-                
             </div>
         </div>
-        <button class="bg-gray-700 text-gray-200 rounded-lg w-28 h-10 mt-8" type="submit">kirim</button>
+        <button class="mt-10 opacity-10 bg-gray-700 text-gray-200 w-24 py-2 rounded cursor-default" type="submit" :class="{activesubmit : valid}" :disabled="invalid">kirim</button>
     </form>
+    </ValidationObserver>
 </section>
 </div>
 </template>
@@ -71,7 +105,15 @@
 <script>
 import axios from 'axios'
 import moment from 'moment'
+import { ValidationObserver, ValidationProvider } from "vee-validate";
+
+
 export default {
+    middleware:"isAuthenticated",
+    components:{
+        ValidationObserver,
+        ValidationProvider
+    },
     data(){
         return{
             inputRak : {
@@ -115,5 +157,21 @@ export default {
 </script>
 
 <style>
-
+.incop{
+    opacity:1,
+}
+.decop{
+    opacity: 0.1;
+}
+.activesubmit {
+    background-color: rgb(39, 39, 39);
+    color:whitesmoke;
+    width:6rem;
+    cursor:pointer;
+    opacity:1;
+    padding-top: .5rem;
+    padding-bottom: .5rem;
+    transition: all 0.5s;
+    transform:translateY(-2px);
+}
 </style>

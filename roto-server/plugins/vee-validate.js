@@ -22,7 +22,7 @@ extend('numeric', {
 
 extend('alpha_spaces', {
   ...alpha_spaces,
-  message: 'isikan angka dan huruf',
+  message: 'isikan huruf dan spasi',
 })
 
 extend('alpha_dash', {

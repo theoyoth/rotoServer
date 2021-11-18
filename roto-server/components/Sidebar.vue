@@ -145,7 +145,7 @@
               />
             </div>
           </li>
-          <li class="items-center">
+          <li class="items-center" v-if="!isSecurity">
             <div
               class="
                 flex
@@ -386,7 +386,7 @@
               />
             </div>
           </li>
-          <li class="items-center" v-if="user.level == 'PA'">
+          <li class="items-center" v-if="isPa">
             <div
               class="
                 flex
@@ -451,6 +451,24 @@ export default {
   computed: {
     user() {
       return this.$auth.user
+    },
+    isEdp() {
+      return this.$store.getters.isEdp
+    },
+    isPa() {
+      return this.$store.getters.isPa
+    },
+    isSecurity() {
+      return this.$store.getters.isSecurity
+    },
+    isadminTeknisi() {
+      return this.$store.getters.isadminTeknisi
+    },
+    isTeknisilistrik() {
+      return this.$store.getters.isTeknisilistrik
+    },
+    isTeknisiac() {
+      return this.$store.getters.isTeknisiac
     },
   },
 }

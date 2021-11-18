@@ -18,6 +18,7 @@
         </div>
     </div>
 
+    <ValidationObserver v-slot={invalid,valid}>
     <form class="mt-8 min-w-min" @submit.prevent="postInputBaterai">
         <div >
             <div class="grid grid-cols-2 grid-rows-4">
@@ -25,38 +26,64 @@
                      <span class="tooltip text-xs rounded shadow-lg p-1 bg-gray-700 text-white ml-32">masukan accu baterai</span>
 
                     <label for="accu" class="block mb-2 text-sm">accu</label>
-                    <input type="text" v-model="inputBaterai.accu" name="accu" id="accu" class="p-2 w-72 rounded-lg focus:ring-blue-500 bg-gray-200">
+                    <div class="flex flex-col w-72">
+                        <ValidationProvider rules="required|numeric" v-slot={errors}>
+                            <input type="text" v-model="inputBaterai.accu" name="accu" id="accu" class="p-2 w-full rounded-lg outline-none bg-gray-200">
+                            <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
+                        </ValidationProvider>
+                    </div>
                 </div>
-                <div class="mb-4 has-tooltip">
+                <div class="mb-4 has-tooltip" :class="[inputBaterai.accu !== '' ? 'incop' : 'decop']">
                      <span class="tooltip text-xs rounded shadow-lg p-1 bg-gray-700 text-white ml-32">masukan jumlah baterai yang di input</span>
 
                     <label for="kuantitas" class="block mb-2 text-sm">kuantitas</label>
-                    <input type="text" v-model="inputBaterai.kuantitas" name="kuantitas" id="kuantitas" class="p-2 w-72 rounded-lg focus:ring-blue-500 bg-gray-200">
+                    <div class="flex flex-col w-72">
+                        <ValidationProvider rules="required|numeric" v-slot={errors}>
+                            <input type="text" v-model="inputBaterai.kuantitas" name="kuantitas" id="kuantitas" class="p-2 w-full rounded-lg outline-none bg-gray-200" :disabled="inputBaterai.accu === ''">
+                            <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
+                        </ValidationProvider>
+                    </div>
                 </div>
-                <div class="mb-4 has-tooltip">
+                <div class="mb-4 has-tooltip" :class="[inputBaterai.kuantitas !== '' ? 'incop' : 'decop']">
                      <span class="tooltip text-xs rounded shadow-lg p-1 bg-gray-700 text-white ml-32">masukan tegangan baterai</span>
 
                     <label for="tegangan" class="block mb-2 text-sm">tegangan</label>
-                    <input type="text" v-model="inputBaterai.tegangan" name="tegangan" id="tegangan" class="p-2 w-72 rounded-lg focus:ring-blue-500 bg-gray-200">
+                    <div class="flex flex-col w-72">
+                        <ValidationProvider rules="required|numeric" v-slot={errors}>
+                            <input type="text" v-model="inputBaterai.tegangan" name="tegangan" id="tegangan" class="p-2 w-full rounded-lg outline-none bg-gray-200" :disabled="inputBaterai.kuantitas === ''">
+                            <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
+                        </ValidationProvider>
+                    </div>
                 </div>
 
-                <div class="mb-4 has-tooltip">
+                <div class="mb-4 has-tooltip" :class="[inputBaterai.tegangan !== '' ? 'incop' : 'decop']">
                      <span class="tooltip text-xs rounded shadow-lg p-1 bg-gray-700 text-white ml-32">masukan tahun masuk barang</span>
 
                     <label for="tahun" class="block mb-2 text-sm">tahun</label>
-                    <input type="date" v-model="inputBaterai.tahun" name="tahun" id="tahun" class="p-2 w-72 rounded-lg focus:ring-blue-500 bg-gray-200">
+                    <div class="flex flex-col w-72">
+                        <ValidationProvider rules="required" v-slot={errors}>
+                            <input type="date" v-model="inputBaterai.tahun" name="tahun" id="tahun" class="p-2 w-full rounded-lg outline-none bg-gray-200" :disabled="inputBaterai.tegangan === ''">
+                            <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
+                        </ValidationProvider>
+                    </div>
                 </div>
-                <div class="mb-4 has-tooltip">
+                <div class="mb-4 has-tooltip" :class="[inputBaterai.tegangan !== '' ? 'incop' : 'decop']">
                      <span class="tooltip text-xs rounded shadow-lg p-1 bg-gray-700 text-white ml-32">masukan batas garansi</span>
 
                     <label for="garansi" class="block mb-2 text-sm">garansi</label>
-                    <input type="date" v-model="inputBaterai.garansi" name="garansi" id="garansi" class="p-2 w-72 rounded-lg focus:ring-blue-500 bg-gray-200">
+                    <div class="flex flex-col w-72">
+                        <ValidationProvider rules="required" v-slot={errors}>
+                            <input type="date" v-model="inputBaterai.garansi" name="garansi" id="garansi" class="p-2 w-72 rounded-lg outline-none bg-gray-200" :disabled="inputBaterai.tegangan === ''">
+                            <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
+                        </ValidationProvider>
+                    </div>
                 </div>
                 
             </div>
         </div>
-        <button class="bg-gray-700 text-gray-200 shadow-md rounded-lg w-28 h-10 mt-8">kirim</button>
+        <button class="opacity-10 bg-gray-700 text-gray-200 w-24 py-2 rounded cursor-default" type="submit" :class="{activesubmit : valid}" :disabled="invalid">kirim</button>
     </form>
+    </ValidationObserver>
 </section>
 </div>
 </template>
@@ -64,7 +91,14 @@
 <script>
 import axios from 'axios'
 import moment from 'moment'
+import { ValidationObserver, ValidationProvider } from "vee-validate";
+
 export default {
+    middleware:"isAuthenticated",
+    components:{
+        ValidationObserver,
+        ValidationProvider
+    },
     data(){
         return{
             inputBaterai:{
@@ -109,5 +143,21 @@ export default {
 </script>
 
 <style>
-
+.incop{
+    opacity:1,
+}
+.decop{
+    opacity: 0.1;
+}
+.activesubmit {
+    background-color: rgb(39, 39, 39);
+    color:whitesmoke;
+    width:6rem;
+    cursor:pointer;
+    opacity:1;
+    padding-top: .5rem;
+    padding-bottom: .5rem;
+    transition: all 0.5s;
+    transform:translateY(-2px);
+}
 </style>
