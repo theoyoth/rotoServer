@@ -25,10 +25,6 @@
             </NuxtLink>
         </div>
 
-        <!-- <div v-if="deletemsg" class="relative mt-5 w-1/4 text-center m-auto">
-        <p class="text-white bg-blue-500 font-semibold p-2 rounded-lg">{{ deletemsg }}</p>
-        </div> -->
-
         <table class="table space-y-6 container mx-auto table-auto border-collapse mt-7 divide-y divide-gray-300">
             <thead class="bg-gray-700 text-sm has-tooltip">
                 <span class="tooltip rounded shadow-lg p-1 bg-gray-700 text-white -mt-10 absolute left-2/4 transform -translate-x-2/4">semua detail barang</span>
@@ -51,7 +47,7 @@
                     <td class="w-32">{{$moment(hasilcari.tahun).format('DD-MM-YYYY')}}</td>
                     <td class="w-32">{{$moment(hasilcari.garansi).format('DD-MM-YYYY')}}</td>
                     <td class="py-3 flex justify-around w-full bg-gray-700">
-                        <NuxtLink :to="{name : 'master-update-updategenset-genset', params:{id : hasilcari.id} }">
+                        <NuxtLink :to="{name : 'master-update-updategenset-genset', params:{id : hasilcari.id_genset} }">
                             <font-awesome-icon :icon="['fas','pencil-alt']" class="text-yellow-500"/>
                         </NuxtLink>
                         <button @click.prevent="deleteData(hasilcari.id_genset)">
@@ -69,10 +65,10 @@
                     <td class="w-32">{{$moment(genset.tahun).format('DD-MM-YYYY')}}</td>
                     <td class="w-32">{{$moment(genset.garansi).format('DD-MM-YYYY')}}</td>
                     <td class="py-3 flex justify-around w-full bg-gray-700">
-                        <NuxtLink :to="{name : 'master-update-updategenset-genset', params:{id : genset.id} }">
+                        <NuxtLink :to="{name : 'master-update-updategenset-genset', params:{id : genset.id_genset} }">
                             <font-awesome-icon :icon="['fas','pencil-alt']" class="text-yellow-500"/>
                         </NuxtLink>
-                        <button @click="deleteData(genset.id,user.lokasi)">
+                        <button @click.prevent="deleteData(genset.id_genset)">
                             <font-awesome-icon :icon="['fas','trash']" class="text-yellow-500"/>
                         </button> 
                     </td>
@@ -110,56 +106,21 @@ export default {
         }
     },
     methods:{
-        deleteData(id,lokasi){
-            // try{
-            // const confirm = await swal({
-            //     title: 'Are you sure?',
-            //     text: 'Once deleted, you will not be able to recover this Music!',
-            //     icon: 'warning',
-            //     buttons: true,
-            //     dangerMode: true
-            // })
-            
-            //     if(confirm){
-            //         const resp = await axios.delete(`/server/master/deletegenset/${lokasi}/${id}`)
-            //         this.$router.push('/master/genset')
-            //         swal('data dihapus', {
-            //             icon: 'success'
-            //         })
-            //         if(resp.data.err){
-            //             swal('Error',resp.data.err , 'error')
-            //         }
-            //     }
-                
-            // }catch(err){
-            //     swal('data tidak dihapus')
-            // }
+        async deleteData(id){
+            let indexOfArrayItem = this.gensets.findIndex(i => i.id_genset === id)
 
-            swal({
-                title: 'Are you sure?',
-                text: 'Once deleted, you will not be able to recover this Music!',
-                icon: 'warning',
-                buttons: true,
-                dangerMode: true
-            }).then(willDelete => {
-            if (willDelete) {
-                this.$axios
-                .$post(`/server/master/deletegenset/${lokasi}/${id}`)
-                .then(response => {
-                    swal('Poof! Your Music file has been deleted!', {
-                    icon: 'success'
-                    })
-                    this.$router.push('/master/genset')
-                })
-                .catch(err => {
-                    swal('Error', 'Somethimg went wrong', 'error')
-                })
-            } else {
-                swal('Your Music file is safe!')
+            const lokasi = this.$auth.user.lokasi
+            const resp = await axios.delete(`/server/master/genset/delete/${id}/${lokasi}`)
+            if(resp){
+                this.gensets.splice(indexOfArrayItem, 1);
+                this.$router.push('/master/genset')
+                swal('data dihapus',{icon:'success'})
             }
-            })
-                
-    },
+            if(resp.data.errmsg){
+                this.$router.push('/master/genset')
+                swal("Error", resp.data.errmsg,{icon:'error'})
+            }
+        },
         async caribaranggenset(){
             this.carigenset = []
             const res = await axios.get(`http://localhost:3000/server/carigenset?cari=${this.caribarang}`)

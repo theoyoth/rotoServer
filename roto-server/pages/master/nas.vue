@@ -130,7 +130,7 @@ export default {
             let indexOfArrayItem = this.nass.findIndex(i => i.id_nas === id)
 
             const lokasi = this.$auth.user.lokasi
-            const resp = await axios.post(`/server/master/deletenas/${id}/${lokasi}`)
+            const resp = await axios.delete(`/server/master/nas/delete/${id}/${lokasi}`)
             if(resp){
                 this.nass.splice(indexOfArrayItem, 1);
                 this.$router.push('/master/nas')

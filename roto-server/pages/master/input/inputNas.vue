@@ -62,7 +62,7 @@
                     <div class="flex flex-col w-72">
                         <ValidationProvider rules="required|numeric" v-slot={errors}>
                             <div class="flex">
-                            <input type="text" v-model="inputNas.storage" name="storage" id="storage" class="p-2 w-full rounded-l-lg outline-none bg-gray-300" :disabled="inputNas.tipe === ''">
+                            <input type="text" v-model="inputNas.storage" name="storage" id="storage" class="p-2 w-52 rounded-l-lg outline-none bg-gray-300" :disabled="inputNas.tipe === ''">
                             <select name="storage" id="storage" class="p-2 rounded-r-lg -ml-2" :disabled="inputNas.tipe === ''">
                                 <option value="gb">GB</option>
                                 <option value="tb">TB</option>

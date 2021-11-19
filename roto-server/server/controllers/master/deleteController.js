@@ -613,8 +613,8 @@ module.exports.deletemasternas = async (req, res) => {
 module.exports.deletemastergenset = async (req, res) => {
   let conn
   try {
-    const lokasiServer = req.params.lokasi
     const id = req.params.id
+    const lokasiServer = req.params.lokasi
     conn = await pool.getConnection()
 
     if (lokasiServer == 'roto 1') {
@@ -623,40 +623,38 @@ module.exports.deletemastergenset = async (req, res) => {
       )
       if (data.affectedRows > 0) {
         res.json({ msg: 'data dihapus' })
-        // res.json(data)
       } else {
-        res.json({ err: 'data tidak terhapus' })
+        res.json({ errmsg: 'data tidak terhapus' })
       }
     } else if (lokasiServer == 'roto 2') {
       const data = await conn.query(
         `DELETE FROM master_genset_roto_2 WHERE id_genset=${id}`
       )
       if (data.affectedRows > 0) {
-        // res.json({ msg: 'data dihapus' })
-        res.json(data)
+        res.json({ msg: 'data dihapus' })
       } else {
-        res.json({ msg: 'data tidak terhapus' })
+        res.json({ errmsg: 'data tidak terhapus' })
       }
     } else if (lokasiServer == 'roto 3') {
       const data = await conn.query(
         `DELETE FROM master_genset_roto_3 WHERE id_genset=${id}`
       )
       if (data.affectedRows > 0) {
-        // res.json({ msg: 'data dihapus' })
-        res.json(data)
+        res.json({ msg: 'data dihapus' })
       } else {
-        res.json({ msg: 'data tidak terhapus' })
+        res.json({ errmsg: 'data tidak terhapus' })
       }
     } else if (lokasiServer == 'tinta') {
       const data = await conn.query(
         `DELETE FROM master_genset_tinta WHERE id_genset=${id}`
       )
       if (data.affectedRows > 0) {
-        // res.json({ msg: 'data dihapus' })
-        res.json(data)
+        res.json({ msg: 'data dihapus' })
       } else {
-        res.json({ msg: 'data tidak terhapus' })
+        res.json({ errmsg: 'data tidak terhapus' })
       }
+
+      conn.release()
     }
   } catch (err) {
     console.log(err)

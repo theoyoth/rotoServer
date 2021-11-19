@@ -86,10 +86,12 @@ router.delete(
   '/master/deletemouse/:id/:lokasi',
   deleteController.deletemastermouse
 )
-router.delete('/master/deletenas/:id/:lokasi', deleteController.deletemasternas)
 router.delete(
-  '/master/deletegenset/:lokasi/:id/:lokasi',
-  isAuthent,
+  '/master/nas/delete/:id/:lokasi',
+  deleteController.deletemasternas
+)
+router.delete(
+  '/master/genset/delete/:id/:lokasi',
   deleteController.deletemastergenset
 )
 
@@ -157,13 +159,10 @@ router.get('/master/nas/update/:id/:lokasi', updateController.masternasgetdata)
 router.post('/master/nas/update', updateController.inputmasternasupdate)
 
 router.get(
-  '/master/update/updategenset/:id',
+  '/master/genset/update/:id/:lokasi',
   updateController.mastergensetgetdata
 )
-router.post(
-  '/master/genset/update/updategenset',
-  updateController.inputmastergensetupdate
-)
+router.post('/master/genset/update', updateController.inputmastergensetupdate)
 // ===============================================================
 // login
 router.post('/login', authController.login)

@@ -693,43 +693,43 @@ module.exports.inputmasternas = async (req, res) => {
     } = req.body
 
     conn = await pool.getConnection()
-    // if (lokasiServer == 'roto 1') {
-    //   const resp = await conn.query(
-    //     `INSERT INTO master_nas VALUES ('','${merek}','${model}','${processor}','${storage}','${tipe}','${cpu}','${raid}','${tahun}','${garansi}','${iduser}')`
-    //   )
-    //   if (resp.affectedRows > 0) {
-    //     res.redirect('/master/nas')
-    //   } else {
-    //     res.json({ errmsg: 'gagal ditambahkan' })
-    //   }
-    // } else if (lokasiServer == 'roto 2') {
-    //   const resp = await conn.query(
-    //     `INSERT INTO master_nas_roto_2 VALUES ('','${merek}','${model}','${processor}','${storage}','${tipe}','${cpu}','${raid}','${tahun}','${garansi}','${iduser}')`
-    //     )
-    //   if (resp.affectedRows > 0) {
-    //     res.redirect('/master/nas')
-    //   } else {
-    //     res.json({ errmsg: 'gagal ditambahkan' })
-    //   }
-    // } else if (lokasiServer == 'roto 3') {
-    //   const resp = await conn.query(
-    //     `INSERT INTO master_nas_roto_3 VALUES ('','${merek}','${model}','${processor}','${storage}','${tipe}','${cpu}','${raid}','${tahun}','${garansi}','${iduser}')`
-    //   )
-    //   if (resp.affectedRows > 0) {
-    //     res.redirect('/master/nas')
-    //   } else {
-    //     res.json({ errmsg: 'gagal ditambahkan' })
-    //   }
-    // } else if (lokasiServer == 'tinta') {
-    //   const resp = await conn.query(
-    //     `INSERT INTO master_nas_tinta VALUES ('','${merek}','${model}','${processor}','${storage}','${tipe}','${cpu}','${raid}','${tahun}','${garansi}','${iduser}')`
-    //   )
-    //   if (resp.affectedRows > 0) {
-    //     res.redirect('/master/nas')
-    //   } else {
-    //     res.json({ errmsg: 'gagal ditambahkan' })
-    //   }
-    // }
+    if (lokasiServer == 'roto 1') {
+      const resp = await conn.query(
+        `INSERT INTO master_nas VALUES ('','${merek}','${model}','${processor}','${storage}','${tipe}','${cpu}','${raid}','${tahun}','${garansi}','${iduser}')`
+      )
+      if (resp.affectedRows > 0) {
+        res.redirect('/master/nas')
+      } else {
+        res.json({ errmsg: 'gagal ditambahkan' })
+      }
+    } else if (lokasiServer == 'roto 2') {
+      const resp = await conn.query(
+        `INSERT INTO master_nas_roto_2 VALUES ('','${merek}','${model}','${processor}','${storage}','${tipe}','${cpu}','${raid}','${tahun}','${garansi}','${iduser}')`
+      )
+      if (resp.affectedRows > 0) {
+        res.redirect('/master/nas')
+      } else {
+        res.json({ errmsg: 'gagal ditambahkan' })
+      }
+    } else if (lokasiServer == 'roto 3') {
+      const resp = await conn.query(
+        `INSERT INTO master_nas_roto_3 VALUES ('','${merek}','${model}','${processor}','${storage}','${tipe}','${cpu}','${raid}','${tahun}','${garansi}','${iduser}')`
+      )
+      if (resp.affectedRows > 0) {
+        res.redirect('/master/nas')
+      } else {
+        res.json({ errmsg: 'gagal ditambahkan' })
+      }
+    } else if (lokasiServer == 'tinta') {
+      const resp = await conn.query(
+        `INSERT INTO master_nas_tinta VALUES ('','${merek}','${model}','${processor}','${storage}','${tipe}','${cpu}','${raid}','${tahun}','${garansi}','${iduser}')`
+      )
+      if (resp.affectedRows > 0) {
+        res.redirect('/master/nas')
+      } else {
+        res.json({ errmsg: 'gagal ditambahkan' })
+      }
+    }
 
     conn.release()
   } catch (err) {

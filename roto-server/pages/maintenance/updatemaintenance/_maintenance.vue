@@ -68,6 +68,7 @@
 import axios from 'axios'
 import moment from 'moment'
 export default {
+    middleware:"isAuthenticated",
   data(){
     return{
       maintenances:'',
@@ -131,8 +132,7 @@ export default {
             this.updateMaintenance.server = dmain.server
             this.updateMaintenance.keterangan = dmain.keterangan
         })
-    }
-
+        }
     } catch(err) {
         console.log(err)
     }
