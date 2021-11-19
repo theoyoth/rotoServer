@@ -99,92 +99,62 @@ router.get(
   updateController.masterservergetdata
 )
 router.post('/master/server/update', updateController.inputmasterserverupdate)
-router.get(
-  '/master/update/updaterak/:id/:lokasi',
-  updateController.masterrakgetdata
-)
-router.post(
-  '/master/rak/update/updaterak/:id',
-  updateController.inputmasterrakupdate
-)
+router.get('/master/rak/update/:id/:lokasi', updateController.masterrakgetdata)
+router.post('/master/rak/update/', updateController.inputmasterrakupdate)
+
+router.get('/master/ups/update/:id/:lokasi', updateController.masterupsgetdata)
+router.post('/master/ups/update', updateController.inputmasterupsupdate)
 
 router.get(
-  '/master/update/updateups/:id/:lokasi',
-  updateController.masterupsgetdata
-)
-router.post(
-  '/master/ups/update/updateups',
-  updateController.inputmasterupsupdate
-)
-
-router.get(
-  '/master/update/updatebaterai/:id/:lokasi',
+  '/master/baterai/update/:id/:lokasi',
   updateController.masterbateraigetdata
 )
-router.post(
-  '/master/baterai/update/updatebaterai',
-  updateController.inputmasterbateraiupdate
-)
+router.post('/master/baterai/update', updateController.inputmasterbateraiupdate)
+
+router.get('/master/ac/update/:id/:lokasi', updateController.masteracgetdata)
+router.post('/master/ac/update', updateController.inputmasteracupdate)
 
 router.get(
-  '/master/update/updateac/:id/:lokasi',
-  updateController.masteracgetdata
+  '/master/cctv/update/:id/:lokasi',
+  updateController.mastercctvgetdata
 )
-router.post('/master/ac/update/updateac', updateController.inputmasteracupdate)
-
-router.get('/master/update/updatecctv/:id', updateController.mastercctvgetdata)
-router.post(
-  '/master/cctv/update/updatecctv',
-  updateController.inputmastercctvupdate
-)
+router.post('/master/cctv/update', updateController.inputmastercctvupdate)
 
 router.get(
-  '/master/update/updatenetwork/:id',
+  '/master/network/update/:id/:lokasi',
   updateController.masternetworkgetdata
 )
-router.post(
-  '/master/network/update/updatenetwork',
-  updateController.inputmasternetworkupdate
-)
-
-router.get('/master/update/updateapar/:id', updateController.masterapargetdata)
-router.post(
-  '/master/apar/update/updateapar',
-  updateController.inputmasteraparupdate
-)
+router.post('/master/network/update', updateController.inputmasternetworkupdate)
 
 router.get(
-  '/master/update/updatemonitor/:id',
+  '/master/apar/update/:id/:lokasi',
+  updateController.masterapargetdata
+)
+router.post('/master/apar/update', updateController.inputmasteraparupdate)
+
+router.get(
+  '/master/monitor/update/:id/:lokasi',
   updateController.mastermonitorgetdata
 )
-router.post(
-  '/master/monitor/update/updatemonitor',
-  updateController.inputmastermonitorupdate
-)
+router.post('/master/monitor/update', updateController.inputmastermonitorupdate)
 
 router.get(
-  '/master/update/updatekeyboard/:id',
+  '/master/keyboard/update/:id/:lokasi',
   updateController.masterkeyboardgetdata
 )
 router.post(
-  '/master/keyboard/update/updatekeyboard',
+  '/master/keyboard/update',
   updateController.inputmasterkeyboardupdate
 )
 
 router.get(
-  '/master/update/updatemouse/:id',
+  '/master/mouse/update/:id/:lokasi',
   updateController.mastermousegetdata
 )
-router.post(
-  '/master/mouse/update/updatemouse',
-  updateController.inputmastermouseupdate
-)
+router.post('/master/mouse/update', updateController.inputmastermouseupdate)
 
-router.get('/master/update/updatenas/:id', updateController.masternasgetdata)
-router.post(
-  '/master/nas/update/updatenas',
-  updateController.inputmasternasupdate
-)
+router.get('/master/nas/update/:id/:lokasi', updateController.masternasgetdata)
+router.post('/master/nas/update', updateController.inputmasternasupdate)
 
 router.get(
   '/master/update/updategenset/:id',

@@ -112,10 +112,12 @@ export default {
     },
     methods:{
          async deleteData(id){
+            let indexOfArrayItem = this.networks.findIndex(i => i.id_network === id)
+
             const lokasi = this.$auth.user.lokasi
             const resp = await axios.delete(`/server/master/deletenetwork/${id}/${lokasi}`)
             if(resp){
-                this.networks.splice(this.networks.indexOf(id), 1);
+                this.networks.splice(indexOfArrayItem, 1);
                 this.$router.push('/master/network')
                 swal('data dihapus',{icon:'success'})
             }

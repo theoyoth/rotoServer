@@ -112,7 +112,15 @@ export default {
     },
     methods:{
         async postInputMonitor(){
-            const res = await axios.post('http://localhost:3000/server/master/inputmonitor',{model:this.inputMonitor.model,merek:this.inputMonitor.merek,tipe:this.inputMonitor.tipe,tahun:this.inputMonitor.tahun, garansi:this.inputMonitor.garansi})
+            const res = await axios.post('http://localhost:3000/server/master/inputmonitor',{
+                iduser:this.$auth.user.id,
+                lokasiServer: this.$auth.user.lokasi,
+                model:this.inputMonitor.model,
+                merek:this.inputMonitor.merek,
+                tipe:this.inputMonitor.tipe,
+                tahun:this.inputMonitor.tahun, 
+                garansi:this.inputMonitor.garansi
+            })
 
             if(res.data.errors){
                 this.errors=res.data.errors

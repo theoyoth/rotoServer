@@ -135,7 +135,10 @@ export default {
     },
     methods:{
         async postInputNetwork(){
-            const res = await axios.post('http://localhost:3000/server/master/inputnetwork',{model:this.inputNetwork.model,
+            const res = await axios.post('http://localhost:3000/server/master/inputnetwork',{
+            iduser:this.$auth.user.id,
+            lokasiServer:this.$auth.user.lokasi,
+            model:this.inputNetwork.model,
             merek:this.inputNetwork.merek,
             tipe:this.inputNetwork.tipe,
             kanal:this.inputNetwork.kanal,

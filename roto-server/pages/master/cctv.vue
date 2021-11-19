@@ -48,7 +48,7 @@
                     <td>{{hasilcari.model}}</td>
                     <td>{{$moment(hasilcari.garansi).format('DD-MM-YYYY')}}</td>
                     <td class="py-3 flex justify-evenly w-full bg-gray-700">
-                        <NuxtLink :to="{name : 'master-update-updatecctv-cctv', params:{id : hasilcari.id} }">
+                        <NuxtLink :to="{name : 'master-update-updatecctv-cctv', params:{id : hasilcari.id_cctv} }">
                             <font-awesome-icon :icon="['fas','pencil-alt']" class="text-blue-500"/>
                         </NuxtLink>
                         <button @click.prevent="deleteData(hasilcari.id_cctv)">
@@ -64,7 +64,7 @@
                     <td>{{cctv.model}}</td>
                     <td>{{$moment(cctv.garansi).format('DD-MM-YYYY')}}</td>
                     <td class="py-3 flex justify-evenly w-full bg-gray-700">
-                        <NuxtLink :to="{name : 'master-update-updatecctv-cctv', params:{id : cctv.id} }">
+                        <NuxtLink :to="{name : 'master-update-updatecctv-cctv', params:{id : cctv.id_cctv} }">
                             <font-awesome-icon :icon="['fas','pencil-alt']" class="text-yellow-500"/>
                         </NuxtLink>
                         <button @click.prevent="deleteData(cctv.id_cctv)">
@@ -102,10 +102,12 @@ export default {
     },
     methods:{
         async deleteData(id){
+            let indexOfArrayItem = this.cctvs.findIndex(i => i.id_cctv === id)
+
             const lokasi = this.$auth.user.lokasi
             const resp = await axios.delete(`http://localhost:3000/server/master/deletecctv/${id}/${lokasi}`)
             if(resp){
-                this.cctvs.splice(this.cctvs.indexOf(id), 1);
+                this.cctvs.splice(indexOfArrayItem, 1);
                 this.$router.push('/master/cctv')
                 swal('data dihapus',{icon:'success'})
             }

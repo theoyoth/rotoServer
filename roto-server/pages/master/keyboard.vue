@@ -69,7 +69,7 @@
                     <td class="w-32">{{$moment(keyboard.tahun).format("DD-MM-YYYY")}}</td>
                     <td class="w-32">{{$moment(keyboard.garansi).format("DD-MM-YYYY")}}</td>
                     <td class="py-3 flex justify-evenly w-full bg-gray-700">
-                    <NuxtLink :to="{name : 'master-update-updatekeyboard-keyboard', params:{id : keyboard.id} }">
+                    <NuxtLink :to="{name : 'master-update-updatekeyboard-keyboard', params:{id : keyboard.id_keyboard} }">
                             <font-awesome-icon :icon="['fas','pencil-alt']" class="text-yellow-500"/>
                         </NuxtLink>
                         <button @click.prevent="deleteData(keyboard.id_keyboard)">

@@ -2,7 +2,7 @@
   <div class="bg-gray-300 min-h-screen w-widthContent ml-auto">
     <!-- <InputHeader maintenance="maintenance"/> -->
     <Navbar/>
-    <section class="bg-white min-h-screen w-widthContentField m-auto mt-7 p-4">
+    <section class="bg-gray-100 min-h-screen w-widthContentField m-auto mt-7 p-4">
         <NuxtLink to="/maintenance"
           class="flex items-center justify-between rounded-md w-28 px-4 py-2 bg-gray-700">
           <div>
@@ -108,7 +108,7 @@ export default {
                 swal('data di update',{icon:'success'})
             }
             else{
-                swal('Error',resp.data.msg,{icon:'error'})
+                swal('Error',resp.data.errmsg,{icon:'error'})
                 this.$router.push('/maintenance/updatemaintenance')
             }
       }
@@ -120,7 +120,6 @@ export default {
     const resp = await axios.get(`http://localhost:3000/server/maintenance/getdatamaintenanceupdate/${id}/${lokasi}`)
     if(resp){
         resp.data.forEach(dmain=>{
-            console.log(dmain)
             this.updateMaintenance.tanggal = moment(dmain.tanggal).format('YYYY-MM-DD')
             this.updateMaintenance.nama = dmain.nama_pemeriksa
             this.updateMaintenance.suhu = dmain.suhu

@@ -112,7 +112,14 @@ export default {
     },
     methods:{
         async postInputMouse(){
-            const res = await axios.post('http://localhost:3000/server/master/inputmouse',{model:this.inputMouse.model,merek:this.inputMouse.merek,tipe:this.inputMouse.tipe,tahun:this.inputMouse.tahun, garansi:this.inputMouse.garansi})
+            const res = await axios.post('http://localhost:3000/server/master/inputmouse',{
+                iduser: this.$auth.user.id,
+                lokasiServer: this.$auth.user.lokasi,
+                model:this.inputMouse.model,
+                merek:this.inputMouse.merek,
+                tipe:this.inputMouse.tipe,
+                tahun:this.inputMouse.tahun,
+                garansi:this.inputMouse.garansi})
 
             if(res.data.errors){
                 this.errors=res.data.errors

@@ -109,6 +109,8 @@ export default {
     methods:{
         async postInputApar(){
             const res = await axios.post('http://localhost:3000/server/master/inputapar',{
+                iduser: this.$auth.user.id,
+                lokasiServer: this.$auth.user.lokasi,
                 model:this.inputApar.model,
                 merek:this.inputApar.merek,
                 tipe:this.inputApar.tipe,

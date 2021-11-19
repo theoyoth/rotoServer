@@ -33,6 +33,7 @@
             <thead class="bg-gray-700 text-sm has-tooltip">
                 <span class="tooltip rounded shadow-lg p-1 bg-gray-700 text-white -mt-10 absolute left-2/4 transform -translate-x-2/4">semua detail barang</span>
                 <tr class="text-xs text-gray-200"> 
+                    <th class="font-semibold py-3 px-2 w-4">no.</th>
                     <th class="font-semibold py-3">Merek</th>
                     <th class="font-semibold py-3">Model</th>
                     <th class="font-semibold">sumber daya listrik</th>
@@ -44,6 +45,7 @@
             </thead>
             <tbody v-if="caribarang !== ''" class="text-center bg-white bg-opacity-40 divide-y divide-gray-300">
                 <tr class="text-sm" v-for="(hasilcari,index) in cariac" :key="index">
+                    <td>{{index+1}}</td>
                     <td class="py-3 w-32">{{hasilcari.merek}}</td>
                     <td class="w-32">{{hasilcari.model}}</td>
                     <td class="w-24">{{hasilcari.sumber_daya_listrik}}</td>
@@ -72,6 +74,7 @@
                 </tr>
             </tbody>
             <tbody v-else class="text-center bg-white bg-opacity-40 divide-y divide-gray-300"><tr class="text-sm" v-for="(ac,index) in acs" :key="index">
+                    <td>{{index+1}}</td>
                     <td class="py-3 w-32">{{ac.merek}}</td>
                     <td class="w-32">{{ac.model}}</td>
                     <td class="w-32">{{ac.sumber_daya_listrik}}</td>
@@ -127,10 +130,12 @@ export default {
     },
     methods:{
     async deleteData(id){
+        let indexOfArrayItem = this.acs.findIndex(i => i.id_ac === id)
+
         const lokasi = this.$auth.user.lokasi
         const resp = await axios.delete(`/server/master/deleteac/${id}/${lokasi}`)
         if(resp){
-            this.acs.splice(this.acs.indexOf(id), 1);
+            this.acs.splice(indexOfArrayItem, 1);
             this.$router.push('/master/ac')
             swal('data dihapus',{icon:'success'})
         }

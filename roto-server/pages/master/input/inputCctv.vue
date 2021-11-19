@@ -91,11 +91,15 @@ export default {
     },
     methods:{
         async postInputCctv(){
-            const res = await axios.post('http://localhost:3000/server/master/inputcctv',{model:this.inputCctv.model,merek:this.inputCctv.merek,garansi:this.inputCctv.garansi})
+            const res = await axios.post('http://localhost:3000/server/master/inputcctv',{
+                iduser:this.$auth.user.id,
+                lokasiServer:this.$auth.user.lokasi,
+                model:this.inputCctv.model,
+                merek:this.inputCctv.merek,
+                garansi:this.inputCctv.garansi})
 
             if(res.data.errors){
                 this.errors=res.data.errors
-                console.log(this.errors)
                 this.$router.push('/master/input/inputCctv')
             }
             else{

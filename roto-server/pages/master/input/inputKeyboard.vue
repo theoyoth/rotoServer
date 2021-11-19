@@ -112,7 +112,14 @@ export default {
     },
     methods:{
         async postInputKeyboard(){
-            const res = await axios.post('http://localhost:3000/server/master/inputkeyboard',{model:this.inputKeyboard.model,merek:this.inputKeyboard.merek,tipe:this.inputKeyboard.tipe,tahun:this.inputKeyboard.tahun, garansi:this.inputKeyboard.garansi})
+            const res = await axios.post('http://localhost:3000/server/master/inputkeyboard',{
+                iduser: this.$auth.user.id,
+                lokasiServer: this.$auth.user.lokasi,
+                model:this.inputKeyboard.model,
+                merek:this.inputKeyboard.merek,
+                tipe:this.inputKeyboard.tipe,
+                tahun:this.inputKeyboard.tahun, 
+                garansi:this.inputKeyboard.garansi})
 
             if(res.data.errors){
                 this.errors=res.data.errors

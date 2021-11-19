@@ -1,27 +1,35 @@
 <template>
-  <div class="bg-bg-gen min-h-screen">
-    <InputHeader item="CCTV"/>
-    <section class="container mx-auto mt-8">
-    <form action="/server/master/cctv/update/updatecctv" method="post" class="w-11/12">
+  <div class="bg-gray-300 min-h-screen w-widthContent ml-auto">
+    <!-- <InputHeader item="CCTV"/> -->
+    <Navbar/>
+    <section class="bg-gray-100 min-h-screen w-widthContentField m-auto mt-7 p-4">
+        <NuxtLink to="/master/cctv"
+          class="flex items-center justify-between rounded-md w-28 px-4 py-2 bg-gray-700">
+          <div>
+            <font-awesome-icon :icon="['fas', 'arrow-left']" class="text-gray-200" />
+          </div>
+          <p class="font-medium text-sm text-gray-200">kembali</p>
+        </NuxtLink> 
+        <p class="text-center text-xl text-gray-700 font-semibold">update CCTV</p>
+    <form @submit.prevent="updateDataCctv" class="w-11/12 mt-10">
         <div>
-            <input type="hidden" name="id" :value="cctvs.id">
             <div class="grid grid-cols-3 grid-rows-4">
                 <div class="mb-4">
                     <label for="merek" class="block mb-2 text-sm">merek</label>
-                    <input type="text" :value="cctvs.merek" name="merek" id="merek" class="p-2 w-72 rounded-lg outline-none">
+                    <input type="text" v-model="updateCctv.merek" name="merek" id="merek" class="p-2 w-72 rounded-lg outline-none bg-gray-300">
                 </div>
                 <div class="mb-4">
                     <label for="model" class="block mb-2 text-sm">model</label>
-                    <input type="text" :value="cctvs.model" name="model" id="model" class="p-2 w-72 rounded-lg outline-none">
+                    <input type="text" v-model="updateCctv.model" name="model" id="model" class="p-2 w-72 rounded-lg outline-none bg-gray-300">
                 </div>
                 <div class="mb-4">
                     <label for="garansi" class="block mb-2 text-sm">garansi</label>
-                    <input type="date" :value="$moment(cctvs.garansi).format('YYYY-MM-DD')" name="garansi" id="garansi" class="p-2 w-72 rounded-lg outline-none">
+                    <input type="date" v-model="updateCctv.garansi" name="garansi" id="garansi" class="p-2 w-72 rounded-lg outline-none bg-gray-300">
                 </div>
                 
             </div>
         </div>
-        <button class="bg-blue-400 shadow-md rounded-lg w-28 h-10 mt-8" type="submit">ubah</button>
+        <button class="bg-gray-700 text-gray-300 shadow-md rounded-lg w-28 h-10" type="submit">ubah</button>
     </form>
 </section>
 </div>
@@ -29,23 +37,60 @@
 
 <script>
 import axios from 'axios'
+import moment from 'moment'
+
 export default {
   data(){
         return{
             cctvs:'',
+            updateCctv:{
+                merek : "",
+                model: "",
+                garansi : "",
+            }
         }
     },
-    mounted(){
-        axios.get(`http://localhost:3000/server/master/update/updatecctv/${this.$route.params.id}`)
-        .then(res => {
-            const result = res
-            this.cctvs = result.data[0]
-        })
-        .catch(err=>{
+    async mounted(){
+        try{
+            const lokasi = this.$auth.user.lokasi
+            const id = this.$route.params.id
+
+            const resp = await axios.get(`http://localhost:3000/server/master/cctv/update/${id}/${lokasi}`)
+            if(resp){
+                resp.data.forEach(cctv=>{
+                    this.updateCctv.merek = cctv.merek
+                    this.updateCctv.model = cctv.model
+                    this.updateCctv.garansi = moment(cctv.garansi).format('YYYY-MM-DD')
+                })
+            }
+            
+        }
+        catch(err){
             console.log(err)
-        }) 
+        }
         
+    },
+    methods:{
+        async updateDataCctv(){
+            const resp = await axios.post('http://localhost:3000/server/master/cctv/update',{
+                iduser: this.$auth.user.id,
+                lokasiServer: this.$auth.user.lokasi,
+                idcctv: this.$route.params.id,
+                merek:this.updateCctv.merek,
+                model: this.updateCctv.model,
+                garansi : this.updateCctv.garansi,
+            })
+             if(resp){
+                this.$router.push('/master/cctv')
+                swal('data di update',{icon:'success'})
+            }
+            else{
+                swal('Error',resp.data.errmsg,{icon:'error'})
+                this.$router.push('/master/cctv/updatecctv')
+            }
+        }
     }
+
 }
 </script>
 

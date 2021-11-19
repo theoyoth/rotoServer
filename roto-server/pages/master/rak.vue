@@ -45,6 +45,7 @@
             <thead class="bg-gray-700 text-sm has-tooltip">
                 <span class="tooltip rounded shadow-lg p-1 bg-gray-700 text-white -mt-10 absolute left-2/4 transform -translate-x-2/4">semua detail barang</span>
                 <tr class="text-xs text-gray-200"> 
+                    <th class="font-semibold py-3 px-2 w-4">no.</th>
                     <th class="font-semibold">nama produk</th>
                     <th class="font-semibold py-3">tipe rak</th>
                     <th class="font-semibold">tipe pintu</th>
@@ -56,6 +57,7 @@
             </thead>
             <tbody v-if="caribarang !== ''" class="text-center bg-white bg-opacity-40 divide-y divide-gray-300">
                 <tr class="text-sm" v-for="(hasilcari,index) in carirak" :key="index">
+                    <td>{{index+1}}</td>
                     <td class="w-44">{{hasilcari.nama_produk}}</td>
                     <td class="py-3 w-36">{{hasilcari.tipe_rak}}</td>
                     <td>{{hasilcari.tipe_pintu}}</td>
@@ -74,6 +76,7 @@
             </tbody>
             <tbody v-else class="text-center bg-white bg-opacity-40 divide-y divide-gray-300" >
                 <tr class="text-sm" v-for="(rak,index) in raks" :key="index">
+                    <td>{{index+1}}</td>
                     <td class="w-44">{{rak.nama_produk}}</td>
                     <td class="py-3 w-36">{{rak.tipe_rak}}</td>
                     <td>{{rak.tipe_pintu}}</td>

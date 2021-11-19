@@ -6,7 +6,7 @@
         <p class="text-center text-lg text-gray-700 font-semibold">Halaman master UPS</p>
         <div class="flex justify-between mt-8">
             <div class="flex">
-                <input type="text" placeholder="cari" name="cari" v-model.lazy="caribarang" @keyup.enter="$fetch" class="rounded-l-lg p-2 outline-none bg-gray-200">
+                <input type="text" placeholder="cari" name="cari" v-model.lazy="caribarang" @keyup.enter="$fetch" class="rounded-l-lg p-2 w-52 outline-none bg-gray-200">
                 <button class="p-2 rounded-r-lg bg-gray-700 flex items-center justify-center w-12" @click="$fetch">
                     <font-awesome-icon :icon="['fas','search']" class="text-yellow-500"/>
                     <!-- <p>hapus</p> -->

@@ -218,6 +218,7 @@ export default {
     },
     methods:{
         async deleteData(id){
+          console.log(this.servers)
            let indexOfArrayItem = this.servers.findIndex(i => i.id_server === id)
 
           const lokasi = this.$auth.user.lokasi

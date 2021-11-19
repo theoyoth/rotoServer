@@ -183,7 +183,7 @@ module.exports.updateMaintenance = async (req, res) => {
       if (resp.affectedRows > 0) {
         res.redirect('/maintenance')
       } else {
-        res.json({ msg: 'data tidak diupdate' })
+        res.json({ errmsg: 'gagal diupdate' })
       }
     } else if (lokasiServer == 'roto 2') {
       const resp = await conn.query(
@@ -266,22 +266,22 @@ module.exports.carimaintenance = async (req, res) => {
 
     if (lokasiServer == 'roto 1') {
       const carimaint = await conn.query(
-        `SELECT * FROM maintenance WHERE id_users=${id} AND suhu LIKE '${value}%' OR kelembapan LIKE '${value}%'`
+        `SELECT * FROM maintenance WHERE suhu LIKE '${value}%' OR kelembapan LIKE '${value}%' AND id_users=${id}`
       )
       res.send(carimaint)
     } else if (lokasiServer == 'roto 2') {
       const carimaint = await conn.query(
-        `SELECT * FROM maintenance_roto_2 WHERE id_users=${id} AND kelembapan LIKE '${value}%' OR suhu LIKE '${value}%'`
+        `SELECT * FROM maintenance_roto_2 WHERE suhu LIKE '${value}%' OR kelembapan LIKE '${value}%' AND id_users=${id}`
       )
       res.send(carimaint)
     } else if (lokasiServer == 'roto 3') {
       const carimaint = await conn.query(
-        `SELECT * FROM maintenance_roto_3 WHERE id_users=${id} AND kelembapan LIKE '${value}%' OR suhu LIKE '${value}%'`
+        `SELECT * FROM maintenance_roto_3 WHERE suhu LIKE '${value}%' OR kelembapan LIKE '${value}%' AND id_users=${id}`
       )
       res.send(carimaint)
     } else if (lokasiServer == 'tinta') {
       const carimaint = await conn.query(
-        `SELECT * FROM maintenance_tinta WHERE id_users=${id} AND kelembapan LIKE '${value}%' OR suhu LIKE '${value}%'`
+        `SELECT * FROM maintenance_tinta WHERE suhu LIKE '${value}%' OR kelembapan LIKE '${value}%' AND id_users=${id}`
       )
       res.send(carimaint)
     }

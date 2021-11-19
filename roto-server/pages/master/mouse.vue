@@ -51,7 +51,7 @@
                     <td class="w-32">{{$moment(hasilcari.tahun).format('DD-MM-YYYY')}}</td>
                     <td class="w-32">{{$moment(hasilcari.garansi).format('DD-MM-YYYY')}}</td>
                     <td class="py-3 flex justify-evenly w-full bg-gray-700">
-                        <NuxtLink :to="{name : 'master-update-updatemouse-mouse', params:{id : hasilcari.id} }">
+                        <NuxtLink :to="{name : 'master-update-updatemouse-mouse', params:{id : hasilcari.id_mouse} }">
                             <font-awesome-icon :icon="['fas','pencil-alt']" class="text-yellow-500"/>
                         </NuxtLink>
                         <button @click="deleteData(hasilcari.id_mouse)">
@@ -69,7 +69,7 @@
                     <td class="w-32">{{$moment(mouse.tahun).format('DD-MM-YYYY')}}</td>
                     <td class="w-32">{{$moment(mouse.garansi).format('DD-MM-YYYY')}}</td>
                     <td class="py-3 flex justify-evenly w-full bg-gray-700">
-                        <NuxtLink :to="{name : 'master-update-updatemouse-mouse', params:{id : mouse.id} }">
+                        <NuxtLink :to="{name : 'master-update-updatemouse-mouse', params:{id : mouse.id_mouse} }">
                             <font-awesome-icon :icon="['fas','pencil-alt']" class="text-yellow-500"/>
                         </NuxtLink>
                         <button @click="deleteData(mouse.id_mouse)">

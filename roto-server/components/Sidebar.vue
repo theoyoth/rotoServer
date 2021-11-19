@@ -123,20 +123,24 @@
               "
             >
               <NuxtLink to="/homepage">
-                <div class="flex items-center">
-                  <font-awesome-icon
-                    :icon="['fas', 'home']"
-                    class="text-gray-500 mr-4 text-xs group-hover:text-white"
-                  />
-                  <p
-                    class="
-                      text-sm text-gray-300
-                      font-bold
-                      group-hover:text-white
-                    "
-                  >
-                    Homepage
-                  </p>
+                <div class="flex items-center w-full">
+                  <div class="w-8 text-center">
+                    <font-awesome-icon
+                      :icon="['fas', 'home']"
+                      class="text-gray-500 text-xs group-hover:text-white"
+                    />
+                  </div>
+                  <div class="">
+                    <p
+                      class="
+                        text-sm text-gray-300
+                        font-bold
+                        group-hover:text-white
+                      "
+                    >
+                      Homepage
+                    </p>
+                  </div>
                 </div>
               </NuxtLink>
               <font-awesome-icon
@@ -158,16 +162,20 @@
               "
               @click="isActive = !isActive"
             >
-              <div class="flex items-center">
+              <div class="flex items-center w-full">
+                <div class="w-8 text-center">
                 <font-awesome-icon
                   :icon="['fas', 'tv']"
-                  class="text-gray-500 mr-3 text-xs group-hover:text-white"
+                  class="text-gray-500 text-xs group-hover:text-white"
                 />
+                </div>
+                <div>
                 <p
                   class="font-bold text-gray-300 text-sm group-hover:text-white"
                 >
                   Master
                 </p>
+                </div>
               </div>
               <font-awesome-icon
                 :icon="['fas', 'chevron-right']"
@@ -176,7 +184,7 @@
               />
             </div>
             <ul
-              class="relative px-16 text-xs"
+              class="relative px-16 py-2 text-xs bg-gray-700"
               :class="[isActive ? 'active' : 'notActive']"
             >
               <li class="py-1 hover:text-gray-400">
@@ -234,16 +242,20 @@
               "
               @click="isMainActive = !isMainActive"
             >
-              <div class="flex items-center">
+              <div class="flex items-center w-full">
+                <div class="w-8 text-center">
                 <font-awesome-icon
                   :icon="['fas', 'cog']"
-                  class="text-gray-500 mr-4 text-xs group-hover:text-white"
+                  class="text-gray-500 text-xs group-hover:text-white"
                 />
+                </div>
+                <div>
                 <p
                   class="text-sm text-gray-300 font-bold group-hover:text-white"
                 >
                   Maintenance
                 </p>
+                </div>
               </div>
               <font-awesome-icon
                 :icon="['fas', 'chevron-right']"
@@ -255,12 +267,13 @@
               class="
                 relative
                 px-16
-                py-1
+                py-2
                 hidden
                 transition
                 ease-in-out
                 duration-300
                 text-xs
+                bg-gray-700
               "
               :class="{ activemaintenance: isMainActive }"
             >
@@ -284,15 +297,19 @@
               @click="isInOutActive = !isInOutActive"
             >
               <div class="flex items-center">
+                <div class="w-8 text-center">
                 <font-awesome-icon
                   :icon="['fas', 'suitcase']"
-                  class="text-gray-500 mr-4 text-xs group-hover:text-white"
+                  class="text-gray-500 text-xs group-hover:text-white"
                 />
+                </div>
+                <div>
                 <p
                   class="text-sm text-gray-300 font-bold group-hover:text-white"
                 >
                   In/Out Barang
                 </p>
+                </div>
               </div>
               <font-awesome-icon
                 :icon="['fas', 'chevron-right']"
@@ -301,7 +318,7 @@
               />
             </div>
             <ul
-              class="relative hidden px-16 py-1 text-xs"
+              class="relative hidden py-1 px-16 text-xs bg-gray-700"
               :class="{ activeinout: isInOutActive }"
             >
               <li class="py-2 w-full hover:text-gray-400">
@@ -329,10 +346,13 @@
             >
               <NuxtLink to="/document">
                 <div class="flex items-center">
+                  <div class="w-8 text-center">
                   <font-awesome-icon
                     :icon="['fas', 'file-alt']"
-                    class="text-gray-500 mr-5 text-xs group-hover:text-white"
+                    class="text-gray-500 text-xs group-hover:text-white"
                   />
+                  </div>
+                  <div>
                   <p
                     class="
                       text-sm text-gray-300
@@ -342,6 +362,7 @@
                   >
                     Dokumentasi
                   </p>
+                  </div>
                 </div>
               </NuxtLink>
               <font-awesome-icon
@@ -365,10 +386,13 @@
             >
               <NuxtLink to="/map">
                 <div class="flex items-center">
+                  <div class="w-8 text-center">
                   <font-awesome-icon
                     :icon="['fas', 'map']"
-                    class="text-gray-500 mr-4 text-xs group-hover:text-white"
+                    class="text-gray-500 text-xs group-hover:text-white"
                   />
+                  </div>
+                  <div>
                   <p
                     class="
                       text-sm text-gray-300
@@ -378,6 +402,7 @@
                   >
                     Map
                   </p>
+                  </div>
                 </div>
               </NuxtLink>
               <font-awesome-icon
@@ -400,13 +425,17 @@
             >
               <NuxtLink to="/infouser">
                 <div class="flex">
+                  <div class="w-8 text-center">
                   <font-awesome-icon
                     :icon="['fas', 'users']"
-                    class="text-gray-500 mr-3 text-xs group-hover:text-white"
+                    class="text-gray-500 text-xs group-hover:text-white"
                   />
+                  </div>
+                  <div>
                   <p class="text-sm font-bold group-hover:text-white">
                     Info User
                   </p>
+                  </div>
                 </div>
               </NuxtLink>
               <font-awesome-icon

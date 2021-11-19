@@ -106,10 +106,12 @@ export default {
     },
     methods:{
         async deleteData(id){
+            let indexOfArrayItem = this.apars.findIndex(i => i.id_apar === id)
+
             const lokasi = this.$auth.user.lokasi
             const resp = await axios.delete(`http://localhost:3000/server/master/deleteapar/${id}/${lokasi}`)
             if(resp){
-                this.apars.splice(this.apars.indexOf(id), 1);
+                this.apars.splice(indexOfArrayItem, 1);
                 this.$router.push('/master/apar')
                 swal('data dihapus',{icon:'success'})
             }

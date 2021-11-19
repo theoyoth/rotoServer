@@ -166,6 +166,8 @@ export default {
      methods:{
         async postInputNas(){
                 const res = await axios.post('http://localhost:3000/server/master/inputnas',{
+                    iduser: this.$auth.user.id,
+                    lokasiServer: this.$auth.user.lokasi,
                     merek : this.inputNas.merek,
                     model : this.inputNas.model,
                     processor : this.inputNas.processor,

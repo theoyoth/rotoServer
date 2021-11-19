@@ -149,6 +149,8 @@ export default {
      methods:{
         async postInputAc(){
                 const res = await axios.post('http://localhost:3000/server/master/inputac',{
+                    iduser:this.$auth.user.id,
+                    lokasiServer:this.$auth.user.lokasi,
                     merek : this.inputAc.merek,
                     model : this.inputAc.model,
                     sumberDayaListrik : this.inputAc.sumberDayaListrik,
