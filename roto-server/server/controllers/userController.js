@@ -35,3 +35,12 @@ module.exports.cariuser = async (req, res) => {
     console.log(err)
   }
 }
+module.exports.addUser = async (req, res) => {
+  let conn
+  try{
+    const {namauser,roleuser,sandi} = req.body
+    conn = await pool.getConnection()
+
+    // const resp = await conn.query(`INSERT INTO users VALUES ('','${namauser}','${sandi}'),'${roleuser}'`)
+  }
+}

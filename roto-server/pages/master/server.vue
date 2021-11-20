@@ -96,39 +96,85 @@
               {{ $moment(hasilcari.garansi).format('DD-MM-YYYY') }}
             </td>
             <td class="py-3 flex justify-around w-full bg-gray-700">
-              <NuxtLink
-                :to="{
-                  name: 'master-detail-detailserver-detailserver',
-                  params: { id: hasilcari.id_server },
-                }"
-              >
-                <font-awesome-icon
-                  :icon="['fas', 'eye']"
-                  class="text-yellow-500"
-                />
-              </NuxtLink>
-              <NuxtLink
-                :to="{
-                  name: 'master-update-updateserver-server',
-                  params: { id: hasilcari.id_server },
-                }"
-              >
-                <font-awesome-icon
-                  :icon="['fas', 'pencil-alt']"
-                  class="text-yellow-500"
-                />
-              </NuxtLink>
-              <form
-                @click="deleteData(hasilcari.id_server)"
-                class="ml-2"
-              >
-                <button type="submit">
-                  <font-awesome-icon
-                    :icon="['fas', 'trash']"
-                    class="text-yellow-500"
-                  />
-                </button>
-              </form>
+              <div class="has-tooltip">
+                <span
+                  class="
+                    tooltip
+                    rounded
+                    text-xs
+                    shadow-lg
+                    p-1
+                    bg-gray-700
+                    text-white
+                    mt-7 -ml-5
+                  "
+                  >detail</span
+                >
+                <div class="bg-gray-700 w-7 h-7 rounded-xl flex items-center justify-center">
+                  <NuxtLink
+                    :to="{
+                      name: 'master-detail-detailserver-detailserver',
+                      params: { id: hasilcari.id_server },
+                    }"
+                  >
+                    <font-awesome-icon
+                      :icon="['fas', 'eye']"
+                      class="text-yellow-500"
+                    />
+                  </NuxtLink>
+                </div>
+              </div>
+              <div class="has-tooltip">
+                <span
+                  class="
+                    tooltip
+                    rounded
+                    text-xs
+                    shadow-lg
+                    p-1
+                    bg-gray-700
+                    text-white
+                    mt-7 -ml-4
+                  "
+                  >edit</span
+                >
+                <div class="bg-gray-700 w-7 h-7 rounded-xl flex items-center justify-center">
+                  <NuxtLink
+                    :to="{
+                      name: 'master-update-updateserver-server',
+                      params: { id: hasilcari.id_server },
+                    }"
+                  >
+                    <font-awesome-icon
+                      :icon="['fas', 'pencil-alt']"
+                      class="text-yellow-500"
+                    />
+                  </NuxtLink>
+                </div>
+              </div>
+              <div class="has-tooltip">
+                <span
+                  class="
+                    tooltip
+                    rounded
+                    text-xs
+                    shadow-lg
+                    p-1
+                    bg-gray-700
+                    text-white
+                    mt-7 -ml-4
+                  "
+                  >hapus</span
+                >
+                <div class="bg-gray-700 w-7 h-7 rounded-xl flex items-center justify-center">
+                  <button @click="deleteData(hasilcari.id_server)">
+                    <font-awesome-icon
+                      :icon="['fas', 'trash']"
+                      class="text-yellow-500"
+                    />
+                  </button>
+                </div>
+              </div>
             </td>
           </tr>
         </tbody>
@@ -144,35 +190,86 @@
             <td class="text-xs w-24">
               {{ $moment(server.garansi).format('DD-MM-YYYY') }}
             </td>
-            <td class="py-3 flex justify-around w-full bg-gray-700">
-              <NuxtLink
-                :to="{
-                  name: 'master-detail-detailserver-detailserver',
-                  params: { id: server.id_server },
-                }"
-              >
-                <font-awesome-icon
-                  :icon="['fas', 'eye']"
-                  class="text-yellow-500"
-                />
-              </NuxtLink>
-              <NuxtLink
-                :to="{
-                  name: 'master-update-updateserver-server',
-                  params: { id: server.id_server },
-                }"
-              >
-                <font-awesome-icon
-                  :icon="['fas', 'pencil-alt']"
-                  class="text-yellow-500"
-                />
-              </NuxtLink>
-              <button @click.prevent="deleteData(server.id_server)">
-                  <font-awesome-icon
-                    :icon="['fas', 'trash']"
-                    class="text-yellow-500"
-                  />
-              </button>
+            <td class="py-3 flex justify-around w-full">
+              <div class="has-tooltip">
+                 <span
+                  class="
+                    tooltip
+                    rounded
+                    text-xs
+                    shadow-lg
+                    p-1
+                    bg-gray-700
+                    text-white
+                    mt-7 -ml-5
+                  "
+                  >detail</span
+                >
+                <div class="bg-gray-700 w-7 h-7 rounded-xl flex items-center justify-center">
+                  <NuxtLink
+                    :to="{
+                      name: 'master-detail-detailserver-detailserver',
+                      params: { id: server.id_server },
+                    }"
+                  >
+                    <font-awesome-icon
+                      :icon="['fas', 'eye']"
+                      class="text-yellow-500"
+                    />
+                  </NuxtLink>
+                </div>
+              </div>
+              <div class="has-tooltip">
+                <span
+                  class="
+                    tooltip
+                    rounded
+                    text-xs
+                    shadow-lg
+                    p-1
+                    bg-gray-700
+                    text-white
+                    mt-7 -ml-4
+                  "
+                  >edit</span
+                >
+                <div class="bg-gray-700 w-7 h-7 rounded-xl flex items-center justify-center">
+                  <NuxtLink
+                    :to="{
+                      name: 'master-update-updateserver-server',
+                      params: { id: server.id_server },
+                    }"
+                  >
+                    <font-awesome-icon
+                      :icon="['fas', 'pencil-alt']"
+                      class="text-yellow-500"
+                    />
+                  </NuxtLink>
+                </div>
+              </div>
+              <div class="has-tooltip">
+              <span
+                  class="
+                    tooltip
+                    rounded
+                    text-xs
+                    shadow-lg
+                    p-1
+                    bg-gray-700
+                    text-white
+                    mt-7 -ml-4
+                  "
+                  >hapus</span
+                >
+                <div class="bg-gray-700 w-7 h-7 rounded-xl flex items-center justify-center">
+                  <button @click.prevent="deleteData(server.id_server)">
+                      <font-awesome-icon
+                        :icon="['fas', 'trash']"
+                        class="text-yellow-500"
+                      />
+                  </button>
+                </div>
+              </div>
             </td>
           </tr>
         </tbody>
@@ -190,6 +287,7 @@ export default {
         return{
             caribarang:"",
             cariserver:[],
+            servers:[],
             master:{
                 nama : "inputServer",
             },
@@ -197,15 +295,6 @@ export default {
         }
     },
     computed: {
-        servers() {
-            return this.$store.state.masterbarang.servers
-        },
-        hasilcariserver(){
-            return this.$store.state.masterbarang.cariserver
-        },
-        databerhasil(){
-            return this.$store.state.inputmasterbarang.inputData
-        },
         user(){
           return this.$auth.user
         }
@@ -234,15 +323,6 @@ export default {
               this.deletemsg = resp.data.errmsg
             }
         },
-        // async deleteData(id){
-        //     const lokasi = this.$auth.user.lokasi
-        //     const id = id
-
-        //   const response = await axios.post(
-        //     `http://localhost:3000/server/master/server/delete/${lokasi}/${id}`
-        //   )
-
-        // },
         async caribarangserver(){
           this.cariserver = []
             const res = await axios.get(`http://localhost:3000/server/cariserver/${this.caribarang}/${this.$auth.user.lokasi}`)
@@ -251,13 +331,21 @@ export default {
           })
         }
     },
-    mounted(){
-        const data = {
-          lokasiserver : this.$auth.user.lokasi,
-          idlogin : this.$auth.user.id
+    async mounted(){
+        const lokasiserver = this.$auth.user.lokasi
+        const idlogin = this.$auth.user.id
+        try{
+            const lokasi = this.$auth.user.lokasi
+            const resp = await axios.get(`http://localhost:3000/server/masterserver/${lokasiserver}/${idlogin}`)
+            resp.data.forEach(server => {
+                this.servers.push(server)
+            })
         }
-        this.$store.dispatch('masterbarang/getServersData',data)
-    }
+        catch(err){
+            console.error(err);
+        };
+    },
+
 }
 </script>
 

@@ -49,13 +49,47 @@
                     <td>{{hasilcari.voltage}}</td>
                     <td class="w-32">{{$moment(hasilcari.tahun).format('DD-MM-YYYY')}}</td>
                     <td class="w-32">{{$moment(hasilcari.garansi).format('DD-MM-YYYY')}}</td>
-                    <td class="py-3 flex justify-evenly w-full bg-gray-700">
-                        <NuxtLink :to="{name : 'master-update-updatebaterai-baterai', params:{id : hasilcari.id_baterai} }">
-                            <font-awesome-icon :icon="['fas','pencil-alt']" class="text-yellow-500"/>
-                        </NuxtLink>
-                        <button @click.prevent="deleteData(hasilcari.id_baterai)">
-                            <font-awesome-icon :icon="['fas','trash']" class="text-yellow-500"/>
-                        </button> 
+                    <td class="py-3 flex justify-evenly w-full ">
+                        <div class="has-tooltip">
+                            <span
+                            class="
+                                tooltip
+                                rounded
+                                text-xs
+                                shadow-lg
+                                p-1
+                                bg-gray-700
+                                text-white
+                                mt-7 -ml-4
+                            "
+                            >edit</span
+                            >
+                            <div class="bg-gray-700 w-7 h-7 rounded-xl flex items-center justify-center">
+                                <NuxtLink :to="{name : 'master-update-updatebaterai-baterai', params:{id : hasilcari.id_baterai} }">
+                                    <font-awesome-icon :icon="['fas','pencil-alt']" class="text-yellow-500"/>
+                                </NuxtLink>
+                            </div>
+                        </div>
+                        <div class="has-tooltip">
+                        <span
+                            class="
+                                tooltip
+                                rounded
+                                text-xs
+                                shadow-lg
+                                p-1
+                                bg-gray-700
+                                text-white
+                                mt-7 -ml-4
+                            "
+                            >hapus</span
+                            >
+                            <div class="bg-gray-700 w-7 h-7 rounded-xl flex items-center justify-center">
+                                <button @click.prevent="deleteData(hasilcari.id_baterai)">
+                                    <font-awesome-icon :icon="['fas','trash']" class="text-yellow-500"/>
+                                </button> 
+                            </div>
+                        </div>
                     </td>
                 </tr>
             </tbody>
@@ -66,13 +100,47 @@
                     <td>{{baterai.voltage}}</td>
                     <td class="w-32">{{$moment(baterai.tahun).format('DD-MM-YYYY')}}</td>
                     <td class="w-32">{{$moment(baterai.garansi).format('DD-MM-YYYY')}}</td>
-                    <td class="py-3 flex justify-evenly w-full bg-gray-700">
-                        <NuxtLink :to="{name : 'master-update-updatebaterai-baterai', params:{id : baterai.id_baterai} }">
-                            <font-awesome-icon :icon="['fas','pencil-alt']" class="text-yellow-500"/>
-                        </NuxtLink>
-                        <button @click.prevent="deleteData(baterai.id_baterai)">
-                            <font-awesome-icon :icon="['fas','trash']" class="text-yellow-500"/>
-                        </button> 
+                    <td class="py-3 flex justify-evenly w-full ">
+                        <div class="has-tooltip">
+                            <span
+                            class="
+                                tooltip
+                                rounded
+                                text-xs
+                                shadow-lg
+                                p-1
+                                bg-gray-700
+                                text-white
+                                mt-7 -ml-4
+                            "
+                            >edit</span
+                            >
+                            <div class="bg-gray-700 w-7 h-7 rounded-xl flex items-center justify-center">
+                                <NuxtLink :to="{name : 'master-update-updatebaterai-baterai', params:{id : baterai.id_baterai} }">
+                                    <font-awesome-icon :icon="['fas','pencil-alt']" class="text-yellow-500"/>
+                                </NuxtLink>
+                            </div>
+                        </div>
+                        <div class="has-tooltip">
+                        <span
+                            class="
+                                tooltip
+                                rounded
+                                text-xs
+                                shadow-lg
+                                p-1
+                                bg-gray-700
+                                text-white
+                                mt-7 -ml-4
+                            "
+                            >hapus</span
+                            >
+                            <div class="bg-gray-700 w-7 h-7 rounded-xl flex items-center justify-center">
+                                <button @click.prevent="deleteData(baterai.id_baterai)">
+                                    <font-awesome-icon :icon="['fas','trash']" class="text-yellow-500"/>
+                                </button> 
+                            </div>
+                        </div>
                     </td>
                 </tr>
             </tbody>

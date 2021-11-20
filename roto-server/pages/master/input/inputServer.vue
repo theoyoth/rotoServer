@@ -80,8 +80,8 @@
                     <div class="flex flex-col w-72">
                         <ValidationProvider rules="required|numeric" v-slot={errors}>
                             <div class="flex">
-                            <input type="text" name="memori" id="memori" class="p-2 w-full rounded-lg ring-gray-500 bg-gray-300" v-model="inputServer.memori" :disabled="inputServer.processor === ''" >
-                            <select name="kapasitas" id="kapasitas" class="p-2 rounded-r-lg ring-gray-500 -ml-2" :disabled="inputServer.processor === ''" >
+                            <input type="text" name="memori" id="memori" class="p-2 w-full rounded-lg outline-none bg-gray-300" v-model="inputServer.memori" :disabled="inputServer.processor === ''" >
+                            <select name="kapasitas" id="kapasitas" class="p-2 rounded-r-lg -ml-2" :disabled="inputServer.processor === ''" >
                                 <option value="gb">GB</option>
                                 <option value="tb">TB</option>
                             </select> 

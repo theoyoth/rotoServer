@@ -38,11 +38,16 @@
                 >
                   sandi
                 </label>
-                <input
-                  type="password"
-                  class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                  placeholder="sandi" v-model="login.sandi"
-                />
+                <div class="flex relative">
+                  <input
+                    :type="passwordFieldType"
+                    class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded-l-sm text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                    placeholder="sandi" v-model="login.sandi"
+                  >
+                  <div type="password" class="flex items-center p-2 bg-white rounded-r-sm w-10 absolute right-0 top-1/2 transform -translate-y-1/2" @click="showpassword();changeicon()">
+                    <font-awesome-icon :icon="eyeIcon" class="text-gray-700"/>
+                  </div>
+                </div>
               </div>
               <div class="relative w-full mb-3">
                  <label
@@ -51,11 +56,6 @@
                 >
                   lokasi
                 </label>
-
-                <!-- <select v-model="login.lokasi" name="lokasi" id="lokasi" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150">
-                    <option disabled value="">pilih lokasi</option>
-                    <option v-for="(lokasi,index) in lokasiserver" :key="index" :value="lokasi.nama">{{lokasi.nama}}</option>
-                </select> -->
                 <select v-model="login.lokasi" name="lokasi" id="lokasi" class="border-0 px-3 py-3 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150">
                     <option disabled value="">pilih lokasi</option>
                     <option value="roto 1">roto 1</option>
@@ -89,6 +89,8 @@ export default {
     auth:"guest",
     data(){
         return{
+          passwordFieldType:"password",
+          ruleIcon: 'asc',
             login :{
                 nama: '',
                 sandi: '',
@@ -100,6 +102,9 @@ export default {
     computed:{
         lokasiserver(){
             return this.$store.state.lokasiServer.lokasi
+        },
+        eyeIcon () {
+          return this.ruleIcon === 'asc' ? ['fas', 'eye'] : ['fas', 'eye-slash'];
         }
     },
     methods:{
@@ -123,7 +128,13 @@ export default {
             catch(err){ 
                 console.log(err)
             }
-        }         
+        }, 
+        showpassword(){
+          this.passwordFieldType = this.passwordFieldType == 'password' ? 'text' : 'password' 
+        },
+        changeicon () {
+          this.ruleIcon = this.ruleIcon === 'asc' ? 'desc' : 'asc';
+        }        
     },
     mounted(){ 
         if(this.$auth.loggedIn){

@@ -870,7 +870,7 @@ module.exports.masterkeyboardgetdata = async (req, res) => {
     conn = await pool.getConnection()
     if (lokasiServer == 'roto 1') {
       const resp = await conn.query(
-        `SELECT * FROM master_keymouseERE id_keyboard=${id}`
+        `SELECT * FROM master_keyboard WHERE id_keyboard=${id}`
       )
       res.send(resp)
     } else if (lokasiServer == 'roto 2') {

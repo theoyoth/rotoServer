@@ -52,24 +52,75 @@
                     <td>{{hasilcari.kelembapan}}</td>
                     <td>{{hasilcari.ac}}</td>
                     <td>{{hasilcari.ups}}</td>
-                    <td class="py-3 flex justify-around w-full bg-gray-700">
-                        <NuxtLink
-                            :to="{
-                            name: 'maintenance-detailmaintenance-detail',
-                            params: { id: hasilcari.id_maintenance },
-                            }"
+                    <td class="py-2 flex justify-around w-full">
+                        <div class="has-tooltip">
+                        <span
+                        class="
+                            tooltip
+                            rounded
+                            text-xs
+                            shadow-lg
+                            p-1
+                            bg-gray-700
+                            text-white
+                            mt-7 -ml-5
+                        "
+                        >detail</span
                         >
-                            <font-awesome-icon
-                            :icon="['fas', 'eye']"
-                            class="text-yellow-500"
-                            />
-                        </NuxtLink>
-                        <NuxtLink :to="{name : 'maintenance-updatemaintenance-maintenance', params:{id : hasilcari.id_maintenance} }">
-                            <font-awesome-icon :icon="['fas','pencil-alt']" class="text-yellow-500"/>
-                        </NuxtLink>
-                        <button @click.prevent="deleteData(hasilcari.id_maintenance)">
-                            <font-awesome-icon :icon="['fas','trash']" class="text-yellow-500"/>
-                        </button> 
+                            <div class="bg-gray-700 w-7 h-7 rounded-xl flex items-center justify-center">
+                                <NuxtLink
+                                    :to="{
+                                    name: 'maintenance-detailmaintenance-detail',
+                                    params: { id: hasilcari.id_maintenance },
+                                    }"
+                                >
+                                    <font-awesome-icon
+                                    :icon="['fas', 'eye']"
+                                    class="text-yellow-500"
+                                    />
+                                </NuxtLink>
+                            </div>
+                        </div>
+                        <div class="has-tooltip">
+                        <span
+                        class="
+                            tooltip
+                            rounded
+                            text-xs
+                            shadow-lg
+                            p-1
+                            bg-gray-700
+                            text-white
+                            mt-7 -ml-4
+                        "
+                        >edit</span
+                        >
+                            <div class="bg-gray-700 w-7 h-7 rounded-xl flex items-center justify-center">
+                                <NuxtLink :to="{name : 'maintenance-updatemaintenance-maintenance', params:{id : hasilcari.id_maintenance} }">
+                                    <font-awesome-icon :icon="['fas','pencil-alt']" class="text-yellow-500"/>
+                                </NuxtLink>
+                            </div>
+                        </div>
+                        <div class="has-tooltip">
+                        <span
+                            class="
+                                tooltip
+                                rounded
+                                text-xs
+                                shadow-lg
+                                p-1
+                                bg-gray-700
+                                text-white
+                                mt-7 -ml-4
+                            "
+                            >hapus</span
+                            >
+                            <div class="bg-gray-700 w-7 h-7 rounded-xl flex items-center justify-center">
+                                <button @click.prevent="deleteData(hasilcari.id_maintenance)">
+                                    <font-awesome-icon :icon="['fas','trash']" class="text-yellow-500"/>
+                                </button> 
+                            </div>
+                        </div>
                     </td>
                 </tr>
             </tbody> 
@@ -82,24 +133,75 @@
                     <td>{{main.kelembapan}}</td>
                     <td>{{main.ac}}</td>
                     <td>{{main.ups}}</td>
-                    <td class="py-3 flex justify-around w-full bg-gray-700">
-                        <NuxtLink
-                            :to="{
-                            name: 'maintenance-detailmaintenance-detail',
-                            params: { id: main.id_maintenance },
-                            }"
+                    <td class="py-2 flex justify-around w-full">
+                        <div class="has-tooltip">
+                        <span
+                        class="
+                            tooltip
+                            rounded
+                            text-xs
+                            shadow-lg
+                            p-1
+                            bg-gray-700
+                            text-white
+                            mt-7 -ml-5
+                        "
+                        >detail</span
                         >
-                            <font-awesome-icon
-                            :icon="['fas', 'eye']"
-                            class="text-yellow-500"
-                            />
-                        </NuxtLink>
-                        <NuxtLink :to="{name : 'maintenance-updatemaintenance-maintenance', params:{id : main.id_maintenance} }">
-                            <font-awesome-icon :icon="['fas','pencil-alt']" class="text-yellow-500"/>
-                        </NuxtLink>
-                        <button @click.prevent="deleteData(main.id_maintenance)">
-                            <font-awesome-icon :icon="['fas','trash']" class="text-yellow-500"/>
-                        </button> 
+                            <div class="bg-gray-700 w-7 h-7 rounded-xl flex items-center justify-center">
+                                <NuxtLink
+                                    :to="{
+                                    name: 'maintenance-detailmaintenance-detail',
+                                    params: { id: main.id_maintenance },
+                                    }"
+                                >
+                                    <font-awesome-icon
+                                    :icon="['fas', 'eye']"
+                                    class="text-yellow-500"
+                                    />
+                                </NuxtLink>
+                            </div>
+                        </div>
+                        <div class="has-tooltip">
+                        <span
+                        class="
+                            tooltip
+                            rounded
+                            text-xs
+                            shadow-lg
+                            p-1
+                            bg-gray-700
+                            text-white
+                            mt-7 -ml-4
+                        "
+                        >edit</span
+                        >
+                            <div class="bg-gray-700 w-7 h-7 rounded-xl flex items-center justify-center">
+                                <NuxtLink :to="{name : 'maintenance-updatemaintenance-maintenance', params:{id : main.id_maintenance} }">
+                                    <font-awesome-icon :icon="['fas','pencil-alt']" class="text-yellow-500"/>
+                                </NuxtLink>
+                            </div>
+                         </div>
+                         <div class="has-tooltip">
+                        <span
+                            class="
+                                tooltip
+                                rounded
+                                text-xs
+                                shadow-lg
+                                p-1
+                                bg-gray-700
+                                text-white
+                                mt-7 -ml-4
+                            "
+                            >hapus</span
+                            >
+                            <div class="bg-gray-700 w-7 h-7 rounded-xl flex items-center justify-center">
+                                <button @click.prevent="deleteData(main.id_maintenance)">
+                                    <font-awesome-icon :icon="['fas','trash']" class="text-yellow-500"/>
+                                </button> 
+                            </div>
+                         </div>
                     </td>
                 </tr>
             </tbody>   

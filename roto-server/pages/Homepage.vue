@@ -4,7 +4,7 @@
     <section class="bg-gray-100 min-h-screen w-widthContentField m-auto mt-7 p-4 ">
       <div class="container mx-auto h-full py-5">
         <div class="flex">
-          <h1 class="text-3xl text-gray-700 font-semibold">WELCOME, <span>{{user.nama}}</span></h1>
+          <h1 class="text-3xl text-gray-700 font-semibold">Welcome, <span>{{user.nama}}</span></h1>
           <!-- <p class="text-2xl">{{user.nama}}</p> -->
         </div>
         <hr class="mt-4">
@@ -140,8 +140,8 @@
                         class="text-gray-200 text-lg z-10"
                     />
                   </div>
-                  <h1 class="text-xl font-semibold">{{hasilMaintenanceSecurity.baterai}}%</h1>
-                  <p class="text-xs">Baterai</p>
+                  <h1 class="text-xl font-semibold">{{hasilMaintenanceSecurity.ups}}%</h1>
+                  <p class="text-xs">UPS</p>
                 </div>
               </div>
           </div>

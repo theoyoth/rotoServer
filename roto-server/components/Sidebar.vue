@@ -143,10 +143,6 @@
                   </div>
                 </div>
               </NuxtLink>
-              <font-awesome-icon
-                :icon="['fas', 'chevron-right']"
-                class="text-gray-500 mr-0 group-hover:text-white"
-              />
             </div>
           </li>
           <li class="items-center" v-if="!isSecurity">
@@ -365,10 +361,6 @@
                   </div>
                 </div>
               </NuxtLink>
-              <font-awesome-icon
-                :icon="['fas', 'chevron-right']"
-                class="text-gray-500 mr-0 group-hover:text-white"
-              />
             </div>
           </li>
 
@@ -405,10 +397,6 @@
                   </div>
                 </div>
               </NuxtLink>
-              <font-awesome-icon
-                :icon="['fas', 'chevron-right']"
-                class="text-gray-500 mr-0 group-hover:text-white"
-              />
             </div>
           </li>
           <li class="items-center" v-if="isPa">
@@ -424,7 +412,7 @@
               "
             >
               <NuxtLink to="/infouser">
-                <div class="flex">
+                <div class="flex items-center">
                   <div class="w-8 text-center">
                   <font-awesome-icon
                     :icon="['fas', 'users']"
@@ -438,10 +426,6 @@
                   </div>
                 </div>
               </NuxtLink>
-              <font-awesome-icon
-                :icon="['fas', 'chevron-right']"
-                class="text-gray-500 mr-0 group-hover:text-white"
-              />
             </div>
           </li>
         </ul>

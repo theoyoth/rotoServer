@@ -40,7 +40,7 @@
                     <th class="font-semibold">dimensi</th>
                     <th class="font-semibold">kapasitas pendingin</th>
                     <th class="font-semibold">garansi</th>
-                    <th class="font-semibold w-28">aksi</th>
+                    <th class="font-semibold w-24">aksi</th>
                 </tr>
             </thead>
             <tbody v-if="caribarang !== ''" class="text-center bg-white bg-opacity-40 divide-y divide-gray-300">
@@ -52,24 +52,75 @@
                     <td class="w-24">{{hasilcari.dimensi}}</td>
                     <td class="w-24">{{hasilcari.kapasitas_pendingin}}</td>
                     <td class="w-24">{{$moment(hasilcari.garansi).format('DD-MM-YYYY')}}</td>
-                    <td class="py-3 flex justify-around w-full bg-gray-700">
-                        <NuxtLink
-                            :to="{
-                            name: 'master-detail-detailac-detailac',
-                            params: { id: hasilcari.id_ac },
-                            }"
-                        >
-                            <font-awesome-icon
-                            :icon="['fas', 'eye']"
-                            class="text-yellow-500"
-                            />
-                        </NuxtLink>
-                        <NuxtLink :to="{name : 'master-update-updateac-ac', params:{id : hasilcari.id_ac} }">
-                            <font-awesome-icon :icon="['fas','pencil-alt']" class="text-yellow-500"/>
-                        </NuxtLink>
-                        <button @click.prevent="deleteData(hasilcari.id_ac)">
-                            <font-awesome-icon :icon="['fas','trash']" class="text-yellow-500"/>
-                        </button> 
+                    <td class="py-3 flex justify-around w-full">
+                        <div class="has-tooltip">
+                             <span
+                            class="
+                                tooltip
+                                rounded
+                                text-xs
+                                shadow-lg
+                                p-1
+                                bg-gray-700
+                                text-white
+                                mt-7 -ml-5
+                            "
+                            >detail</span
+                            >
+                            <div class="bg-gray-700 w-7 h-7 rounded-xl flex items-center justify-center">
+                                <NuxtLink
+                                    :to="{
+                                    name: 'master-detail-detailac-detailac',
+                                    params: { id: hasilcari.id_ac },
+                                    }"
+                                >
+                                    <font-awesome-icon
+                                    :icon="['fas', 'eye']"
+                                    class="text-yellow-500"
+                                    />
+                                </NuxtLink>
+                            </div>
+                        </div>
+                        <div class="has-tooltip">
+                             <span
+                            class="
+                                tooltip
+                                rounded
+                                text-xs
+                                shadow-lg
+                                p-1
+                                bg-gray-700
+                                text-white
+                                mt-7 -ml-4
+                            "
+                            >edit</span
+                            >
+                            <div class="bg-gray-700 w-7 h-7 rounded-xl flex items-center justify-center">
+                                <NuxtLink :to="{name : 'master-update-updateac-ac', params:{id : hasilcari.id_ac} }">
+                                    <font-awesome-icon :icon="['fas','pencil-alt']" class="text-yellow-500"/>
+                                </NuxtLink>
+                            </div>
+                        </div>
+                        <div class="has-tooltip">
+                            <span
+                            class="
+                                tooltip
+                                rounded
+                                text-xs
+                                shadow-lg
+                                p-1
+                                bg-gray-700
+                                text-white
+                                mt-7 -ml-4
+                            "
+                            >hapus</span
+                            >
+                            <div class="bg-gray-700 w-7 h-7 rounded-xl flex items-center justify-center">
+                                <button @click.prevent="deleteData(hasilcari.id_ac)">
+                                    <font-awesome-icon :icon="['fas','trash']" class="text-yellow-500"/>
+                                </button> 
+                            </div>
+                        </div>
                     </td>
                 </tr>
             </tbody>
@@ -81,24 +132,75 @@
                     <td class="w-32">{{ac.dimensi}}</td>
                     <td class="w-32">{{ac.kapasitas_pendingin}}</td>
                     <td class="w-28">{{$moment(ac.garansi).format("DD-MM-YYYY")}}</td>
-                    <td class="py-3 flex justify-around w-full bg-gray-700">
-                        <NuxtLink
-                            :to="{
-                            name: 'master-detail-detailac-detailac',
-                            params: { id: ac.id_ac},
-                            }"
-                        >
-                            <font-awesome-icon
-                            :icon="['fas', 'eye']"
-                            class="text-yellow-500"
-                            />
-                        </NuxtLink>
-                        <NuxtLink :to="{name : 'master-update-updateac-ac', params:{id : ac.id_ac} }">
-                            <font-awesome-icon :icon="['fas','pencil-alt']" class="text-yellow-500"/>
-                        </NuxtLink>
-                        <button @click.prevent="deleteData(ac.id_ac)">
-                            <font-awesome-icon :icon="['fas','trash']" class="text-yellow-500"/>
-                        </button> 
+                    <td class="py-3 flex justify-around w-full">
+                        <div class="has-tooltip">
+                             <span
+                            class="
+                                tooltip
+                                rounded
+                                text-xs
+                                shadow-lg
+                                p-1
+                                bg-gray-700
+                                text-white
+                                mt-7 -ml-5
+                            "
+                            >detail</span
+                            >
+                            <div class="bg-gray-700 w-7 h-7 rounded-xl flex items-center justify-center">
+                                <NuxtLink
+                                    :to="{
+                                    name: 'master-detail-detailac-detailac',
+                                    params: { id: ac.id_ac},
+                                    }"
+                                >
+                                    <font-awesome-icon
+                                    :icon="['fas', 'eye']"
+                                    class="text-yellow-500"
+                                    />
+                                </NuxtLink>
+                            </div>
+                        </div>
+                        <div class="has-tooltip">
+                             <span
+                            class="
+                                tooltip
+                                rounded
+                                text-xs
+                                shadow-lg
+                                p-1
+                                bg-gray-700
+                                text-white
+                                mt-7 -ml-4
+                            "
+                            >edit</span
+                            >
+                            <div class="bg-gray-700 w-7 h-7 rounded-xl flex items-center justify-center">
+                                <NuxtLink :to="{name : 'master-update-updateac-ac', params:{id : ac.id_ac} }">
+                                    <font-awesome-icon :icon="['fas','pencil-alt']" class="text-yellow-500"/>
+                                </NuxtLink>
+                            </div>
+                        </div>
+                        <div class="has-tooltip">
+                            <span
+                            class="
+                                tooltip
+                                rounded
+                                text-xs
+                                shadow-lg
+                                p-1
+                                bg-gray-700
+                                text-white
+                                mt-7 -ml-4
+                            "
+                            >hapus</span
+                            >
+                            <div class="bg-gray-700 w-7 h-7 rounded-xl flex items-center justify-center">
+                                <button @click.prevent="deleteData(ac.id_ac)">
+                                    <font-awesome-icon :icon="['fas','trash']" class="text-yellow-500"/>
+                                </button> 
+                            </div>
+                        </div>
                     </td>
                 </tr>
             </tbody>

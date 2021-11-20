@@ -4,6 +4,7 @@ import {
   numeric,
   alpha_spaces,
   alpha_dash,
+  confirmed,
 } from 'vee-validate/dist/rules'
 
 // Object.keys(rules).forEach((rule) => {
@@ -28,4 +29,8 @@ extend('alpha_spaces', {
 extend('alpha_dash', {
   ...alpha_dash,
   message: 'isikan huruf dan angka',
+})
+extend('confirmed', {
+  ...confirmed,
+  message: 'password tidak cocok',
 })

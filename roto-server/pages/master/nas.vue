@@ -25,10 +25,6 @@
             </NuxtLink>
         </div>
 
-        <!-- <div v-if="deletemsg" class="relative mt-5 w-1/4 text-center m-auto">
-        <p class="text-white bg-blue-500 font-semibold p-2 rounded-lg">{{ deletemsg }}</p>
-        </div> -->
-
         <table class="table space-y-6 container mx-auto table-auto border-collapse border border-white mt-7 divide-y divide-gray-300">
             <thead class="bg-gray-700 text-sm has-tooltip">
                 <span class="tooltip rounded shadow-lg p-1 bg-gray-700 text-white -mt-10 absolute left-2/4 transform -translate-x-2/4">semua detail barang</span>
@@ -39,8 +35,8 @@
                     <th class="font-semibold">storage</th>  
                     <th class="font-semibold">tipe</th>    
                     <th class="font-semibold">CPU</th>
-                    <th class="font-semibold">garansi</th>
-                    <th class="font-semibold w-32">aksi</th>
+                    <th class="font-semibold w-24">garansi</th>
+                    <th class="font-semibold w-28">aksi</th>
                 </tr>
             </thead>
             <tbody v-if="caribarang !== ''" class="text-center bg-white bg-opacity-40 divide-y divide-gray-300">
@@ -51,23 +47,74 @@
                     <td>{{hasilcari.storage}}</td>
                     <td>{{hasilcari.tipe}}</td>
                     <td>{{hasilcari.cpu}}</td>
-                    <td class="w-24">{{$moment(hasilcari.garansi).format('DD-MM-YYYY')}}</td>
-                    <td class="py-3 flex justify-around w-full bg-gray-700">
-                        <NuxtLink 
-                        :to="{name:'master-detail-detailnas-detailnas',
-                            params: { id: hasilcari.id_nas },
-                        }">
-                            <font-awesome-icon
-                            :icon="['fas', 'eye']"
-                            class="text-yellow-500"
-                            />
-                        </NuxtLink>
-                        <NuxtLink :to="{name : 'master-update-updatenas-nas',params:{id : hasilcari.id_nas} }">
-                            <font-awesome-icon :icon="['fas','pencil-alt']" class="text-yellow-500"/>
-                        </NuxtLink>
-                        <button @click.prevent="deleteData(hasilcari.id_nas)">
-                            <font-awesome-icon :icon="['fas','trash']" class="text-yellow-500"/>
-                        </button> 
+                    <td>{{$moment(hasilcari.garansi).format('DD-MM-YYYY')}}</td>
+                    <td class="py-3 flex justify-around w-full">
+                        <div class="has-tooltip">
+                        <span
+                        class="
+                            tooltip
+                            rounded
+                            text-xs
+                            shadow-lg
+                            p-1
+                            bg-gray-700
+                            text-white
+                            mt-7 -ml-5
+                        "
+                        >detail</span
+                        >
+                            <div class="bg-gray-700 w-7 h-7 rounded-xl flex items-center justify-center">
+                                <NuxtLink 
+                                :to="{name:'master-detail-detailnas-detailnas',
+                                    params: { id: hasilcari.id_nas },
+                                }">
+                                    <font-awesome-icon
+                                    :icon="['fas', 'eye']"
+                                    class="text-yellow-500"
+                                    />
+                                </NuxtLink>
+                            </div>
+                        </div>
+                        <div class="has-tooltip">
+                        <span
+                        class="
+                            tooltip
+                            rounded
+                            text-xs
+                            shadow-lg
+                            p-1
+                            bg-gray-700
+                            text-white
+                            mt-7 -ml-4
+                        "
+                        >edit</span
+                        >
+                            <div class="bg-gray-700 w-7 h-7 rounded-xl flex items-center justify-center">
+                                <NuxtLink :to="{name : 'master-update-updatenas-nas',params:{id : hasilcari.id_nas} }">
+                                    <font-awesome-icon :icon="['fas','pencil-alt']" class="text-yellow-500"/>
+                                </NuxtLink>
+                            </div>
+                        </div>
+                        <div class="has-tooltip">
+                        <span
+                            class="
+                                tooltip
+                                rounded
+                                text-xs
+                                shadow-lg
+                                p-1
+                                bg-gray-700
+                                text-white
+                                mt-7 -ml-4
+                            "
+                            >hapus</span
+                            >
+                            <div class="bg-gray-700 w-7 h-7 rounded-xl flex items-center justify-center">
+                                <button @click.prevent="deleteData(hasilcari.id_nas)">
+                                    <font-awesome-icon :icon="['fas','trash']" class="text-yellow-500"/>
+                                </button> 
+                            </div>
+                        </div>
                     </td>
                 </tr>
             </tbody>
@@ -79,23 +126,74 @@
                     <td>{{nas.storage}}</td>
                     <td>{{nas.tipe}}</td>
                     <td>{{nas.cpu}}</td>
-                    <td class="w-24">{{$moment(nas.garansi).format('DD-MM-YYYY')}}</td>
-                    <td class="py-3 flex justify-around w-full bg-gray-700">
-                        <NuxtLink 
-                        :to="{name:'master-detail-detailnas-detailnas',
-                            params: { id: nas.id_nas },
-                        }">
-                            <font-awesome-icon
-                            :icon="['fas', 'eye']"
-                            class="text-yellow-500"
-                            />
-                        </NuxtLink>
-                        <NuxtLink :to="{name : 'master-update-updatenas-nas', params:{id : nas.id_nas} }">
-                            <font-awesome-icon :icon="['fas','pencil-alt']" class="text-yellow-500"/>
-                        </NuxtLink>
-                        <button @click.prevent="deleteData(nas.id_nas)">
-                            <font-awesome-icon :icon="['fas','trash']" class="text-yellow-500"/>
-                        </button> 
+                    <td>{{$moment(nas.garansi).format('DD-MM-YYYY')}}</td>
+                    <td class="py-3 flex justify-around w-full ">
+                        <div class="has-tooltip">
+                        <span
+                        class="
+                            tooltip
+                            rounded
+                            text-xs
+                            shadow-lg
+                            p-1
+                            bg-gray-700
+                            text-white
+                            mt-7 -ml-5
+                        "
+                        >detail</span
+                        >
+                            <div class="bg-gray-700 w-7 h-7 rounded-xl flex items-center justify-center">
+                                <NuxtLink 
+                                :to="{name:'master-detail-detailnas-detailnas',
+                                    params: { id: nas.id_nas },
+                                }">
+                                    <font-awesome-icon
+                                    :icon="['fas', 'eye']"
+                                    class="text-yellow-500"
+                                    />
+                                </NuxtLink>
+                            </div>
+                        </div>
+                        <div class="has-tooltip">
+                        <span
+                        class="
+                            tooltip
+                            rounded
+                            text-xs
+                            shadow-lg
+                            p-1
+                            bg-gray-700
+                            text-white
+                            mt-7 -ml-4
+                        "
+                        >edit</span
+                        >
+                            <div class="bg-gray-700 w-7 h-7 rounded-xl flex items-center justify-center">
+                                <NuxtLink :to="{name : 'master-update-updatenas-nas', params:{id : nas.id_nas} }">
+                                    <font-awesome-icon :icon="['fas','pencil-alt']" class="text-yellow-500"/>
+                                </NuxtLink>
+                            </div>
+                        </div>
+                        <div class="has-tooltip">
+                        <span
+                            class="
+                                tooltip
+                                rounded
+                                text-xs
+                                shadow-lg
+                                p-1
+                                bg-gray-700
+                                text-white
+                                mt-7 -ml-4
+                            "
+                            >hapus</span
+                            >
+                            <div class="bg-gray-700 w-7 h-7 rounded-xl flex items-center justify-center">
+                                <button @click.prevent="deleteData(nas.id_nas)">
+                                    <font-awesome-icon :icon="['fas','trash']" class="text-yellow-500"/>
+                                </button> 
+                            </div>
+                        </div>
                     </td>
                 </tr>
             </tbody>

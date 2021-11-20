@@ -354,7 +354,7 @@ module.exports.mainteananceuser = async (req, res) => {
     // id role 6 adalah security
     if (lokasiServer == 'roto 1') {
       const rows = await conn.query(
-        'SELECT suhu,kelembapan,baterai FROM maintenance INNER JOIN users ON maintenance.id_users = users.id_user WHERE id_role=6 ORDER BY maintenance.id_maintenance DESC LIMIT 1'
+        'SELECT suhu,kelembapan,ups FROM maintenance INNER JOIN users ON maintenance.id_users = users.id_user WHERE id_role=6 ORDER BY maintenance.id_maintenance DESC LIMIT 1'
       )
       if (rows) {
         res.send(rows)
@@ -363,7 +363,7 @@ module.exports.mainteananceuser = async (req, res) => {
       }
     } else if (lokasiServer == 'roto 2') {
       const rows = await conn.query(
-        'SELECT suhu,kelembapan,baterai FROM maintenance_roto_2 INNER JOIN users ON maintenance_roto_2.id_users = users.id_user WHERE id_role=6 ORDER BY maintenance_roto_2.id_maintenance DESC LIMIT 1'
+        'SELECT suhu,kelembapan,ups FROM maintenance_roto_2 INNER JOIN users ON maintenance_roto_2.id_users = users.id_user WHERE id_role=6 ORDER BY maintenance_roto_2.id_maintenance DESC LIMIT 1'
       )
       if (rows) {
         res.send(rows)
@@ -372,7 +372,7 @@ module.exports.mainteananceuser = async (req, res) => {
       }
     } else if (lokasiServer == 'roto 3') {
       const rows = await conn.query(
-        'SELECT suhu,kelembapan,baterai FROM maintenance_roto_3 INNER JOIN users ON maintenance_roto_3.id_users = users.id_user WHERE id_role=6 ORDER BY maintenance_roto_3.id_maintenance DESC LIMIT 1'
+        'SELECT suhu,kelembapan,ups FROM maintenance_roto_3 INNER JOIN users ON maintenance_roto_3.id_users = users.id_user WHERE id_role=6 ORDER BY maintenance_roto_3.id_maintenance DESC LIMIT 1'
       )
       if (rows) {
         res.send(rows)
@@ -381,7 +381,7 @@ module.exports.mainteananceuser = async (req, res) => {
       }
     } else if (lokasiServer == 'tinta') {
       const rows = await conn.query(
-        'SELECT suhu,kelembapan,baterai FROM maintenance_tinta INNER JOIN users ON maintenance_tinta.id_users = users.id_user WHERE id_role=6 ORDER BY maintenance_tinta.id_maintenance DESC LIMIT 1'
+        'SELECT suhu,kelembapan,ups FROM maintenance_tinta INNER JOIN users ON maintenance_tinta.id_users = users.id_user WHERE id_role=6 ORDER BY maintenance_tinta.id_maintenance DESC LIMIT 1'
       )
       if (rows) {
         res.send(rows)

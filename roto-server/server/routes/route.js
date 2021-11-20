@@ -222,4 +222,8 @@ router.get('/lokasi', lokasiServer.lokasiserver)
 router.get('/users', userController.getAllUsers)
 router.get('/cariuser', userController.cariuser)
 
+// mengatur user oleh PA
+// tambah user
+router.post('/user/tambah', userController.addUser)
+
 module.exports = router

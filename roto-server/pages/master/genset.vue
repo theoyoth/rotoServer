@@ -33,8 +33,8 @@
                     <th class="font-semibold py-3">Merek</th>
                     <th class="font-semibold py-3">Model</th>   
                     <th class="font-semibold">tipe</th>    
-                    <th class="font-semibold">tahun</th>
-                    <th class="font-semibold">garansi</th>
+                    <th class="font-semibold w-32">tahun</th>
+                    <th class="font-semibold w-32">garansi</th>
                     <th class="font-semibold w-20">aksi</th>
                 </tr>
             </thead>
@@ -44,15 +44,49 @@
                     <td class="py-3">{{hasilcari.merek}}</td>
                     <td>{{hasilcari.model}}</td>
                     <td>{{hasilcari.tipe}}</td>
-                    <td class="w-32">{{$moment(hasilcari.tahun).format('DD-MM-YYYY')}}</td>
-                    <td class="w-32">{{$moment(hasilcari.garansi).format('DD-MM-YYYY')}}</td>
-                    <td class="py-3 flex justify-around w-full bg-gray-700">
-                        <NuxtLink :to="{name : 'master-update-updategenset-genset', params:{id : hasilcari.id_genset} }">
-                            <font-awesome-icon :icon="['fas','pencil-alt']" class="text-yellow-500"/>
-                        </NuxtLink>
-                        <button @click.prevent="deleteData(hasilcari.id_genset)">
-                            <font-awesome-icon :icon="['fas','trash']" class="text-yellow-500"/>
-                        </button> 
+                    <td>{{$moment(hasilcari.tahun).format('DD-MM-YYYY')}}</td>
+                    <td>{{$moment(hasilcari.garansi).format('DD-MM-YYYY')}}</td>
+                    <td class="py-2 flex justify-around w-full">
+                        <div class="has-tooltip">
+                        <span
+                        class="
+                            tooltip
+                            rounded
+                            text-xs
+                            shadow-lg
+                            p-1
+                            bg-gray-700
+                            text-white
+                            mt-7 -ml-4
+                        "
+                        >edit</span
+                        >
+                            <div class="bg-gray-700 w-7 h-7 rounded-xl flex items-center justify-center">
+                                <NuxtLink :to="{name : 'master-update-updategenset-genset', params:{id : hasilcari.id_genset} }">
+                                    <font-awesome-icon :icon="['fas','pencil-alt']" class="text-yellow-500"/>
+                                </NuxtLink>
+                            </div>
+                        </div>
+                        <div class="has-tooltip">
+                        <span
+                            class="
+                                tooltip
+                                rounded
+                                text-xs
+                                shadow-lg
+                                p-1
+                                bg-gray-700
+                                text-white
+                                mt-7 -ml-4
+                            "
+                            >hapus</span
+                            >
+                            <div class="bg-gray-700 w-7 h-7 rounded-xl flex items-center justify-center">
+                                <button @click.prevent="deleteData(hasilcari.id_genset)">
+                                    <font-awesome-icon :icon="['fas','trash']" class="text-yellow-500"/>
+                                </button>
+                            </div>
+                        </div> 
                     </td>
                 </tr>
             </tbody>
@@ -62,15 +96,49 @@
                     <td class="py-3">{{genset.merek}}</td>
                     <td>{{genset.model}}</td>
                     <td>{{genset.tipe}}</td>
-                    <td class="w-32">{{$moment(genset.tahun).format('DD-MM-YYYY')}}</td>
-                    <td class="w-32">{{$moment(genset.garansi).format('DD-MM-YYYY')}}</td>
-                    <td class="py-3 flex justify-around w-full bg-gray-700">
-                        <NuxtLink :to="{name : 'master-update-updategenset-genset', params:{id : genset.id_genset} }">
-                            <font-awesome-icon :icon="['fas','pencil-alt']" class="text-yellow-500"/>
-                        </NuxtLink>
-                        <button @click.prevent="deleteData(genset.id_genset)">
-                            <font-awesome-icon :icon="['fas','trash']" class="text-yellow-500"/>
-                        </button> 
+                    <td>{{$moment(genset.tahun).format('DD-MM-YYYY')}}</td>
+                    <td>{{$moment(genset.garansi).format('DD-MM-YYYY')}}</td>
+                    <td class="py-2 flex justify-around w-full">
+                        <div class="has-tooltip">
+                        <span
+                        class="
+                            tooltip
+                            rounded
+                            text-xs
+                            shadow-lg
+                            p-1
+                            bg-gray-700
+                            text-white
+                            mt-7 -ml-4
+                        "
+                        >edit</span
+                        >
+                            <div class="bg-gray-700 w-7 h-7 rounded-xl flex items-center justify-center">
+                                <NuxtLink :to="{name : 'master-update-updategenset-genset', params:{id : genset.id_genset} }">
+                                    <font-awesome-icon :icon="['fas','pencil-alt']" class="text-yellow-500"/>
+                                </NuxtLink>
+                            </div>
+                        </div>
+                        <div class="has-tooltip">
+                        <span
+                            class="
+                                tooltip
+                                rounded
+                                text-xs
+                                shadow-lg
+                                p-1
+                                bg-gray-700
+                                text-white
+                                mt-7 -ml-4
+                            "
+                            >hapus</span
+                            >
+                            <div class="bg-gray-700 w-7 h-7 rounded-xl flex items-center justify-center">
+                                <button @click.prevent="deleteData(genset.id_genset)">
+                                    <font-awesome-icon :icon="['fas','trash']" class="text-yellow-500"/>
+                                </button> 
+                            </div>
+                        </div>
                     </td>
                 </tr>
             </tbody>
