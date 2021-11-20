@@ -77,7 +77,7 @@
               <p>{{ user.nama }}</p>
             </div>
             <div class="text-gray-500">
-              <p>{{ user.level }}</p>
+              <p>{{ user.role }}</p>
             </div>
           </div>
         </div>

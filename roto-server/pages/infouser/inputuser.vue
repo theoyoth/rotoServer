@@ -33,20 +33,21 @@
 
                     <label for="merek" class="block mb-2 text-sm">role</label>
                     <div class="flex flex-col">
-                          <select name="role" class="p-2 w-full rounded-lg" v-model="inputUser.role" >
+                          <select name="role" id="role" class="p-2 w-full rounded-lg" v-model="inputUser.role">
+                              <option disabled value="">pilih role</option>
                               <option value="EDP">EDP</option>
                               <option value="PA">PA</option>
-                              <option value="admin teknisi">admin teknisi</option>
-                              <option value="teknisi listrik">teknisi listrik</option>
-                              <option value="teknisi ac">teknisi AC</option>
-                              <option value="security">security</option>
+                              <option value="Admin teknisi">admin teknisi</option>
+                              <option value="Teknisi listrik">teknisi listrik</option>
+                              <option value="Teknisi ac">teknisi AC</option>
+                              <option value="Security">security</option>
                           </select> 
                     </div>
                 </div>
                 <div class="mb-4 has-tooltip" >
                     <span class="tooltip text-xs rounded shadow-lg p-1 bg-gray-700 text-white ml-32">masukan password</span>
 
-                    <label for="model" class="block mb-2 text-sm">password</label>
+                    <label for="model" class="block mb-2 text-sm">sandi</label>
                     <div class="flex flex-col">
                         <ValidationProvider rules="required" v-slot={errors} vid="confirm">
                           <div class="flex">
@@ -62,7 +63,7 @@
                 <div class="mb-4 has-tooltip" >
                     <span class="tooltip text-xs rounded shadow-lg p-1 bg-gray-700 text-white ml-32">konfirmasi password</span>
 
-                    <label for="model" class="block mb-2 text-sm">confirm password</label>
+                    <label for="model" class="block mb-2 text-sm">konfirmasi sandi</label>
                     <div class="flex flex-col">
                         <ValidationProvider v-slot={errors}  rules="required|confirmed:confirm">
                             <input type="password" v-model="inputUser.confirm" name="model" class="p-2 w-full rounded-lg outline-none bg-gray-200">
@@ -85,7 +86,7 @@ import axios from 'axios'
 import moment from 'moment'
 import { ValidationObserver, ValidationProvider } from "vee-validate";
 export default {
-   middleware:"isAuthenticated",
+  //  middleware:"isAuthenticated",
     components:{
         ValidationObserver,
         ValidationProvider
@@ -119,6 +120,10 @@ export default {
           if(resp){
             this.$router.push('/infouser')
             swal('user berhasil ditambah',{icon:'success'})
+          }
+          else{
+            this.$router.push('/infouser/inputuser')
+            swal('Error',errmsg,{icon:'error'})
           }
         }
         catch(err) {

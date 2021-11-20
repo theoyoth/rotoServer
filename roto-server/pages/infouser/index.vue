@@ -25,6 +25,7 @@
         <table class="table space-y-6 container mx-auto table-auto border-collapse w-3/4 mt-10 divide-y divide-gray-300" ref="listitem" id="listitem">
           <thead class="text-sm bg-gray-700">
               <tr class="text-sm text-gray-200"> 
+                  <th class="font-semibold py-3 px-2 w-4">no.</th>
                   <th class="font-semibold py-3">nama</th>
                   <th class="font-semibold py-3">role</th>
                   <th class="font-semibold py-3 w-24">aksi</th>
@@ -33,8 +34,9 @@
           </thead>
           <tbody v-if="cariuser !== ''" class="text-center bg-white bg-opacity-40 divide-y divide-gray-300">
               <tr class="text-sm" v-for="(hasilcari,index) in hasilcariusers" :key="index">
+                  <td>{{index+1}}</td>
                   <td class="py-3">{{hasilcari.nama}}</td>
-                  <td>{{hasilcari.level}}</td>
+                  <td>{{hasilcari.role}}</td>
                   <td class="py-3 flex justify-evenly w-full ">
                         <div class="has-tooltip">
                             <span
@@ -51,7 +53,7 @@
                             >edit</span
                             >
                             <div class="bg-gray-700 w-7 h-7 rounded-xl flex items-center justify-center">
-                                <NuxtLink :to="{name : 'master-update-updaterak-rak', params:{id : 1} }">
+                                <NuxtLink :to="{name : 'infouser-update-updateuser', params:{id : hasilcari.id_user} }">
                                     <font-awesome-icon :icon="['fas','pencil-alt']" class="text-yellow-500"/>
                                 </NuxtLink>
                             </div>
@@ -71,7 +73,7 @@
                             >hapus</span
                             >
                             <div class="bg-gray-700 w-7 h-7 rounded-xl flex items-center justify-center">
-                                <button @click.prevent="deleteData()">
+                                <button @click.prevent="deleteData(hasilcari.id_user)">
                                     <font-awesome-icon :icon="['fas','trash']" class="text-yellow-500"/>
                                 </button> 
                             </div>
@@ -81,8 +83,9 @@
           </tbody> 
           <tbody v-else class="text-center bg-white bg-opacity-40 divide-y divide-gray-300">
               <tr class="text-sm" v-for="(us,index) in users" :key="index">
+                  <td>{{index+1}}</td>
                   <td class="py-3">{{us.nama}}</td>
-                  <td>{{us.level}}</td>
+                  <td>{{us.role}}</td>
                   <td class="py-3 flex justify-evenly w-full ">
                         <div class="has-tooltip">
                             <span
@@ -99,7 +102,7 @@
                             >edit</span
                             >
                             <div class="bg-gray-700 w-7 h-7 rounded-xl flex items-center justify-center">
-                                <NuxtLink :to="{name : 'master-update-updaterak-rak', params:{id : 1} }">
+                                <NuxtLink :to="{name : 'infouser-update-updateuser', params:{id : us.id_user} }">
                                     <font-awesome-icon :icon="['fas','pencil-alt']" class="text-yellow-500"/>
                                 </NuxtLink>
                             </div>
@@ -119,7 +122,7 @@
                             >hapus</span
                             >
                             <div class="bg-gray-700 w-7 h-7 rounded-xl flex items-center justify-center">
-                                <button @click.prevent="deleteData()">
+                                <button @click.prevent="deleteData(us.id_user)">
                                     <font-awesome-icon :icon="['fas','trash']" class="text-yellow-500"/>
                                 </button> 
                             </div>
@@ -155,7 +158,21 @@ export default {
       catch (err){
         console.log(err)
       }
-    }
+    },
+    async deleteData(id){
+            let indexOfArrayItem = this.users.findIndex(i => i.id_user === id)
+            
+            const resp = await axios.delete(`http://localhost:3000/server/user/delete/${id}`)
+            if(resp) {
+              this.users.splice(indexOfArrayItem, 1);
+              this.$router.push('/infouser')
+              swal('data dihapus',{icon:'success'})
+            }
+            if(resp.data.errmsg){
+                this.$router.push('/infouser')
+                swal('Error',resp.data.errmsg,{icon:'error'})
+            }
+        },
   },
   async mounted(){
     try {

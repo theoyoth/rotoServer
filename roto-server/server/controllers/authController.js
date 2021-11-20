@@ -2,6 +2,7 @@ const pool = require('../db.js')
 const jwt = require('jsonwebtoken')
 const dotenv = require('dotenv')
 const cookieParser = require('cookie-parser')
+const bcrypt = require('bcrypt')
 
 dotenv.config()
 
@@ -11,35 +12,39 @@ module.exports.login = async (req, res) => {
   try {
     if (nama && sandi && lokasi) {
       conn = await pool.getConnection()
-      const data = await conn.query(
-        `SELECT * FROM users WHERE nama='${nama}' AND sandi='${sandi}'`
-      )
+      const data = await conn.query(`SELECT * FROM users WHERE nama='${nama}'`)
       const lok = await conn.query(
         `SELECT * FROM lokasi_server WHERE nama_lokasi='${lokasi}'`
       )
+
       if (data.length > 0 && lok.length > 0) {
         let user = data[0]
         let lokasi = lok[0]
 
-        const token = jwt.sign(
-          {
-            id: user.id_user,
-            nama: user.nama,
-            level: user.level,
-            lokasiid: lokasi.id_lokasi,
-            lokasi: lokasi.nama_lokasi,
-          },
-          process.env.TOKEN_KEY,
-          { expiresIn: '1h' }
-        )
-        res.cookie('aksestoken', token, {
-          httpOnly: true,
-          sameSite: 'strict',
-          secure: true,
-        })
-        res.json({ token })
+        const validPassword = await bcrypt.compare(sandi, user.sandi)
+        if (validPassword) {
+          const token = jwt.sign(
+            {
+              id: user.id_user,
+              nama: user.nama,
+              role: user.role,
+              lokasiid: lokasi.id_lokasi,
+              lokasi: lokasi.nama_lokasi,
+            },
+            process.env.TOKEN_KEY,
+            { expiresIn: '1h' }
+          )
+          res.cookie('aksestoken', token, {
+            httpOnly: true,
+            sameSite: 'strict',
+            secure: true,
+          })
+          res.json({ token })
+        } else {
+          res.json({ errmsg: 'password tidak cocok' })
+        }
       } else {
-        return res.json({ errmsg: 'data yang dimasukan tidak terdaftar' })
+        return res.json({ errmsg: 'data yang dimasukkan tidak terdaftar' })
       }
       conn.release()
     } else {
@@ -85,7 +90,7 @@ module.exports.homepage = async (req, res) => {
         user: {
           id: userdata.id_user,
           nama: userdata.nama,
-          level: userdata.level,
+          role: userdata.role,
           lokasi: lokasi.nama_lokasi,
           token: token,
         },

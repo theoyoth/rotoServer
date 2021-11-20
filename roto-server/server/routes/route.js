@@ -225,5 +225,11 @@ router.get('/cariuser', userController.cariuser)
 // mengatur user oleh PA
 // tambah user
 router.post('/user/tambah', userController.addUser)
+// hapus user
+router.delete('/user/delete/:id', userController.deleteUser)
+// ambil data user tertentu
+router.get('/user/:id', userController.getUser)
+// update data user
+router.post('/user/update', userController.updateUser)
 
 module.exports = router
