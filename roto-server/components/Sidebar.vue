@@ -55,12 +55,12 @@
           rounded
         "
       >
-        <div class="flex justify-around items-center w-3/5 mx-auto">
+        <div class="flex flex-col w-3/4 items-center mx-auto">
           <div
             class="
               rounded rounded-full
-              w-16
-              h-16
+              w-12
+              h-12
               bg-gray-500
               flex
               justify-center
@@ -72,7 +72,7 @@
               class="text-yellow-500 text-lg"
             />
           </div>
-          <div class="text-sm">
+          <div class="text-xs mt-2 text-center">
             <div class="font-semibold">
               <p>{{ user.nama }}</p>
             </div>
@@ -275,6 +275,12 @@
             >
               <li class="py-1 hover:text-gray-400">
                 <NuxtLink to="/maintenance">maintenance</NuxtLink>
+              </li>
+              <li class="py-1 hover:text-gray-400" v-if="isadminTeknisi">
+                <NuxtLink to="/maintenance/maintenancelistrik">maintenance teknisi listrik</NuxtLink>
+              </li>
+              <li class="py-1 hover:text-gray-400" v-if="isadminTeknisi">
+                <NuxtLink to="/maintenance/maintenanceac">maintenance teknisi AC</NuxtLink>
               </li>
             </ul>
           </li>

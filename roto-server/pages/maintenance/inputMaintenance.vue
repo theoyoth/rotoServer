@@ -173,7 +173,6 @@ export default {
     .activesubmit {
         background-color: rgb(55, 65, 81);
         color:whitesmoke;
-        width:6rem;
         cursor:pointer;
         opacity:1;
         padding-top: .5rem;

@@ -170,19 +170,36 @@ export default {
     },
     methods:{
         async deleteData(id){
-            let indexOfArrayItem = this.cctvs.findIndex(i => i.id_cctv === id)
+            swal({
+                title: 'anda yakin?',
+                text: 'sekali dihapus, data tidak akan bisa kembali',
+                icon: 'warning',
+                buttons: true,
+                dangerMode: true
+            }).then(suc=>{
+                if(suc){
+                    let indexOfArrayItem = this.cctvs.findIndex(i => i.id_cctv === id)
 
-            const lokasi = this.$auth.user.lokasi
-            const resp = await axios.delete(`http://localhost:3000/server/master/deletecctv/${id}/${lokasi}`)
-            if(resp){
-                this.cctvs.splice(indexOfArrayItem, 1);
-                this.$router.push('/master/cctv')
-                swal('data dihapus',{icon:'success'})
-            }
-            if(resp.data.errmsg){
-                this.$router.push('/master/cctv')
-                swal('Error', resp.data.errmsg,{icon:'error'})
-            }
+                    const lokasi = this.$auth.user.lokasi
+                    axios.delete(`http://localhost:3000/server/master/deletecctv/${id}/${lokasi}`)
+                    .then(resp=>{
+                        if(resp){
+                            this.cctvs.splice(indexOfArrayItem, 1);
+                            this.$router.push('/master/cctv')
+                            swal('data dihapus',{icon:'success'})
+                        }
+                    }).catch(err=>{
+                        if(err.data.errmsg){
+                            this.$router.push('/master/cctv')
+                            swal('Error', err.data.errmsg,{icon:'error'})
+                        }
+                    })
+                } else{
+                    swal('Error','gagal menghapus',{icon:'error'})
+                }
+            }).catch(err=>{
+                swal('Error','ada yang salah',{icon:'error'})
+            })
         },
         async caribarangcctv(){
             this.caricctv = []
@@ -195,8 +212,9 @@ export default {
     async mounted(){
         try{
             const lokasi = this.$auth.user.lokasi
+            const idlogin = this.$auth.user.id
 
-            const resp = await axios.get(`http://localhost:3000/server/mastercctv?lokasi=${lokasi}`)
+            const resp = await axios.get(`http://localhost:3000/server/mastercctv/${lokasi}/${idlogin}`)
             resp.data.forEach(cctv => {
                 this.cctvs.push(cctv)
             })

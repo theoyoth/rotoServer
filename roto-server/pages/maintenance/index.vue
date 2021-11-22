@@ -232,20 +232,41 @@ export default {
         }
     },
     methods:{
-        async deleteData(id){
-            let indexOfArrayItem = this.hasilMaintenance.findIndex(i => i.id_maintenance === id)
-
-            const lokasi = this.$auth.user.lokasi
-            const resp = await axios.delete(`/server/maintenance/delete/${id}/${lokasi}`)
-            if(resp){
-                this.hasilMaintenance.splice(indexOfArrayItem, 1);
-                this.$router.push('/maintenance')
-                swal('data dihapus',{icon:'success'})
-            }
-            if(resp.data.errmsg){
-                this.$router.push('/maintenance')
-                swal('Error', resp.data.errmsg,{icon:'error'})
-            }
+        deleteData(id){
+            swal({
+                title: 'anda yakin?',
+                text: 'sekali dihapus, data tidak akan bisa kembali',
+                icon: 'warning',
+                buttons: true,
+                dangerMode: true
+            }).then(suc=>{
+                if(suc){
+                    let indexOfArrayItem = this.hasilMaintenance.findIndex(i => i.id_maintenance === id)
+                    const lokasi = this.$auth.user.lokasi
+                    axios.delete(`/server/maintenance/delete/${id}/${lokasi}`)
+                    .then(resp=>{
+                        if(resp){
+                            this.hasilMaintenance.splice(indexOfArrayItem, 1);
+                            this.$router.push('/maintenance')
+                            swal('data dihapus',{icon:'success'})
+                        }
+                    }).catch(err=>{
+                        if(err.data.errmsg){
+                            this.$router.push('/maintenance')
+                            swal('Error', err.data.errmsg,{icon:'error'})
+                        }
+                    })
+                }
+                else{
+                    swal('Error','gagal menghapus',{icon:'error'})
+                }
+            }).catch(err=>{
+                swal('Error','ada yang salah',{icon:'error'})
+            })
+            
+            // else{
+            //     swal('Error','data tidak dihapus',{icon:'error'})
+            // }
         },
         async caridimaintenance(){
             this.hasilcarimaintenance = []

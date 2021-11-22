@@ -174,19 +174,36 @@ export default {
     },
     methods:{
         async deleteData(id){
-            let indexOfArrayItem = this.apars.findIndex(i => i.id_apar === id)
+            swal({
+                title: 'anda yakin?',
+                text: 'sekali dihapus, data tidak akan bisa kembali',
+                icon: 'warning',
+                buttons: true,
+                dangerMode: true
+            }).then(suc=>{
+                if(suc){
+                    let indexOfArrayItem = this.apars.findIndex(i => i.id_apar === id)
 
-            const lokasi = this.$auth.user.lokasi
-            const resp = await axios.delete(`http://localhost:3000/server/master/deleteapar/${id}/${lokasi}`)
-            if(resp){
-                this.apars.splice(indexOfArrayItem, 1);
-                this.$router.push('/master/apar')
-                swal('data dihapus',{icon:'success'})
-            }
-            if(resp.data.errmsg){
-                this.$router.push('/master/apar')
-                swal("Error", resp.data.errmsg,{icon:'error'})
-            }
+                    const lokasi = this.$auth.user.lokasi
+                    axios.delete(`http://localhost:3000/server/master/deleteapar/${id}/${lokasi}`)
+                    .then(resp=>{
+                        if(resp){
+                            this.apars.splice(indexOfArrayItem, 1);
+                            this.$router.push('/master/apar')
+                            swal('data dihapus',{icon:'success'})
+                        }
+                    }).catch(err=>{
+                        if(err.data.errmsg){
+                            this.$router.push('/master/apar')
+                            swal("Error", err.data.errmsg,{icon:'error'})
+                        }
+                    })
+                } else{
+                    swal('Error','gagal menghapus',{icon:'error'})
+                }
+            }).catch(err=>{
+                swal('Error','ada yang salah',{icon:'error'})
+            })
         },
          async caribarangapar(){
             this.cariapar = []
@@ -199,7 +216,8 @@ export default {
     async mounted(){
         try{
             const lokasi = this.$auth.user.lokasi
-            const resp = await axios.get(`http://localhost:3000/server/masterapar?lokasi=${lokasi}`)
+            const idlogin = this.$auth.user.id
+            const resp = await axios.get(`http://localhost:3000/server/masterapar/${lokasi}/${idlogin}`)
             resp.data.forEach(apar => {
                 this.apars.push(apar)
             })

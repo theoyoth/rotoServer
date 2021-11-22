@@ -11,7 +11,7 @@ export default{
             datasets:[
               {
                 label: "suhu",
-                backgroundColor:"#4c51bf",
+                backgroundColor:"rgb(120,200,225)",
                 borderColor: "#ed64a6",
                 data:[10,20,30,10,22,21,10],
               }

@@ -175,19 +175,36 @@ export default {
     },
     methods:{
         async deleteData(id){
-            let indexOfArrayItem = this.gensets.findIndex(i => i.id_genset === id)
+            swal({
+                title: 'anda yakin?',
+                text: 'sekali dihapus, data tidak akan bisa kembali',
+                icon: 'warning',
+                buttons: true,
+                dangerMode: true
+            }).then(suc=>{
+                if(suc){
+                    let indexOfArrayItem = this.gensets.findIndex(i => i.id_genset === id)
 
-            const lokasi = this.$auth.user.lokasi
-            const resp = await axios.delete(`/server/master/genset/delete/${id}/${lokasi}`)
-            if(resp){
-                this.gensets.splice(indexOfArrayItem, 1);
-                this.$router.push('/master/genset')
-                swal('data dihapus',{icon:'success'})
-            }
-            if(resp.data.errmsg){
-                this.$router.push('/master/genset')
-                swal("Error", resp.data.errmsg,{icon:'error'})
-            }
+                    const lokasi = this.$auth.user.lokasi
+                    axios.delete(`/server/master/genset/delete/${id}/${lokasi}`)
+                    .then(resp=>{
+                        if(resp){
+                            this.gensets.splice(indexOfArrayItem, 1);
+                            this.$router.push('/master/genset')
+                            swal('data dihapus',{icon:'success'})
+                        }
+                    }).catch(err=>{
+                        if(err.data.errmsg){
+                            this.$router.push('/master/genset')
+                            swal("Error", err.data.errmsg,{icon:'error'})
+                        }
+                    })
+                }else{
+                    swal('Error','gagal menghapus',{icon:'error'})
+                }
+            }).catch(err=>{
+                swal('Error','ada yang salah',{icon:'error'})
+            })
         },
         async caribaranggenset(){
             this.carigenset = []
@@ -200,7 +217,8 @@ export default {
     async mounted(){
         try{
             const lokasi = this.$auth.user.lokasi
-            const resp = await axios.get(`http://localhost:3000/server/mastergenset?lokasi=${lokasi}`)
+            const idlogin = this.$auth.user.id
+            const resp = await axios.get(`http://localhost:3000/server/mastergenset/${lokasi}/${idlogin}`)
             resp.data.forEach(genset => {
                 this.gensets.push(genset)
             })

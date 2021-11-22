@@ -145,6 +145,16 @@
                 </div>
               </div>
           </div>
+          <hr class="mt-8">
+          <h1 class="text-3xl mt-4 text-gray-700 font-semibold">Graphic</h1>
+          <div class="w-full mt-10">
+            <div>
+              <BarChart/>
+            </div>
+            <div class="mt-8">
+              <BarChart/>
+            </div>
+          </div>
         </div>       
       </div>
     </section>

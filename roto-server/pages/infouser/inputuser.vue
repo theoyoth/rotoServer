@@ -4,11 +4,11 @@
     <Navbar/>
     <section class="bg-gray-100 min-h-screen w-widthContentField m-auto mt-7 p-4 ">
         <NuxtLink to="/infouser"
-          class="flex items-center justify-between rounded-md w-28 px-4 py-2 bg-gray-700">
-          <div>
+          class="group flex items-center justify-between rounded-md w-28 px-4 py-2 bg-gray-700 ">
+          <div class="transform transition ease-in duration-300 group-hover:-translate-x-2">
             <font-awesome-icon :icon="['fas', 'arrow-left']" class="text-gray-200" />
           </div>
-          <p class="font-medium text-sm text-gray-200">kembali</p>
+          <p class="font-medium text-sm text-gray-200 group-hover:translate-x-2">kembali</p>
         </NuxtLink> 
         <!-- <p class="text-center text-xl text-gray-700 font-semibold">Input User baru</p> -->
 
@@ -52,9 +52,9 @@
                         <ValidationProvider rules="required" v-slot={errors} vid="confirm">
                           <div class="flex">
                             <input :type="passwordFieldType" v-model="inputUser.sandi" name="model" id="model" class="p-2 w-full rounded-l-lg outline-none bg-gray-200">
-                            <button type="password" class="flex items-center p-2 bg-gray-200 rounded-r-lg" @click="showpassword();changeicon()">
+                            <div type="password" class="flex cursor-pointer items-center p-2 bg-gray-200 rounded-r-lg" @click="showpassword();changeicon();">
                              <font-awesome-icon :icon="eyeIcon" class="text-gray-700"/>
-                            </button>
+                            </div>
                           </div>
                         <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
                         </ValidationProvider>
@@ -73,7 +73,7 @@
                 </div>
                 
             </div>
-        <button class="opacity-10 cursor-default mt-5 bg-gray-700 text-gray-200 w-full py-2 rounded" type="submit" :class="{activesubmit : valid}" :disabled="invalid">tambah</button>
+        <button class="opacity-10 cursor-default mt-5 m-auto bg-gray-700 text-gray-200 w-full py-2 rounded" type="submit" :class="{activesubmit : valid}" :disabled="invalid">tambah</button>
         </div>
     </form>
     </ValidationObserver>
@@ -86,7 +86,7 @@ import axios from 'axios'
 import moment from 'moment'
 import { ValidationObserver, ValidationProvider } from "vee-validate";
 export default {
-  //  middleware:"isAuthenticated",
+   middleware:"isAuthenticated",
     components:{
         ValidationObserver,
         ValidationProvider
@@ -123,7 +123,7 @@ export default {
           }
           else{
             this.$router.push('/infouser/inputuser')
-            swal('Error',errmsg,{icon:'error'})
+            swal('Error',resp.data.errmsg,{icon:'error'})
           }
         }
         catch(err) {
@@ -135,7 +135,8 @@ export default {
       },
       changeicon () {
 			this.ruleIcon = this.ruleIcon === 'asc' ? 'desc' : 'asc';
-		}
+		  },
+      
     }
 }
 </script>
@@ -145,6 +146,7 @@ export default {
     background-color: rgb(37, 45, 56);
     color:whitesmoke;
     cursor:pointer;
+    width:100%;
     opacity:1;
     padding-top: .5rem;
     padding-bottom: .5rem;

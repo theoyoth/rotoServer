@@ -180,19 +180,36 @@ export default {
     },
     methods:{
          async deleteData(id){
-            let indexOfArrayItem = this.networks.findIndex(i => i.id_network === id)
+             swal({
+                title: 'anda yakin?',
+                text: 'sekali dihapus, data tidak akan bisa kembali',
+                icon: 'warning',
+                buttons: true,
+                dangerMode: true
+            }).then(suc=>{
+                if(suc){
+                    let indexOfArrayItem = this.networks.findIndex(i => i.id_network === id)
 
-            const lokasi = this.$auth.user.lokasi
-            const resp = await axios.delete(`/server/master/deletenetwork/${id}/${lokasi}`)
-            if(resp){
-                this.networks.splice(indexOfArrayItem, 1);
-                this.$router.push('/master/network')
-                swal('data dihapus',{icon:'success'})
-            }
-            if(resp.data.errmsg){
-                this.$router.push('/master/network')
-                swal("Error", resp.data.errmsg,{icon:'error'})
-            }
+                    const lokasi = this.$auth.user.lokasi
+                    axios.delete(`/server/master/deletenetwork/${id}/${lokasi}`)
+                    .then(resp=>{
+                        if(resp){
+                            this.networks.splice(indexOfArrayItem, 1);
+                            this.$router.push('/master/network')
+                            swal('data dihapus',{icon:'success'})
+                        }
+                    }).catch(err=>{
+                        if(err.data.errmsg){
+                            this.$router.push('/master/network')
+                            swal("Error", err.data.errmsg,{icon:'error'})
+                        }
+                    })
+                } else{
+                    swal('Error','gagal menghapus',{icon:'error'})
+                }
+            }).catch(err=>{
+                swal('Error','ada yang salah',{icon:'error'})
+            })
         },
         async caribarangnetwork(){
             this.carinetwork = []
@@ -205,8 +222,9 @@ export default {
     async mounted(){
         try{
             const lokasi = this.$auth.user.lokasi
+            const idlogin = this.$auth.user.id
 
-            const resp = await axios.get(`http://localhost:3000/server/masternetwork?lokasi=${lokasi}`)
+            const resp = await axios.get(`http://localhost:3000/server/masternetwork/${lokasi}/${idlogin}`)
             resp.data.forEach(network => {
                 this.networks.push(network)   
             })

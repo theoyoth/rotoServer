@@ -307,21 +307,36 @@ export default {
     },
     methods:{
         async deleteData(id){
-          console.log(this.servers)
-           let indexOfArrayItem = this.servers.findIndex(i => i.id_server === id)
+          swal({
+                title: 'anda yakin?',
+                text: 'sekali dihapus, data tidak akan bisa kembali',
+                icon: 'warning',
+                buttons: true,
+                dangerMode: true
+            }).then(suc=>{
+              if(suc){
+                let indexOfArrayItem = this.servers.findIndex(i => i.id_server === id)
 
-          const lokasi = this.$auth.user.lokasi
-            const resp = await axios.delete(`http://localhost:3000/server/master/server/delete/${id}/${lokasi}`)
-            if(resp) {
-              this.servers.splice(indexOfArrayItem, 1);
-              this.$router.push('/master/server')
-              swal('data dihapus',{icon:'success'})
-            }
-            
-            if(resp.data.errmsg){
-              swal('Error','gagal dihapus',{icon:'error'})
-              this.deletemsg = resp.data.errmsg
-            }
+                const lokasi = this.$auth.user.lokasi
+                  axios.delete(`http://localhost:3000/server/master/server/delete/${id}/${lokasi}`)
+                  .then(resp=>{
+                    if(resp) {
+                      this.servers.splice(indexOfArrayItem, 1);
+                      this.$router.push('/master/server')
+                      swal('data dihapus',{icon:'success'})
+                    }
+                  }).catch(err=>{
+                    if(err.data.errmsg){
+                      swal('Error','gagal dihapus',{icon:'error'})
+                      this.deletemsg = err.data.errmsg
+                    }
+                  })
+              } else{
+                    swal('Error','gagal menghapus',{icon:'error'})
+                }
+            }).catch(err=>{
+                swal('Error','ada yang salah',{icon:'error'})
+            })
         },
         async caribarangserver(){
           this.cariserver = []

@@ -225,19 +225,36 @@ export default {
     },
     methods:{
         async deleteData(id){
-            let indexOfArrayItem = this.nass.findIndex(i => i.id_nas === id)
+            swal({
+                title: 'anda yakin?',
+                text: 'sekali dihapus, data tidak akan bisa kembali',
+                icon: 'warning',
+                buttons: true,
+                dangerMode: true
+            }).then(suc=>{
+                if(suc){
+                    let indexOfArrayItem = this.nass.findIndex(i => i.id_nas === id)
 
-            const lokasi = this.$auth.user.lokasi
-            const resp = await axios.delete(`/server/master/nas/delete/${id}/${lokasi}`)
-            if(resp){
-                this.nass.splice(indexOfArrayItem, 1);
-                this.$router.push('/master/nas')
-                swal('data dihapus',{icon:'success'})
-            }
-            if(resp.data.errmsg){
-                this.$router.push('/master/nas')
-                swal('Error', resp.data.msg,{icon:'error'})
-            }
+                    const lokasi = this.$auth.user.lokasi
+                    axios.delete(`/server/master/nas/delete/${id}/${lokasi}`)
+                    .then(resp=>{
+                        if(resp){
+                            this.nass.splice(indexOfArrayItem, 1);
+                            this.$router.push('/master/nas')
+                            swal('data dihapus',{icon:'success'})
+                        }
+                    }).catch(err=>{
+                        if(err.data.errmsg){
+                            this.$router.push('/master/nas')
+                            swal('Error', err.data.msg,{icon:'error'})
+                        }
+                    })
+                } else{
+                    swal('Error','gagal menghapus',{icon:'error'})
+                }
+            }).catch(err=>{
+                swal('Error','ada yang salah',{icon:'error'})
+            })
         },
         async caribarangnas(){
             this.carinas = []
@@ -250,7 +267,8 @@ export default {
     async mounted(){
         try{
             const lokasi = this.$auth.user.lokasi
-            const resp = await axios.get(`http://localhost:3000/server/masternas?lokasi=${lokasi}`)
+            const idlogin = this.$auth.user.id
+            const resp = await axios.get(`http://localhost:3000/server/masternas/${lokasi}/${idlogin}`)
             resp.data.forEach(nas => {
                 this.nass.push(nas)
             })

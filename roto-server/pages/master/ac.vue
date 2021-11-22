@@ -232,19 +232,36 @@ export default {
     },
     methods:{
     async deleteData(id){
-        let indexOfArrayItem = this.acs.findIndex(i => i.id_ac === id)
+        swal({
+            title: 'anda yakin?',
+            text: 'sekali dihapus, data tidak akan bisa kembali',
+            icon: 'warning',
+            buttons: true,
+            dangerMode: true
+        }).then(suc=>{
+            if(suc){
+                let indexOfArrayItem = this.acs.findIndex(i => i.id_ac === id)
 
-        const lokasi = this.$auth.user.lokasi
-        const resp = await axios.delete(`/server/master/deleteac/${id}/${lokasi}`)
-        if(resp){
-            this.acs.splice(indexOfArrayItem, 1);
-            this.$router.push('/master/ac')
-            swal('data dihapus',{icon:'success'})
-        }
-        if(resp.data.errmsg){
-            this.$router.push('/master/ac')
-            swal("error", resp.data.errmsg,{icon:'error'})
-        }
+                const lokasi = this.$auth.user.lokasi
+                axios.delete(`/server/master/deleteac/${id}/${lokasi}`)
+                .then(resp=>{
+                    if(resp){
+                        this.acs.splice(indexOfArrayItem, 1);
+                        this.$router.push('/master/ac')
+                        swal('data dihapus',{icon:'success'})
+                    }
+                }).catch(err=>{
+                    if(err.data.errmsg){
+                        this.$router.push('/master/ac')
+                        swal("error", err.data.errmsg,{icon:'error'})
+                    }
+                })
+            } else{
+                    swal('Error','gagal menghapus',{icon:'error'})
+                }
+        }).catch(err=>{
+                swal('Error','ada yang salah',{icon:'error'})
+            })
     },
     async caribarangac(){
         this.cariac = []
@@ -257,7 +274,8 @@ export default {
     async mounted(){
         try{
             const lokasi = this.$auth.user.lokasi
-            const resp = await axios.get(`http://localhost:3000/server/masterac?lokasi=${lokasi}`)
+            const idlogin = this.$auth.user.id
+            const resp = await axios.get(`http://localhost:3000/server/masterac/${lokasi}/${idlogin}`)
             resp.data.forEach(ac => {
                 this.acs.push(ac)
             })

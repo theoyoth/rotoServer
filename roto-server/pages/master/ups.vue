@@ -230,19 +230,36 @@ export default {
     },
     methods:{
         async deleteData(id){
-        let indexOfArrayItem = this.upss.findIndex(i => i.id_ups === id)
+            swal({
+                title: 'anda yakin?',
+                text: 'sekali dihapus, data tidak akan bisa kembali',
+                icon: 'warning',
+                buttons: true,
+                dangerMode: true
+            }).then(suc=>{
+                if(suc){
+                    let indexOfArrayItem = this.upss.findIndex(i => i.id_ups === id)
 
-        const lokasi = this.$auth.user.lokasi
-        const resp = await axios.delete(`/server/master/deleteups/${id}/${lokasi}`)
-        if(resp){
-            this.upss.splice(indexOfArrayItem, 1);
-            this.$router.push('/master/ups')
-            swal('data dihapus',{icon:'success'})
-        }
-        if(resp.data.errmsg){
-            this.$router.push('/master/ups')
-            swal('Error',resp.data.errmsg,{icon:'error'})
-        }
+                    const lokasi = this.$auth.user.lokasi
+                    axios.delete(`/server/master/deleteups/${id}/${lokasi}`)
+                    .then(resp=>{
+                        if(resp){
+                            this.upss.splice(indexOfArrayItem, 1);
+                            this.$router.push('/master/ups')
+                            swal('data dihapus',{icon:'success'})
+                        }
+                    }).catch(err=>{
+                        if(err.data.errmsg){
+                            this.$router.push('/master/ups')
+                            swal('Error',err.data.errmsg,{icon:'error'})
+                        }
+                    })
+                } else{
+                    swal('Error','gagal menghapus',{icon:'error'})
+                }
+            }).catch(err=>{
+                swal('Error','ada yang salah',{icon:'error'})
+            })
     },
         
         async caribarangups(){

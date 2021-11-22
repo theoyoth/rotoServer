@@ -189,19 +189,37 @@ export default {
     },
     methods:{
         async deleteData(id){
-            let indexOfArrayItem = this.raks.findIndex(i => i.id_rak === id)
+            swal({
+                title: 'anda yakin?',
+                text: 'sekali dihapus, data tidak akan bisa kembali',
+                icon: 'warning',
+                buttons: true,
+                dangerMode: true
+            }).then(suc=>{
+                if(suc){
+                    let indexOfArrayItem = this.raks.findIndex(i => i.id_rak === id)
+                    
+                    const lokasi = this.$auth.user.lokasi
+                    axios.delete(`http://localhost:3000/server/master/deleterak/${id}/${lokasi}`)
+                    .then(resp=>{
+                        if(resp) {
+                        this.raks.splice(indexOfArrayItem, 1);
+                        this.$router.push('/master/rak')
+                        swal('data dihapus',{icon:'success'})
+                        }
+                    }).catch(err=>{
+                        if(err.data.errmsg){
+                            this.$router.push('/master/rak')
+                            swal('Error',err.data.errmsg,{icon:'error'})
+                        }
+                    })
+                } else{
+                    swal('Error','gagal menghapus',{icon:'error'})
+                }    
+            }).catch(err=>{
+                swal('Error','ada yang salah',{icon:'error'})
+            })
             
-            const lokasi = this.$auth.user.lokasi
-            const resp = await axios.delete(`http://localhost:3000/server/master/deleterak/${id}/${lokasi}`)
-            if(resp) {
-              this.raks.splice(indexOfArrayItem, 1);
-              this.$router.push('/master/rak')
-              swal('data dihapus',{icon:'success'})
-            }
-            if(resp.data.errmsg){
-                this.$router.push('/master/rak')
-                swal('Error',resp.data.errmsg,{icon:'error'})
-            }
         },
         async caribarangrak(){
             this.carirak = []

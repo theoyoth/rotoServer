@@ -6,7 +6,7 @@
             :icon="['fas', 'warehouse']"
             class="text-gray-700 mr-2"
         />
-        <!-- {{user.lokasi}} -->
+        {{user.lokasi}}
         </div>
       <button @click.prevent="logout"
             class="

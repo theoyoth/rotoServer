@@ -38,7 +38,7 @@
                   <td class="py-3">{{hasilcari.nama}}</td>
                   <td>{{hasilcari.role}}</td>
                   <td class="py-3 flex justify-evenly w-full ">
-                        <div class="has-tooltip">
+                        <!-- <div class="has-tooltip">
                             <span
                             class="
                                 tooltip
@@ -57,7 +57,7 @@
                                     <font-awesome-icon :icon="['fas','pencil-alt']" class="text-yellow-500"/>
                                 </NuxtLink>
                             </div>
-                        </div>
+                        </div> -->
                         <div class="has-tooltip">
                             <span
                             class="
@@ -87,7 +87,7 @@
                   <td class="py-3">{{us.nama}}</td>
                   <td>{{us.role}}</td>
                   <td class="py-3 flex justify-evenly w-full ">
-                        <div class="has-tooltip">
+                        <!-- <div class="has-tooltip">
                             <span
                             class="
                                 tooltip
@@ -106,7 +106,7 @@
                                     <font-awesome-icon :icon="['fas','pencil-alt']" class="text-yellow-500"/>
                                 </NuxtLink>
                             </div>
-                        </div>
+                        </div> -->
                         <div class="has-tooltip">
                             <span
                             class="
