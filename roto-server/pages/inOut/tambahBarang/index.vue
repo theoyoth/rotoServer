@@ -67,7 +67,7 @@
                     <th class="font-semibold" >kuantitas</th>
                     <th class="font-semibold" >kepentingan</th>
                     <th class="font-semibold" >penanggung jawab</th>
-                    <th class="font-semibold w-20" >aksi</th>
+                    <th class="font-semibold w-24" >aksi</th>
                 </tr>
             </thead>
             <tbody v-if="caribarang !== ''" class="text-center bg-white bg-opacity-40 divide-y divide-gray-300">
@@ -132,7 +132,27 @@
                     <td>{{barang.kuantitas}}</td>
                     <td>{{barang.kepentingan}}</td>
                     <td>{{barang.penanggung_jawab}}</td>
-                    <td class="py-3 flex justify-around w-full">
+                    <td class="py-3 flex justify-between w-full">
+                        <div class="has-tooltip">
+                        <span
+                        class="
+                            tooltip
+                            rounded
+                            text-xs
+                            shadow-lg
+                            p-1
+                            bg-gray-700
+                            text-white
+                            mt-7 -ml-4
+                        "
+                        >print</span
+                        >
+                            <div class="bg-gray-700 w-7 h-7 rounded-xl flex items-center justify-center">
+                                <NuxtLink :to="{name:'inout-tambahbarang-print-printform',params:{id:barang.id_tambah_barang}}">
+                                    <font-awesome-icon :icon="['fas','print']" class="text-yellow-500"/>
+                                </NuxtLink>
+                            </div>
+                         </div>
                         <div class="has-tooltip">
                         <span
                         class="
@@ -215,7 +235,7 @@ export default {
         }
     },
     methods:{
-        async deleteData(id){
+        deleteData(id){
              swal({
                 title: 'anda yakin?',
                 text: 'sekali dihapus, data tidak akan bisa kembali',

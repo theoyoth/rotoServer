@@ -94,7 +94,7 @@
                 </div>
             </div>
         </div>
-        <button class="opacity-10 bg-gray-700 text-gray-200 w-24 py-2 rounded cursor-default" :class="{activesubmit : valid}" type="submit" :disabled="invalid">kirim</button>
+        <button class="opacity-10 bg-gray-700 text-gray-200 py-2 rounded cursor-default" :class="{activesubmit : valid}" type="submit" :disabled="invalid">kirim</button>
     </form>
     </ValidationObserver>
 </section>
@@ -174,11 +174,12 @@ export default {
         background-color: rgb(55, 65, 81);
         color:whitesmoke;
         cursor:pointer;
+        width:100px;
         opacity:1;
         padding-top: .5rem;
         padding-bottom: .5rem;
         transition: all 0.5s;
-        transform:translateY(-2px);
+        transform:translateY(4px);
     }
     .redring:focus {
         outline: 1px solid rgb(238, 56, 56);

@@ -401,6 +401,56 @@ module.exports.mainteananceuser = async (req, res) => {
   }
 }
 
+module.exports.allMaintenanceResultSecurity = async (req, res) => {
+  let conn
+  try {
+    const lokasiServer = req.params.lokasi
+    conn = await pool.getConnection()
+
+    if (lokasiServer == 'roto 1') {
+      const rows = await conn.query(
+        'SELECT suhu,kelembapan,tanggal FROM maintenance INNER JOIN users ON maintenance.id_users = users.id_user WHERE id_role=6'
+      )
+      if (rows) {
+        res.send(rows)
+      } else {
+        res.json({ msg: 'no data' })
+      }
+    } else if (lokasiServer == 'roto 2') {
+      const rows = await conn.query(
+        'SELECT suhu,kelembapan,tanggal FROM maintenance_roto_2 INNER JOIN users ON maintenance_roto_2.id_users = users.id_user WHERE id_role=6'
+      )
+      if (rows) {
+        res.send(rows)
+      } else {
+        res.json({ msg: 'no data' })
+      }
+    } else if (lokasiServer == 'roto 3') {
+      const rows = await conn.query(
+        'SELECT suhu,kelembapan,tanggal FROM maintenance_roto_3 INNER JOIN users ON maintenance_roto_3.id_users = users.id_user WHERE id_role=6'
+      )
+      if (rows) {
+        res.send(rows)
+      } else {
+        res.json({ msg: 'no data' })
+      }
+    } else if (lokasiServer == 'tinta') {
+      const rows = await conn.query(
+        'SELECT suhu,kelembapan,tanggal FROM maintenance_tinta INNER JOIN users ON maintenance_tinta.id_users = users.id_user WHERE id_role=6'
+      )
+      if (rows) {
+        res.send(rows)
+      } else {
+        res.json({ msg: 'no data' })
+      }
+    }
+  } catch (err) {
+    console.log(err)
+  } finally {
+    if (conn) return conn.end()
+  }
+}
+
 module.exports.getDataTeknisilistrik = async (req, res) => {
   let conn
   try {

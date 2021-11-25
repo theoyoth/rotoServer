@@ -1,0 +1,13 @@
+body {visibility:hidden;}
+.print-form {
+  visibility:visible;
+  width: 600px;
+  border: 1px solid black;
+}
+.print-container {
+  width: 100%;
+}
+.print-people{
+  display:flex;
+  justify-content: space-between;
+}

@@ -1,3 +1,6 @@
+const multer = require('multer')
+const path = require('path')
+
 const maintenanceController = require('../controllers/maintenanceController.js')
 const authController = require('../controllers/authController.js')
 const userController = require('../controllers/userController.js')
@@ -21,6 +24,9 @@ const readgantiController = require('../controllers/inout/ganti/readController.j
 const createdgantiController = require('../controllers/inout/ganti/createdController.js')
 const updategantiController = require('../controllers/inout/ganti/updateController.js')
 const deletegantiController = require('../controllers/inout/ganti/deleteController.js')
+// ===================================
+// == UPLOAD FILE
+const fileController = require('../controllers/file/fileController.js')
 // ===================================
 const lokasiServer = require('../controllers/lokasiServer.js')
 const { isAuthent } = require('../middleware/userAuthorization.js')
@@ -235,6 +241,10 @@ router.get(
   '/maintenance/security/:lokasi',
   maintenanceController.mainteananceuser
 )
+router.get(
+  '/maintenance/security/alldata/:lokasi',
+  maintenanceController.allMaintenanceResultSecurity
+)
 // hasil maintenance teknisi listrik dan ac untuk admin teknisi
 router.get(
   '/maintenance/teknisilistrik/:lokasi',
@@ -332,5 +342,41 @@ router.get(
   '/inout/gantibarang/caribarang/:cari/:lokasi',
   readgantiController.caridataGantiBarang
 )
+
+// FORM UPLOAD DOKUMEN
+// upload dokumen
+const multerStorage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, './uploads/')
+  },
+  filename: (req, file, cb) => {
+    cb(
+      null,
+      file.originalname.split('.')[0] +
+        '_' +
+        Date.now() +
+        path.extname(file.originalname)
+    )
+  },
+})
+const multerFilter = (req, file, cb) => {
+  // file.mimetype.slice('/')[1] = 'pdf'
+
+  if (!file.originalname.match(/.pdf$/)) {
+    cb(new Error('bukan file yang diminta'), false)
+  } else {
+    cb(null, true)
+  }
+}
+const upload = multer({
+  storage: multerStorage,
+  fileFilter: multerFilter,
+})
+
+router.post('/document', upload.single('file'), fileController.uploadFiledoc)
+
+router.get('/document/list', fileController.getAllFiles)
+
+router.get('/document/list/:name', fileController.downloadFile)
 
 module.exports = router

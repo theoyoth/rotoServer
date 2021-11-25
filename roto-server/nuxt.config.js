@@ -30,6 +30,9 @@ export default {
   plugins: [
     { src: '~/plugins/sweetalert' },
     { src: '~/plugins/vee-validate.js' },
+    { src: '~/plugins/chart', ssr: false },
+    { src: '~/plugins/hchs-vue-charts', ssr: false },
+    { src: '~/plugins/vue-html-to-paper.js', ssr: false },
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components

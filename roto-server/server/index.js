@@ -8,6 +8,9 @@ const flash = require('connect-flash')
 const rute = require('./routes/route')
 const app = express()
 app.use(cookieParser())
+
+global.__basedir = __dirname
+
 app.use(
   cors({
     credentials: true,

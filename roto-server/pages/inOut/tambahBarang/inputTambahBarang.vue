@@ -80,6 +80,7 @@
         <button class="mt-10 opacity-10 bg-gray-700 text-gray-200 w-24 py-2 rounded cursor-default" type="submit" :class="{activesubmit : valid}" :disabled="invalid">kirim</button>
     </form>
     </ValidationObserver>
+    
 </section>
 </div>
 </template>

@@ -15,10 +15,10 @@
                 <option value="tahun">tahun</option>
             </select> -->
             <NuxtLink to="/infouser/inputuser"
-            class="flex items-center justify-between rounded-md px-3 w-20 bg-gray-700">
-            <p class="font-medium text-sm text-gray-200">input</p>
+            class="flex items-center justify-between rounded-md px-3 w-28 bg-gray-700 hover:bg-gray-600">
+            <p class="font-medium text-sm text-gray-200">tambah</p>
             <div>
-                <font-awesome-icon :icon="['fas', 'plus']" class="text-gray-200" />
+                <font-awesome-icon :icon="['fas', 'user-plus']" class="text-gray-200" />
             </div>
             </NuxtLink>
       </div>
@@ -159,19 +159,36 @@ export default {
         console.log(err)
       }
     },
-    async deleteData(id){
-            let indexOfArrayItem = this.users.findIndex(i => i.id_user === id)
-            
-            const resp = await axios.delete(`http://localhost:3000/server/user/delete/${id}`)
-            if(resp) {
-              this.users.splice(indexOfArrayItem, 1);
-              this.$router.push('/infouser')
-              swal('data dihapus',{icon:'success'})
-            }
-            if(resp.data.errmsg){
-                this.$router.push('/infouser')
-                swal('Error',resp.data.errmsg,{icon:'error'})
-            }
+    deleteData(id){
+            swal({
+                title: 'anda yakin?',
+                text: 'data tidak akan bisa kembali',
+                icon: 'warning',
+                buttons: true,
+                dangerMode: true
+            }).then(suc=>{
+              if(suc){
+                let indexOfArrayItem = this.users.findIndex(i => i.id_user === id)
+                
+                axios.delete(`http://localhost:3000/server/user/delete/${id}`)
+                .then(resp=>{
+                  if(resp) {
+                    this.users.splice(indexOfArrayItem, 1);
+                    this.$router.push('/infouser')
+                    swal('data dihapus',{icon:'success'})
+                  }
+                }).catch(err=>{
+                  if(err.data.errmsg){
+                      this.$router.push('/infouser')
+                      swal('Error',err.data.errmsg,{icon:'error'})
+                  }
+                })
+              } else{
+                    swal('Error','gagal menghapus',{icon:'error'})
+                }
+            }).catch(err=>{
+                swal('Error','ada yang salah',{icon:'error'})
+            })
         },
   },
   async mounted(){

@@ -17,7 +17,7 @@
                     h-28
                     w-52
                     rounded-xl
-                    bg-blue-100
+                    bg-blue-200
                     py-1
                     px-5
                     flex
@@ -61,7 +61,7 @@
                     h-28
                     w-52
                     rounded-xl
-                    bg-red-100
+                    bg-red-200
                     py-1
                     px-5
                     flex
@@ -106,7 +106,7 @@
                     h-28
                     w-52
                     rounded-xl
-                    bg-green-100
+                    bg-green-200
                     py-1
                     px-5
                     flex
@@ -145,14 +145,18 @@
                 </div>
               </div>
           </div>
+          <!-- <div v-for="(ma,index) in allDataMaintenance" :key="index">
+            <p>{{ma.tanggal}}</p>
+          </div> -->
           <hr class="mt-8">
           <h1 class="text-3xl mt-4 text-gray-700 font-semibold">Graphic</h1>
           <div class="w-full mt-10">
             <div>
-              <BarChart/>
+              <BarChart :chart-data="chartData" :options="options"/>
             </div>
-            <div class="mt-8">
-              <BarChart/>
+              <!-- <BarChartdata :labels="labels" :chartData="suhus"/> -->
+            <div class="mt-10">
+              <BarChartKelembapan :chart-data="kelembapans" :options="optionKelem"/>
             </div>
           </div>
         </div>       
@@ -162,14 +166,21 @@
 </template>
 
 <script>
+import axios from 'axios'
+import moment from 'moment'
 
 export default {
   middleware: 'isAuthenticated',
   data() {
     return {
-      // user : '',
       message: '',
       errors: null,
+      labels:[],
+      suhus:[],
+      kelembapans:null,
+      chartData:null,
+      options:{},
+      optionKelem:{},
     }
   },
   computed: {
@@ -206,24 +217,133 @@ export default {
     hasilMaintenanceSecurity() {
       return this.$store.state.maintenanceSecurity.hasilMaintenanceSecurity
     },
+    // allDataMaintenance() {
+    //   return this.$store.state.maintenanceSecurity.allDataMaintenance
+    // }
   },
   methods: {
     async logout() {
       await this.$auth.logout()
       localStorage.setItem("app-logout", 'logout' + Math.random())
       return true
-      // this.$auth.$storage.removeCookie("authtoken")
-      // this.$cookies.remove('aksestoken')
-      // this.$cookies.remove('aksestoken')
-      // this.$router.push('/')
     },
+    async fillData(){
+      const lokasi = this.$auth.user.lokasi
+      try {
+        const resp = await axios.get(
+          `http://localhost:3000/server/maintenance/security/alldata/${lokasi}`
+        )
+        if (resp.data) {
+          const daftarLabel = resp.data.map(list => moment(list.tanggal).format('DD-MM-YYYY'))
+          const daftarSuhu = resp.data.map(list => list.suhu)
+          // const daftarSuhu = resp.data.map(list => list.suhu)
+          this.chartData = {
+            labels: daftarLabel,
+            datasets: [
+              {
+                label: "suhu",
+                backgroundColor: 'rgb(147, 197, 254)',
+                borderColor: "#C5CAE9",
+                data: daftarSuhu,
+                fill: true
+              }
+            ]
+          },
+           this.options = {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+              y: {
+                // stacked: true,
+                beginAtZero: true,
+                ticks: {
+                  color: "#E8EAF6",
+                },
+                grid: {
+                  color: "rgb(232, 234, 246)"
+                },
+              },
+              x: {
+                ticks: {
+                  color: "#E8EAF6",
+                },
+                grid: {
+                  color: "rgb(232, 234, 246)"
+                }
+              }
+            }
+          }
+          // resp.data.forEach(data => {
+          //   this.labels.push(data.tanggal.toString());
+          //   this.suhus.push(data.suhu.toString())
+          //   this.kelembapans.push(data.kelembapan.toString())
+          // })
+        } 
+      } catch (err) {
+        console.log(err)
+      }
+    },
+     async fillDataKelembapan(){
+      const lokasi = this.$auth.user.lokasi
+      try {
+        const resp = await axios.get(
+          `http://localhost:3000/server/maintenance/security/alldata/${lokasi}`
+        )
+        if (resp.data) {
+          const daftarLabel = resp.data.map(list => moment(list.tanggal).format('DD-MM-YYYY'))
+          const daftarKelembapan = resp.data.map(list => list.kelembapan)
+          this.kelembapans = {
+            labels: daftarLabel,
+            datasets: [
+              {
+                label: "kelembapan",
+                backgroundColor: 'rgb(252, 165, 165)',
+                borderColor: "#C5CAE9",
+                data: daftarKelembapan,
+                fill: true
+              }
+            ]
+          },
+           this.optionKelem = {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+              y: {
+                // stacked: true,
+                beginAtZero: true,
+                ticks: {
+                  color: "#E8EAF6",
+                },
+                grid: {
+                  color: "rgb(232, 234, 246)"
+                },
+              },
+              x: {
+                ticks: {
+                  color: "#E8EAF6",
+                },
+                grid: {
+                  color: "rgb(232, 234, 246)"
+                }
+              }
+            }
+          }
+        } 
+      } catch (err) {
+        console.log(err)
+      }
+    }
   },
   mounted(){
+    this.fillData(),
+    this.fillDataKelembapan()
+    
     const data = {
       lokasi : this.$auth.user.lokasi
     }
     this.$store.dispatch('maintenanceSecurity/getSecurity',data)
-  }
+    this.$store.dispatch('maintenanceSecurity/getAllMaintenanceSecurity',data)
+  },
 }
 </script>
 

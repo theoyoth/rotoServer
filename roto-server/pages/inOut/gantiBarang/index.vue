@@ -220,7 +220,7 @@ export default {
         }
     },
     methods:{
-        async deleteData(id){
+        deleteData(id){
             swal({
                 title: 'anda yakin?',
                 text: 'sekali dihapus, data tidak akan bisa kembali',
