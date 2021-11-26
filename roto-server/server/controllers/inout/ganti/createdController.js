@@ -17,7 +17,7 @@ module.exports.addBarang = async (req, res) => {
     } = req.body
     conn = await pool.getConnection()
 
-    if (lokasiServer == 'roto 1') {
+    if (lokasiServer == 'rotogravure 1') {
       const resp = await conn.query(
         `INSERT INTO ganti_barang VALUES('','${tanggal}','${namauser}','${namaBarangBaru}','${namaBarangLama}','${kuantitas}','${kepentingan}','${penanggungJawab}','${keterangan}','${iduser}')`
       )
@@ -26,7 +26,7 @@ module.exports.addBarang = async (req, res) => {
       } else {
         res.json({ errmsg: 'gagal disimpan' })
       }
-    } else if (lokasiServer == 'roto 2') {
+    } else if (lokasiServer == 'rotogravure 2') {
       const resp = await conn.query(
         `INSERT INTO ambil_barang_roto_2 VALUES('','${tanggal}','${namauser}','${namaBarangBaru}','${namaBarangLama}','${kuantitas}','${kepentingan}','${penanggungJawab}','${keterangan}','${iduser}')`
       )
@@ -35,7 +35,7 @@ module.exports.addBarang = async (req, res) => {
       } else {
         res.json({ errmsg: 'gagal disimpan' })
       }
-    } else if (lokasiServer == 'roto 3') {
+    } else if (lokasiServer == 'rotogravure 3') {
       const resp = await conn.query(
         `INSERT INTO ambil_barang_roto_3 VALUES('','${tanggal}','${namauser}','${namaBarangBaru}','${namaBarangLama}','${kuantitas}','${kepentingan}','${penanggungJawab}','${keterangan}','${iduser}')`
       )
@@ -44,7 +44,7 @@ module.exports.addBarang = async (req, res) => {
       } else {
         res.json({ errmsg: 'gagal disimpan' })
       }
-    } else if (lokasiServer == 'tinta') {
+    } else if (lokasiServer == 'rotogravure tinta') {
       const resp = await conn.query(
         `INSERT INTO ambil_barang_tinta VALUES('','${tanggal}','${namauser}','${namaBarangBaru}','${namaBarangLama}','${kuantitas}','${kepentingan}','${penanggungJawab}','${keterangan}','${iduser}')`
       )

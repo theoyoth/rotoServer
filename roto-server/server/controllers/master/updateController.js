@@ -9,22 +9,22 @@ module.exports.masterservergetdata = async (req, res) => {
     const lokasiServer = req.params.lokasi
     conn = await pool.getConnection()
 
-    if (lokasiServer == 'roto 1') {
+    if (lokasiServer == 'rotogravure 1') {
       const rows = await conn.query(
         `SELECT * FROM master_server WHERE id_server=${id}`
       )
       res.send(rows)
-    } else if (lokasiServer == 'roto 2') {
+    } else if (lokasiServer == 'rotogravure 2') {
       const rows = await conn.query(
         `SELECT * FROM master_server_roto_2 WHERE id_server=${id}`
       )
       res.send(rows)
-    } else if (lokasiServer == 'roto 3') {
+    } else if (lokasiServer == 'rotogravure 3') {
       const rows = await conn.query(
         `SELECT * FROM master_server_roto_3 WHERE id_server=${id}`
       )
       res.send(rows)
-    } else if (lokasiServer == 'tinta') {
+    } else if (lokasiServer == 'rotogravure tinta') {
       const rows = await conn.query(
         `SELECT * FROM master_server_tinta WHERE id_server=${id}`
       )
@@ -50,7 +50,6 @@ module.exports.inputmasterserverupdate = async (req, res) => {
       memori,
       internalStorage,
       networkController,
-      storage,
       sumberDayaListrik,
       tahun,
       garansi,
@@ -58,36 +57,36 @@ module.exports.inputmasterserverupdate = async (req, res) => {
     } = req.body
 
     conn = await pool.getConnection()
-    if (lokasiServer == 'roto 1') {
+    if (lokasiServer == 'rotogravure 1') {
       const resp = await conn.query(
-        `UPDATE master_server SET produk='${produk}', merek='${merek}', model='${model}', processor='${processor}', memori='${memori}',internal_storage='${internalStorage}', network_controller='${networkController}', storage='${storage}', sumber_daya_listrik='${sumberDayaListrik}', tahun='${tahun}', garansi='${garansi}' WHERE id_server = ${idproduk}`
+        `UPDATE master_server SET produk='${produk}', merek='${merek}', model='${model}', processor='${processor}', memori='${memori}',internal_storage='${internalStorage}', network_controller='${networkController}', sumber_daya_listrik='${sumberDayaListrik}', tahun='${tahun}', garansi='${garansi}' WHERE id_server = ${idproduk}`
       )
       if (resp.affectedRows > 0) {
         res.redirect('/master/server')
       } else {
         res.json({ msg: 'data tidak diupdate' })
       }
-    } else if (lokasiServer == 'roto 2') {
+    } else if (lokasiServer == 'rotogravure 2') {
       const resp = await conn.query(
-        `UPDATE master_server_roto_2 SET produk='${produk}', merek='${merek}', model='${model}', processor='${processor}', memori='${memori}',internal_storage='${internalStorage}', network_controller='${networkController}', storage='${storage}', sumber_daya_listrik='${sumberDayaListrik}', tahun='${tahun}', garansi='${garansi}' WHERE id_server = ${idproduk}`
+        `UPDATE master_server_roto_2 SET produk='${produk}', merek='${merek}', model='${model}', processor='${processor}', memori='${memori}',internal_storage='${internalStorage}', network_controller='${networkController}', sumber_daya_listrik='${sumberDayaListrik}', tahun='${tahun}', garansi='${garansi}' WHERE id_server = ${idproduk}`
       )
       if (resp.affectedRows > 0) {
         res.redirect('/master/server')
       } else {
         res.json({ msg: 'data tidak diupdate' })
       }
-    } else if (lokasiServer == 'roto 3') {
+    } else if (lokasiServer == 'rotogravure 3') {
       const resp = await conn.query(
-        `UPDATE master_server_roto_3 SET produk='${produk}', merek='${merek}', model='${model}', processor='${processor}', memori='${memori}',internal_storage='${internalStorage}', network_controller='${networkController}', storage='${storage}', sumber_daya_listrik='${sumberDayaListrik}', tahun='${tahun}', garansi='${garansi}' WHERE id_server = ${idproduk}`
+        `UPDATE master_server_roto_3 SET produk='${produk}', merek='${merek}', model='${model}', processor='${processor}', memori='${memori}',internal_storage='${internalStorage}', network_controller='${networkController}', sumber_daya_listrik='${sumberDayaListrik}', tahun='${tahun}', garansi='${garansi}' WHERE id_server = ${idproduk}`
       )
       if (resp.affectedRows > 0) {
         res.redirect('/master/server')
       } else {
         res.json({ msg: 'data tidak diupdate' })
       }
-    } else if (lokasiServer == 'tinta') {
+    } else if (lokasiServer == 'rotogravure tinta') {
       const resp = await conn.query(
-        `UPDATE master_server_tinta SET produk='${produk}', merek='${merek}', model='${model}', processor='${processor}', memori='${memori}',internal_storage='${internalStorage}', network_controller='${networkController}', storage='${storage}', sumber_daya_listrik='${sumberDayaListrik}', tahun='${tahun}', garansi='${garansi}' WHERE id_server = ${idproduk}`
+        `UPDATE master_server_tinta SET produk='${produk}', merek='${merek}', model='${model}', processor='${processor}', memori='${memori}',internal_storage='${internalStorage}', network_controller='${networkController}', sumber_daya_listrik='${sumberDayaListrik}', tahun='${tahun}', garansi='${garansi}' WHERE id_server = ${idproduk}`
       )
       if (resp.affectedRows > 0) {
         res.redirect('/master/server')
@@ -111,7 +110,7 @@ module.exports.masterrakgetdata = async (req, res) => {
     const lokasiServer = req.params.lokasi
     conn = await pool.getConnection()
 
-    if (lokasiServer == 'roto 1') {
+    if (lokasiServer == 'rotogravure 1') {
       const rows = await conn.query(
         `SELECT * FROM master_rak WHERE id_rak=${id}`
       )
@@ -126,7 +125,7 @@ module.exports.masterrakgetdata = async (req, res) => {
         `SELECT * FROM master_rak_roto_3 WHERE id_rak=${id}`
       )
       res.send(rows)
-    } else if (lokasiServer == 'tinta') {
+    } else if (lokasiServer == 'rotogravure tinta') {
       const rows = await conn.query(
         `SELECT * FROM master_rak_tinta WHERE id_rak=${id}`
       )
@@ -155,7 +154,7 @@ module.exports.inputmasterrakupdate = async (req, res) => {
     } = req.body
 
     conn = await pool.getConnection()
-    if (lokasiServer == 'roto 1') {
+    if (lokasiServer == 'rotogravure 1') {
       const resp = await conn.query(
         `UPDATE master_rak SET tipe_rak='${tipeRak}', tipe_pintu='${tipePintu}', nama_produk='${namaProduk}', dimensi='${dimensi}', berat='${berat}',tahun='${tahun}',id_users='${iduser}' WHERE id_rak=${idrak}`
       )
@@ -164,7 +163,7 @@ module.exports.inputmasterrakupdate = async (req, res) => {
       } else {
         res.json({ errmsg: 'data gagal di update' })
       }
-    } else if (lokasiServer == 'roto 2') {
+    } else if (lokasiServer == 'rotogravure 2') {
       const resp = await conn.query(
         `UPDATE master_rak_roto_2 SET tipe_rak='${tipeRak}', tipe_pintu='${tipePintu}', nama_produk='${namaProduk}', dimensi='${dimensi}', berat='${berat}',tahun='${tahun}',id_users='${iduser}' WHERE id_rak=${idrak}`
       )
@@ -173,7 +172,7 @@ module.exports.inputmasterrakupdate = async (req, res) => {
       } else {
         res.json({ errmsg: 'data gagal di update' })
       }
-    } else if (lokasiServer == 'roto 3') {
+    } else if (lokasiServer == 'rotogravure 3') {
       const resp = await conn.query(
         `UPDATE master_rak_roto_3 SET tipe_rak='${tipeRak}', tipe_pintu='${tipePintu}', nama_produk='${namaProduk}', dimensi='${dimensi}', berat='${berat}',tahun='${tahun}',id_users='${iduser}' WHERE id_rak=${idrak}`
       )
@@ -182,7 +181,7 @@ module.exports.inputmasterrakupdate = async (req, res) => {
       } else {
         res.json({ errmsg: 'data gagal di update' })
       }
-    } else if (lokasiServer == 'tinta') {
+    } else if (lokasiServer == 'rotogravure tinta') {
       const resp = await conn.query(
         `UPDATE master_rak_tinta SET tipe_rak='${tipeRak}', tipe_pintu='${tipePintu}', nama_produk='${namaProduk}', dimensi='${dimensi}', berat='${berat}',tahun='${tahun}',id_users='${iduser}' WHERE id_rak=${idrak}`
       )
@@ -206,22 +205,22 @@ module.exports.masterupsgetdata = async (req, res) => {
     const lokasiServer = req.params.lokasi
     conn = await pool.getConnection()
 
-    if (lokasiServer == 'roto 1') {
+    if (lokasiServer == 'rotogravure 1') {
       const rows = await conn.query(
         `SELECT * FROM master_ups WHERE id_ups=${id}`
       )
       res.send(rows)
-    } else if (lokasiServer == 'roto 2') {
+    } else if (lokasiServer == 'rotogravure 2') {
       const rows = await conn.query(
         `SELECT * FROM master_ups_roto_2 WHERE id_ups=${id}`
       )
       res.send(rows)
-    } else if (lokasiServer == 'roto 3') {
+    } else if (lokasiServer == 'rotogravure 3') {
       const rows = await conn.query(
         `SELECT * FROM master_ups_roto_3 WHERE id_ups=${id}`
       )
       res.send(rows)
-    } else if (lokasiServer == 'tinta') {
+    } else if (lokasiServer == 'rotogravure tinta') {
       const rows = await conn.query(
         `SELECT * FROM master_ups_tinta WHERE id_ups=${id}`
       )
@@ -256,7 +255,7 @@ module.exports.inputmasterupsupdate = async (req, res) => {
     } = req.body
 
     conn = await pool.getConnection()
-    if (lokasiServer == 'roto 1') {
+    if (lokasiServer == 'rotogravure 1') {
       const resp = await conn.query(
         `UPDATE master_ups SET ups_critical_load='${upsCriticalLoad}', ups_critical_temperature='${upsCriticalTemperature}', ups_critical_capacity='${upsCriticalCapacity}', nomor_serial='${nomorSerial}', nama_sistem='${namaSistem}',model='${model}',manufaktur='${manufaktur}',peringkat_tegangan='${peringkatTegangan}',peringkat_frekuensi='${peringkatFrekuensi}',peringkat_tegangan_baterai='${peringkatTeganganBaterai}',tahun='${tahun}',garansi='${garansi}',id_users='${iduser}' WHERE id_ups=${idups}`
       )
@@ -265,7 +264,7 @@ module.exports.inputmasterupsupdate = async (req, res) => {
       } else {
         res.json({ errmsg: 'gagal diupdate' })
       }
-    } else if (lokasiServer == 'roto 2') {
+    } else if (lokasiServer == 'rotogravure 2') {
       const resp = await conn.query(
         `UPDATE master_ups_roto_2 SET ups_critical_load='${upsCriticalLoad}', ups_critical_temperature='${upsCriticalTemperature}', ups_critical_capacity='${upsCriticalCapacity}', nomor_serial='${nomorSerial}', nama_sistem='${namaSistem}',model='${model}',manufaktur='${manufaktur}',peringkat_tegangan='${peringkatTegangan}',peringkat_frekuensi='${peringkatFrekuensi}',peringkat_tegangan_baterai='${peringkatTeganganBaterai}',tahun='${tahun}',garansi='${garansi}',id_users='${iduser}' WHERE id_ups=${idups}`
       )
@@ -274,7 +273,7 @@ module.exports.inputmasterupsupdate = async (req, res) => {
       } else {
         res.json({ errmsg: 'gagal diupdate' })
       }
-    } else if (lokasiServer == 'roto 3') {
+    } else if (lokasiServer == 'rotogravure 3') {
       const resp = await conn.query(
         `UPDATE master_ups_roto_3 SET ups_critical_load='${upsCriticalLoad}', ups_critical_temperature='${upsCriticalTemperature}', ups_critical_capacity='${upsCriticalCapacity}', nomor_serial='${nomorSerial}', nama_sistem='${namaSistem}',model='${model}',manufaktur='${manufaktur}',peringkat_tegangan='${peringkatTegangan}',peringkat_frekuensi='${peringkatFrekuensi}',peringkat_tegangan_baterai='${peringkatTeganganBaterai}',tahun='${tahun}',garansi='${garansi}',id_users='${iduser}' WHERE id_ups=${idups}`
       )
@@ -283,7 +282,7 @@ module.exports.inputmasterupsupdate = async (req, res) => {
       } else {
         res.json({ errmsg: 'gagal diupdate' })
       }
-    } else if (lokasiServer == 'tinta') {
+    } else if (lokasiServer == 'rotogravure tinta') {
       const resp = await conn.query(
         `UPDATE master_ups_tinta SET ups_critical_load='${upsCriticalLoad}', ups_critical_temperature='${upsCriticalTemperature}', ups_critical_capacity='${upsCriticalCapacity}', nomor_serial='${nomorSerial}', nama_sistem='${namaSistem}',model='${model}',manufaktur='${manufaktur}',peringkat_tegangan='${peringkatTegangan}',peringkat_frekuensi='${peringkatFrekuensi}',peringkat_tegangan_baterai='${peringkatTeganganBaterai}',tahun='${tahun}',garansi='${garansi}',id_users='${iduser}' WHERE id_ups=${idups}`
       )
@@ -308,7 +307,7 @@ module.exports.masterbateraigetdata = async (req, res) => {
     const lokasiServer = req.params.lokasi
     conn = await pool.getConnection()
 
-    if (lokasiServer == 'roto 1') {
+    if (lokasiServer == 'rotogravure 1') {
       const rows = await conn.query(
         `SELECT * FROM master_baterai WHERE id_baterai=${id}`
       )
@@ -323,7 +322,7 @@ module.exports.masterbateraigetdata = async (req, res) => {
         `SELECT * FROM master_baterai_roto_3 WHERE id_baterai=${id}`
       )
       res.send(rows)
-    } else if (lokasiServer == 'tinta') {
+    } else if (lokasiServer == 'rotogravure tinta') {
       const rows = await conn.query(
         `SELECT * FROM master_baterai_tinta WHERE id_baterai=${id}`
       )
@@ -352,7 +351,7 @@ module.exports.inputmasterbateraiupdate = async (req, res) => {
     } = req.body
 
     conn = await pool.getConnection()
-    if (lokasiServer == 'roto 1') {
+    if (lokasiServer == 'rotogravure 1') {
       const resp = await conn.query(
         `UPDATE master_baterai SET accu='${accu}', kuantitas='${kuantitas}',voltage='${voltage}',tahun='${tahun}',garansi='${garansi}',id_users='${iduser}' WHERE id_baterai=${idbaterai}`
       )
@@ -361,7 +360,7 @@ module.exports.inputmasterbateraiupdate = async (req, res) => {
       } else {
         res.json({ errmsg: 'gagal diupdate' })
       }
-    } else if (lokasiServer == 'roto 2') {
+    } else if (lokasiServer == 'rotogravure 2') {
       const resp = await conn.query(
         `UPDATE master_baterai_roto_2 SET accu='${accu}', kuantitas='${kuantitas}',voltage='${voltage}',tahun='${tahun}',garansi='${garansi}',id_users='${iduser}' WHERE id_baterai=${idbaterai}`
       )
@@ -370,7 +369,7 @@ module.exports.inputmasterbateraiupdate = async (req, res) => {
       } else {
         res.json({ errmsg: 'gagal diupdate' })
       }
-    } else if (lokasiServer == 'roto 3') {
+    } else if (lokasiServer == 'rotogravure 3') {
       const resp = await conn.query(
         `UPDATE master_baterai_roto_3 SET accu='${accu}', kuantitas='${kuantitas}',voltage='${voltage}',tahun='${tahun}',garansi='${garansi}',id_users='${iduser}' WHERE id_baterai=${idbaterai}`
       )
@@ -379,7 +378,7 @@ module.exports.inputmasterbateraiupdate = async (req, res) => {
       } else {
         res.json({ errmsg: 'gagal diupdate' })
       }
-    } else if (lokasiServer == 'tinta') {
+    } else if (lokasiServer == 'rotogravure tinta') {
       const resp = await conn.query(
         `UPDATE master_baterai_tinta SET accu='${accu}', kuantitas='${kuantitas}',voltage='${voltage}',tahun='${tahun}',garansi='${garansi}',id_users='${iduser}' WHERE id_baterai=${idbaterai}`
       )
@@ -404,7 +403,7 @@ module.exports.masteracgetdata = async (req, res) => {
     const lokasiServer = req.params.lokasi
     conn = await pool.getConnection()
 
-    if (lokasiServer == 'roto 1') {
+    if (lokasiServer == 'rotogravure 1') {
       const rows = await conn.query(`SELECT * FROM master_ac WHERE id_ac=${id}`)
       res.send(rows)
     } else if (lokasiServer == 'roto_2') {
@@ -417,7 +416,7 @@ module.exports.masteracgetdata = async (req, res) => {
         `SELECT * FROM master_ac_roto_3 WHERE id_ac=${id}`
       )
       res.send(rows)
-    } else if (lokasiServer == 'tinta') {
+    } else if (lokasiServer == 'rotogravure tinta') {
       const rows = await conn.query(
         `SELECT * FROM master_ac_tinta WHERE id_ac=${id}`
       )
@@ -448,7 +447,7 @@ module.exports.inputmasteracupdate = async (req, res) => {
     } = req.body
 
     conn = await pool.getConnection()
-    if (lokasiServer == 'roto 1') {
+    if (lokasiServer == 'rotogravure 1') {
       const resp = await conn.query(
         `UPDATE master_ac SET merek='${merek}', model='${model}',sumber_daya_listrik='${sumberDayaListrik}',dimensi='${dimensi}',konsumsi_daya_listrik='${konsumsiDayaListrik}',kapasitas_pendingin='${kapasitasPendingin}',tahun='${tahun}',garansi='${garansi}',id_users='${iduser}' WHERE id_ac=${idac}`
       )
@@ -457,7 +456,7 @@ module.exports.inputmasteracupdate = async (req, res) => {
       } else {
         res.json({ errmsg: 'gagal diupdate' })
       }
-    } else if (lokasiServer == 'roto 2') {
+    } else if (lokasiServer == 'rotogravure 2') {
       const resp = await conn.query(
         `UPDATE master_ac_roto_2 SET merek='${merek}', model='${model}',sumber_daya_listrik='${sumberDayaListrik}',dimensi='${dimensi}',konsumsi_daya_listrik='${konsumsiDayaListrik}',kapasitas_pendingin='${kapasitasPendingin}',tahun='${tahun}',garansi='${garansi}',id_users='${iduser}' WHERE id_ac=${idac}`
       )
@@ -466,7 +465,7 @@ module.exports.inputmasteracupdate = async (req, res) => {
       } else {
         res.json({ errmsg: 'gagal diupdate' })
       }
-    } else if (lokasiServer == 'roto 3') {
+    } else if (lokasiServer == 'rotogravure 3') {
       const resp = await conn.query(
         `UPDATE master_ac_roto_3 SET merek='${merek}', model='${model}',sumber_daya_listrik='${sumberDayaListrik}',dimensi='${dimensi}',konsumsi_daya_listrik='${konsumsiDayaListrik}',kapasitas_pendingin='${kapasitasPendingin}',tahun='${tahun}',garansi='${garansi}',id_users='${iduser}' WHERE id_ac=${idac}`
       )
@@ -475,7 +474,7 @@ module.exports.inputmasteracupdate = async (req, res) => {
       } else {
         res.json({ errmsg: 'gagal diupdate' })
       }
-    } else if (lokasiServer == 'tinta') {
+    } else if (lokasiServer == 'rotogravure tinta') {
       const resp = await conn.query(
         `UPDATE master_ac_tinta SET merek='${merek}', model='${model}',sumber_daya_listrik='${sumberDayaListrik}',dimensi='${dimensi}',konsumsi_daya_listrik='${konsumsiDayaListrik}',kapasitas_pendingin='${kapasitasPendingin}',tahun='${tahun}',garansi='${garansi}',id_users='${iduser}' WHERE id_ac=${idac}`
       )
@@ -500,22 +499,22 @@ module.exports.mastercctvgetdata = async (req, res) => {
     const lokasiServer = req.params.lokasi
     conn = await pool.getConnection()
 
-    if (lokasiServer == 'roto 1') {
+    if (lokasiServer == 'rotogravure 1') {
       const resp = await conn.query(
         `SELECT * FROM master_cctv WHERE id_cctv=${id}`
       )
       res.send(resp)
-    } else if (lokasiServer == 'roto 2') {
+    } else if (lokasiServer == 'rotogravure 2') {
       const resp = await conn.query(
         `SELECT * FROM master_cctv_roto_2 WHERE id_cctv=${id}`
       )
       res.send(resp)
-    } else if (lokasiServer == 'roto 3') {
+    } else if (lokasiServer == 'rotogravure 3') {
       const resp = await conn.query(
         `SELECT * FROM master_cctv_roto_3 WHERE id_cctv=${id}`
       )
       res.send(resp)
-    } else if (lokasiServer == 'tinta') {
+    } else if (lokasiServer == 'rotogravure tinta') {
       const resp = await conn.query(
         `SELECT * FROM master_cctv_tinta WHERE id_cctv=${id}`
       )
@@ -535,7 +534,7 @@ module.exports.inputmastercctvupdate = async (req, res) => {
     const { iduser, lokasiServer, idcctv, merek, model, garansi } = req.body
 
     conn = await pool.getConnection()
-    if (lokasiServer == 'roto 1') {
+    if (lokasiServer == 'rotogravure 1') {
       const resp = await conn.query(
         `UPDATE master_cctv SET merek='${merek}', model='${model}',garansi='${garansi}',id_users='${iduser}' WHERE id_cctv=${idcctv}`
       )
@@ -544,7 +543,7 @@ module.exports.inputmastercctvupdate = async (req, res) => {
       } else {
         res.json({ errmsg: 'gagal diupdate' })
       }
-    } else if (lokasiServer == 'roto 2') {
+    } else if (lokasiServer == 'rotogravure 2') {
       const resp = await conn.query(
         `UPDATE master_cctv_roto_2 SET merek='${merek}', model='${model}',garansi='${garansi}',id_users='${iduser}' WHERE id_cctv=${idcctv}`
       )
@@ -553,7 +552,7 @@ module.exports.inputmastercctvupdate = async (req, res) => {
       } else {
         res.json({ errmsg: 'gagal diupdate' })
       }
-    } else if (lokasiServer == 'roto 3') {
+    } else if (lokasiServer == 'rotogravure 3') {
       const resp = await conn.query(
         `UPDATE master_cctv_roto_3 SET merek='${merek}', model='${model}',garansi='${garansi}',id_users='${iduser}' WHERE id_cctv=${idcctv}`
       )
@@ -562,7 +561,7 @@ module.exports.inputmastercctvupdate = async (req, res) => {
       } else {
         res.json({ errmsg: 'gagal diupdate' })
       }
-    } else if (lokasiServer == 'tinta') {
+    } else if (lokasiServer == 'rotogravure tinta') {
       const resp = await conn.query(
         `UPDATE master_cctv_tinta SET merek='${merek}', model='${model}',garansi='${garansi}',id_users='${iduser}' WHERE id_cctv=${idcctv}`
       )
@@ -587,22 +586,22 @@ module.exports.masternetworkgetdata = async (req, res) => {
     const lokasiServer = req.params.lokasi
 
     conn = await pool.getConnection()
-    if (lokasiServer == 'roto 1') {
+    if (lokasiServer == 'rotogravure 1') {
       const resp = await conn.query(
         `SELECT * FROM master_network WHERE id_network=${id}`
       )
       res.send(resp)
-    } else if (lokasiServer == 'roto 2') {
+    } else if (lokasiServer == 'rotogravure 2') {
       const resp = await conn.query(
         `SELECT * FROM master_network_roto_2 WHERE id_network=${id}`
       )
       res.send(resp)
-    } else if (lokasiServer == 'roto 3') {
+    } else if (lokasiServer == 'rotogravure 3') {
       const resp = await conn.query(
         `SELECT * FROM master_network_roto_3 WHERE id_network=${id}`
       )
       res.send(resp)
-    } else if (lokasiServer == 'tinta') {
+    } else if (lokasiServer == 'rotogravure tinta') {
       const resp = await conn.query(
         `SELECT * FROM master_network_tinta WHERE id_network=${id}`
       )
@@ -632,7 +631,7 @@ module.exports.inputmasternetworkupdate = async (req, res) => {
     } = req.body
 
     conn = await pool.getConnection()
-    if (lokasiServer == 'roto 1') {
+    if (lokasiServer == 'rotogravure 1') {
       const resp = await conn.query(
         `UPDATE master_network SET merek='${merek}', model='${model}',tipe='${tipe}',kuantitas='${kuantitas}',kanal='${kanal}',tahun='${tahun}',garansi='${garansi}',id_users='${iduser}' WHERE id_network=${idnetwork}`
       )
@@ -641,7 +640,7 @@ module.exports.inputmasternetworkupdate = async (req, res) => {
       } else {
         res.json({ errmsg: 'gagal diupdate' })
       }
-    } else if (lokasiServer == 'roto 2') {
+    } else if (lokasiServer == 'rotogravure 2') {
       const resp = await conn.query(
         `UPDATE master_network_roto_2 SET merek='${merek}', model='${model}',tipe='${tipe}',kuantitas='${kuantitas}',kanal='${kanal}',tahun='${tahun}',garansi='${garansi}',id_users='${iduser}' WHERE id_network=${idnetwork}`
       )
@@ -650,7 +649,7 @@ module.exports.inputmasternetworkupdate = async (req, res) => {
       } else {
         res.json({ errmsg: 'gagal diupdate' })
       }
-    } else if (lokasiServer == 'roto 3') {
+    } else if (lokasiServer == 'rotogravure 3') {
       const resp = await conn.query(
         `UPDATE master_network_roto_3 SET merek='${merek}', model='${model}',tipe='${tipe}',kuantitas='${kuantitas}',kanal='${kanal}',tahun='${tahun}',garansi='${garansi}',id_users='${iduser}' WHERE id_network=${idnetwork}`
       )
@@ -659,7 +658,7 @@ module.exports.inputmasternetworkupdate = async (req, res) => {
       } else {
         res.json({ errmsg: 'gagal diupdate' })
       }
-    } else if (lokasiServer == 'tinta') {
+    } else if (lokasiServer == 'rotogravure tinta') {
       const resp = await conn.query(
         `UPDATE master_network_tinta SET merek='${merek}', model='${model}',tipe='${tipe}',kuantitas='${kuantitas}',kanal='${kanal}',tahun='${tahun}',garansi='${garansi}',id_users='${iduser}' WHERE id_network=${idnetwork}`
       )
@@ -685,22 +684,22 @@ module.exports.masterapargetdata = async (req, res) => {
     const lokasiServer = req.params.lokasi
 
     conn = await pool.getConnection()
-    if (lokasiServer == 'roto 1') {
+    if (lokasiServer == 'rotogravure 1') {
       const resp = await conn.query(
         `SELECT * FROM master_apar WHERE id_apar=${id}`
       )
       res.send(resp)
-    } else if (lokasiServer == 'roto 2') {
+    } else if (lokasiServer == 'rotogravure 2') {
       const resp = await conn.query(
         `SELECT * FROM master_apar_roto_2 WHERE id_apar=${id}`
       )
       res.send(resp)
-    } else if (lokasiServer == 'roto 3') {
+    } else if (lokasiServer == 'rotogravure 3') {
       const resp = await conn.query(
         `SELECT * FROM master_apar_roto_3 WHERE id_apar=${id}`
       )
       res.send(resp)
-    } else if (lokasiServer == 'tinta') {
+    } else if (lokasiServer == 'rotogravure tinta') {
       const resp = await conn.query(
         `SELECT * FROM master_apar_tinta WHERE id_apar=${id}`
       )
@@ -721,7 +720,7 @@ module.exports.inputmasteraparupdate = async (req, res) => {
       req.body
 
     conn = await pool.getConnection()
-    if (lokasiServer == 'roto 1') {
+    if (lokasiServer == 'rotogravure 1') {
       const resp = await conn.query(
         `UPDATE master_apar SET merek='${merek}', model='${model}',tipe='${tipe}',tahun='${tahun}',garansi='${garansi}',id_users='${iduser}' WHERE id_apar=${idapar}`
       )
@@ -730,7 +729,7 @@ module.exports.inputmasteraparupdate = async (req, res) => {
       } else {
         res.json({ errmsg: 'gagal diupdate' })
       }
-    } else if (lokasiServer == 'roto 2') {
+    } else if (lokasiServer == 'rotogravure 2') {
       const resp = await conn.query(
         `UPDATE master_apar_roto_2 SET merek='${merek}', model='${model}',tipe='${tipe}',tahun='${tahun}',garansi='${garansi}',id_users='${iduser}' WHERE id_apar=${idapar}`
       )
@@ -739,7 +738,7 @@ module.exports.inputmasteraparupdate = async (req, res) => {
       } else {
         res.json({ errmsg: 'gagal diupdate' })
       }
-    } else if (lokasiServer == 'roto 3') {
+    } else if (lokasiServer == 'rotogravure 3') {
       const resp = await conn.query(
         `UPDATE master_apar_roto_3 SET merek='${merek}', model='${model}',tipe='${tipe}',tahun='${tahun}',garansi='${garansi}',id_users='${iduser}' WHERE id_apar=${idapar}`
       )
@@ -748,7 +747,7 @@ module.exports.inputmasteraparupdate = async (req, res) => {
       } else {
         res.json({ errmsg: 'gagal diupdate' })
       }
-    } else if (lokasiServer == 'tinta') {
+    } else if (lokasiServer == 'rotogravure tinta') {
       const resp = await conn.query(
         `UPDATE master_apar_tinta SET merek='${merek}', model='${model}',tipe='${tipe}',tahun='${tahun}',garansi='${garansi}',id_users='${iduser}' WHERE id_apar=${idapar}`
       )
@@ -773,22 +772,22 @@ module.exports.mastermonitorgetdata = async (req, res) => {
     const lokasiServer = req.params.lokasi
 
     conn = await pool.getConnection()
-    if (lokasiServer == 'roto 1') {
+    if (lokasiServer == 'rotogravure 1') {
       const resp = await conn.query(
         `SELECT * FROM master_monitor WHERE id_monitor=${id}`
       )
       res.send(resp)
-    } else if (lokasiServer == 'roto 2') {
+    } else if (lokasiServer == 'rotogravure 2') {
       const resp = await conn.query(
         `SELECT * FROM master_monitor_roto_2 WHERE id_monitor=${id}`
       )
       res.send(resp)
-    } else if (lokasiServer == 'roto 3') {
+    } else if (lokasiServer == 'rotogravure 3') {
       const resp = await conn.query(
         `SELECT * FROM master_monitor_roto_3 WHERE id_monitor=${id}`
       )
       res.send(resp)
-    } else if (lokasiServer == 'tinta') {
+    } else if (lokasiServer == 'rotogravure tinta') {
       const resp = await conn.query(
         `SELECT * FROM master_monitor_tinta WHERE id_monitor=${id}`
       )
@@ -816,7 +815,7 @@ module.exports.inputmastermonitorupdate = async (req, res) => {
     } = req.body
 
     conn = await pool.getConnection()
-    if (lokasiServer == 'roto 1') {
+    if (lokasiServer == 'rotogravure 1') {
       const resp = await conn.query(
         `UPDATE master_monitor SET merek='${merek}', model='${model}',tipe='${tipe}',tahun='${tahun}',garansi='${garansi}',id_users='${iduser}' WHERE id_monitor=${idmonitor}`
       )
@@ -825,7 +824,7 @@ module.exports.inputmastermonitorupdate = async (req, res) => {
       } else {
         res.json({ errmsg: 'gagal diupdate' })
       }
-    } else if (lokasiServer == 'roto 2') {
+    } else if (lokasiServer == 'rotogravure 2') {
       const resp = await conn.query(
         `UPDATE master_monitor_roto_2 SET merek='${merek}', model='${model}',tipe='${tipe}',tahun='${tahun}',garansi='${garansi}',id_users='${iduser}' WHERE id_monitor=${idmonitor}`
       )
@@ -834,7 +833,7 @@ module.exports.inputmastermonitorupdate = async (req, res) => {
       } else {
         res.json({ errmsg: 'gagal diupdate' })
       }
-    } else if (lokasiServer == 'roto 3') {
+    } else if (lokasiServer == 'rotogravure 3') {
       const resp = await conn.query(
         `UPDATE master_monitor_roto_3 SET merek='${merek}', model='${model}',tipe='${tipe}',tahun='${tahun}',garansi='${garansi}',id_users='${iduser}' WHERE id_monitor=${idmonitor}`
       )
@@ -843,7 +842,7 @@ module.exports.inputmastermonitorupdate = async (req, res) => {
       } else {
         res.json({ errmsg: 'gagal diupdate' })
       }
-    } else if (lokasiServer == 'tinta') {
+    } else if (lokasiServer == 'rotogravure tinta') {
       const resp = await conn.query(
         `UPDATE master_monitor_tinta SET merek='${merek}', model='${model}',tipe='${tipe}',tahun='${tahun}',garansi='${garansi}',id_users='${iduser}' WHERE id_monitor=${idmonitor}`
       )
@@ -868,22 +867,22 @@ module.exports.masterkeyboardgetdata = async (req, res) => {
     const lokasiServer = req.params.lokasi
 
     conn = await pool.getConnection()
-    if (lokasiServer == 'roto 1') {
+    if (lokasiServer == 'rotogravure 1') {
       const resp = await conn.query(
         `SELECT * FROM master_keyboard WHERE id_keyboard=${id}`
       )
       res.send(resp)
-    } else if (lokasiServer == 'roto 2') {
+    } else if (lokasiServer == 'rotogravure 2') {
       const resp = await conn.query(
         `SELECT * FROM master_keyboard_roto_2 WHERE id_keyboard=${id}`
       )
       res.send(resp)
-    } else if (lokasiServer == 'roto 3') {
+    } else if (lokasiServer == 'rotogravure 3') {
       const resp = await conn.query(
         `SELECT * FROM master_keyboard_roto_3 WHERE id_keyboard=${id}`
       )
       res.send(resp)
-    } else if (lokasiServer == 'tinta') {
+    } else if (lokasiServer == 'rotogravure tinta') {
       const resp = await conn.query(
         `SELECT * FROM master_keyboard_tinta WHERE id_keyboard=${id}`
       )
@@ -911,7 +910,7 @@ module.exports.inputmasterkeyboardupdate = async (req, res) => {
     } = req.body
 
     conn = await pool.getConnection()
-    if (lokasiServer == 'roto 1') {
+    if (lokasiServer == 'rotogravure 1') {
       const resp = await conn.query(
         `UPDATE master_keyboard SET merek='${merek}', model='${model}',tipe='${tipe}',tahun='${tahun}',garansi='${garansi}',id_users='${iduser}' WHERE id_keyboard=${idkeyboard}`
       )
@@ -920,7 +919,7 @@ module.exports.inputmasterkeyboardupdate = async (req, res) => {
       } else {
         res.json({ errmsg: 'gagal diupdate' })
       }
-    } else if (lokasiServer == 'roto 2') {
+    } else if (lokasiServer == 'rotogravure 2') {
       const resp = await conn.query(
         `UPDATE master_keyboard_roto_2 SET merek='${merek}', model='${model}',tipe='${tipe}',tahun='${tahun}',garansi='${garansi}',id_users='${iduser}' WHERE id_keyboard=${idkeyboard}`
       )
@@ -929,7 +928,7 @@ module.exports.inputmasterkeyboardupdate = async (req, res) => {
       } else {
         res.json({ errmsg: 'gagal diupdate' })
       }
-    } else if (lokasiServer == 'roto 3') {
+    } else if (lokasiServer == 'rotogravure 3') {
       const resp = await conn.query(
         `UPDATE master_keyboard_roto_3 SET merek='${merek}', model='${model}',tipe='${tipe}',tahun='${tahun}',garansi='${garansi}',id_users='${iduser}' WHERE id_keyboard=${idkeyboard}`
       )
@@ -938,7 +937,7 @@ module.exports.inputmasterkeyboardupdate = async (req, res) => {
       } else {
         res.json({ errmsg: 'gagal diupdate' })
       }
-    } else if (lokasiServer == 'tinta') {
+    } else if (lokasiServer == 'rotogravure tinta') {
       const resp = await conn.query(
         `UPDATE master_keyboard_tinta SET merek='${merek}', model='${model}',tipe='${tipe}',tahun='${tahun}',garansi='${garansi}',id_users='${iduser}' WHERE id_keyboard=${idkeyboard}`
       )
@@ -963,22 +962,22 @@ module.exports.mastermousegetdata = async (req, res) => {
     const lokasiServer = req.params.lokasi
 
     conn = await pool.getConnection()
-    if (lokasiServer == 'roto 1') {
+    if (lokasiServer == 'rotogravure 1') {
       const resp = await conn.query(
         `SELECT * FROM master_mouse WHERE id_mouse=${id}`
       )
       res.send(resp)
-    } else if (lokasiServer == 'roto 2') {
+    } else if (lokasiServer == 'rotogravure 2') {
       const resp = await conn.query(
         `SELECT * FROM master_mouse_roto_2 WHERE id_mouse=${id}`
       )
       res.send(resp)
-    } else if (lokasiServer == 'roto 3') {
+    } else if (lokasiServer == 'rotogravure 3') {
       const resp = await conn.query(
         `SELECT * FROM master_mouse_roto_3 WHERE id_mouse=${id}`
       )
       res.send(resp)
-    } else if (lokasiServer == 'tinta') {
+    } else if (lokasiServer == 'rotogravure tinta') {
       const resp = await conn.query(
         `SELECT * FROM master_mouse_tinta WHERE id_mouse=${id}`
       )
@@ -1006,7 +1005,7 @@ module.exports.inputmastermouseupdate = async (req, res) => {
     } = req.body
 
     conn = await pool.getConnection()
-    if (lokasiServer == 'roto 1') {
+    if (lokasiServer == 'rotogravure 1') {
       const resp = await conn.query(
         `UPDATE master_mouse SET merek='${merek}', model='${model}',tipe='${tipe}',tahun='${tahun}',garansi='${garansi}',id_users='${iduser}' WHERE id_mouse=${idmouse}`
       )
@@ -1015,7 +1014,7 @@ module.exports.inputmastermouseupdate = async (req, res) => {
       } else {
         res.json({ errmsg: 'gagal diupdate' })
       }
-    } else if (lokasiServer == 'roto 2') {
+    } else if (lokasiServer == 'rotogravure 2') {
       const resp = await conn.query(
         `UPDATE master_mouse_roto_2 SET merek='${merek}', model='${model}',tipe='${tipe}',tahun='${tahun}',garansi='${garansi}',id_users='${iduser}' WHERE id_mouse=${idmouse}`
       )
@@ -1024,7 +1023,7 @@ module.exports.inputmastermouseupdate = async (req, res) => {
       } else {
         res.json({ errmsg: 'gagal diupdate' })
       }
-    } else if (lokasiServer == 'roto 3') {
+    } else if (lokasiServer == 'rotogravure 3') {
       const resp = await conn.query(
         `UPDATE master_mouse_roto_3 SET merek='${merek}', model='${model}',tipe='${tipe}',tahun='${tahun}',garansi='${garansi}',id_users='${iduser}' WHERE id_mouse=${idmouse}`
       )
@@ -1033,7 +1032,7 @@ module.exports.inputmastermouseupdate = async (req, res) => {
       } else {
         res.json({ errmsg: 'gagal diupdate' })
       }
-    } else if (lokasiServer == 'tinta') {
+    } else if (lokasiServer == 'rotogravure tinta') {
       const resp = await conn.query(
         `UPDATE master_mouse_tinta SET merek='${merek}', model='${model}',tipe='${tipe}',tahun='${tahun}',garansi='${garansi}',id_users='${iduser}' WHERE id_mouse=${idmouse}`
       )
@@ -1058,22 +1057,22 @@ module.exports.masternasgetdata = async (req, res) => {
     const lokasiServer = req.params.lokasi
 
     conn = await pool.getConnection()
-    if (lokasiServer == 'roto 1') {
+    if (lokasiServer == 'rotogravure 1') {
       const resp = await conn.query(
         `SELECT * FROM master_nas WHERE id_nas=${id}`
       )
       res.send(resp)
-    } else if (lokasiServer == 'roto 2') {
+    } else if (lokasiServer == 'rotogravure 2') {
       const resp = await conn.query(
         `SELECT * FROM master_nas_roto_2 WHERE id_nas=${id}`
       )
       res.send(resp)
-    } else if (lokasiServer == 'roto 3') {
+    } else if (lokasiServer == 'rotogravure 3') {
       const resp = await conn.query(
         `SELECT * FROM master_nas_roto_3 WHERE id_nas=${id}`
       )
       res.send(resp)
-    } else if (lokasiServer == 'tinta') {
+    } else if (lokasiServer == 'rotogravure tinta') {
       const resp = await conn.query(
         `SELECT * FROM master_nas_tinta WHERE id_nas=${id}`
       )
@@ -1106,7 +1105,7 @@ module.exports.inputmasternasupdate = async (req, res) => {
     } = req.body
 
     conn = await pool.getConnection()
-    if (lokasiServer == 'roto 1') {
+    if (lokasiServer == 'rotogravure 1') {
       const resp = await conn.query(
         `UPDATE master_nas SET merek='${merek}',model='${model}',processor='${processor}',storage='${storage}',tipe='${tipe}',cpu='${cpu}',raid='${raid}',tahun='${tahun}',garansi='${garansi}',id_users='${iduser}' WHERE id_nas=${idnas}`
       )
@@ -1116,7 +1115,7 @@ module.exports.inputmasternasupdate = async (req, res) => {
       } else {
         res.json({ errmsg: 'gagal diupdate' })
       }
-    } else if (lokasiServer == 'roto 2') {
+    } else if (lokasiServer == 'rotogravure 2') {
       const resp = await conn.query(
         `UPDATE master_nas_roto_2 SET merek='${merek}',model='${model}',processor='${processor}',storage='${storage}',tipe='${tipe}',cpu='${cpu}',raid='${raid}',tahun='${tahun}',garansi='${garansi}',id_users='${iduser}' WHERE id_nas=${idnas}`
       )
@@ -1126,7 +1125,7 @@ module.exports.inputmasternasupdate = async (req, res) => {
       } else {
         res.json({ errmsg: 'gagal diupdate' })
       }
-    } else if (lokasiServer == 'roto 3') {
+    } else if (lokasiServer == 'rotogravure 3') {
       const resp = await conn.query(
         `UPDATE master_nas_roto_3 SET merek='${merek}',model='${model}',processor='${processor}',storage='${storage}',tipe='${tipe}',cpu='${cpu}',raid='${raid}',tahun='${tahun}',garansi='${garansi}',id_users='${iduser}' WHERE id_nas=${idnas}`
       )
@@ -1136,7 +1135,7 @@ module.exports.inputmasternasupdate = async (req, res) => {
       } else {
         res.json({ errmsg: 'gagal diupdate' })
       }
-    } else if (lokasiServer == 'tinta') {
+    } else if (lokasiServer == 'rotogravure tinta') {
       const resp = await conn.query(
         `UPDATE master_nas_tinta SET merek='${merek}',model='${model}',processor='${processor}',storage='${storage}',tipe='${tipe}',cpu='${cpu}',raid='${raid}',tahun='${tahun}',garansi='${garansi}',id_users='${iduser}' WHERE id_nas=${idnas}`
       )
@@ -1164,22 +1163,22 @@ module.exports.mastergensetgetdata = async (req, res) => {
     const lokasiServer = req.params.lokasi
 
     conn = await pool.getConnection()
-    if (lokasiServer == 'roto 1') {
+    if (lokasiServer == 'rotogravure 1') {
       const resp = await conn.query(
         `SELECT * FROM master_genset WHERE id_genset=${id}`
       )
       res.send(resp)
-    } else if (lokasiServer == 'roto 2') {
+    } else if (lokasiServer == 'rotogravure 2') {
       const resp = await conn.query(
         `SELECT * FROM master_genset_roto_2 WHERE id_genset=${id}`
       )
       res.send(resp)
-    } else if (lokasiServer == 'roto 3') {
+    } else if (lokasiServer == 'rotogravure 3') {
       const resp = await conn.query(
         `SELECT * FROM master_genset_roto_3 WHERE id_genset=${id}`
       )
       res.send(resp)
-    } else if (lokasiServer == 'tinta') {
+    } else if (lokasiServer == 'rotogravure tinta') {
       const resp = await conn.query(
         `SELECT * FROM master_genset_tinta WHERE id_genset=${id}`
       )
@@ -1211,7 +1210,7 @@ module.exports.inputmastergensetupdate = async (req, res) => {
     } = req.body
 
     conn = await pool.getConnection()
-    if (lokasiServer == 'roto 1') {
+    if (lokasiServer == 'rotogravure 1') {
       const resp = await conn.query(
         `UPDATE master_genset SET merek='${merek}',model='${model}',tipe='${tipe}',tahun='${tahun}',garansi='${garansi}',id_users='${iduser}' WHERE id_genset=${idgenset}`
       )
@@ -1220,7 +1219,7 @@ module.exports.inputmastergensetupdate = async (req, res) => {
       } else {
         res.json({ errmsg: 'gagal diupdate' })
       }
-    } else if (lokasiServer == 'roto 2') {
+    } else if (lokasiServer == 'rotogravure 2') {
       const resp = await conn.query(
         `UPDATE master_genset_roto_2 SET '${merek}','${model}','${tipe}','${tahun}','${garansi}','${iduser}' WHERE id_genset=${idgenset}`
       )
@@ -1229,7 +1228,7 @@ module.exports.inputmastergensetupdate = async (req, res) => {
       } else {
         res.json({ errmsg: 'gagal diupdate' })
       }
-    } else if (lokasiServer == 'roto 3') {
+    } else if (lokasiServer == 'rotogravure 3') {
       const resp = await conn.query(
         `UPDATE master_genset_roto_3 SET '${merek}','${model}','${tipe}','${tahun}','${garansi}','${iduser}' WHERE id_genset=${idgenset}`
       )
@@ -1238,7 +1237,7 @@ module.exports.inputmastergensetupdate = async (req, res) => {
       } else {
         res.json({ errmsg: 'gagal diupdate' })
       }
-    } else if (lokasiServer == 'tinta') {
+    } else if (lokasiServer == 'rotogravure tinta') {
       const resp = await conn.query(
         `UPDATE master_genset_tinta SET '${merek}','${model}','${tipe}','${tahun}','${garansi}','${iduser}' WHERE id_genset=${idgenset}`
       )

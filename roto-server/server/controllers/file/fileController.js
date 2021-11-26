@@ -45,3 +45,18 @@ module.exports.downloadFile = async (req, res) => {
     }
   })
 }
+
+module.exports.deleteFile = async (req, res) => {
+  const filename = req.params.name
+  const directoryPath = './uploads/'
+
+  fs.unlink(directoryPath + filename, (err) => {
+    if (err) {
+      res.status(404).send({
+        errmsg: 'gagal menghapus, data tidak ditemukan',
+      })
+    } else {
+      return res.send({ msg: 'file dihapus' })
+    }
+  })
+}

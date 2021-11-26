@@ -182,7 +182,7 @@
         <tbody v-else class="text-center bg-white bg-opacity-40 divide-y divide-gray-300">
           <tr class="text-sm" v-for="(server, index) in servers" :key="index">
             <td>{{index+1}}</td>
-            <td>{{ $moment().format('YYYY-MM-DD') }}</td>
+            <td>{{ $moment().format('DD-MM-YYYY') }}</td>
             <td class="w-32">{{ server.merek }}</td>
             <td class="w-32">{{ server.model }}</td>
             <td class="w-20">{{ server.processor }}</td>

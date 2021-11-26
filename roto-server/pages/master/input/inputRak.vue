@@ -13,12 +13,6 @@
         </NuxtLink> 
         <p class="text-center text-xl text-gray-700 font-semibold">Input data baru</p>
 
-    <div class="grid grid-cols-3 w-10/12 mt-6">
-        <div v-for="(err,index) in errors" :key="index" class="bg-white w-10/12 rounded-lg mb-1 bg-opacity-90">
-            <li class="text-red-400 text-xs p-2">{{err.msg}}</li>
-        </div>
-    </div>
-
     <ValidationObserver v-slot={invalid,valid}>
     <form class="mt-10 min-w-min" @submit.prevent="postInputRak">
         <div>
@@ -28,7 +22,7 @@
 
                     <label for="tipeRak" class="block mb-2 text-sm">tipe rak</label>
                     <div class="flex flex-col w-72">
-                        <ValidationProvider rules="required|alpha_spaces" v-slot={errors}>
+                        <ValidationProvider rules="required|passchar" v-slot={errors}>
                             <input type="text" v-model="inputRak.tipeRak" name="tipeRak" id="tipeRak" class="p-2 w-full rounded-lg outline-none bg-gray-200">
                             <p class="text-xs mt-1 text-right text-red-500">{{ errors[0] }}</p>
                         </ValidationProvider>
@@ -40,7 +34,7 @@
                     <label for="tipePintu" class="block mb-2 text-sm">tipe pintu</label>
 
                     <div class="flex flex-col w-72">
-                        <ValidationProvider rules="required|alpha_spaces" v-slot={errors}>
+                        <ValidationProvider rules="required|passchar" v-slot={errors}>
                             <input type="text" v-model="inputRak.tipePintu" name="tipePintu" id="tipePintu" class="p-2 w-full rounded-lg outline-none  bg-gray-200" :disabled="inputRak.tipeRak === ''">
                             <p class="text-xs mt-1 text-right text-red-500">{{ errors[0] }}</p>
                         </ValidationProvider>
@@ -53,7 +47,7 @@
                     <label for="namaProduk" class="block mb-2 text-sm">nama produk</label>
 
                     <div class="flex flex-col w-72">
-                        <ValidationProvider rules="required|alpha_dash" v-slot={errors}>
+                        <ValidationProvider rules="required|passchar" v-slot={errors}>
                             <input type="text" v-model="inputRak.namaProduk" name="namaProduk" id="namaProduk" class="p-2 w-full rounded-lg outline-none bg-gray-200" :disabled="inputRak.tipePintu === ''">
                             <p class="text-xs mt-1 text-right text-red-500">{{ errors[0] }}</p>
                         </ValidationProvider>
@@ -64,7 +58,7 @@
 
                     <label for="dimensi" class="block mb-2 text-sm">dimensi</label>
                     <div class="flex flex-col w-72">
-                    <ValidationProvider rules="required|numeric" v-slot={errors}>
+                    <ValidationProvider rules="required|passchar" v-slot={errors}>
                         <input type="text" v-model="inputRak.dimensi" name="dimensi" id="dimensi" class="p-2 w-full rounded-lg outline-none bg-gray-200" :disabled="inputRak.namaProduk === ''">
                         <p class="text-xs mt-1 text-right text-red-500">{{ errors[0] }}</p>
                     </ValidationProvider>

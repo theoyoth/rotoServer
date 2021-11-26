@@ -152,11 +152,11 @@
           <h1 class="text-3xl mt-4 text-gray-700 font-semibold">Graphic</h1>
           <div class="w-full mt-10">
             <div>
-              <BarChart :chart-data="chartData" :options="options"/>
+              <BarChartsuhu :chart-data="chartData" :options="options"/>
             </div>
               <!-- <BarChartdata :labels="labels" :chartData="suhus"/> -->
             <div class="mt-10">
-              <BarChartKelembapan :chart-data="kelembapans" :options="optionKelem"/>
+              <BarChartkelembapan :chart-data="kelembapans" :options="optionKelem"/>
             </div>
           </div>
         </div>       
@@ -243,7 +243,8 @@ export default {
               {
                 label: "suhu",
                 backgroundColor: 'rgb(147, 197, 254)',
-                borderColor: "#C5CAE9",
+                borderColor: "rgb(100,200,225)",
+                pointBackgroundColor:"rgb(100,100,100)",
                 data: daftarSuhu,
                 fill: true
               }
@@ -298,7 +299,8 @@ export default {
               {
                 label: "kelembapan",
                 backgroundColor: 'rgb(252, 165, 165)',
-                borderColor: "#C5CAE9",
+                borderColor: "rgb(225,150,140)",
+                pointBackgroundColor:"rgb(100,100,100)",
                 data: daftarKelembapan,
                 fill: true
               }

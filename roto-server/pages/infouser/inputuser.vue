@@ -28,13 +28,12 @@
                       </ValidationProvider>
                     </div>
                 </div>
-                <div class="mb-4 has-tooltip" >
+                <div class="mb-4 has-tooltip" :class="[inputUser.nama !== '' ? 'incop' : 'decop']">
                     <span class="tooltip text-xs rounded shadow-lg p-1 bg-gray-700 text-white ml-32">masukan role</span>
 
                     <label for="merek" class="block mb-2 text-sm">role</label>
                     <div class="flex flex-col">
                           <select name="role" id="role" class="p-2 w-full rounded-lg" v-model="inputUser.role">
-                              <option disabled value="">pilih role</option>
                               <option value="EDP">EDP</option>
                               <option value="PA">PA</option>
                               <option value="Admin teknisi">admin teknisi</option>
@@ -44,11 +43,12 @@
                           </select> 
                     </div>
                 </div>
-                <div class="mb-4 has-tooltip" >
+                <div class="mb-4 has-tooltip" :class="[inputUser.role !== '' ? 'incop' : 'decop']">
                     <span class="tooltip text-xs rounded shadow-lg p-1 bg-gray-700 text-white ml-32">masukan password</span>
 
                     <label for="model" class="block mb-2 text-sm">sandi</label>
                     <div class="flex flex-col">
+                      <div v-if="inputUser.role == 'Admin teknisi' || inputUser.role == 'Teknisi listrik' || inputUser.role == 'Teknisi ac' || inputUser.role == 'Security'">
                         <ValidationProvider rules="required" v-slot={errors} vid="confirm">
                           <div class="flex">
                             <input :type="passwordFieldType" v-model="inputUser.sandi" name="model" id="model" class="p-2 w-full rounded-l-lg outline-none bg-gray-200">
@@ -58,16 +58,28 @@
                           </div>
                         <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
                         </ValidationProvider>
+                      </div>
+                      <div v-if="inputUser.role == 'PA' || inputUser.role == 'EDP'">
+                        <ValidationProvider rules="required|min:8" v-slot={errors} vid="confirm">
+                          <div class="flex">
+                            <input :type="passwordFieldType" v-model="inputUser.sandi" name="model" id="model" class="p-2 w-full rounded-l-lg outline-none bg-gray-200">
+                            <div type="password" class="flex cursor-pointer items-center p-2 bg-gray-200 rounded-r-lg" @click="showpassword();changeicon();">
+                             <font-awesome-icon :icon="eyeIcon" class="text-gray-700"/>
+                            </div>
+                          </div>
+                        <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
+                        </ValidationProvider>
+                      </div>
                     </div>
                 </div>
-                <div class="mb-4 has-tooltip" >
+                <div class="mb-4 has-tooltip" :class="[inputUser.sandi !== '' ? 'incop' : 'decop']">
                     <span class="tooltip text-xs rounded shadow-lg p-1 bg-gray-700 text-white ml-32">konfirmasi password</span>
 
                     <label for="model" class="block mb-2 text-sm">konfirmasi sandi</label>
                     <div class="flex flex-col">
                         <ValidationProvider v-slot={errors}  rules="required|confirmed:confirm">
                             <input type="password" v-model="inputUser.confirm" name="model" class="p-2 w-full rounded-lg outline-none bg-gray-200">
-                        <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
+                            <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
                         </ValidationProvider>
                     </div>
                 </div>
@@ -107,7 +119,10 @@ export default {
     computed: {
 		eyeIcon () {
 			return this.ruleIcon === 'asc' ? ['fas', 'eye'] : ['fas', 'eye-slash'];
-		  }
+		  },
+      user(){
+        return this.$auth.user
+      },
 	  },
     methods:{
       async inputUserBaru(){
@@ -142,6 +157,12 @@ export default {
 </script>
 
 <style>
+.incop{
+    opacity:1,
+}
+.decop{
+    opacity: 0.1;
+}
 .activesubmit {
     background-color: rgb(37, 45, 56);
     color:whitesmoke;

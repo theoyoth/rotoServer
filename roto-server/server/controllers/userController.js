@@ -8,7 +8,7 @@ module.exports.getAllUsers = async (req, res) => {
   try {
     conn = await pool.getConnection()
 
-    const rows = await conn.query('SELECT * FROM users')
+    const rows = await conn.query('SELECT id_user,nama,role FROM users')
     res.send(rows)
     conn.release()
   } catch (err) {
@@ -206,5 +206,28 @@ module.exports.updateUser = async (req, res) => {
     conn.release()
   } catch (err) {
     throw err
+  }
+}
+
+module.exports.getUserPa = async (req, res) => {
+  let conn
+  try {
+    conn = await pool.getConnection()
+    // id PA adalah 2
+    const resp = await conn.query('SELECT nama FROM users WHERE id_role=2')
+    if (resp) {
+      res.send(resp)
+      console.log('resp')
+    } else {
+      res.end()
+    }
+
+    conn.release()
+  } catch (err) {
+    console.log('tidak bisa mengambil user PA', err)
+  } finally {
+    if (conn) {
+      return conn.end()
+    }
   }
 }

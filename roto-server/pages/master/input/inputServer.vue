@@ -27,7 +27,7 @@
                     <label for="produk" class="block mb-2 text-sm">produk</label>
                     
                     <div class="flex flex-col w-72">
-                        <ValidationProvider rules="required|alpha_dash" v-slot={errors}>
+                        <ValidationProvider rules="required|passchar" v-slot={errors}>
                             <input type="text" name="produk" id="produk" class="p-2 w-full rounded-lg bg-gray-300 outline-none" v-model="inputServer.produk" autofocus>
                             <p class="text-xs mt-1 text-right text-red-500">{{ errors[0] }}</p>
                         </ValidationProvider>
@@ -39,7 +39,7 @@
                     <span class="tooltip text-xs rounded shadow-lg p-1 bg-gray-700 text-white ml-36">masukan nama merek</span>
                     <label for="merek" class="block mb-2 text-sm">merek</label>
                     <div class="flex flex-col w-72">
-                        <ValidationProvider rules="required|alpha_spaces" v-slot={errors}>
+                        <ValidationProvider rules="required|passchar" v-slot={errors}>
                             <input type="text" name="merek" id="merek" class="p-2 w-full rounded-lg outline-none bg-gray-300" v-model="inputServer.merek" :disabled="inputServer.produk === ''">
                             <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
                         </ValidationProvider>
@@ -52,7 +52,7 @@
                     <label for="model" class="block mb-2 text-sm">model</label>
 
                     <div class="flex flex-col w-72">
-                        <ValidationProvider rules="required|alpha_spaces" v-slot={errors}>
+                        <ValidationProvider rules="required|passchar" v-slot={errors}>
                             <input type="text" name="model" id="model" class="p-2 w-full outline-none rounded-lg bg-gray-300" v-model="inputServer.model" :disabled="inputServer.merek === ''" >
                             <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
                         </ValidationProvider>
@@ -65,7 +65,7 @@
                     <label for="processor" class="block mb-2 text-sm">processor</label>
 
                     <div class="flex flex-col w-72">
-                        <ValidationProvider rules="required" v-slot={errors}>
+                        <ValidationProvider rules="required|passchar" v-slot={errors}>
                             <input type="text" name="processor" id="processor" class="p-2 w-full rounded-lg bg-gray-300 outline-none" v-model="inputServer.processor" :disabled="inputServer.model === ''" >
                             <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
                         </ValidationProvider>
@@ -78,9 +78,9 @@
                     <label for="memori" class="block mb-2 text-sm">memori</label>
 
                     <div class="flex flex-col w-72">
-                        <ValidationProvider rules="required|numeric" v-slot={errors}>
+                        <ValidationProvider rules="required|passchar" v-slot={errors}>
                             <div class="flex">
-                            <input type="text" name="memori" id="memori" class="p-2 w-full rounded-lg outline-none bg-gray-300" v-model="inputServer.memori" :disabled="inputServer.processor === ''" >
+                            <input type="text"  name="memori" id="memori" class="p-2 w-full rounded-lg outline-none bg-gray-300" v-model="inputServer.memori" :disabled="inputServer.processor === ''" >
                             <select name="kapasitas" id="kapasitas" class="p-2 rounded-r-lg -ml-2" :disabled="inputServer.processor === ''" >
                                 <option value="gb">GB</option>
                                 <option value="tb">TB</option>
@@ -97,9 +97,9 @@
                     <label for="internalStorage" class="block mb-2 text-sm">internal Storage</label>
                     
                     <div class="flex flex-col w-72">
-                        <ValidationProvider rules="required|numeric" v-slot={errors}>
+                        <ValidationProvider rules="required|passchar" v-slot={errors}>
                             <div class="flex">
-                            <input type="text" name="internalStorage" id="internalStorage" class="p-2 w-full rounded-lg bg-gray-300 outline-none" v-model="inputServer.internalStorage" :disabled="inputServer.memori === ''" >
+                            <input type="text"  name="internalStorage" id="internalStorage" class="p-2 w-full rounded-lg bg-gray-300 outline-none" v-model="inputServer.internalStorage" :disabled="inputServer.memori === ''" >
                             <select name="kapasitas" id="kapasitas" class="p-2 rounded-r-lg -ml-2 ring-blue-500" :disabled="inputServer.memori === ''" >
                                 <option value="gb">GB</option>
                                 <option value="tb">TB</option>
@@ -116,40 +116,21 @@
                     <label for="netwokController" class="block mb-2 text-sm">network Controller</label>
 
                     <div class="flex flex-col w-72">
-                        <ValidationProvider rules="required|numeric" v-slot={errors}>
+                        <ValidationProvider rules="required|passchar" v-slot={errors}>
                             <input type="text" name="networkController" id="netwokController" class="p-2 w-full rounded-lg bg-gray-300 outline-none" v-model="inputServer.networkController" :disabled="inputServer.internalStorage === ''" >
                             <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
                         </ValidationProvider>
                     </div>
                 </div>
             </div>
-            <div class="mt-2" :class="[inputServer.internalStorage !== '' ? 'incop' : 'decop']">
-                <div class="has-tooltip">
-                    <span class="tooltip text-xs rounded shadow-lg p-1 bg-gray-700 text-white ml-32">masukan jumlah storage</span>
-                    <label for="storage" class="block mb-2 text-sm">Storage</label>
-
-                    <div class="flex flex-col w-72">
-                        <ValidationProvider rules="required|numeric" v-slot={errors}>
-                            <div class="flex">
-                            <input type="text" name="storage" id="storage" class="p-2 w-full rounded-lg bg-gray-300 outline-none" v-model="inputServer.storage" :disabled="inputServer.networkController === ''" >
-                            <select name="kapasitas" id="kapasitas" class="p-2 ring-blue-500 rounded-r-lg -ml-2" :disabled="inputServer.networkController === ''" >
-                                <option value="gb">GB</option>
-                                <option value="tb">TB</option>
-                            </select>
-                            </div>
-                            <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
-                        </ValidationProvider>
-                    </div>
-                </div>
-            </div>
-            <div class="mt-2" :class="[inputServer.storage !== '' ? 'incop' : 'decop']">
+            <div class="mt-2" :class="[inputServer.networkController !== '' ? 'incop' : 'decop']">
                 <div class="has-tooltip relative">
                     <span class="tooltip text-xs rounded shadow-lg p-1 bg-gray-700 text-white ml-20">masukan besar sumber daya listrik</span>
                     <label for="sumberDayaListrik" class="block mb-2 text-sm">power supply (dalam watt)</label>
 
                     <div class="flex flex-col w-72">
                         <ValidationProvider rules="required|numeric" v-slot={errors}>
-                            <input type="text" name="sumberDayaListrik" id="sumberDayaListrik" class="p-2 w-full rounded-lg bg-gray-300 outline-none" v-model="inputServer.sumberDayaListrik" :disabled="inputServer.storage === ''">
+                            <input type="text" name="sumberDayaListrik" id="sumberDayaListrik" class="p-2 w-full rounded-lg bg-gray-300 outline-none" v-model="inputServer.sumberDayaListrik" :disabled="inputServer.networkController === ''">
                             <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
                         </ValidationProvider>
                     </div>
@@ -211,7 +192,6 @@ export default {
                 memori : "",
                 internalStorage : "",
                 networkController: "",
-                storage : "",
                 sumberDayaListrik : "",
                 tahun : "",
                 garansi : "",
@@ -243,7 +223,6 @@ export default {
                     memori : this.inputServer.memori,
                     internalStorage : this.inputServer.internalStorage,
                     networkController : this.inputServer.networkController,
-                    storage : this.inputServer.storage,
                     sumberDayaListrik : this.inputServer.sumberDayaListrik,
                     tahun: this.inputServer.tahun,
                     garansi : this.inputServer.garansi,

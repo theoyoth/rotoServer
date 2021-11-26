@@ -1,6 +1,7 @@
 <template>
 <div class="bg-gray-300 h-screen">
     <Navbar/>
+    <Map/>
 </div>
   
 </template>

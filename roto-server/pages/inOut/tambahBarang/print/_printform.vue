@@ -1,35 +1,45 @@
 <template>
-  <div class="min-h-screen w-full mx-auto">
-    <div class="print-container container-form container">
-      <div class="print-form formulir" id="printform" >
-        <h1 class="title">Data Barang</h1>
-        <table class="thisborder table-form">
-          <thead>
-            <th class="thisborder">Tanggal</th>
-            <th class="thisborder">Nama Barang</th>
-            <th class="thisborder">Kuantitas</th>
-          </thead>
-          <tbody>
-            <tr class="textform">
-              <td class="thisborder textform">{{dataPrint.tanggal}}</td>
-              <td class="thisborder textform">{{dataPrint.namaBarang}}</td>
-              <td class="thisborder textform">{{dataPrint.kuantitas}}</td>
-            </tr>
-          </tbody>
-        </table>
-        <div class="print-people flex justify-between w-full mt-6 table-form">
-          <div class="h-24 flex flex-col justify-between text-center">
-            <p>Nama pemambah</p>
-            <p>{{dataPrint.namaPenambah}}</p>
+  <div class="bg-gray-300 min-h-screen w-widthContent ml-auto">
+    <Navbar/>
+    <section class="bg-gray-100 min-h-screen w-widthContentField m-auto mt-7 p-4">
+      <NuxtLink to="/inout/tambahbarang"
+          class="flex items-center justify-between rounded-md w-28 px-4 py-2 bg-gray-700">
+          <div>
+            <font-awesome-icon :icon="['fas', 'arrow-left']" class="text-gray-200" />
           </div>
-          <div class="h-24 flex flex-col justify-between text-center">
-            <p>Penanggung jawab</p>
-            <p>{{dataPrint.penanggungJawab}}</p>
+          <p class="font-medium text-sm text-gray-200">kembali</p>
+        </NuxtLink> 
+        <div id="printform" class="mt-8">
+          <h1 class="text-xl font-semibold" style="text-align: center">Data Barang</h1>
+          <table width="100%" border="1" style="border-collapse: collapse;" class="mt-2">
+            <thead>
+              <th class="border border-black py-2" style="border-width:1px;border-color:black;padding-top:2px;font-weight:bold;">Tanggal</th>
+              <th class="border border-black"  style="padding-top:2px;font-weight:bold;">Nama Barang</th>
+              <th class="border border-black"  style="padding-top:2px;font-weight:bold;">Kuantitas</th>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="border border-black py-2" style="text-align: center;padding-top:2px;">{{dataPrint.tanggal}}</td>
+                <td class="border border-black " style="text-align: center;padding-top:2px;">{{dataPrint.namaBarang}}</td>
+                <td class="border border-black " style="text-align: center;padding-top:2px;">{{dataPrint.kuantitas}}</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="flex justify-between w-full" style="display: flex;justify-content:space-around;margin-top:10px;">
+            <div class="h-20 flex flex-col justify-between text-center" style="text-align: center;">
+              <p>Nama pemambah</p>
+              <p style="transform:translateY(20px);">{{dataPrint.namaPenambah}}</p>
+            </div>
+            <div class="h-20 flex flex-col justify-between text-center" style="text-align:center;">
+              <p>Penanggung jawab</p>
+              <p style="transform:translateY(20px);">{{dataPrint.penanggungJawab}}</p>
+            </div>
           </div>
         </div>
-      </div>
-      <button class="px-8 py-2 rounded-lg bg-gray-700 text-gray-200 mt-6 btnmr" @click="printtheform">Print</button>
-    </div>
+
+        <button class="px-8 py-2 rounded-lg bg-gray-700 text-gray-200 mt-16" @click="printtheform">Print</button>
+      
+    </section>
     
   </div>
 </template>
@@ -40,19 +50,6 @@ import moment from 'moment'
 
 export default {  
   middleware:"isAuthenticated",
-   head: {
-    title: 'my website title',
-    meta: [
-      { charset: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      {
-        hid: 'description',
-        name: 'description',
-        content: 'my website description'
-      }
-    ],
-    link: { rel: 'stylesheet', type: 'text/css', media:'print' }
-  },
   data(){
     return{
       dataPrint:{
@@ -96,74 +93,16 @@ export default {
 }
 </script>
 
-<style  type="text/css">
-@media screen{
-  .thisborder{
+<style>
+@media print {
+  table{
     border:1px solid black;
   }
-  .container-form{
-    width: 100%;
-    height: 100vh;
-  }
-  .formulir{
-    width:700px;
-    margin:auto;
-  }
-  .table-form{
-    width:100%;
-  }
-  .title{
-    text-align:center;
-    font-size: 1.5rem;
-  }
-  .text-form{
-    text-align: center;
-    padding: 1rem;
-  }
-  .people{
-    margin-bottom:30px;
-  }
-  .btnmr{
-    transform:translate(300px,100px);
-  }
-
-}
-  @media print {
-  .formulir {
-    width: 100%
-  }
-  .thisborder{
+  thead{
     border:1px solid black;
   }
-  .container-form{
-    width: 100%;
-    height: 100vh;
-    border:1px solid black;
+  tbody{
+    border: 1px solid black;
   }
-  .formulir{
-    width:700px;
-    margin:auto;
-    border:1px solid black;
-  }
-  .table-form{
-    width:100%;
-    padding:8px;
-  }
-  .title{
-    text-align:center;
-    font-size: 1.5rem;
-  }
-  .text-form{
-    text-align: center;
-  }
-  .people{
-    margin-bottom:30px;
-  }
-  /* table {
-  font-family: arial, sans-serif;
-  border-collapse: collapse;
-  width: 100%;
-} */
-
 }
 </style>

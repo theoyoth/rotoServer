@@ -9,9 +9,9 @@
           </div>
           <p class="font-medium text-sm text-gray-200">kembali</p>
         </NuxtLink> 
-        <p class="text-center text-gray-700 font-semibold mt-4">DETAIL BARANG SERVER</p>
+        <p class="text-center text-gray-700 text-lg font-semibold mt-4">DETAIL BARANG SERVER</p>
         <div class="grid grid-cols-2 w-3/4 bg-gray-200 text-gray-900 text-sm m-auto mt-10">
-          <div class="border border-gray-400 divide-y divide-gray-300">
+          <div class="border border-gray-400 divide-y divide-gray-300 font-semibold">
               <p class="py-2 px-6">tanggal di input</p>
               <p class="py-2 px-6">produk</p>
               <p class="py-2 px-6">merek</p>
@@ -20,7 +20,6 @@
               <p class="py-2 px-6">memori</p>
               <p class="py-2 px-6">internal storage</p>
               <p class="py-2 px-6">network controller</p>
-              <p class="py-2 px-6">storage</p>
               <p class="py-2 px-6">sumber daya lispik</p>
               <p class="py-2 px-6">tahun</p>
               <p class="py-2 px-6">garansi</p>
@@ -34,7 +33,6 @@
               <p class="py-2 px-6">{{det.memori}}</p>
               <p class="py-2 px-6">{{det.internal_storage}}</p>
               <p class="py-2 px-6">{{det.network_controller}}</p>
-              <p class="py-2 px-6">{{det.storage}}</p>
               <p class="py-2 px-6">{{det.sumber_daya_listrik}}</p>
               <p class="py-2 px-6">{{$moment(det.tahun).format('DD-MM-YYYY')}}</p>
               <p class="py-2 px-6">{{$moment(det.garansi).format('DD-MM-YYYY')}}</p>

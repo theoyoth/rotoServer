@@ -27,7 +27,7 @@
 
                     <label for="merek" class="block mb-2 text-sm">merek</label>
                      <div class="flex flex-col w-72">
-                        <ValidationProvider rules="required|alpha_spaces" v-slot={errors}>
+                        <ValidationProvider rules="required|passchar" v-slot={errors}>
                             <input type="text" v-model="inputNas.merek" name="merek" id="merek" class="p-2 w-full rounded-lg bg-gray-300 outline-none">
                             <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
                         </ValidationProvider>
@@ -38,7 +38,7 @@
 
                     <label for="model" class="block mb-2 text-sm">model</label>
                     <div class="flex flex-col w-72">
-                        <ValidationProvider rules="required|alpha_dash" v-slot={errors}>
+                        <ValidationProvider rules="required|passchar" v-slot={errors}>
                             <input type="text" v-model="inputNas.model" name="model" id="model" class="p-2 w-full rounded-lg bg-gray-300 outline-none" :disabled="inputNas.merek === ''">
                             <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
                         </ValidationProvider>
@@ -49,7 +49,7 @@
 
                     <label for="tipe" class="block mb-2 text-sm">tipe</label>
                     <div class="flex flex-col w-72">
-                        <ValidationProvider rules="required|alpha_dash" v-slot={errors}>
+                        <ValidationProvider rules="required|passchar" v-slot={errors}>
                             <input type="text" v-model="inputNas.tipe" name="tipe" id="tipe" class="p-2 w-full rounded-lg bg-gray-300 outline-none" :disabled="inputNas.model === ''">
                             <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
                         </ValidationProvider>
@@ -62,7 +62,7 @@
                     <div class="flex flex-col w-72">
                         <ValidationProvider rules="required|numeric" v-slot={errors}>
                             <div class="flex">
-                            <input type="text" v-model="inputNas.storage" name="storage" id="storage" class="p-2 w-52 rounded-l-lg outline-none bg-gray-300" :disabled="inputNas.tipe === ''">
+                            <input type="text" v-model="inputNas.storage" name="storage" id="storage" class="p-2 w-full rounded-l-lg outline-none bg-gray-300" :disabled="inputNas.tipe === ''">
                             <select name="storage" id="storage" class="p-2 rounded-r-lg -ml-2" :disabled="inputNas.tipe === ''">
                                 <option value="gb">GB</option>
                                 <option value="tb">TB</option>
@@ -77,7 +77,7 @@
 
                     <label for="processor" class="block mb-2 text-sm">processor</label>
                     <div class="flex flex-col w-72">
-                        <ValidationProvider rules="required|alpha_dash" v-slot={errors}>
+                        <ValidationProvider rules="required|passchar" v-slot={errors}>
                             <input type="text" v-model="inputNas.processor" name="processor" id="processor" class="p-2 w-full rounded-lg bg-gray-300 outline-none" :disabled="inputNas.storage === ''">
                             <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
                         </ValidationProvider>
@@ -88,7 +88,7 @@
 
                     <label for="cpu" class="block mb-2 text-sm">cpu</label>
                     <div class="flex flex-col w-72">
-                        <ValidationProvider rules="required|alpha_dash" v-slot={errors}>
+                        <ValidationProvider rules="required|passchar" v-slot={errors}>
                             <input type="text" v-model="inputNas.cpu" name="cpu" id="cpu" class="p-2 w-full rounded-lg bg-gray-300 outline-none" :disabled="inputNas.processor === ''">
                             <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
                         </ValidationProvider>
@@ -99,7 +99,7 @@
 
                     <label for="raid" class="block mb-2 text-sm">raid</label>
                      <div class="flex flex-col w-72">
-                        <ValidationProvider rules="required|alpha_dash" v-slot={errors}>
+                        <ValidationProvider rules="required|passchar" v-slot={errors}>
                             <input type="text" v-model="inputNas.raid" name="raid" id="raid" class="p-2 w-full rounded-lg bg-gray-300 outline-none" :disabled="inputNas.cpu === ''">
                             <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
                         </ValidationProvider>

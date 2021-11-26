@@ -58,7 +58,7 @@
                     <label for="kepentingan" class="block mb-2 text-sm">kepentingan</label>
 
                     <div class="flex flex-col w-72">
-                        <ValidationProvider rules="required|alpha_spaces" v-slot={errors}>
+                        <ValidationProvider rules="required|passchar" v-slot={errors}>
                             <input type="text" v-model="inputTambahBarang.kepentingan" name="kepentingan" id="kepentingan" class="p-2 w-full rounded-lg outline-none bg-gray-200" :disabled="inputTambahBarang.kuantitas === ''">
                             <p class="text-xs mt-1 text-right text-red-500">{{ errors[0] }}</p>
                         </ValidationProvider>
@@ -69,10 +69,12 @@
 
                     <label for="penanggungJawab" class="block mb-2 text-sm">penanggung jawab</label>
                     <div class="flex flex-col w-72">
-                    <ValidationProvider rules="required|alpha_spaces" v-slot={errors}>
-                        <input type="text" v-model="inputTambahBarang.penanggungJawab" name="penanggungJawab" id="penanggungJawab" class="p-2 w-full rounded-lg outline-none bg-gray-200" :disabled="inputTambahBarang.kepentingan === ''">
-                        <p class="text-xs mt-1 text-right text-red-500">{{ errors[0] }}</p>
-                    </ValidationProvider>
+                        <select name="penanggungJawab" id="penanggungJawab" class="p-2 w-full rounded-lg" v-model="inputTambahBarang.penanggungJawab">
+                            <option disabled value="">penanggung jawab</option>
+                            <option v-for="(pa,index) in userpa" :key="index">
+                                <option :value="pa.nama">{{pa.nama}}</option>
+                            </option>
+                        </select> 
                     </div>
                 </div>
             </div>
@@ -104,7 +106,8 @@ export default {
                 kuantitas : "",
                 kepentingan:"",
                 penanggungJawab: "",
-            }
+            },
+            userpa:[],
         }
     },
     methods:{
@@ -122,11 +125,24 @@ export default {
             if(resp){
                 this.$router.push('/inout/tambahbarang')
                 swal('data berhasil disimpan',{icon:'success'})
+                console.log(this.inputTambahBarang.penanggungJawab)
             }
             else{
                 this.$router.push('/inout/tambahbarang')
                 swal('Error',resp.data.errmsg,{icon:'error'})
             }
+        }
+    },
+    async mounted(){
+        try{
+            const resp = await axios.get('http://localhost:3000/server/users/pa')
+            if(resp){
+                resp.data.forEach(pa=>{
+                    this.userpa.push(pa)
+                })
+            }
+        }catch(err){
+            console.log(err)
         }
     }
 }

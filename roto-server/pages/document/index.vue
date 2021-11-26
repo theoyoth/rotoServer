@@ -52,6 +52,9 @@
               <div class="cursor-pointer w-6" @click="downloadFile(fil.name)">
                 <font-awesome-icon :icon="['fas','download']" class="text-gray-700"/>
               </div>
+              <div class="cursor-pointer w-6" @click="deleteFile(fil.name)">
+                <font-awesome-icon :icon="['fas','trash']" class="text-gray-700"/>
+              </div>
             </div>
           </div>
         </div>
@@ -120,6 +123,14 @@ export default {
             swal(err.data.errmsg,{icon:'error'})
           })
     },
+    deleteFile(filename){
+      axios.delete(`http://localhost:3000/server/document/list/${filename}`)
+      .then(resp=>{
+        swal(resp.data.msg,{icon:'success'})
+      }).catch(err=>{
+        swal(err.data.errmsg,{icon:'error'})
+      })
+    }
   },
   async mounted() {
     try {
@@ -136,7 +147,7 @@ export default {
     //   /^.*\.pdf$/
     // )
 
-    require.context('~/uploads/', true, /\.pdf$/)
+    // require.context('~/uploads/', true, /\.pdf$/)
   },
 }
 </script>

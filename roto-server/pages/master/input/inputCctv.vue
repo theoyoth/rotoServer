@@ -27,7 +27,7 @@
 
                     <label for="merek" class="block mb-2 text-sm">merek</label>
                     <div class="flex flex-col w-72">
-                        <ValidationProvider rules="required|alpha_spaces" v-slot={errors}>
+                        <ValidationProvider rules="required|passchar" v-slot={errors}>
                             <input type="text" v-model="inputCctv.merek" name="merek" id="merek" class="p-2 w-full rounded-lg outline-none bg-gray-200">
                             <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
                         </ValidationProvider>
@@ -39,7 +39,7 @@
 
                     <label for="model" class="block mb-2 text-sm">model</label>
                     <div class="flex flex-col w-72">
-                        <ValidationProvider rules="required|alpha_dash">
+                        <ValidationProvider rules="required|passchar">
                             <input type="text" v-model="inputCctv.model" name="model" id="model" class="p-2 w-full rounded-lg outline-none bg-gray-200" :disabled="inputCctv.merek === ''">
                             <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
                         </ValidationProvider>

@@ -70,7 +70,7 @@
 
                     <label for="namaSistem" class="block mb-2 text-sm">nama sistem</label>
                     <div class="flex flex-col w-72">
-                        <ValidationProvider rules="required|alpha_spaces" v-slot={errors}>
+                        <ValidationProvider rules="required|passchar" v-slot={errors}>
                             <input type="text" v-model="inputUps.namaSistem" name="namaSistem" id="namaSistem" class="p-2 w-full rounded-lg outline-none bg-gray-200" :disabled="inputUps.nomorSerial === ''">
                             <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
                         </ValidationProvider>
@@ -81,7 +81,7 @@
 
                     <label for="model" class="block mb-2 text-sm">model</label>
                     <div class="flex flex-col w-72">
-                        <ValidationProvider rules="required|alpha_spaces" v-slot={errors}>
+                        <ValidationProvider rules="required|passchar" v-slot={errors}>
                             <input type="text" v-model="inputUps.model" name="model" id="model" class="p-2 w-full rounded-lg outline-none bg-gray-200" :disabled="inputUps.namaSistem === ''">
                             <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
                         </ValidationProvider>
@@ -92,7 +92,7 @@
 
                     <label for="manufaktur" class="block mb-2 text-sm">manufaktur</label>
                     <div class="flex flex-col w-72">
-                        <ValidationProvider rules="required|alpha_dash" v-slot={errors}>
+                        <ValidationProvider rules="required|passchar" v-slot={errors}>
                             <input type="text" v-model="inputUps.manufaktur" name="manufaktur" id="manufaktur" class="p-2 w-full rounded-lg outline-none bg-gray-200" :disabled="inputUps.model === ''">
                             <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
                         </ValidationProvider>

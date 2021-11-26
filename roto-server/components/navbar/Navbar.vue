@@ -1,12 +1,12 @@
 <template>
   <section>
     <div class="bg-gray-100 w-full py-4 px-7 flex justify-between items-center text-gray-700">
-      <div class="text-lg font-semibold underline flex items-center">
+      <div class="text-lg font-semibold flex items-center">
         <font-awesome-icon
             :icon="['fas', 'warehouse']"
             class="text-gray-700 mr-2"
         />
-        {{user.lokasi}}
+        {{user.lokasi.charAt(0).toUpperCase()+user.lokasi.slice(1)}}
         </div>
       <button @click.prevent="logout"
             class="

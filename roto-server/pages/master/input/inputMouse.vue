@@ -1,8 +1,8 @@
 <template>
-<div class="bg-gray-200 min-h-screen w-widthContent ml-auto">
+<div class="bg-gray-300 min-h-screen w-widthContent ml-auto">
     <!-- <InputHeader item="Mouse"/> -->
     <Navbar/>
-    <section class="bg-white min-h-screen w-widthContentField m-auto mt-7 p-4 ">
+    <section class="bg-gray-100 min-h-screen w-widthContentField m-auto mt-7 p-4 ">
         <NuxtLink to="/master/mouse"
           class="flex items-center justify-between rounded-md w-28 px-4 py-2 bg-gray-700">
           <div>
@@ -27,7 +27,7 @@
 
                     <label for="merek" class="block mb-2 text-sm">merek</label>
                     <div class="flex flex-col w-72">
-                        <ValidationProvider rules="required|alpha_spaces" v-slot={errors}>
+                        <ValidationProvider rules="required|passchar" v-slot={errors}>
                             <input type="text" v-model="inputMouse.merek" name="merek" id="merek" class="p-2 w-full rounded-lg bg-gray-300 outline-none">
                             <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
                         </ValidationProvider>
@@ -38,7 +38,7 @@
 
                     <label for="model" class="block mb-2 text-sm">model</label>
                     <div class="flex flex-col w-72">
-                        <ValidationProvider rules="required|alpha_dash" v-slot={errors}>
+                        <ValidationProvider rules="required|passchar" v-slot={errors}>
                             <input type="text" v-model="inputMouse.model" name="model" id="model" class="p-2 w-full rounded-lg bg-gray-300 outline-none" :disabled="inputMouse.merek === ''">
                             <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
                         </ValidationProvider>
@@ -49,7 +49,7 @@
 
                     <label for="tipe" class="block mb-2 text-sm">tipe</label>
                     <div class="flex flex-col w-72">
-                        <ValidationProvider rules="required|alpha_dash" v-slot={errors}>
+                        <ValidationProvider rules="required|passchar" v-slot={errors}>
                             <input type="text" v-model="inputMouse.tipe" name="tipe" id="tipe" class="p-2 w-full rounded-lg bg-gray-300 outline-none" :disabled="inputMouse.model === ''">
                             <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
                         </ValidationProvider>

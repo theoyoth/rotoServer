@@ -2,11 +2,6 @@ const pool = require('../../db.js')
 const { check, validationResult } = require('express-validator')
 
 module.exports.inputmasterserver = async (req, res) => {
-  const errors = validationResult(req)
-  if (!errors.isEmpty()) {
-    return res.json({ errors: errors.array() })
-  }
-
   let conn
   try {
     const {
@@ -19,7 +14,6 @@ module.exports.inputmasterserver = async (req, res) => {
       memori,
       internalStorage,
       networkController,
-      storage,
       sumberDayaListrik,
       tahun,
       garansi,
@@ -27,9 +21,9 @@ module.exports.inputmasterserver = async (req, res) => {
 
     conn = await pool.getConnection()
 
-    if (lokasiServer == 'roto 1') {
+    if (lokasiServer == 'rotogravure 1') {
       const data = await conn.query(
-        `INSERT INTO master_server VALUES ('','${produk}','${merek}','${model}','${processor}','${memori}','${internalStorage}','${networkController}','${storage}','${sumberDayaListrik}','${tahun}','${garansi}','${iduser}')`
+        `INSERT INTO master_server VALUES ('','${produk}','${merek}','${model}','${processor}','${memori}','${internalStorage}','${networkController}','${sumberDayaListrik}','${tahun}','${garansi}','${iduser}')`
       )
       if (data.affectedRows > 0) {
         res.redirect('/master/server')
@@ -38,9 +32,9 @@ module.exports.inputmasterserver = async (req, res) => {
           .json({ msg: 'gagal di input' })
           .redirect('/master/server/inputServer')
       }
-    } else if (lokasiServer == 'roto 2') {
+    } else if (lokasiServer == 'rotogravure 2') {
       const data = await conn.query(
-        `INSERT INTO master_server_roto_2 VALUES ('','${produk}','${merek}','${model}','${processor}','${memori}','${internalStorage}','${networkController}','${storage}','${sumberDayaListrik}','${tahun}','${garansi}','${iduser}')`
+        `INSERT INTO master_server_roto_2 VALUES ('','${produk}','${merek}','${model}','${processor}','${memori}','${internalStorage}','${networkController}','${sumberDayaListrik}','${tahun}','${garansi}','${iduser}')`
       )
       if (data.affectedRows > 0) {
         res.redirect('/master/server')
@@ -49,9 +43,9 @@ module.exports.inputmasterserver = async (req, res) => {
           .json({ msg: 'gagal di input' })
           .redirect('/master/server/inputServer')
       }
-    } else if (lokasiServer == 'roto 3') {
+    } else if (lokasiServer == 'rotogravure 3') {
       const data = await conn.query(
-        `INSERT INTO master_server_roto_3 VALUES ('','${produk}','${merek}','${model}','${processor}','${memori}','${internalStorage}','${networkController}','${storage}','${sumberDayaListrik}','${tahun}','${garansi}','${iduser}')`
+        `INSERT INTO master_server_roto_3 VALUES ('','${produk}','${merek}','${model}','${processor}','${memori}','${internalStorage}','${networkController}','${sumberDayaListrik}','${tahun}','${garansi}','${iduser}')`
       )
       if (data.affectedRows > 0) {
         res.redirect('/master/server')
@@ -60,9 +54,9 @@ module.exports.inputmasterserver = async (req, res) => {
           .json({ msg: 'gagal di input' })
           .redirect('/master/server/inputServer')
       }
-    } else if (lokasiServer == 'tinta') {
+    } else if (lokasiServer == 'rotogravure tinta') {
       const data = await conn.query(
-        `INSERT INTO master_server_tinta VALUES ('','${produk}','${merek}','${model}','${processor}','${memori}','${internalStorage}','${networkController}','${storage}','${sumberDayaListrik}','${tahun}','${garansi}','${iduser}')`
+        `INSERT INTO master_server_tinta VALUES ('','${produk}','${merek}','${model}','${processor}','${memori}','${internalStorage}','${networkController}','${sumberDayaListrik}','${tahun}','${garansi}','${iduser}')`
       )
       if (data.affectedRows > 0) {
         res.redirect('/master/server')
@@ -100,7 +94,7 @@ module.exports.inputmasterrak = async (req, res) => {
 
     conn = await pool.getConnection()
 
-    if (lokasiServer == 'roto 1') {
+    if (lokasiServer == 'rotogravure 1') {
       const data = await conn.query(
         `INSERT INTO master_rak VALUES ('','${tipeRak}','${tipePintu}','${namaProduk}','${dimensi}','${berat}','${tahun}','${iduser}')`
       )
@@ -111,7 +105,7 @@ module.exports.inputmasterrak = async (req, res) => {
           .json({ msg: 'gagal di input' })
           .redirect('/master/rak/inputRak')
       }
-    } else if (lokasiServer == 'roto 2') {
+    } else if (lokasiServer == 'rotogravure 2') {
       const data = await conn.query(
         `INSERT INTO master_rak_roto_2 VALUES ('','${tipeRak}','${tipePintu}','${namaProduk}','${dimensi}','${berat}','${tahun}','${iduser}')`
       )
@@ -122,7 +116,7 @@ module.exports.inputmasterrak = async (req, res) => {
           .json({ msg: 'gagal di input' })
           .redirect('/master/rak/inputRak')
       }
-    } else if (lokasiServer == 'roto 3') {
+    } else if (lokasiServer == 'rotogravure 3') {
       const data = await conn.query(
         `INSERT INTO master_rak_roto_3 VALUES ('','${tipeRak}','${tipePintu}','${namaProduk}','${dimensi}','${berat}','${tahun}','${iduser}')`
       )
@@ -133,7 +127,7 @@ module.exports.inputmasterrak = async (req, res) => {
           .json({ msg: 'gagal di input' })
           .redirect('/master/rak/inputRak')
       }
-    } else if (lokasiServer == 'tinta') {
+    } else if (lokasiServer == 'rotogravure tinta') {
       const data = await conn.query(
         `INSERT INTO master_rak_tinta VALUES ('','${tipeRak}','${tipePintu}','${namaProduk}','${dimensi}','${berat}','${tahun}','${iduser}')`
       )
@@ -178,7 +172,7 @@ module.exports.inputmasterups = async (req, res) => {
     } = req.body
 
     conn = await pool.getConnection()
-    if (lokasiServer == 'roto 1') {
+    if (lokasiServer == 'rotogravure 1') {
       const data = await conn.query(
         `INSERT INTO master_ups VALUES ('','${model}','${upsCriticalLoad}','${upsCriticalTemperature}','${upsCriticalCapacity}','${nomorSerial}','${namaSistem}','${manufaktur}','${peringkatTegangan}','${peringkatFrekuensi}','${peringkatTeganganBaterai}','${tahun}','${garansi}','${iduser}')`
       )
@@ -189,7 +183,7 @@ module.exports.inputmasterups = async (req, res) => {
           .json({ msg: 'gagal di input' })
           .redirect('/master/ups/inputups')
       }
-    } else if (lokasiServer == 'roto 2') {
+    } else if (lokasiServer == 'rotogravure 2') {
       const data = await conn.query(
         `INSERT INTO master_ups_roto_2 VALUES ('','${model}','${upsCriticalLoad}','${upsCriticalTemperature}','${upsCriticalCapacity}','${nomorSerial}','${namaSistem}','${manufaktur}','${peringkatTegangan}','${peringkatFrekuensi}','${peringkatTeganganBaterai}','${tahun}','${garansi}','${iduser}')`
       )
@@ -200,7 +194,7 @@ module.exports.inputmasterups = async (req, res) => {
           .json({ msg: 'gagal di input' })
           .redirect('/master/ups/inputups')
       }
-    } else if (lokasiServer == 'roto 3') {
+    } else if (lokasiServer == 'rotogravure 3') {
       const data = await conn.query(
         `INSERT INTO master_ups_roto_3 VALUES ('','${model}','${upsCriticalLoad}','${upsCriticalTemperature}','${upsCriticalCapacity}','${nomorSerial}','${namaSistem}','${manufaktur}','${peringkatTegangan}','${peringkatFrekuensi}','${peringkatTeganganBaterai}','${tahun}','${garansi}','${iduser}')`
       )
@@ -211,7 +205,7 @@ module.exports.inputmasterups = async (req, res) => {
           .json({ msg: 'gagal di input' })
           .redirect('/master/ups/inputups')
       }
-    } else if (lokasiServer == 'tinta') {
+    } else if (lokasiServer == 'rotogravure tinta') {
       const data = await conn.query(
         `INSERT INTO master_ups_tinta VALUES ('','${model}','${upsCriticalLoad}','${upsCriticalTemperature}','${upsCriticalCapacity}','${nomorSerial}','${namaSistem}','${manufaktur}','${peringkatTegangan}','${peringkatFrekuensi}','${peringkatTeganganBaterai}','${tahun}','${garansi}','${iduser}')`
       )
@@ -244,7 +238,7 @@ module.exports.inputmasterbaterai = async (req, res) => {
 
     conn = await pool.getConnection()
 
-    if (lokasiServer == 'roto 1') {
+    if (lokasiServer == 'rotogravure 1') {
       const data = await conn.query(
         `INSERT INTO master_baterai VALUES ('','${accu}','${kuantitas}','${tegangan}','${tahun}','${garansi}','${iduser}')`
       )
@@ -255,7 +249,7 @@ module.exports.inputmasterbaterai = async (req, res) => {
           .json({ msg: 'gagal di input' })
           .redirect('/master/baterai/inputBaterai')
       }
-    } else if (lokasiServer == 'roto 2') {
+    } else if (lokasiServer == 'rotogravure 2') {
       const data = await conn.query(
         `INSERT INTO master_baterai_roto_2 VALUES ('','${accu}','${kuantitas}','${tegangan}','${tahun}','${garansi}','${iduser}')`
       )
@@ -266,7 +260,7 @@ module.exports.inputmasterbaterai = async (req, res) => {
           .json({ msg: 'gagal di input' })
           .redirect('/master/baterai/inputBaterai')
       }
-    } else if (lokasiServer == 'roto 3') {
+    } else if (lokasiServer == 'rotogravure 3') {
       const data = await conn.query(
         `INSERT INTO master_baterai_roto_3 VALUES ('','${accu}','${kuantitas}','${tegangan}','${tahun}','${garansi}','${iduser}')`
       )
@@ -277,7 +271,7 @@ module.exports.inputmasterbaterai = async (req, res) => {
           .json({ msg: 'gagal di input' })
           .redirect('/master/baterai/inputBaterai')
       }
-    } else if (lokasiServer == 'tinta') {
+    } else if (lokasiServer == 'rotogravure tinta') {
       const data = await conn.query(
         `INSERT INTO master_baterai_tinta VALUES ('','${accu}','${kuantitas}','${tegangan}','${tahun}','${garansi}','${iduser}')`
       )
@@ -314,7 +308,7 @@ module.exports.inputmasterac = async (req, res) => {
     } = req.body
 
     conn = await pool.getConnection()
-    if (lokasiServer == 'roto 1') {
+    if (lokasiServer == 'rotogravure 1') {
       const resp = await conn.query(
         `INSERT INTO master_ac VALUES ('','${merek}','${model}','${sumberDayaListrik}','${dimensi}','${konsumsiDaya}','${kapasitasPendingin}','${tahun}','${garansi}', '${iduser}')`
       )
@@ -323,7 +317,7 @@ module.exports.inputmasterac = async (req, res) => {
       } else {
         res.json({ errmsg: 'gagal diupdate' })
       }
-    } else if (lokasiServer == 'roto 2') {
+    } else if (lokasiServer == 'rotogravure 2') {
       const resp = await conn.query(
         `INSERT INTO master_ac_roto_2 VALUES ('','${merek}','${model}','${sumberDayaListrik}','${dimensi}','${konsumsiDaya}','${kapasitasPendingin}','${tahun}','${garansi}','${iduser}')`
       )
@@ -332,7 +326,7 @@ module.exports.inputmasterac = async (req, res) => {
       } else {
         res.json({ errmsg: 'gagal diupdate' })
       }
-    } else if (lokasiServer == 'roto 3') {
+    } else if (lokasiServer == 'rotogravure 3') {
       const resp = await conn.query(
         `INSERT INTO master_ac_roto_3 VALUES ('','${merek}','${model}','${sumberDayaListrik}','${dimensi}','${konsumsiDaya}','${kapasitasPendingin}','${tahun}','${garansi}','${iduser}')`
       )
@@ -341,7 +335,7 @@ module.exports.inputmasterac = async (req, res) => {
       } else {
         res.json({ errmsg: 'gagal diupdate' })
       }
-    } else if (lokasiServer == 'tinta') {
+    } else if (lokasiServer == 'rotogravure tinta') {
       const resp = await conn.query(
         `INSERT INTO master_ac_tinta VALUES ('','${merek}','${model}','${sumberDayaListrik}','${dimensi}','${konsumsiDaya}','${kapasitasPendingin}','${tahun}','${garansi}', '${iduser}')`
       )
@@ -365,7 +359,7 @@ module.exports.inputmastercctv = async (req, res) => {
     const { iduser, lokasiServer, merek, model, garansi } = req.body
 
     conn = await pool.getConnection()
-    if (lokasiServer == 'roto 1') {
+    if (lokasiServer == 'rotogravure 1') {
       const resp = await conn.query(
         `INSERT INTO master_cctv VALUES ('','${merek}','${model}','${garansi}','${iduser}')`
       )
@@ -374,7 +368,7 @@ module.exports.inputmastercctv = async (req, res) => {
       } else {
         res.json({ errmsg: 'gagal ditambahkan' })
       }
-    } else if (lokasiServer == 'roto 2') {
+    } else if (lokasiServer == 'rotogravure 2') {
       const resp = await conn.query(
         `INSERT INTO master_cctv_roto_2 VALUES ('','${merek}','${model}','${garansi}','${iduser}')`
       )
@@ -383,7 +377,7 @@ module.exports.inputmastercctv = async (req, res) => {
       } else {
         res.json({ errmsg: 'gagal ditambahkan' })
       }
-    } else if (lokasiServer == 'roto 3') {
+    } else if (lokasiServer == 'rotogravure 3') {
       const resp = await conn.query(
         `INSERT INTO master_cctv_roto_3 VALUES ('','${merek}','${model}','${garansi}','${iduser}')`
       )
@@ -392,7 +386,7 @@ module.exports.inputmastercctv = async (req, res) => {
       } else {
         res.json({ errmsg: 'gagal ditambahkan' })
       }
-    } else if (lokasiServer == 'tinta') {
+    } else if (lokasiServer == 'rotogravure tinta') {
       const resp = await conn.query(
         `INSERT INTO master_cctv_tinta VALUES ('','${merek}','${model}','${garansi}','${iduser}')`
       )
@@ -426,7 +420,7 @@ module.exports.inputmasternetwork = async (req, res) => {
     } = req.body
 
     conn = await pool.getConnection()
-    if (lokasiServer == 'roto 1') {
+    if (lokasiServer == 'rotogravure 1') {
       const resp = await conn.query(
         `INSERT INTO master_network VALUES ('','${merek}','${model}','${tipe}','${kuantitas}','${kanal}','${tahun}','${garansi}','${iduser}')`
       )
@@ -435,7 +429,7 @@ module.exports.inputmasternetwork = async (req, res) => {
       } else {
         res.json({ errmsg: 'gagal ditambahkan' })
       }
-    } else if (lokasiServer == 'roto 2') {
+    } else if (lokasiServer == 'rotogravure 2') {
       const resp = await conn.query(
         `INSERT INTO master_network_roto_2 VALUES ('','${merek}','${model}','${tipe}','${kuantitas}','${kanal}','${tahun}','${garansi}','${iduser}')`
       )
@@ -444,7 +438,7 @@ module.exports.inputmasternetwork = async (req, res) => {
       } else {
         res.json({ errmsg: 'gagal ditambahkan' })
       }
-    } else if (lokasiServer == 'roto 3') {
+    } else if (lokasiServer == 'rotogravure 3') {
       const resp = await conn.query(
         `INSERT INTO master_network_roto_3 VALUES ('','${merek}','${model}','${tipe}','${kuantitas}','${kanal}','${tahun}','${garansi}','${iduser}')`
       )
@@ -453,7 +447,7 @@ module.exports.inputmasternetwork = async (req, res) => {
       } else {
         res.json({ errmsg: 'gagal ditambahkan' })
       }
-    } else if (lokasiServer == 'tinta') {
+    } else if (lokasiServer == 'rotogravure tinta') {
       const resp = await conn.query(
         `INSERT INTO master_network_tinta VALUES ('','${merek}','${model}','${tipe}','${kuantitas}','${kanal}','${tahun}','${garansi}','${iduser}')`
       )
@@ -477,7 +471,7 @@ module.exports.inputmasterapar = async (req, res) => {
       req.body
 
     conn = await pool.getConnection()
-    if (lokasiServer == 'roto 1') {
+    if (lokasiServer == 'rotogravure 1') {
       const resp = await conn.query(
         `INSERT INTO master_apar VALUES ('','${merek}','${model}','${tipe}','${tahun}','${garansi}','${iduser}')`
       )
@@ -486,7 +480,7 @@ module.exports.inputmasterapar = async (req, res) => {
       } else {
         res.json({ errmsg: 'gagal ditambahkan' })
       }
-    } else if (lokasiServer == 'roto 2') {
+    } else if (lokasiServer == 'rotogravure 2') {
       const resp = await conn.query(
         `INSERT INTO master_apar_roto_2 VALUES ('','${merek}','${model}','${tipe}','${tahun}','${garansi}','${iduser}')`
       )
@@ -495,7 +489,7 @@ module.exports.inputmasterapar = async (req, res) => {
       } else {
         res.json({ errmsg: 'gagal ditambahkan' })
       }
-    } else if (lokasiServer == 'roto 3') {
+    } else if (lokasiServer == 'rotogravure 3') {
       const resp = await conn.query(
         `INSERT INTO master_apar_roto_3 VALUES ('','${merek}','${model}','${tipe}','${tahun}','${garansi}','${iduser}')`
       )
@@ -504,7 +498,7 @@ module.exports.inputmasterapar = async (req, res) => {
       } else {
         res.json({ errmsg: 'gagal ditambahkan' })
       }
-    } else if (lokasiServer == 'tinta') {
+    } else if (lokasiServer == 'rotogravure tinta') {
       const resp = await conn.query(
         `INSERT INTO master_apar_tinta VALUES ('','${merek}','${model}','${tipe}','${tahun}','${garansi}','${iduser}')`
       )
@@ -528,7 +522,7 @@ module.exports.inputmastermonitor = async (req, res) => {
       req.body
 
     conn = await pool.getConnection()
-    if (lokasiServer == 'roto 1') {
+    if (lokasiServer == 'rotogravure 1') {
       const resp = await conn.query(
         `INSERT INTO master_monitor VALUES ('','${merek}','${model}','${tipe}','${tahun}','${garansi}','${iduser}')`
       )
@@ -537,7 +531,7 @@ module.exports.inputmastermonitor = async (req, res) => {
       } else {
         res.json({ errmsg: 'gagal ditambahkan' })
       }
-    } else if (lokasiServer == 'roto 2') {
+    } else if (lokasiServer == 'rotogravure 2') {
       const resp = await conn.query(
         `INSERT INTO master_monitor_roto_2 VALUES ('','${merek}','${model}','${tipe}','${tahun}','${garansi}','${iduser}')`
       )
@@ -546,7 +540,7 @@ module.exports.inputmastermonitor = async (req, res) => {
       } else {
         res.json({ errmsg: 'gagal ditambahkan' })
       }
-    } else if (lokasiServer == 'roto 3') {
+    } else if (lokasiServer == 'rotogravure 3') {
       const resp = await conn.query(
         `INSERT INTO master_monitor_roto_3 VALUES ('','${merek}','${model}','${tipe}','${tahun}','${garansi}','${iduser}')`
       )
@@ -555,7 +549,7 @@ module.exports.inputmastermonitor = async (req, res) => {
       } else {
         res.json({ errmsg: 'gagal ditambahkan' })
       }
-    } else if (lokasiServer == 'tinta') {
+    } else if (lokasiServer == 'rotogravure tinta') {
       const resp = await conn.query(
         `INSERT INTO master_monitor_tinta VALUES ('','${merek}','${model}','${tipe}','${tahun}','${garansi}','${iduser}')`
       )
@@ -579,7 +573,7 @@ module.exports.inputmasterkeyboard = async (req, res) => {
       req.body
 
     conn = await pool.getConnection()
-    if (lokasiServer == 'roto 1') {
+    if (lokasiServer == 'rotogravure 1') {
       const resp = await conn.query(
         `INSERT INTO master_keyboard VALUES ('','${merek}','${model}','${tipe}','${tahun}','${garansi}','${iduser}')`
       )
@@ -588,7 +582,7 @@ module.exports.inputmasterkeyboard = async (req, res) => {
       } else {
         res.json({ errmsg: 'gagal ditambahkan' })
       }
-    } else if (lokasiServer == 'roto 2') {
+    } else if (lokasiServer == 'rotogravure 2') {
       const resp = await conn.query(
         `INSERT INTO master_keyboard_roto_2 VALUES ('','${merek}','${model}','${tipe}','${tahun}','${garansi}','${iduser}')`
       )
@@ -597,7 +591,7 @@ module.exports.inputmasterkeyboard = async (req, res) => {
       } else {
         res.json({ errmsg: 'gagal ditambahkan' })
       }
-    } else if (lokasiServer == 'roto 3') {
+    } else if (lokasiServer == 'rotogravure 3') {
       const resp = await conn.query(
         `INSERT INTO master_keyboard_roto_3 VALUES ('','${merek}','${model}','${tipe}','${tahun}','${garansi}','${iduser}')`
       )
@@ -606,7 +600,7 @@ module.exports.inputmasterkeyboard = async (req, res) => {
       } else {
         res.json({ errmsg: 'gagal ditambahkan' })
       }
-    } else if (lokasiServer == 'tinta') {
+    } else if (lokasiServer == 'rotogravure tinta') {
       const resp = await conn.query(
         `INSERT INTO master_keyboard_tinta VALUES ('','${merek}','${model}','${tipe}','${tahun}','${garansi}','${iduser}')`
       )
@@ -631,7 +625,7 @@ module.exports.inputmastermouse = async (req, res) => {
       req.body
 
     conn = await pool.getConnection()
-    if (lokasiServer == 'roto 1') {
+    if (lokasiServer == 'rotogravure 1') {
       const resp = await conn.query(
         `INSERT INTO master_mouse VALUES ('','${merek}','${model}','${tipe}','${tahun}','${garansi}','${iduser}')`
       )
@@ -640,7 +634,7 @@ module.exports.inputmastermouse = async (req, res) => {
       } else {
         res.json({ errmsg: 'gagal ditambahkan' })
       }
-    } else if (lokasiServer == 'roto 2') {
+    } else if (lokasiServer == 'rotogravure 2') {
       const resp = await conn.query(
         `INSERT INTO master_mouse_roto_2 VALUES ('','${merek}','${model}','${tipe}','${tahun}','${garansi}','${iduser}')`
       )
@@ -649,7 +643,7 @@ module.exports.inputmastermouse = async (req, res) => {
       } else {
         res.json({ errmsg: 'gagal ditambahkan' })
       }
-    } else if (lokasiServer == 'roto 3') {
+    } else if (lokasiServer == 'rotogravure 3') {
       const resp = await conn.query(
         `INSERT INTO master_mouse_roto_3 VALUES ('','${merek}','${model}','${tipe}','${tahun}','${garansi}','${iduser}')`
       )
@@ -658,7 +652,7 @@ module.exports.inputmastermouse = async (req, res) => {
       } else {
         res.json({ errmsg: 'gagal ditambahkan' })
       }
-    } else if (lokasiServer == 'tinta') {
+    } else if (lokasiServer == 'rotogravure tinta') {
       const resp = await conn.query(
         `INSERT INTO master_mouse_tinta VALUES ('','${merek}','${model}','${tipe}','${tahun}','${garansi}','${iduser}')`
       )
@@ -693,7 +687,7 @@ module.exports.inputmasternas = async (req, res) => {
     } = req.body
 
     conn = await pool.getConnection()
-    if (lokasiServer == 'roto 1') {
+    if (lokasiServer == 'rotogravure 1') {
       const resp = await conn.query(
         `INSERT INTO master_nas VALUES ('','${merek}','${model}','${processor}','${storage}','${tipe}','${cpu}','${raid}','${tahun}','${garansi}','${iduser}')`
       )
@@ -702,7 +696,7 @@ module.exports.inputmasternas = async (req, res) => {
       } else {
         res.json({ errmsg: 'gagal ditambahkan' })
       }
-    } else if (lokasiServer == 'roto 2') {
+    } else if (lokasiServer == 'rotogravure 2') {
       const resp = await conn.query(
         `INSERT INTO master_nas_roto_2 VALUES ('','${merek}','${model}','${processor}','${storage}','${tipe}','${cpu}','${raid}','${tahun}','${garansi}','${iduser}')`
       )
@@ -711,7 +705,7 @@ module.exports.inputmasternas = async (req, res) => {
       } else {
         res.json({ errmsg: 'gagal ditambahkan' })
       }
-    } else if (lokasiServer == 'roto 3') {
+    } else if (lokasiServer == 'rotogravure 3') {
       const resp = await conn.query(
         `INSERT INTO master_nas_roto_3 VALUES ('','${merek}','${model}','${processor}','${storage}','${tipe}','${cpu}','${raid}','${tahun}','${garansi}','${iduser}')`
       )
@@ -720,7 +714,7 @@ module.exports.inputmasternas = async (req, res) => {
       } else {
         res.json({ errmsg: 'gagal ditambahkan' })
       }
-    } else if (lokasiServer == 'tinta') {
+    } else if (lokasiServer == 'rotogravure tinta') {
       const resp = await conn.query(
         `INSERT INTO master_nas_tinta VALUES ('','${merek}','${model}','${processor}','${storage}','${tipe}','${cpu}','${raid}','${tahun}','${garansi}','${iduser}')`
       )
@@ -745,28 +739,28 @@ module.exports.inputmastergenset = async (req, res) => {
       req.body
     conn = await pool.getConnection()
 
-    if (lokasiServer == 'roto 1') {
+    if (lokasiServer == 'rotogravure 1') {
       const data = await conn.query(
         `INSERT INTO master_genset VALUES ('','${merek}','${model}','${tipe}','${tahun}','${garansi}','${iduser}')`
       )
       if (data.affectedRows > 0) {
         res.redirect('/master/genset')
       }
-    } else if (lokasiServer === 'roto 2') {
+    } else if (lokasiServer === 'rotogravure 2') {
       const data = await conn.query(
         `INSERT INTO master_genset_roto_2 VALUES ('','${merek}','${model}','${tipe}','${tahun}','${garansi}','${iduser}')`
       )
       if (data.affectedRows > 0) {
         res.redirect('/master/genset')
       }
-    } else if (lokasiServer === 'roto 3') {
+    } else if (lokasiServer === 'rotogravure 3') {
       const data = await conn.query(
         `INSERT INTO master_genset_roto_3 VALUES ('','${merek}','${model}','${tipe}','${tahun}','${garansi}','${iduser}')`
       )
       if (data.affectedRows > 0) {
         res.redirect('/master/genset')
       }
-    } else if (lokasiServer === 'tinta') {
+    } else if (lokasiServer === 'rotogravure tinta') {
       const data = await conn.query(
         `INSERT INTO master_genset_tinta VALUES ('','${merek}','${model}','${tipe}','${tahun}','${garansi}','${iduser}')`
       )

@@ -268,6 +268,8 @@ router.delete('/user/delete/:id', userController.deleteUser)
 router.get('/user/:id', userController.getUser)
 // update data user
 router.post('/user/update', userController.updateUser)
+// ambil nama user dengan role PA
+router.get('/users/pa', userController.getUserPa)
 
 // =====================================
 // ==============IN-OUT BARANG==========
@@ -378,5 +380,6 @@ router.post('/document', upload.single('file'), fileController.uploadFiledoc)
 router.get('/document/list', fileController.getAllFiles)
 
 router.get('/document/list/:name', fileController.downloadFile)
+router.delete('/document/list/:name', fileController.deleteFile)
 
 module.exports = router

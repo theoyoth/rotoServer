@@ -72,17 +72,6 @@
                     <input type="text" name="networkController" id="netwokController" v-model="updateServer.networkController" class="p-2 w-full rounded-lg outline-none bg-gray-300">
                     </div>
                 </div>
-                <div class="mb-4 has-tooltip">
-                    <span class="tooltip text-xs rounded shadow-lg p-1 bg-gray-700 text-white ml-32">masukan jumlah storage</span>
-                    <label for="storage" class="block mb-2 text-sm">Storage</label>
-                    <div class="flex w-72">
-                    <input type="text" name="storage" id="storage" v-model="updateServer.storage" class="p-2 w-full rounded-lg ring-gray-500 bg-gray-300">
-                     <select name="kapasitas" id="kapasitas" class="p-2 rounded-r-lg ring-gray-500 -ml-2 bg-gray-300">
-                        <option value="gb">GB</option>
-                        <option value="tb">TB</option>
-                    </select>
-                    </div>
-                </div>
                 <div class="mb-4 has-tooltip relative">
                      <span class="tooltip text-xs rounded shadow-lg p-1 bg-gray-700 text-white ml-20">masukan besar sumber daya listrik</span>
                     <label for="sumberDayaListrik" class="block mb-2 text-sm">power supply</label>
@@ -127,7 +116,6 @@ export default {
                 internalStorage : "",
                 networkController : "",
                 sumberDayaListrik : "",
-                storage : "",
                 tahun : "",
                 garansi : "",
             }
@@ -149,7 +137,6 @@ export default {
                     this.updateServer.internalStorage = servers.internal_storage
                     this.updateServer.networkController = servers.network_controller
                     this.updateServer.sumberDayaListrik = servers.sumber_daya_listrik
-                    this.updateServer.storage = servers.storage
                     this.updateServer.tahun = moment(servers.tahun).format('YYYY-MM-DD')
                     this.updateServer.garansi = moment(servers.garansi).format('YYYY-MM-DD')
                     this.updateServer.idserver = servers.id_server
@@ -176,7 +163,6 @@ export default {
                 internalStorage : this.updateServer.internalStorage,
                 networkController : this.updateServer.networkController,
                 sumberDayaListrik : this.updateServer.sumberDayaListrik,
-                storage : this.updateServer.storage,
                 tahun : this.updateServer.tahun,
                 garansi : this.updateServer.garansi,
                 })

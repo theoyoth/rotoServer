@@ -7,7 +7,7 @@ module.exports.deleteBarang = async (req, res) => {
     const lokasiServer = req.params.lokasi
     conn = await pool.getConnection()
 
-    if (lokasiServer == 'roto 1') {
+    if (lokasiServer == 'rotogravure 1') {
       const data = await conn.query(
         `DELETE FROM ambil_barang WHERE id_ambil_barang=${id}`
       )
@@ -18,7 +18,7 @@ module.exports.deleteBarang = async (req, res) => {
       } else {
         res.json({ errmsg: 'data tidak terhapus' })
       }
-    } else if (lokasiServer == 'roto 2') {
+    } else if (lokasiServer == 'rotogravure 2') {
       const data = await conn.query(
         `DELETE FROM ambil_barang_roto_2 WHERE id_ambil_barang=${id}`
       )
@@ -28,7 +28,7 @@ module.exports.deleteBarang = async (req, res) => {
       } else {
         res.json({ errmsg: 'data tidak terhapus' })
       }
-    } else if (lokasiServer == 'roto 3') {
+    } else if (lokasiServer == 'rotogravure 3') {
       const data = await conn.query(
         `DELETE FROM ambil_barang_roto_3 WHERE id_ambil_barang=${id}`
       )
@@ -38,7 +38,7 @@ module.exports.deleteBarang = async (req, res) => {
       } else {
         res.json({ errmsg: 'data tidak terhapus' })
       }
-    } else if (lokasiServer == 'tinta') {
+    } else if (lokasiServer == 'rotogravure tinta') {
       const data = await conn.query(
         `DELETE FROM ambil_barang_tinta WHERE id_ambil_barang=${id}`
       )

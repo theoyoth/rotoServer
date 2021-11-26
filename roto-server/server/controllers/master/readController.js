@@ -8,22 +8,22 @@ module.exports.masterserver = async (req, res) => {
     const idlogin = req.params.id
     conn = await pool.getConnection()
 
-    if (lokasiServer == 'roto 1') {
+    if (lokasiServer == 'rotogravure 1') {
       const rows = await conn.query(
         `SELECT * FROM master_server INNER JOIN users ON master_server.id_users=users.id_user WHERE users.id_user=${idlogin}`
       )
       res.send(rows)
-    } else if (lokasiServer == 'roto 2') {
+    } else if (lokasiServer == 'rotogravure 2') {
       const rows = await conn.query(
         `SELECT * FROM master_server_roto_2 INNER JOIN users ON master_server_roto_2.id_users=users.id_user WHERE users.id_user=${idlogin}`
       )
       res.send(rows)
-    } else if (lokasiServer == 'roto 3') {
+    } else if (lokasiServer == 'rotogravure 3') {
       const rows = await conn.query(
         `SELECT * FROM master_server_roto_3 INNER JOIN users ON master_server_roto_3.id_users=users.id_user WHERE users.id_user=${idlogin}`
       )
       res.send(rows)
-    } else if (lokasiServer == 'tinta') {
+    } else if (lokasiServer == 'rotogravure tinta') {
       const rows = await conn.query(
         `SELECT * FROM master_server_tinta INNER JOIN users ON master_server_tinta.id_users=users.id_user WHERE users.id_user=${idlogin}`
       )
@@ -44,22 +44,22 @@ module.exports.masterrak = async (req, res) => {
     const idlogin = req.params.id
     conn = await pool.getConnection()
 
-    if (lokasiServer == 'roto 1') {
+    if (lokasiServer == 'rotogravure 1') {
       const rows = await conn.query(
         `SELECT * FROM master_rak INNER JOIN users ON master_rak.id_users=users.id_user WHERE users.id_user=${idlogin}`
       )
       res.send(rows)
-    } else if (lokasiServer == 'roto 2') {
+    } else if (lokasiServer == 'rotogravure 2') {
       const rows = await conn.query(
         `SELECT * FROM master_rak_roto_2 INNER JOIN users ON master_rak_roto_2.id_users=users.id_user WHERE users.id_user=${idlogin}`
       )
       res.send(rows)
-    } else if (lokasiServer == 'roto 3') {
+    } else if (lokasiServer == 'rotogravure 3') {
       const rows = await conn.query(
         `SELECT * FROM master_rak_roto_3 INNER JOIN users ON master_rak_roto_3.id_users=users.id_user WHERE users.id_user=${idlogin}`
       )
       res.send(rows)
-    } else if (lokasiServer == 'tinta') {
+    } else if (lokasiServer == 'rotogravure tinta') {
       const rows = await conn.query(
         `SELECT * FROM master_rak_tinta INNER JOIN users ON master_rak_tinta.id_users=users.id_user WHERE users.id_user=${idlogin}`
       )
@@ -79,22 +79,22 @@ module.exports.masterups = async (req, res) => {
     const lokasiServer = req.params.lokasi
     const idlogin = req.params.id
     conn = await pool.getConnection()
-    if (lokasiServer == 'roto 1') {
+    if (lokasiServer == 'rotogravure 1') {
       const rows = await conn.query(
         `SELECT * FROM master_ups INNER JOIN users ON master_ups.id_users=users.id_user WHERE users.id_user=${idlogin}`
       )
       res.send(rows)
-    } else if (lokasiServer == 'roto 2') {
+    } else if (lokasiServer == 'rotogravure 2') {
       const rows = await conn.query(
         `SELECT * FROM master_ups_roto_2 INNER JOIN users ON master_ups_roto_2.id_users=users.id_user WHERE users.id_user=${idlogin}`
       )
       res.send(rows)
-    } else if (lokasiServer == 'roto 3') {
+    } else if (lokasiServer == 'rotogravure 3') {
       const rows = await conn.query(
         `SELECT * FROM master_ups_roto_3 INNER JOIN users ON master_ups_roto_3.id_users=users.id_user WHERE users.id_user=${idlogin}`
       )
       res.send(rows)
-    } else if (lokasiServer == 'tinta') {
+    } else if (lokasiServer == 'rotogravure tinta') {
       const rows = await conn.query(
         `SELECT * FROM master_ups_tinta INNER JOIN users ON master_ups_tinta.id_users=users.id_user WHERE users.id_user=${idlogin}`
       )
@@ -115,22 +115,22 @@ module.exports.masterbaterai = async (req, res) => {
     const idlogin = req.params.id
     conn = await pool.getConnection()
 
-    if (lokasiServer == 'roto 1') {
+    if (lokasiServer == 'rotogravure 1') {
       const rows = await conn.query(
         `SELECT * FROM master_baterai INNER JOIN users ON master_baterai.id_users=users.id_user WHERE users.id_user=${idlogin}`
       )
       res.send(rows)
-    } else if (lokasiServer == 'roto 2') {
+    } else if (lokasiServer == 'rotogravure 2') {
       const rows = await conn.query(
         `SELECT * FROM master_baterai_roto_2 INNER JOIN users ON master_baterai_roto_2.id_users=users.id_user WHERE users.id_user=${idlogin}`
       )
       res.send(rows)
-    } else if (lokasiServer == 'roto 3') {
+    } else if (lokasiServer == 'rotogravure 3') {
       const rows = await conn.query(
         `SELECT * FROM master_baterai_roto_3 INNER JOIN users ON master_baterai_roto_3.id_users=users.id_user WHERE users.id_user=${idlogin}`
       )
       res.send(rows)
-    } else if (lokasiServer == 'tinta') {
+    } else if (lokasiServer == 'rotogravure tinta') {
       const rows = await conn.query(
         `SELECT * FROM master_baterai_tinta INNER JOIN users ON master_baterai_tinta.id_users=users.id_user WHERE users.id_user=${idlogin}`
       )
@@ -151,22 +151,22 @@ module.exports.masterac = async (req, res) => {
     const idlogin = req.params.id
     conn = await pool.getConnection()
 
-    if (lokasiServer == 'roto 1') {
+    if (lokasiServer == 'rotogravure 1') {
       const rows = await conn.query(
         `SELECT * FROM master_ac INNER JOIN users ON master_ac.id_users=users.id_user WHERE users.id_user=${idlogin}`
       )
       res.send(rows)
-    } else if (lokasiServer == 'roto 2') {
+    } else if (lokasiServer == 'rotogravure 2') {
       const rows = await conn.query(
         `SELECT * FROM master_ac_roto_2 INNER JOIN users ON master_ac_roto_2.id_users=users.id_user WHERE users.id_user=${idlogin}`
       )
       res.send(rows)
-    } else if (lokasiServer == 'roto 3') {
+    } else if (lokasiServer == 'rotogravure 3') {
       const rows = await conn.query(
         `SELECT * FROM master_ac_roto_3 INNER JOIN users ON master_ac_roto_3.id_users=users.id_user WHERE users.id_user=${idlogin}`
       )
       res.send(rows)
-    } else if (lokasiServer == 'tinta') {
+    } else if (lokasiServer == 'rotogravure tinta') {
       const rows = await conn.query(
         `SELECT * FROM master_ac_tinta INNER JOIN users ON master_ac_tinta.id_users=users.id_user WHERE users.id_user=${idlogin}`
       )
@@ -187,22 +187,22 @@ module.exports.mastercctv = async (req, res) => {
     const idlogin = req.params.id
     conn = await pool.getConnection()
 
-    if (lokasiServer == 'roto 1') {
+    if (lokasiServer == 'rotogravure 1') {
       const rows = await conn.query(
         `SELECT * FROM master_cctv INNER JOIN users ON master_cctv.id_users=users.id_user WHERE users.id_user=${idlogin}`
       )
       res.send(rows)
-    } else if (lokasiServer == 'roto 2') {
+    } else if (lokasiServer == 'rotogravure 2') {
       const rows = await conn.query(
         `SELECT * FROM master_cctv_roto_2 INNER JOIN users ON master_cctv_roto_2.id_users=users.id_user WHERE users.id_user=${idlogin}`
       )
       res.send(rows)
-    } else if (lokasiServer == 'roto 3') {
+    } else if (lokasiServer == 'rotogravure 3') {
       const rows = await conn.query(
         `SELECT * FROM master_cctv_roto_3 INNER JOIN users ON master_cctv_roto_3.id_users=users.id_user WHERE users.id_user=${idlogin}`
       )
       res.send(rows)
-    } else if (lokasiServer == 'tinta') {
+    } else if (lokasiServer == 'rotogravure tinta') {
       const rows = await conn.query(
         `SELECT * FROM master_cctv_tinta INNER JOIN users ON master_cctv_tinta.id_users=users.id_user WHERE users.id_user=${idlogin}`
       )
@@ -223,22 +223,22 @@ module.exports.masternetwork = async (req, res) => {
     const idlogin = req.params.id
     conn = await pool.getConnection()
 
-    if (lokasiServer == 'roto 1') {
+    if (lokasiServer == 'rotogravure 1') {
       const rows = await conn.query(
         `SELECT * FROM master_network INNER JOIN users ON master_network.id_users=users.id_user WHERE users.id_user=${idlogin}`
       )
       res.send(rows)
-    } else if (lokasiServer == 'roto 2') {
+    } else if (lokasiServer == 'rotogravure 2') {
       const rows = await conn.query(
         `SELECT * FROM master_network_roto_2 INNER JOIN users ON master_network_roto_2.id_users=users.id_user WHERE users.id_user=${idlogin}`
       )
       res.send(rows)
-    } else if (lokasiServer == 'roto 3') {
+    } else if (lokasiServer == 'rotogravure 3') {
       const rows = await conn.query(
         `SELECT * FROM master_network_roto_3 INNER JOIN users ON master_network_roto_3.id_users=users.id_user WHERE users.id_user=${idlogin}`
       )
       res.send(rows)
-    } else if (lokasiServer == 'tinta') {
+    } else if (lokasiServer == 'rotogravure tinta') {
       const rows = await conn.query(
         `SELECT * FROM master_network_tinta INNER JOIN users ON master_network_tinta.id_users=users.id_user WHERE users.id_user=${idlogin}`
       )
@@ -259,22 +259,22 @@ module.exports.masterapar = async (req, res) => {
     const idlogin = req.params.id
     conn = await pool.getConnection()
 
-    if (lokasiServer == 'roto 1') {
+    if (lokasiServer == 'rotogravure 1') {
       const rows = await conn.query(
         `SELECT * FROM master_apar INNER JOIN users ON master_apar.id_users=users.id_user WHERE users.id_user=${idlogin}`
       )
       res.send(rows)
-    } else if (lokasiServer == 'roto 2') {
+    } else if (lokasiServer == 'rotogravure 2') {
       const rows = await conn.query(
         `SELECT * FROM master_apar_roto_2 INNER JOIN users ON master_apar_roto_2.id_users=users.id_user WHERE users.id_user=${idlogin}`
       )
       res.send(rows)
-    } else if (lokasiServer == 'roto 3') {
+    } else if (lokasiServer == 'rotogravure 3') {
       const rows = await conn.query(
         `SELECT * FROM master_apar_roto_3 INNER JOIN users ON master_apar_roto_3.id_users=users.id_user WHERE users.id_user=${idlogin}`
       )
       res.send(rows)
-    } else if (lokasiServer == 'tinta') {
+    } else if (lokasiServer == 'rotogravure tinta') {
       const rows = await conn.query(
         `SELECT * FROM master_apar_tinta INNER JOIN users ON master_apar_tinta.id_users=users.id_user WHERE users.id_user=${idlogin}`
       )
@@ -295,22 +295,22 @@ module.exports.mastermonitor = async (req, res) => {
     const idlogin = req.params.id
     conn = await pool.getConnection()
 
-    if (lokasiServer == 'roto 1') {
+    if (lokasiServer == 'rotogravure 1') {
       const rows = await conn.query(
         `SELECT * FROM master_monitor INNER JOIN users ON master_monitor.id_users=users.id_user WHERE users.id_user=${idlogin}`
       )
       res.send(rows)
-    } else if (lokasiServer == 'roto 2') {
+    } else if (lokasiServer == 'rotogravure 2') {
       const rows = await conn.query(
         `SELECT * FROM master_monitor_roto_2 INNER JOIN users ON master_monitor_roto_2.id_users=users.id_user WHERE users.id_user=${idlogin}`
       )
       res.send(rows)
-    } else if (lokasiServer == 'roto 3') {
+    } else if (lokasiServer == 'rotogravure 3') {
       const rows = await conn.query(
         `SELECT * FROM master_monitor_roto_3 INNER JOIN users ON master_monitor_roto_3.id_users=users.id_user WHERE users.id_user=${idlogin}`
       )
       res.send(rows)
-    } else if (lokasiServer == 'tinta') {
+    } else if (lokasiServer == 'rotogravure tinta') {
       const rows = await conn.query(
         `SELECT * FROM master_monitor_tinta INNER JOIN users ON master_monitor_tinta.id_users=users.id_user WHERE users.id_user=${idlogin}`
       )
@@ -331,22 +331,22 @@ module.exports.masterkeyboard = async (req, res) => {
     const idlogin = req.params.id
     conn = await pool.getConnection()
 
-    if (lokasiServer == 'roto 1') {
+    if (lokasiServer == 'rotogravure 1') {
       const rows = await conn.query(
         `SELECT * FROM master_keyboard INNER JOIN users ON master_keyboard.id_users=users.id_user WHERE users.id_user=${idlogin}`
       )
       res.send(rows)
-    } else if (lokasiServer == 'roto 2') {
+    } else if (lokasiServer == 'rotogravure 2') {
       const rows = await conn.query(
         `SELECT * FROM master_keyboard_roto_2 INNER JOIN users ON master_keyboard_roto_2.id_users=users.id_user WHERE users.id_user=${idlogin}`
       )
       res.send(rows)
-    } else if (lokasiServer == 'roto 3') {
+    } else if (lokasiServer == 'rotogravure 3') {
       const rows = await conn.query(
         `SELECT * FROM master_keyboard_roto_3 INNER JOIN users ON master_keyboard_roto_3.id_users=users.id_user WHERE users.id_user=${idlogin}`
       )
       res.send(rows)
-    } else if (lokasiServer == 'tinta') {
+    } else if (lokasiServer == 'rotogravure tinta') {
       const rows = await conn.query(
         `SELECT * FROM master_keyboard_tinta INNER JOIN users ON master_keyboard_tinta.id_users=users.id_user WHERE users.id_user=${idlogin}`
       )
@@ -367,22 +367,22 @@ module.exports.mastermouse = async (req, res) => {
     const idlogin = req.params.id
     conn = await pool.getConnection()
 
-    if (lokasiServer == 'roto 1') {
+    if (lokasiServer == 'rotogravure 1') {
       const rows = await conn.query(
         `SELECT * FROM master_mouse INNER JOIN users ON master_mouse.id_users=users.id_user WHERE users.id_user=${idlogin}`
       )
       res.send(rows)
-    } else if (lokasiServer == 'roto 2') {
+    } else if (lokasiServer == 'rotogravure 2') {
       const rows = await conn.query(
         `SELECT * FROM master_mouse_roto_2 INNER JOIN users ON master_mouse_roto_2.id_users=users.id_user WHERE users.id_user=${idlogin}`
       )
       res.send(rows)
-    } else if (lokasiServer == 'roto 3') {
+    } else if (lokasiServer == 'rotogravure 3') {
       const rows = await conn.query(
         `SELECT * FROM master_mouse_roto_3 INNER JOIN users ON master_mouse_roto_3.id_users=users.id_user WHERE users.id_user=${idlogin}`
       )
       res.send(rows)
-    } else if (lokasiServer == 'tinta') {
+    } else if (lokasiServer == 'rotogravure tinta') {
       const rows = await conn.query(
         `SELECT * FROM master_mouse_tinta INNER JOIN users ON master_mouse_tinta.id_users=users.id_user WHERE users.id_user=${idlogin}`
       )
@@ -403,22 +403,22 @@ module.exports.masternas = async (req, res) => {
     const idlogin = req.params.id
     conn = await pool.getConnection()
 
-    if (lokasiServer == 'roto 1') {
+    if (lokasiServer == 'rotogravure 1') {
       const rows = await conn.query(
         `SELECT * FROM master_nas INNER JOIN users ON master_nas.id_users=users.id_user WHERE users.id_user=${idlogin}`
       )
       res.send(rows)
-    } else if (lokasiServer == 'roto 2') {
+    } else if (lokasiServer == 'rotogravure 2') {
       const rows = await conn.query(
         `SELECT * FROM master_nas_roto_2 INNER JOIN users ON master_nas_roto_2.id_users=users.id_user WHERE users.id_user=${idlogin}`
       )
       res.send(rows)
-    } else if (lokasiServer == 'roto 3') {
+    } else if (lokasiServer == 'rotogravure 3') {
       const rows = await conn.query(
         `SELECT * FROM master_nas_roto_3 INNER JOIN users ON master_nas_roto_3.id_users=users.id_user WHERE users.id_user=${idlogin}`
       )
       res.send(rows)
-    } else if (lokasiServer == 'tinta') {
+    } else if (lokasiServer == 'rotogravure tinta') {
       const rows = await conn.query(
         `SELECT * FROM master_nas_tinta INNER JOIN users ON master_nas_tinta.id_users=users.id_user WHERE users.id_user=${idlogin}`
       )
@@ -439,22 +439,22 @@ module.exports.mastergenset = async (req, res) => {
     const idlogin = req.params.id
     conn = await pool.getConnection()
 
-    if (lokasiServer == 'roto 1') {
+    if (lokasiServer == 'rotogravure 1') {
       const rows = await conn.query(
         `SELECT * FROM master_genset INNER JOIN users ON master_genset.id_users=users.id_user WHERE users.id_user=${idlogin}`
       )
       res.send(rows)
-    } else if (lokasiServer == 'roto 2') {
+    } else if (lokasiServer == 'rotogravure 2') {
       const rows = await conn.query(
         `SELECT * FROM master_genset_roto_2 INNER JOIN users ON master_genset_roto_2.id_users=users.id_user WHERE users.id_user=${idlogin}`
       )
       res.send(rows)
-    } else if (lokasiServer == 'roto 3') {
+    } else if (lokasiServer == 'rotogravure 3') {
       const rows = await conn.query(
         `SELECT * FROM master_genset_roto_3 INNER JOIN users ON master_genset_roto_3.id_users=users.id_user WHERE users.id_user=${idlogin}`
       )
       res.send(rows)
-    } else if (lokasiServer == 'tinta') {
+    } else if (lokasiServer == 'rotogravure tinta') {
       const rows = await conn.query(
         `SELECT * FROM master_genset_tinta INNER JOIN users ON master_genset_tinta.id_users=users.id_user WHERE users.id_user=${idlogin}`
       )
@@ -477,22 +477,22 @@ module.exports.caribarangserver = async (req, res) => {
     const lokasiServer = req.params.lokasi
     conn = await pool.getConnection()
 
-    if (lokasiServer == 'roto 1') {
+    if (lokasiServer == 'rotogravure 1') {
       const barang = await conn.query(
         `SELECT * FROM master_server WHERE merek LIKE '${value}%' OR model LIKE '${value}%'`
       )
       res.send(barang)
-    } else if (lokasiServer == 'roto 2') {
+    } else if (lokasiServer == 'rotogravure 2') {
       const barang = await conn.query(
         `SELECT * FROM master_server_roto_2 WHERE merek LIKE '${value}%' OR model LIKE '${value}%'`
       )
       res.send(barang)
-    } else if (lokasiServer == 'roto 3') {
+    } else if (lokasiServer == 'rotogravure 3') {
       const barang = await conn.query(
         `SELECT * FROM master_server_roto_3 WHERE merek LIKE '${value}%' OR model LIKE '${value}%'`
       )
       res.send(barang)
-    } else if (lokasiServer == 'tinta') {
+    } else if (lokasiServer == 'rotogravure tinta') {
       const barang = await conn.query(
         `SELECT * FROM master_server_tinta WHERE merek LIKE '${value}%' OR model LIKE '${value}%'`
       )
@@ -512,22 +512,22 @@ module.exports.caribarangrak = async (req, res) => {
 
     conn = await pool.getConnection()
 
-    if (lokasiServer == 'roto 1') {
+    if (lokasiServer == 'rotogravure 1') {
       const barang = await conn.query(
         `SELECT * FROM master_rak WHERE nama_produk LIKE '${value}%'`
       )
       res.send(barang)
-    } else if (lokasiServer == 'roto 2') {
+    } else if (lokasiServer == 'rotogravure 2') {
       const barang = await conn.query(
         `SELECT * FROM master_rak_roto_2 WHERE nama_produk LIKE '${value}%'`
       )
       res.send(barang)
-    } else if (lokasiServer == 'roto 3') {
+    } else if (lokasiServer == 'rotogravure 3') {
       const barang = await conn.query(
         `SELECT * FROM master_rak_roto_3 WHERE nama_produk LIKE '${value}%'`
       )
       res.send(barang)
-    } else if (lokasiServer == 'tinta') {
+    } else if (lokasiServer == 'rotogravure tinta') {
       const barang = await conn.query(
         `SELECT * FROM master_rak_tinta WHERE nama_produk LIKE '${value}%'`
       )
@@ -720,7 +720,7 @@ module.exports.detailmasterserver = async (req, res) => {
     const lokasiServer = req.params.lokasi
     conn = await pool.getConnection()
 
-    if (lokasiServer == 'roto 1') {
+    if (lokasiServer == 'rotogravure 1') {
       const resp = await conn.query(
         `SELECT * FROM master_server WHERE id_server=${id}`
       )
@@ -729,7 +729,7 @@ module.exports.detailmasterserver = async (req, res) => {
       } else {
         res.json({ err: 'tidak ada data' })
       }
-    } else if (lokasiServer == 'roto 2') {
+    } else if (lokasiServer == 'rotogravure 2') {
       const resp = await conn.query(
         `SELECT * FROM master_server_roto_2 WHERE id_server=${id}`
       )
@@ -738,7 +738,7 @@ module.exports.detailmasterserver = async (req, res) => {
       } else {
         res.json({ err: 'tidak bisa data' })
       }
-    } else if (lokasiServer == 'roto 3') {
+    } else if (lokasiServer == 'rotogravure 3') {
       const resp = await conn.query(
         `SELECT * FROM master_server_roto_3 WHERE id_server=${id}`
       )
@@ -747,7 +747,7 @@ module.exports.detailmasterserver = async (req, res) => {
       } else {
         res.json({ err: 'tidak bisa data' })
       }
-    } else if (lokasiServer == 'tinta') {
+    } else if (lokasiServer == 'rotogravure tinta') {
       const resp = await conn.query(
         `SELECT * FROM master_server_tinta WHERE id_server=${id}`
       )
@@ -771,7 +771,7 @@ module.exports.detailmasterups = async (req, res) => {
     const lokasiServer = req.params.lokasi
     conn = await pool.getConnection()
 
-    if (lokasiServer == 'roto 1') {
+    if (lokasiServer == 'rotogravure 1') {
       const resp = await conn.query(
         `SELECT * FROM master_ups WHERE id_ups=${id}`
       )
@@ -780,7 +780,7 @@ module.exports.detailmasterups = async (req, res) => {
       } else {
         res.json({ err: 'tidak ada data' })
       }
-    } else if (lokasiServer == 'roto 2') {
+    } else if (lokasiServer == 'rotogravure 2') {
       const resp = await conn.query(
         `SELECT * FROM master_ups_roto_2 WHERE id_ups=${id}`
       )
@@ -789,7 +789,7 @@ module.exports.detailmasterups = async (req, res) => {
       } else {
         res.json({ err: 'tidak bisa data' })
       }
-    } else if (lokasiServer == 'roto 3') {
+    } else if (lokasiServer == 'rotogravure 3') {
       const resp = await conn.query(
         `SELECT * FROM master_ups_roto_3 WHERE id_ups=${id}`
       )
@@ -798,7 +798,7 @@ module.exports.detailmasterups = async (req, res) => {
       } else {
         res.json({ err: 'tidak bisa data' })
       }
-    } else if (lokasiServer == 'tinta') {
+    } else if (lokasiServer == 'rotogravure tinta') {
       const resp = await conn.query(
         `SELECT * FROM master_ups_tinta WHERE id_ups=${id}`
       )
@@ -822,7 +822,7 @@ module.exports.detailmasternas = async (req, res) => {
     const lokasiServer = req.params.lokasi
     conn = await pool.getConnection()
 
-    if (lokasiServer == 'roto 1') {
+    if (lokasiServer == 'rotogravure 1') {
       const resp = await conn.query(
         `SELECT * FROM master_nas WHERE id_nas=${id}`
       )
@@ -831,7 +831,7 @@ module.exports.detailmasternas = async (req, res) => {
       } else {
         res.json({ err: 'tidak ada data' })
       }
-    } else if (lokasiServer == 'roto 2') {
+    } else if (lokasiServer == 'rotogravure 2') {
       const resp = await conn.query(
         `SELECT * FROM master_nas_roto_2 WHERE id_nas=${id}`
       )
@@ -840,7 +840,7 @@ module.exports.detailmasternas = async (req, res) => {
       } else {
         res.json({ err: 'tidak bisa data' })
       }
-    } else if (lokasiServer == 'roto 3') {
+    } else if (lokasiServer == 'rotogravure 3') {
       const resp = await conn.query(
         `SELECT * FROM master_nas_roto_3 WHERE id_nas=${id}`
       )
@@ -849,7 +849,7 @@ module.exports.detailmasternas = async (req, res) => {
       } else {
         res.json({ err: 'tidak bisa data' })
       }
-    } else if (lokasiServer == 'tinta') {
+    } else if (lokasiServer == 'rotogravure tinta') {
       const resp = await conn.query(
         `SELECT * FROM master_nas_tinta WHERE id_nas=${id}`
       )
@@ -873,14 +873,14 @@ module.exports.detailmasterac = async (req, res) => {
     const lokasiServer = req.params.lokasi
     conn = await pool.getConnection()
 
-    if (lokasiServer == 'roto 1') {
+    if (lokasiServer == 'rotogravure 1') {
       const resp = await conn.query(`SELECT * FROM master_ac WHERE id_ac=${id}`)
       if (resp.length > 0) {
         res.send(resp)
       } else {
         res.json({ err: 'tidak ada data' })
       }
-    } else if (lokasiServer == 'roto 2') {
+    } else if (lokasiServer == 'rotogravure 2') {
       const resp = await conn.query(
         `SELECT * FROM master_ac_roto_2 WHERE id_ac=${id}`
       )
@@ -889,7 +889,7 @@ module.exports.detailmasterac = async (req, res) => {
       } else {
         res.json({ err: 'tidak bisa data' })
       }
-    } else if (lokasiServer == 'roto 3') {
+    } else if (lokasiServer == 'rotogravure 3') {
       const resp = await conn.query(
         `SELECT * FROM master_ac_roto_3 WHERE id_ac=${id}`
       )
@@ -898,7 +898,7 @@ module.exports.detailmasterac = async (req, res) => {
       } else {
         res.json({ err: 'tidak bisa data' })
       }
-    } else if (lokasiServer == 'tinta') {
+    } else if (lokasiServer == 'rotogravure tinta') {
       const resp = await conn.query(
         `SELECT * FROM master_ac_tinta WHERE id_ac=${id}`
       )

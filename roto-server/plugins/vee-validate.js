@@ -5,6 +5,7 @@ import {
   alpha_spaces,
   alpha_dash,
   confirmed,
+  min,
 } from 'vee-validate/dist/rules'
 
 // Object.keys(rules).forEach((rule) => {
@@ -34,3 +35,24 @@ extend('confirmed', {
   ...confirmed,
   message: 'password tidak cocok',
 })
+extend('min', {
+  ...min,
+  message: 'minimal 8 karakter',
+})
+extend('passchar', {
+  message: 'inputan harus berupa huruf dan angka',
+  validate: (value) => {
+    const spaceAlphaNum = /^[a-zA-Z\s\d]*$/
+    const anychar = spaceAlphaNum.test(value)
+    if (anychar) {
+      return true
+    } else {
+      return false
+    }
+  },
+})
+// extend('passwordcheck',{
+//   validate: (value) => {
+//     const minpass = /^[min:8]/
+//   }
+// })

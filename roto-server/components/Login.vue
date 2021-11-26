@@ -58,10 +58,10 @@
                 </label>
                 <select v-model="login.lokasi" name="lokasi" id="lokasi" class="border-0 px-3 py-3 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150">
                     <option disabled value="">pilih lokasi</option>
-                    <option value="roto 1">roto 1</option>
-                    <option value="roto 2">roto 2</option>
-                    <option value="roto 3">roto 3</option>
-                    <option value="tinta">tinta</option>
+                    <option value="rotogravure 1">rotogravure 1</option>
+                    <option value="rotogravure 2">rotogravure 2</option>
+                    <option value="rotogravure 3">rotogravure 3</option>
+                    <option value="rotogravure tinta">rotogravure tinta</option>
                 </select>
               </div>
               <nuxt-link to="">

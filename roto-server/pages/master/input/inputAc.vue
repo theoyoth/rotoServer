@@ -27,7 +27,7 @@
 
                     <label for="merek" class="block mb-2 text-sm">merek</label>
                     <div class="flex flex-col w-72">
-                        <ValidationProvider rules="required|alpha_spaces" v-slot={errors}>
+                        <ValidationProvider rules="required|passchar" v-slot={errors}>
                             <input type="text" v-model="inputAc.merek" name="merek" id="merek" class="p-2 w-full rounded-lg focus:ring-blue-500 bg-gray-200">
                             <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
                         </ValidationProvider>
@@ -38,7 +38,7 @@
 
                     <label for="model" class="block mb-2 text-sm">model</label>
                     <div class="flex flex-col w-72">
-                        <ValidationProvider rules="required|alpha_spaces" v-slot={errors}>
+                        <ValidationProvider rules="required|passchar" v-slot={errors}>
                             <input type="text" v-model="inputAc.model" name="model" id="model" class="p-2 w-72 rounded-lg focus:ring-blue-500 bg-gray-200" :disabled="inputAc.merek === ''">
                         <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
                         </ValidationProvider>
@@ -60,7 +60,7 @@
 
                     <label for="dimensi" class="block mb-2 text-sm">dimensi</label>
                     <div class="flex flex-col w-72">
-                        <ValidationProvider rules="required|numeric" v-slot={errors}>
+                        <ValidationProvider rules="required|passchar" v-slot={errors}>
                             <input type="text" v-model="inputAc.dimensi" name="dimensi" id="dimensi" class="p-2 w-full rounded-lg focus:ring-blue-500 bg-gray-200" :disabled="inputAc.sumberDayaListrik === ''">
                             <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
                         </ValidationProvider>
