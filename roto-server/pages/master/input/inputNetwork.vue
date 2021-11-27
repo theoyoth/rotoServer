@@ -28,7 +28,7 @@
                     <label for="merek" class="block mb-2 text-sm">merek</label>
                     <div class="flex flex-col w-72">
                         <ValidationProvider rules="required|passchar" v-slot={errors}>
-                            <input type="text" v-model="inputNetwork.merek" name="merek" id="merek" class="p-2 w-full rounded-lg outline-none bg-gray-200">
+                            <input type="text" v-model="inputNetwork.merek" name="merek" id="merek" class="p-2 w-full rounded-lg outline-none bg-gray-200 uppercase">
                             <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
                         </ValidationProvider>
                     </div>
@@ -39,7 +39,7 @@
                     <label for="model" class="block mb-2 text-sm">model</label>
                     <div class="flex flex-col w-72">
                         <ValidationProvider rules="required|passchar" v-slot={errors}>
-                            <input type="text" v-model="inputNetwork.model" name="model" id="model" class="p-2 w-full rounded-lg outline-none bg-gray-200" :disabled="inputNetwork.merek === ''">
+                            <input type="text" v-model="inputNetwork.model" name="model" id="model" class="p-2 w-full rounded-lg outline-none bg-gray-200 uppercase" :disabled="inputNetwork.merek === ''">
                             <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
                         </ValidationProvider>
                     </div>
@@ -50,7 +50,7 @@
                     <label for="tipe" class="block mb-2 text-sm">tipe</label>
                     <div class="flex flex-col w-72">
                         <ValidationProvider rules="required|passchar" v-slot={errors}>
-                            <input type="text" v-model="inputNetwork.tipe" name="tipe" id="tipe" class="p-2 w-full rounded-lg outline-none bg-gray-200" :disabled="inputNetwork.model === ''">
+                            <input type="text" v-model="inputNetwork.tipe" name="tipe" id="tipe" class="p-2 w-full rounded-lg outline-none bg-gray-200 uppercase" :disabled="inputNetwork.model === ''">
                             <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
                         </ValidationProvider>
                     </div>
@@ -61,7 +61,7 @@
                     <label for="kuantitas" class="block mb-2 text-sm">kuantitas</label>
                     <div class="flex flex-col w-72">
                         <ValidationProvider rules="required|numeric" v-slot={errors}>
-                            <input type="text" v-model="inputNetwork.kuantitas" name="kuantitas" id="kuantitas" class="p-2 w-72 rounded-lg outline-none bg-gray-200" :disabled="inputNetwork.tipe === ''">
+                            <input type="text" v-model="inputNetwork.kuantitas" name="kuantitas" id="kuantitas" class="p-2 w-72 rounded-lg outline-none bg-gray-200 uppercase" :disabled="inputNetwork.tipe === ''">
                             <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
                         </ValidationProvider>
                     </div>
@@ -72,7 +72,7 @@
                     <label for="kanal" class="block mb-2 text-sm">kanal</label>
                     <div class="flex flex-col w-72">
                         <ValidationProvider rules="required|numeric" v-slot={errors}>
-                            <input type="text" v-model="inputNetwork.kanal" name="kanal" id="kanal" class="p-2 w-full rounded-lg outline-none bg-gray-200" :disabled="inputNetwork.kuantitas === ''">
+                            <input type="text" v-model="inputNetwork.kanal" name="kanal" id="kanal" class="p-2 w-full rounded-lg outline-none bg-gray-200 uppercase" :disabled="inputNetwork.kuantitas === ''">
                             <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
                         </ValidationProvider>
                     </div>

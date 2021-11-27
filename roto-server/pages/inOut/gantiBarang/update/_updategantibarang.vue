@@ -14,22 +14,22 @@
         <p class="text-center text-xl text-gray-700 font-semibold">update ganti barang</p>
     <form @submit.prevent="updateDataGantiBarang" class="w-11/12 mt-10">
         <div>
-            <div class="grid grid-cols-3 grid-rows-4">
+            <div class="grid grid-cols-3 ">
                 <div class="mb-4">
                     <label for="tanggal" class="block mb-2 text-sm">tanggal</label>
                     <input type="date" v-model="updateGantiBarang.tanggal" name="tanggal" id="tanggal" class="p-2 w-72 rounded-lg outline-none bg-gray-300">
                 </div>
                 <div class="mb-4">
                     <label for="namaPengganti" class="block mb-2 text-sm">nama pengganti</label>
-                    <input type="text" v-model="updateGantiBarang.namaPengganti" name="namaPengganti" id="namaPengganti" class="p-2 w-72 rounded-lg outline-none bg-gray-300">
+                    <input type="text" v-model="updateGantiBarang.namaPengganti" name="namaPengganti" id="namaPengganti" class="p-2 w-72 rounded-lg outline-none bg-gray-300 uppercase">
                 </div>
                 <div class="mb-4">
                     <label for="namaBarangBaru" class="block mb-2 text-sm">nama barang baru</label>
-                    <input type="text" v-model="updateGantiBarang.namaBarangBaru" name="namaBarangBaru" id="namaBarangBaru" class="p-2 w-72 rounded-lg outline-none bg-gray-300">
+                    <input type="text" v-model="updateGantiBarang.namaBarangBaru" name="namaBarangBaru" id="namaBarangBaru" class="p-2 w-72 rounded-lg outline-none bg-gray-300 uppercase">
                 </div>
                 <div class="mb-4">
                     <label for="namaBarangLama" class="block mb-2 text-sm">nama barang lama</label>
-                    <input type="text" v-model="updateGantiBarang.namaBarangLama" name="namaBarangLama" id="namaBarangLama" class="p-2 w-72 rounded-lg outline-none bg-gray-300">
+                    <input type="text" v-model="updateGantiBarang.namaBarangLama" name="namaBarangLama" id="namaBarangLama" class="p-2 w-72 rounded-lg outline-none bg-gray-300 uppercase">
                 </div>
                  <div class="mb-4">
                     <label for="kuantitas" class="block mb-2 text-sm">kuantitas</label>
@@ -37,19 +37,19 @@
                 </div>
                 <div class="mb-4">
                     <label for="kepentingan" class="block mb-2 text-sm">kepentingan</label>
-                    <input type="text" v-model="updateGantiBarang.kepentingan" name="kepentingan" id="kepentingan" class="p-2 w-72 rounded-lg outline-none bg-gray-300">
+                    <input type="text" v-model="updateGantiBarang.kepentingan" name="kepentingan" id="kepentingan" class="p-2 w-72 rounded-lg outline-none bg-gray-300 uppercase">
                 </div>
                 <div class="mb-4">
                     <label for="penanggungJawab" class="block mb-2 text-sm">penanggung jawab</label>
-                    <input type="text" v-model="updateGantiBarang.penanggungJawab" name="penanggungJawab" id="penanggungJawab" class="p-2 w-72 rounded-lg outline-none bg-gray-300">
+                    <input type="text" v-model="updateGantiBarang.penanggungJawab" name="penanggungJawab" id="penanggungJawab" class="p-2 w-72 rounded-lg outline-none bg-gray-300 uppercase">
                 </div>
                 <div class="mb-4">
-                    <label for="keterangan" class="block mb-2 text-sm">penanggung jawab</label>
-                    <input type="text" v-model="updateGantiBarang.keterangan" name="keterangan" id="keterangan" class="p-2 w-72 rounded-lg outline-none bg-gray-300">
+                    <label for="keterangan" class="block mb-2 text-sm">keterangan</label>
+                    <textarea type="text" rows="4" v-model="updateGantiBarang.keterangan" name="keterangan" id="keterangan" class="p-2 w-72 rounded-lg outline-none bg-gray-300 uppercase"></textarea>
                 </div>
             </div>
         </div>
-        <button class="bg-gray-700 text-gray-300 shadow-md rounded-lg w-28 h-10" type="submit">ubah</button>
+        <button class="bg-gray-700 text-gray-300 shadow-md rounded-lg w-28 h-10 mt-6" type="submit">ubah</button>
     </form>
 </section>
 </div>

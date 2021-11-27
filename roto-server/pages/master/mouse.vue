@@ -34,23 +34,23 @@
                 <span class="tooltip rounded shadow-lg p-1 bg-gray-700 text-white -mt-10 absolute left-2/4 transform -translate-x-2/4">semua detail barang</span>
                 <tr class="text-xs text-gray-200"> 
                     <th class="font-semibold py-3 px-2 w-4">no.</th>
-                    <th class="font-semibold py-3">Merek</th>
-                    <th class="font-semibold py-3">Model</th>   
+                    <th class="font-semibold py-3 w-52">Merek</th>
+                    <th class="font-semibold py-3 w-52">Model</th>   
                     <th class="font-semibold">tipe</th>    
-                    <th class="font-semibold">tahun</th>
-                    <th class="font-semibold">garansi</th>
+                    <th class="font-semibold w-32">tahun</th>
+                    <th class="font-semibold w-32">garansi</th>
                     <th class="font-semibold w-20">aksi</th>
                 </tr>
             </thead>
             <tbody v-if="caribarang !== ''" class="text-center bg-white bg-opacity-40 divide-y divide-gray-300">
-                <tr class="text-sm" v-for="(hasilcari,index) in carimouse" :key="index">
+                <tr class="text-sm uppercase" v-for="(hasilcari,index) in carimouse" :key="index">
                     <td>{{index+1}}</td>
                     <td class="py-3">{{hasilcari.merek}}</td>
                     <td>{{hasilcari.model}}</td>
                     <td>{{hasilcari.tipe}}</td>
-                    <td class="w-32">{{$moment(hasilcari.tahun).format('DD-MM-YYYY')}}</td>
-                    <td class="w-32">{{$moment(hasilcari.garansi).format('DD-MM-YYYY')}}</td>
-                    <td class="py-3 flex justify-evenly w-full">
+                    <td>{{$moment(hasilcari.tahun).format('DD-MM-YYYY')}}</td>
+                    <td>{{$moment(hasilcari.garansi).format('DD-MM-YYYY')}}</td>
+                    <td class="py-3 flex justify-evenly w-full lowercase">
                         <div class="has-tooltip">
                         <span
                         class="
@@ -95,14 +95,14 @@
                 </tr>
             </tbody>
             <tbody v-else class="text-center bg-white bg-opacity-40 divide-y divide-gray-300">
-                <tr v-show="mouse" class="text-sm" v-for="(mouse,index) in mouses" :key="index">
+                <tr v-show="mouse" class="text-sm uppercase" v-for="(mouse,index) in mouses" :key="index">
                     <td>{{index+1}}</td>
                     <td class="py-3">{{mouse.merek}}</td>
                     <td>{{mouse.model}}</td>
                     <td>{{mouse.tipe}}</td>
-                    <td class="w-32">{{$moment(mouse.tahun).format('DD-MM-YYYY')}}</td>
-                    <td class="w-32">{{$moment(mouse.garansi).format('DD-MM-YYYY')}}</td>
-                    <td class="py-3 flex justify-evenly w-full ">
+                    <td>{{$moment(mouse.tahun).format('DD-MM-YYYY')}}</td>
+                    <td>{{$moment(mouse.garansi).format('DD-MM-YYYY')}}</td>
+                    <td class="py-3 flex justify-evenly w-full lowercase">
                         <div class="has-tooltip">
                         <span
                         class="

@@ -41,26 +41,27 @@ module.exports.caridataTambahBarang = async (req, res) => {
   try {
     const value = req.params.cari
     const lokasiServer = req.params.lokasi
+    const iduser = req.params.id
     conn = await pool.getConnection()
 
     if (lokasiServer == 'rotogravure 1') {
       const barang = await conn.query(
-        `SELECT * FROM tambah_barang WHERE nama_barang LIKE '${value}%'`
+        `SELECT * FROM tambah_barang WHERE nama_barang LIKE '${value}%' AND id_users=${iduser}`
       )
       res.send(barang)
     } else if (lokasiServer == 'rotogravure 2') {
       const barang = await conn.query(
-        `SELECT * FROM tambah_barang_roto_2 WHERE merek LIKE '${value}%'`
+        `SELECT * FROM tambah_barang_roto_2 WHERE nama_barang LIKE '${value}%' AND id_users=${iduser}`
       )
       res.send(barang)
     } else if (lokasiServer == 'rotogravure 3') {
       const barang = await conn.query(
-        `SELECT * FROM tambah_barang_roto_3 WHERE merek LIKE '${value}%'`
+        `SELECT * FROM tambah_barang_roto_3 WHERE nama_barang LIKE '${value}%' AND id_users=${iduser}`
       )
       res.send(barang)
     } else if (lokasiServer == 'rotogravure tinta') {
       const barang = await conn.query(
-        `SELECT * FROM tambah_barang_tinta WHERE merek LIKE '${value}%'`
+        `SELECT * FROM tambah_barang_tinta WHERE nama_barang LIKE '${value}%' AND id_users=${iduser}`
       )
       res.send(barang)
     }

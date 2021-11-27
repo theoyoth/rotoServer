@@ -16,11 +16,11 @@
             <div class="grid grid-cols-3 grid-rows-4">
                 <div class="mb-4">
                     <label for="merek" class="block mb-2 text-sm">merek</label>
-                    <input type="text" v-model="updateCctv.merek" name="merek" id="merek" class="p-2 w-72 rounded-lg outline-none bg-gray-300">
+                    <input type="text" v-model="updateCctv.merek" name="merek" id="merek" class="p-2 w-72 rounded-lg outline-none bg-gray-300 uppercase">
                 </div>
                 <div class="mb-4">
                     <label for="model" class="block mb-2 text-sm">model</label>
-                    <input type="text" v-model="updateCctv.model" name="model" id="model" class="p-2 w-72 rounded-lg outline-none bg-gray-300">
+                    <input type="text" v-model="updateCctv.model" name="model" id="model" class="p-2 w-72 rounded-lg outline-none bg-gray-300 uppercase">
                 </div>
                 <div class="mb-4">
                     <label for="garansi" class="block mb-2 text-sm">garansi</label>

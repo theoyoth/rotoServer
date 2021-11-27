@@ -28,7 +28,7 @@
                     <label for="merek" class="block mb-2 text-sm">merek</label>
                     <div class="flex flex-col w-72">
                         <ValidationProvider rules="required|passchar" v-slot={errors}>
-                            <input type="text" v-model="inputMonitor.merek" name="merek" id="merek" class="p-2 w-full rounded-lg outline-none bg-gray-200">
+                            <input type="text" v-model="inputMonitor.merek" name="merek" id="merek" class="p-2 w-full rounded-lg outline-none bg-gray-200 uppercase">
                             <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
                         </ValidationProvider>
                     </div>
@@ -39,7 +39,7 @@
                     <label for="model" class="block mb-2 text-sm">model</label>
                     <div class="flex flex-col w-72">
                     <ValidationProvider rules="required|passchar" v-slot={errors}>
-                            <input type="text" v-model="inputMonitor.model" name="model" id="model" class="p-2 w-72 rounded-lg outline-none bg-gray-200" :disabled="inputMonitor.merek === ''">
+                            <input type="text" v-model="inputMonitor.model" name="model" id="model" class="p-2 w-72 rounded-lg outline-none bg-gray-200 uppercase" :disabled="inputMonitor.merek === ''">
                             <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
                         </ValidationProvider>
                     </div>
@@ -50,7 +50,7 @@
                     <label for="tipe" class="block mb-2 text-sm">tipe</label>
                     <div class="flex flex-col w-72">
                         <ValidationProvider rules="required|passchar" v-slot={errors}>
-                            <input type="text" v-model="inputMonitor.tipe" name="tipe" id="tipe" class="p-2 w-full rounded-lg bg-gray-200 outline-none" :disabled="inputMonitor.model === ''">
+                            <input type="text" v-model="inputMonitor.tipe" name="tipe" id="tipe" class="p-2 w-full rounded-lg bg-gray-200 outline-none uppercase" :disabled="inputMonitor.model === ''">
                              <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
                         </ValidationProvider>
                     </div>
@@ -61,7 +61,7 @@
                     <label for="tahun" class="block mb-2 text-sm">tahun</label>
                     <div class="flex flex-col w-72">
                         <ValidationProvider rules="required" v-slot={errors}>
-                            <input type="date" v-model="inputMonitor.tahun" name="tahun" id="tahun" class="p-2 w-full rounded-lg bg-gray-300 outline-none" :disabled="inputMonitor.tipe === ''">
+                            <input type="date" v-model="inputMonitor.tahun" name="tahun" id="tahun" class="p-2 w-full rounded-lg bg-gray-300 outline-none " :disabled="inputMonitor.tipe === ''">
                              <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
                         </ValidationProvider>
                     </div>
@@ -72,7 +72,7 @@
                     <label for="garansi" class="block mb-2 text-sm">garansi</label>
                      <div class="flex flex-col w-72">
                         <ValidationProvider rules="required" v-slot={errors}>
-                            <input type="date" v-model="inputMonitor.garansi" name="garansi" id="garansi" class="p-2 w-full rounded-lg bg-gray-200 outline-none">
+                            <input type="date" v-model="inputMonitor.garansi" name="garansi" id="garansi" class="p-2 w-full rounded-lg bg-gray-200 outline-none uppercase">
                             <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
                         </ValidationProvider>
                     </div>

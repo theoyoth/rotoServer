@@ -29,28 +29,28 @@
         <p class="text-white bg-blue-500 font-semibold p-2 rounded-lg">{{ deletemsg }}</p>
         </div> -->
 
-        <table class="table space-y-6 container mx-auto table-auto border-collapse border border-white mt-7 divide-y divide-gray-300">
+        <table class="table space-y-6 container mx-auto table-auto border-collapse mt-7 divide-y divide-gray-300">
             <thead class="bg-gray-700 text-sm has-tooltip">
                 <span class="tooltip rounded shadow-lg p-1 bg-gray-700 text-white -mt-10 absolute left-2/4 transform -translate-x-2/4">semua detail barang</span>
                 <tr class="text-xs text-gray-200"> 
-                    <th class="font-semibold py-3">no.</th>
-                    <th class="font-semibold py-3">Merek</th>
-                    <th class="font-semibold py-3">Model</th>   
+                    <th class="font-semibold py-3 px-2 w-4">no.</th>
+                    <th class="font-semibold py-3 w-56">Merek</th>
+                    <th class="font-semibold py-3 w-52">Model</th>   
                     <th class="font-semibold">tipe</th>    
-                    <th class="font-semibold">tahun</th>
-                    <th class="font-semibold">garansi</th>
+                    <th class="font-semibold w-32">tahun</th>
+                    <th class="font-semibold w-32">garansi</th>
                     <th class="font-semibold w-20">aksi</th>
                 </tr>
             </thead>
             <tbody v-if="caribarang !== ''" class="text-center bg-white bg-opacity-40 divide-y divide-gray-300">
-                <tr class="text-sm" v-for="(hasilcari,index) in carikeyboard" :key="index">
+                <tr class="text-sm uppercase" v-for="(hasilcari,index) in carikeyboard" :key="index">
                     <td>{{index+1}}</td>
                     <td class="py-3">{{hasilcari.merek}}</td>
                     <td>{{hasilcari.model}}</td>
                     <td>{{hasilcari.tipe}}</td>
-                    <td class="w-32">{{$moment(hasilcari.tahun).format('DD-MM-YYYY')}}</td>
-                    <td class="w-32">{{$moment(hasilcari.garansi).format('DD-MM-YYYY')}}</td>
-                    <td class="py-3 flex justify-evenly w-full">
+                    <td>{{$moment(hasilcari.tahun).format('DD-MM-YYYY')}}</td>
+                    <td>{{$moment(hasilcari.garansi).format('DD-MM-YYYY')}}</td>
+                    <td class="py-3 flex justify-evenly w-full lowercase">
                         <div class="has-tooltip">
                         <span
                         class="
@@ -95,14 +95,14 @@
                 </tr>
             </tbody>
             <tbody v-else class="text-center bg-white bg-opacity-40 divide-y divide-gray-300">
-                <tr class="text-sm" v-for="(keyboard,index) in keyboards" :key="index">
+                <tr class="text-sm uppercase" v-for="(keyboard,index) in keyboards" :key="index">
                     <td>{{index+1}}</td>
                     <td class="py-3">{{keyboard.merek}}</td>
                     <td>{{keyboard.model}}</td>
                     <td>{{keyboard.tipe}}</td>
-                    <td class="w-32">{{$moment(keyboard.tahun).format("DD-MM-YYYY")}}</td>
-                    <td class="w-32">{{$moment(keyboard.garansi).format("DD-MM-YYYY")}}</td>
-                    <td class="py-3 flex justify-evenly w-full">
+                    <td>{{$moment(keyboard.tahun).format("DD-MM-YYYY")}}</td>
+                    <td>{{$moment(keyboard.garansi).format("DD-MM-YYYY")}}</td>
+                    <td class="py-3 flex justify-evenly w-full lowercase">
                         <div class="has-tooltip">
                         <span
                         class="

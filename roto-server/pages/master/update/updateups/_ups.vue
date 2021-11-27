@@ -28,19 +28,19 @@
                 </div>
                 <div class="mb-4">
                     <label for="nomorSerial" class="block mb-2 text-sm">nomor serial</label>
-                    <input type="text" v-model="updateUps.nomorSerial" name="nomorSerial" id="nomorSerial" class="p-2 w-72 rounded-lg outline-none bg-gray-300">
+                    <input type="text" v-model="updateUps.nomorSerial" name="nomorSerial" id="nomorSerial" class="p-2 w-72 rounded-lg outline-none bg-gray-300 uppercase">
                 </div>
                 <div class="mb-4">
                     <label for="namaSistem" class="block mb-2 text-sm">nama sistem</label>
-                    <input type="text" v-model="updateUps.namaSistem" name="namaSistem" id="namaSistem" class="p-2 w-72 rounded-lg outline-none bg-gray-300">
+                    <input type="text" v-model="updateUps.namaSistem" name="namaSistem" id="namaSistem" class="p-2 w-72 rounded-lg outline-none bg-gray-300 uppercase">
                 </div>
                 <div class="mb-4">
                     <label for="model" class="block mb-2 text-sm">model</label>
-                    <input type="text" v-model="updateUps.model" name="model" id="model" class="p-2 w-72 rounded-lg outline-none bg-gray-300">
+                    <input type="text" v-model="updateUps.model" name="model" id="model" class="p-2 w-72 rounded-lg outline-none bg-gray-300 uppercase">
                 </div>
                 <div class="mb-4">
                     <label for="manufaktur" class="block mb-2 text-sm">manufaktur</label>
-                    <input type="text" v-model="updateUps.manufaktur" name="manufaktur" id="manufaktur" class="p-2 w-72 rounded-lg outline-none bg-gray-300">
+                    <input type="text" v-model="updateUps.manufaktur" name="manufaktur" id="manufaktur" class="p-2 w-72 rounded-lg outline-none bg-gray-300 uppercase">
                 </div>
                 <div class="mb-4">
                     <label for="peringkatTegangan" class="block mb-2 text-sm">peringkat tegangan</label>

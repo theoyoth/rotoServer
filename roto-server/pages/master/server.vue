@@ -74,28 +74,28 @@
           <tr class="text-xs text-gray-200">
             <th class="font-semibold py-3 px-2 w-4">no.</th>
             <th class="font-semibold py-3 w-24">Tanggal input</th>
-            <th class="font-semibold py-3">Merek</th>
-            <th class="font-semibold py-3">Model</th>
-            <th class="font-semibold" >Processor</th>
+            <th class="font-semibold py-3 w-44">Merek</th>
+            <th class="font-semibold py-3 w-44">Model</th>
+            <th class="font-semibold w-44">Processor</th>
             <th class="font-semibold">memori</th>
-            <th class="font-semibold">garansi</th>
-            <th class="font-semibold w-20">aksi</th>
+            <th class="font-semibold w-32">garansi</th>
+            <th class="font-semibold w-24">aksi</th>
           </tr>
         </thead>
         <tbody
           v-if="caribarang !== ''"
           class="text-center bg-white bg-opacity-40 divide-y divide-gray-300">
-          <tr class="text-sm" v-for="(hasilcari, index) in hasilcariserver" :key="index">
+          <tr class="text-sm uppercase" v-for="(hasilcari, index) in hasilcariserver" :key="index">
             <td>{{index+1}}</td>
             <td>{{ $moment().format('YYYY-MM-DD') }}</td>
-            <td class="w-32">{{ hasilcari.merek }}</td>
-            <td class="w-32">{{ hasilcari.model }}</td>
-            <td class="w-20">{{ hasilcari.processor }}</td>
-            <td class="w-20">{{ hasilcari.memori }}</td>
-            <td class="text-xs w-24">
+            <td>{{ hasilcari.merek }}</td>
+            <td>{{ hasilcari.model }}</td>
+            <td>{{ hasilcari.processor }}</td>
+            <td>{{ hasilcari.memori }}</td>
+            <td class="text-xs">
               {{ $moment(hasilcari.garansi).format('DD-MM-YYYY') }}
             </td>
-            <td class="py-3 flex justify-around w-full bg-gray-700">
+            <td class="py-3 flex justify-between w-full bg-gray-700">
               <div class="has-tooltip">
                 <span
                   class="
@@ -180,17 +180,17 @@
         </tbody>
 
         <tbody v-else class="text-center bg-white bg-opacity-40 divide-y divide-gray-300">
-          <tr class="text-sm" v-for="(server, index) in servers" :key="index">
+          <tr class="text-sm uppercase" v-for="(server, index) in servers" :key="index">
             <td>{{index+1}}</td>
             <td>{{ $moment().format('DD-MM-YYYY') }}</td>
-            <td class="w-32">{{ server.merek }}</td>
-            <td class="w-32">{{ server.model }}</td>
-            <td class="w-20">{{ server.processor }}</td>
-            <td class="w-20">{{ server.memori }}</td>
-            <td class="text-xs w-24">
+            <td>{{ server.merek }}</td>
+            <td>{{ server.model }}</td>
+            <td>{{ server.processor }}</td>
+            <td>{{ server.memori }}</td>
+            <td class="text-xs">
               {{ $moment(server.garansi).format('DD-MM-YYYY') }}
             </td>
-            <td class="py-3 flex justify-around w-full">
+            <td class="py-3 flex justify-between w-full">
               <div class="has-tooltip">
                  <span
                   class="
@@ -286,7 +286,7 @@ export default {
     data(){
         return{
             caribarang:"",
-            cariserver:[],
+            hasilcariserver:[],
             servers:[],
             master:{
                 nama : "inputServer",
@@ -339,10 +339,10 @@ export default {
             })
         },
         async caribarangserver(){
-          this.cariserver = []
+          this.hasilcariserver = []
             const res = await axios.get(`http://localhost:3000/server/cariserver/${this.caribarang}/${this.$auth.user.lokasi}`)
             res.data.forEach(val =>{
-                this.cariserver.push(val)
+                this.hasilcariserver.push(val)
           })
         }
     },
@@ -350,7 +350,6 @@ export default {
         const lokasiserver = this.$auth.user.lokasi
         const idlogin = this.$auth.user.id
         try{
-            const lokasi = this.$auth.user.lokasi
             const resp = await axios.get(`http://localhost:3000/server/masterserver/${lokasiserver}/${idlogin}`)
             resp.data.forEach(server => {
                 this.servers.push(server)

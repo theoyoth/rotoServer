@@ -66,11 +66,11 @@
                     <th class="font-semibold" >kuantitas</th>
                     <th class="font-semibold" >kepentingan</th>
                     <th class="font-semibold" >penanggung jawab</th>
-                    <th class="font-semibold w-20" >aksi</th>
+                    <th class="font-semibold w-24" >aksi</th>
                 </tr>
             </thead>
             <tbody v-if="caribarang !== ''" class="text-center bg-white bg-opacity-40 divide-y divide-gray-300">
-                <tr class="text-sm" v-for="(hasilcari,index) in caridatabarang" :key="index">
+                <tr class="text-sm uppercase" v-for="(hasilcari,index) in caridatabarang" :key="index">
                     <td>{{index+1}}</td>
                     <td>{{$moment(hasilcari.tanggal).format('DD-MM-YYYY')}}</td>
                     <td>{{hasilcari.nama_pengambil}}</td>
@@ -78,7 +78,27 @@
                     <td>{{hasilcari.kuantitas}}</td>
                     <td>{{hasilcari.kepentingan}}</td>
                     <td>{{hasilcari.penanggung_jawab}}</td>
-                    <td class="py-3 flex justify-around w-full">
+                    <td class="py-3 flex justify-between w-full lowercase">
+                         <div class="has-tooltip">
+                        <span
+                        class="
+                            tooltip
+                            rounded
+                            text-xs
+                            shadow-lg
+                            p-1
+                            bg-gray-700
+                            text-white
+                            mt-7 -ml-4
+                        "
+                        >print</span
+                        >
+                            <div class="bg-gray-700 w-7 h-7 rounded-xl flex items-center justify-center">
+                                <NuxtLink :to="{name:'inout-ambilbarang-print-printform',params:{id:hasilcari.id_ambil_barang}}">
+                                    <font-awesome-icon :icon="['fas','print']" class="text-yellow-500"/>
+                                </NuxtLink>
+                            </div>
+                         </div>
                         <div class="has-tooltip">
                         <span
                         class="
@@ -123,7 +143,7 @@
                 </tr>
             </tbody>  
             <tbody v-else class="text-center bg-white bg-opacity-40 divide-y divide-gray-300">
-                <tr class="text-sm" v-for="(barang,index) in barangs" :key="index">
+                <tr class="text-sm uppercase" v-for="(barang,index) in barangs" :key="index">
                     <td>{{index+1}}</td>
                     <td>{{$moment(barang.tanggal).format('DD-MM-YYYY')}}</td>
                     <td>{{barang.nama_pengambil}}</td>
@@ -131,7 +151,27 @@
                     <td>{{barang.kuantitas}}</td>
                     <td>{{barang.kepentingan}}</td>
                     <td>{{barang.penanggung_jawab}}</td>
-                    <td class="py-3 flex justify-around w-full">
+                    <td class="py-3 flex justify-between w-full lowercase">
+                        <div class="has-tooltip">
+                        <span
+                        class="
+                            tooltip
+                            rounded
+                            text-xs
+                            shadow-lg
+                            p-1
+                            bg-gray-700
+                            text-white
+                            mt-7 -ml-4
+                        "
+                        >print</span
+                        >
+                            <div class="bg-gray-700 w-7 h-7 rounded-xl flex items-center justify-center">
+                                <NuxtLink :to="{name:'inout-ambilbarang-print-printform',params:{id:barang.id_ambil_barang}}">
+                                    <font-awesome-icon :icon="['fas','print']" class="text-yellow-500"/>
+                                </NuxtLink>
+                            </div>
+                         </div>
                         <div class="has-tooltip">
                         <span
                         class="
@@ -245,7 +285,7 @@ export default {
         },
         async caridataambilbarang(){
             this.caridatabarang = []
-            const res = await axios.get(`http://localhost:3000/server/inout/ambilbarang/caribarang/${this.caribarang}/${this.$auth.user.lokasi}`)
+            const res = await axios.get(`http://localhost:3000/server/inout/ambilbarang/caribarang/${this.caribarang}/${this.$auth.user.lokasi}/${this.$auth.user.id}`)
             res.data.forEach(val =>{
                 this.caridatabarang.push(val)
             })

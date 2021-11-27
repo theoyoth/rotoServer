@@ -38,6 +38,7 @@ module.exports = {
     extend: {
       color: ['hover'],
       transform: ['group-hover', 'hover'],
+      width: ['focus', 'active', 'hover'],
     },
   },
   plugins: [],

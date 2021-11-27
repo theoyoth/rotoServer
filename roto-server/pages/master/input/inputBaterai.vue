@@ -28,7 +28,7 @@
                     <label for="accu" class="block mb-2 text-sm">accu</label>
                     <div class="flex flex-col w-72">
                         <ValidationProvider rules="required|numeric" v-slot={errors}>
-                            <input type="text" v-model="inputBaterai.accu" name="accu" id="accu" class="p-2 w-full rounded-lg outline-none bg-gray-200">
+                            <input type="text" v-model="inputBaterai.accu" name="accu" id="accu" class="p-2 w-full rounded-lg outline-none bg-gray-200 uppercase">
                             <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
                         </ValidationProvider>
                     </div>
@@ -39,7 +39,7 @@
                     <label for="kuantitas" class="block mb-2 text-sm">kuantitas</label>
                     <div class="flex flex-col w-72">
                         <ValidationProvider rules="required|numeric" v-slot={errors}>
-                            <input type="text" v-model="inputBaterai.kuantitas" name="kuantitas" id="kuantitas" class="p-2 w-full rounded-lg outline-none bg-gray-200" :disabled="inputBaterai.accu === ''">
+                            <input type="text" v-model="inputBaterai.kuantitas" name="kuantitas" id="kuantitas" class="p-2 w-full rounded-lg outline-none bg-gray-200 uppercase" :disabled="inputBaterai.accu === ''">
                             <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
                         </ValidationProvider>
                     </div>
@@ -50,7 +50,7 @@
                     <label for="tegangan" class="block mb-2 text-sm">tegangan</label>
                     <div class="flex flex-col w-72">
                         <ValidationProvider rules="required|numeric" v-slot={errors}>
-                            <input type="text" v-model="inputBaterai.tegangan" name="tegangan" id="tegangan" class="p-2 w-full rounded-lg outline-none bg-gray-200" :disabled="inputBaterai.kuantitas === ''">
+                            <input type="text" v-model="inputBaterai.tegangan" name="tegangan" id="tegangan" class="p-2 w-full rounded-lg outline-none bg-gray-200 uppercase" :disabled="inputBaterai.kuantitas === ''">
                             <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
                         </ValidationProvider>
                     </div>
@@ -62,7 +62,7 @@
                     <label for="tahun" class="block mb-2 text-sm">tahun</label>
                     <div class="flex flex-col w-72">
                         <ValidationProvider rules="required" v-slot={errors}>
-                            <input type="date" v-model="inputBaterai.tahun" name="tahun" id="tahun" class="p-2 w-full rounded-lg outline-none bg-gray-200" :disabled="inputBaterai.tegangan === ''">
+                            <input type="date" v-model="inputBaterai.tahun" name="tahun" id="tahun" class="p-2 w-full rounded-lg outline-none bg-gray-200 uppercase" :disabled="inputBaterai.tegangan === ''">
                             <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
                         </ValidationProvider>
                     </div>
@@ -73,7 +73,7 @@
                     <label for="garansi" class="block mb-2 text-sm">garansi</label>
                     <div class="flex flex-col w-72">
                         <ValidationProvider rules="required" v-slot={errors}>
-                            <input type="date" v-model="inputBaterai.garansi" name="garansi" id="garansi" class="p-2 w-72 rounded-lg outline-none bg-gray-200" :disabled="inputBaterai.tegangan === ''">
+                            <input type="date" v-model="inputBaterai.garansi" name="garansi" id="garansi" class="p-2 w-72 rounded-lg outline-none bg-gray-200 uppercase" :disabled="inputBaterai.tegangan === ''">
                             <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
                         </ValidationProvider>
                     </div>

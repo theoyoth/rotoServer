@@ -25,30 +25,28 @@
             </NuxtLink>
         </div>
 
-        <table class="table space-y-6 container mx-auto table-auto border-collapse border border-white mt-7 divide-y divide-gray-300">
+        <table class="table space-y-6 container mx-auto table-auto border-collapse mt-7 divide-y divide-gray-300">
             <thead class="bg-gray-700 text-sm has-tooltip">
                 <span class="tooltip rounded shadow-lg p-1 bg-gray-700 text-white -mt-10 absolute left-2/4 transform -translate-x-2/4">semua detail barang</span>
                 <tr class="text-xs text-gray-200"> 
                     <th class="font-semibold py-3 px-2 w-4">no.</th>
-                    <th class="font-semibold py-3">Merek</th>
-                    <th class="font-semibold">Processor</th>
-                    <th class="font-semibold">storage</th>  
-                    <th class="font-semibold">tipe</th>    
+                    <th class="font-semibold py-3 w-52">Merek</th>
+                    <th class="font-semibold w-56">Processor</th>
+                    <th class="font-semibold w-28">storage</th>   
                     <th class="font-semibold">CPU</th>
-                    <th class="font-semibold w-24">garansi</th>
+                    <th class="font-semibold w-28">garansi</th>
                     <th class="font-semibold w-28">aksi</th>
                 </tr>
             </thead>
             <tbody v-if="caribarang !== ''" class="text-center bg-white bg-opacity-40 divide-y divide-gray-300">
-                <tr class="text-sm" v-for="(hasilcari,index) in carinas" :key="index">
+                <tr class="text-sm uppercase" v-for="(hasilcari,index) in carinas" :key="index">
                     <td>{{index+1}}</td>
                     <td>{{hasilcari.merek}}</td>
                     <td>{{hasilcari.processor}}</td>
                     <td>{{hasilcari.storage}}</td>
-                    <td>{{hasilcari.tipe}}</td>
                     <td>{{hasilcari.cpu}}</td>
                     <td>{{$moment(hasilcari.garansi).format('DD-MM-YYYY')}}</td>
-                    <td class="py-3 flex justify-around w-full">
+                    <td class="py-3 flex justify-around w-full lowercase">
                         <div class="has-tooltip">
                         <span
                         class="
@@ -119,15 +117,14 @@
                 </tr>
             </tbody>
             <tbody v-else class="text-center bg-white bg-opacity-40 divide-y divide-gray-300">
-                <tr class="text-sm" v-for="(nas,index) in nass" :key="index">
+                <tr class="text-sm uppercase" v-for="(nas,index) in nass" :key="index">
                     <td>{{index+1}}</td>
                     <td>{{nas.merek}}</td>
                     <td>{{nas.processor}}</td>
                     <td>{{nas.storage}}</td>
-                    <td>{{nas.tipe}}</td>
                     <td>{{nas.cpu}}</td>
                     <td>{{$moment(nas.garansi).format('DD-MM-YYYY')}}</td>
-                    <td class="py-3 flex justify-around w-full ">
+                    <td class="py-3 flex justify-around w-full lowercase">
                         <div class="has-tooltip">
                         <span
                         class="

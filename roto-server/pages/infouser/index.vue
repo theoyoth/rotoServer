@@ -2,10 +2,10 @@
   <div class="bg-gray-300 w-widthContent ml-auto">
     <Navbar/>
     <section class="bg-gray-100 min-h-screen w-widthContentField m-auto mt-7 p-4">
-      <div class="flex justify-between mt-8 ">
+      <div class="flex justify-between mt-8">
             <div class="flex">
-                <input type="text" placeholder="cari" name="cari" v-model.lazy="cariuser" class="rounded-l-lg w-52 p-2 outline-none bg-gray-200" @keyup.enter="getuser">
-                <button @click="getuser" class="p-2 rounded-r-lg bg-gray-700 flex items-center justify-center w-12" >
+                <input type="text" placeholder="cari" name="cari" v-model.lazy="cariuser" class="transition-all duration-200 ease-in-out rounded-l-lg p-2 bg-gray-200 outline-none w-40 focus:w-52 focus:ring-2 focus:ring-gray-700" @keyup.enter="$fetch">
+                <button @click="$fetch" class="p-2 rounded-r-lg bg-gray-700 flex items-center justify-center w-12" >
                     <font-awesome-icon :icon="['fas','search']" class="text-yellow-500"/>
                 </button>
             </div>
@@ -22,12 +22,15 @@
             </div>
             </NuxtLink>
       </div>
+      <!-- <div class="w-full mt-4 p-4">
+        
+      </div> -->
         <table class="table space-y-6 container mx-auto table-auto border-collapse w-3/4 mt-10 divide-y divide-gray-300" ref="listitem" id="listitem">
           <thead class="text-sm bg-gray-700">
               <tr class="text-sm text-gray-200"> 
                   <th class="font-semibold py-3 px-2 w-4">no.</th>
                   <th class="font-semibold py-3">nama</th>
-                  <th class="font-semibold py-3">role</th>
+                  <th class="font-semibold py-3 w-64">role</th>
                   <th class="font-semibold py-3 w-24">aksi</th>
 
               </tr>
@@ -147,17 +150,25 @@ export default {
       cariuser:"",
     }
   },
+  async fetch(){
+    if(this.cariuser !== ''){
+      await this.getuser()
+      return
+    }
+  },
   methods:{
     async getuser(){
-      try{
-        const carisiuser = await axios.get(`http://localhost:3000/server/cariuser?cari=${this.cariuser}`)
-        if(carisiuser) {
-          this.hasilcariusers = carisiuser.data
+        this.hasilcariusers = []
+        const resp = await axios.get(`http://localhost:3000/server/cariuser?cari=${this.cariuser}`)
+        if(resp.data) {
+          resp.data.forEach(us=>{
+            this.hasilcariusers.push(us)
+          })
         }
-      }
-      catch (err){
-        console.log(err)
-      }
+        else{
+          swal('data user tidak ada',{icon:'error'})
+        }
+      
     },
     deleteData(id){
             swal({

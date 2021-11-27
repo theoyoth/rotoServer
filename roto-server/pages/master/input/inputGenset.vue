@@ -28,7 +28,7 @@
                     <label for="merek" class="block mb-2 text-sm">merek</label>
                     <div class="flex flex-col w-72">
                         <ValidationProvider rules="required|passchar" v-slot={errors}>
-                            <input type="text" v-model="inputGenset.merek" name="merek" id="merek" class="p-2 w-72 rounded-lg bg-gray-300 outline-none">
+                            <input type="text" v-model="inputGenset.merek" name="merek" id="merek" class="p-2 w-72 rounded-lg bg-gray-300 outline-none uppercase">
                             <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
                         </ValidationProvider>
                     </div>
@@ -39,7 +39,7 @@
                     <label for="model" class="block mb-2 text-sm">model</label>
                     <div class="flex flex-col w-72">
                         <ValidationProvider rules="required|passchar" v-slot={errors}>
-                            <input type="text" v-model="inputGenset.model" name="model" id="model" class="p-2 w-full rounded-lg bg-gray-300 outline-none" :disabled="inputGenset.merek === ''">
+                            <input type="text" v-model="inputGenset.model" name="model" id="model" class="p-2 w-full rounded-lg bg-gray-300 outline-none uppercase" :disabled="inputGenset.merek === ''">
                             <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
                         </ValidationProvider>
                     </div>
@@ -50,7 +50,7 @@
                     <label for="tipe" class="block mb-2 text-sm">tipe</label>
                     <div class="flex flex-col w-72">
                         <ValidationProvider rules="required|passchar" v-slot={errors}>
-                            <input type="text" v-model="inputGenset.tipe" name="tipe" id="tipe" class="p-2 w-full rounded-lg bg-gray-300 outline-none" :disabled="inputGenset.model === ''">
+                            <input type="text" v-model="inputGenset.tipe" name="tipe" id="tipe" class="p-2 w-full rounded-lg bg-gray-300 outline-none uppercase" :disabled="inputGenset.model === ''">
                             <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
                         </ValidationProvider>
                     </div>
@@ -72,7 +72,7 @@
                     <label for="garansi" class="block mb-2 text-sm">garansi</label>
                      <div class="flex flex-col w-72">
                         <ValidationProvider rules="required" v-slot={errors}>
-                            <input type="date" v-model="inputGenset.garansi" name="garansi" id="garansi" class="p-2 w-72 rounded-lg bg-gray-300 outline-none" :disabled="inputGenset.tipe === ''">
+                            <input type="date" v-model="inputGenset.garansi" name="garansi" id="garansi" class="p-2 w-72 rounded-lg bg-gray-300 outline-none uppercase" :disabled="inputGenset.tipe === ''">
                             <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
                         </ValidationProvider>
                     </div>

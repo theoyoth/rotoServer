@@ -23,7 +23,7 @@
                     <label for="tipeRak" class="block mb-2 text-sm">tipe rak</label>
                     <div class="flex flex-col w-72">
                         <ValidationProvider rules="required|passchar" v-slot={errors}>
-                            <input type="text" v-model="inputRak.tipeRak" name="tipeRak" id="tipeRak" class="p-2 w-full rounded-lg outline-none bg-gray-200">
+                            <input type="text" v-model="inputRak.tipeRak" name="tipeRak" id="tipeRak" class="p-2 w-full rounded-lg outline-none bg-gray-200 uppercase">
                             <p class="text-xs mt-1 text-right text-red-500">{{ errors[0] }}</p>
                         </ValidationProvider>
                     </div>
@@ -35,7 +35,7 @@
 
                     <div class="flex flex-col w-72">
                         <ValidationProvider rules="required|passchar" v-slot={errors}>
-                            <input type="text" v-model="inputRak.tipePintu" name="tipePintu" id="tipePintu" class="p-2 w-full rounded-lg outline-none  bg-gray-200" :disabled="inputRak.tipeRak === ''">
+                            <input type="text" v-model="inputRak.tipePintu" name="tipePintu" id="tipePintu" class="p-2 w-full rounded-lg outline-none  bg-gray-200 uppercase" :disabled="inputRak.tipeRak === ''">
                             <p class="text-xs mt-1 text-right text-red-500">{{ errors[0] }}</p>
                         </ValidationProvider>
                     </div>
@@ -48,7 +48,7 @@
 
                     <div class="flex flex-col w-72">
                         <ValidationProvider rules="required|passchar" v-slot={errors}>
-                            <input type="text" v-model="inputRak.namaProduk" name="namaProduk" id="namaProduk" class="p-2 w-full rounded-lg outline-none bg-gray-200" :disabled="inputRak.tipePintu === ''">
+                            <input type="text" v-model="inputRak.namaProduk" name="namaProduk" id="namaProduk" class="p-2 w-full rounded-lg outline-none bg-gray-200 uppercase" :disabled="inputRak.tipePintu === ''">
                             <p class="text-xs mt-1 text-right text-red-500">{{ errors[0] }}</p>
                         </ValidationProvider>
                     </div>
@@ -59,7 +59,7 @@
                     <label for="dimensi" class="block mb-2 text-sm">dimensi</label>
                     <div class="flex flex-col w-72">
                     <ValidationProvider rules="required|passchar" v-slot={errors}>
-                        <input type="text" v-model="inputRak.dimensi" name="dimensi" id="dimensi" class="p-2 w-full rounded-lg outline-none bg-gray-200" :disabled="inputRak.namaProduk === ''">
+                        <input type="text" v-model="inputRak.dimensi" name="dimensi" id="dimensi" class="p-2 w-full rounded-lg outline-none bg-gray-200 uppercase" :disabled="inputRak.namaProduk === ''">
                         <p class="text-xs mt-1 text-right text-red-500">{{ errors[0] }}</p>
                     </ValidationProvider>
                     </div>
@@ -70,7 +70,7 @@
                     <label for="berat" class="block mb-2 text-sm">berat (dalam KG)</label>
                     <div class="flex flex-col w-72">
                     <ValidationProvider rules="required|numeric" v-slot={errors}>
-                        <input type="text" v-model="inputRak.berat" name="berat" id="berat" class="p-2 w-full rounded-lg outline-none bg-gray-200" :disabled="inputRak.dimensi === ''">
+                        <input type="text" v-model="inputRak.berat" name="berat" id="berat" class="p-2 w-full rounded-lg outline-none bg-gray-200 uppercase" :disabled="inputRak.dimensi === ''">
                         <p class="text-xs mt-1 text-right text-red-500">{{ errors[0] }}</p>
                     </ValidationProvider>
                     </div>
@@ -82,7 +82,7 @@
                     <label for="tahun" class="block mb-2 text-sm">tahun</label>
                     <div class="flex flex-col w-72">
                         <ValidationProvider rules="required" v-slot={errors}>
-                            <input type="date" v-model="inputRak.tahun" name="tahun" id="tahun" class="p-2 w-full rounded-lg outline-none bg-gray-200" >
+                            <input type="date" v-model="inputRak.tahun" name="tahun" id="tahun" class="p-2 w-full rounded-lg outline-none bg-gray-200 uppercase" >
                             <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
                         </ValidationProvider>
                     </div>

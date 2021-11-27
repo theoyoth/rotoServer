@@ -24,7 +24,7 @@ module.exports.cariuser = async (req, res) => {
     conn = await pool.getConnection()
 
     const rows = await conn.query(
-      `SELECT nama,level FROM users WHERE nama LIKE '${value}%' OR level LIKE '${value}%'`
+      `SELECT nama,role FROM users WHERE nama LIKE '${value}%' OR role LIKE '${value}%'`
     )
     if (rows) {
       res.send(rows)

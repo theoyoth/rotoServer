@@ -21,11 +21,11 @@
                 </div>
                 <div class="mb-4">
                     <label for="namaPenambah" class="block mb-2 text-sm">nama penambah</label>
-                    <input type="text" v-model="updateAmbilBarang.namaPengambil" name="namaPenambah" id="namaPenambah" class="p-2 w-72 rounded-lg outline-none bg-gray-300">
+                    <input type="text" v-model="updateAmbilBarang.namaPengambil" name="namaPenambah" id="namaPenambah" class="p-2 w-72 rounded-lg outline-none bg-gray-300 uppercase">
                 </div>
                 <div class="mb-4">
                     <label for="namaBarang" class="block mb-2 text-sm">nama barang</label>
-                    <input type="text" v-model="updateAmbilBarang.namaBarang" name="namaBarang" id="namaBarang" class="p-2 w-72 rounded-lg outline-none bg-gray-300">
+                    <input type="text" v-model="updateAmbilBarang.namaBarang" name="namaBarang" id="namaBarang" class="p-2 w-72 rounded-lg outline-none bg-gray-300 uppercase">
                 </div>
                  <div class="mb-4">
                     <label for="kuantitas" class="block mb-2 text-sm">kuantitas</label>
@@ -33,11 +33,11 @@
                 </div>
                 <div class="mb-4">
                     <label for="kepentingan" class="block mb-2 text-sm">kepentingan</label>
-                    <input type="text" v-model="updateAmbilBarang.kepentingan" name="kepentingan" id="kepentingan" class="p-2 w-72 rounded-lg outline-none bg-gray-300">
+                    <input type="text" v-model="updateAmbilBarang.kepentingan" name="kepentingan" id="kepentingan" class="p-2 w-72 rounded-lg outline-none bg-gray-300 uppercase">
                 </div>
                 <div class="mb-4">
                     <label for="penanggungJawab" class="block mb-2 text-sm">penanggung jawab</label>
-                    <input type="text" v-model="updateAmbilBarang.penanggungJawab" name="penanggungJawab" id="penanggungJawab" class="p-2 w-72 rounded-lg outline-none bg-gray-300">
+                    <input type="text" v-model="updateAmbilBarang.penanggungJawab" name="penanggungJawab" id="penanggungJawab" class="p-2 w-72 rounded-lg outline-none bg-gray-300 uppercase">
                 </div>
             </div>
         </div>

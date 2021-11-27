@@ -16,15 +16,15 @@
             <div class="grid grid-cols-3 grid-rows-4">
                 <div class="mb-4">
                     <label for="merek" class="block mb-2 text-sm">merek</label>
-                    <input type="text" v-model="updateNetwork.merek" name="merek" id="merek" class="p-2 w-72 rounded-lg outline-none bg-gray-300">
+                    <input type="text" v-model="updateNetwork.merek" name="merek" id="merek" class="p-2 w-72 rounded-lg outline-none bg-gray-300 uppercase">
                 </div>
                 <div class="mb-4">
                     <label for="model" class="block mb-2 text-sm">model</label>
-                    <input type="text" v-model="updateNetwork.model" name="model" id="model" class="p-2 w-72 rounded-lg outline-none bg-gray-300">
+                    <input type="text" v-model="updateNetwork.model" name="model" id="model" class="p-2 w-72 rounded-lg outline-none bg-gray-300 uppercase">
                 </div>
                 <div class="mb-4">
                     <label for="tipe" class="block mb-2 text-sm">tipe</label>
-                    <input type="text" v-model="updateNetwork.tipe" name="tipe" id="tipe" class="p-2 w-72 rounded-lg outline-none bg-gray-300">
+                    <input type="text" v-model="updateNetwork.tipe" name="tipe" id="tipe" class="p-2 w-72 rounded-lg outline-none bg-gray-300 uppercase">
                 </div>
                 <div class="mb-4">
                     <label for="kuantitas" class="block mb-2 text-sm">kuantitas</label>

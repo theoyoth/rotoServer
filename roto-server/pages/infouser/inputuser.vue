@@ -60,7 +60,7 @@
                         </ValidationProvider>
                       </div>
                       <div v-if="inputUser.role == 'PA' || inputUser.role == 'EDP'">
-                        <ValidationProvider rules="required|min:8" v-slot={errors} vid="confirm">
+                        <ValidationProvider rules="required|nospace|min:8" v-slot={errors} vid="confirm">
                           <div class="flex">
                             <input :type="passwordFieldType" v-model="inputUser.sandi" name="model" id="model" class="p-2 w-full rounded-l-lg outline-none bg-gray-200">
                             <div type="password" class="flex cursor-pointer items-center p-2 bg-gray-200 rounded-r-lg" @click="showpassword();changeicon();">

@@ -34,25 +34,25 @@
                 <span class="tooltip rounded shadow-lg p-1 bg-gray-700 text-white -mt-10 absolute left-2/4 transform -translate-x-2/4">semua detail barang</span>
                 <tr class="text-xs text-gray-200"> 
                     <th class="font-semibold py-3 px-2 w-4">no.</th>     
-                    <th class="font-semibold py-3 w-32">Model</th>     
-                    <th class="font-semibold">UPS critical load</th>
-                    <th class="font-semibold">nomor serial</th>
-                    <th class="font-semibold">nama sistem</th>
+                    <th class="font-semibold py-3 w-44">Model</th>     
+                    <th class="font-semibold w-36">UPS critical load</th>
+                    <th class="font-semibold w-40">nomor serial</th>
+                    <th class="font-semibold w-44">nama sistem</th>
                     <th class="font-semibold">manufaktur</th>
-                    <th class="font-semibold">garansi</th>
-                    <th class="font-semibold w-20">aksi</th>
+                    <th class="font-semibold w-32">garansi</th>
+                    <th class="font-semibold w-24">aksi</th>
                 </tr>
             </thead>
             <tbody v-if="caribarang !== ''" class="text-center bg-white bg-opacity-40 divide-y divide-gray-300">
-                <tr class="text-sm" v-for="(hasilcari,index) in cariups" :key="index">
+                <tr class="text-sm uppercase" v-for="(hasilcari,index) in cariups" :key="index">
                     <td>{{index+1}}</td>
                     <td>{{hasilcari.model}}</td>
-                    <td class="w-28">{{hasilcari.ups_critical_load}}</td>
-                    <td class="w-32">{{hasilcari.nomor_serial}}</td>
-                    <td class="w-32">{{hasilcari.nama_sistem}}</td>
-                    <td class="w-32">{{hasilcari.manufaktur}}</td>
-                    <td class="text-xs w-24">{{$moment(hasilcari.garansi).format('DD-MM-YYYY')}}</td>
-                    <td class="py-3 flex justify-around w-full">
+                    <td>{{hasilcari.ups_critical_load}}</td>
+                    <td>{{hasilcari.nomor_serial}}</td>
+                    <td>{{hasilcari.nama_sistem}}</td>
+                    <td>{{hasilcari.manufaktur}}</td>
+                    <td class="text-xs">{{$moment(hasilcari.garansi).format('DD-MM-YYYY')}}</td>
+                    <td class="py-3 flex justify-between w-full lowercase">
                         <div class="has-tooltip">
                             <span
                             class="
@@ -123,15 +123,15 @@
                 </tr>
             </tbody>
             <tbody v-else class="text-center bg-white bg-opacity-40 divide-y divide-gray-300">
-                <tr class="text-sm" v-for="(ups,index) in upss" :key="index">
+                <tr class="text-sm uppercase" v-for="(ups,index) in upss" :key="index">
                     <td>{{index+1}}</td>
                     <td>{{ups.model}}</td>
-                    <td class="w-28">{{ups.ups_critical_load}}</td>
-                    <td class="w-32">{{ups.nomor_serial}}</td>
-                    <td class="w-32">{{ups.nama_sistem}}</td>
-                    <td class="w-32">{{ups.manufaktur}}</td>
-                    <td class="text-xs w-24">{{$moment(ups.garansi).format('DD-MM-YYYY')}}</td>
-                    <td class="py-3 flex justify-around w-full">
+                    <td>{{ups.ups_critical_load}}</td>
+                    <td>{{ups.nomor_serial}}</td>
+                    <td>{{ups.nama_sistem}}</td>
+                    <td>{{ups.manufaktur}}</td>
+                    <td class="text-xs">{{$moment(ups.garansi).format('DD-MM-YYYY')}}</td>
+                    <td class="py-3 flex justify-between w-full lowercase">
                         <div class="has-tooltip">
                             <span
                             class="

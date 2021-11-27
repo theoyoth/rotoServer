@@ -17,11 +17,11 @@
             <div class="grid grid-cols-3 grid-rows-4">
                 <div class="mb-4">
                     <label for="merek" class="block mb-2 text-sm">merek</label>
-                    <input type="text" v-model="updateAc.merek" name="merek" id="merek" class="p-2 w-72 rounded-lg outline-none bg-gray-300">
+                    <input type="text" v-model="updateAc.merek" name="merek" id="merek" class="p-2 w-72 rounded-lg outline-none bg-gray-300 uppercase">
                 </div>
                 <div class="mb-4">
                     <label for="model" class="block mb-2 text-sm">model</label>
-                    <input type="text" v-model="updateAc.model" name="model" id="model" class="p-2 w-72 rounded-lg outline-none bg-gray-300">
+                    <input type="text" v-model="updateAc.model" name="model" id="model" class="p-2 w-72 rounded-lg outline-none bg-gray-300 uppercase">
                 </div>
                 <div class="mb-4">
                     <label for="sumberDayaListrik" class="block mb-2 text-sm">sumber daya listrik</label>
@@ -29,10 +29,10 @@
                 </div>
                  <div class="mb-4">
                     <label for="dimensi" class="block mb-2 text-sm">dimensi</label>
-                    <input type="text" v-model="updateAc.dimensi" name="dimensi" id="dimensi" class="p-2 w-72 rounded-lg outline-none bg-gray-300">
+                    <input type="text" v-model="updateAc.dimensi" name="dimensi" id="dimensi" class="p-2 w-72 rounded-lg outline-none bg-gray-300 uppercase">
                 </div>
                 <div class="mb-4">
-                    <label for="konsumsiDaya" class="block mb-2 text-sm">konsumsi daya</label>
+                    <label for="konsumsiDaya" class="block mb-2 text-sm">konsumsi daya listrik</label>
                     <input type="text" v-model="updateAc.konsumsiDayaListrik" name="konsumsiDayaListrik" id="konsumsiDaya" class="p-2 w-72 rounded-lg outline-none bg-gray-300">
                 </div>
                 <div class="mb-4">
@@ -87,10 +87,10 @@ export default {
                 this.updateAc.model = ac.model
                 this.updateAc.sumberDayaListrik = ac.sumber_daya_listrik
                 this.updateAc.dimensi = ac.dimensi
-                this.konsumsiDayaListrik = ac.konsumsi_daya_listrik
+                this.updateAc.konsumsiDayaListrik = ac.konsumsi_daya_listrik
                 this.updateAc.kapasitasPendingin = ac.kapasitas_pendingin
                 this.updateAc.tahun = moment(ac.tahun).format('YYYY-MM-DD')
-                this.updateAc.garansi = ac.garansi
+                this.updateAc.garansi = moment(ac.garansi).format('YYYY-MM-DD')
             })
         }
     },

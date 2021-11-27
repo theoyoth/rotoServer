@@ -17,23 +17,23 @@
             <div class="grid grid-cols-3 grid-rows-4">
                 <div class="mb-4">
                     <label for="tipeRak" class="block mb-2 text-sm">tipe rak</label>
-                    <input type="text" v-model="updateRak.tipeRak" name="tipeRak" id="tipeRak" class="p-2 w-72 rounded-lg outline-none bg-gray-300">
+                    <input type="text" v-model="updateRak.tipeRak" name="tipeRak" id="tipeRak" class="p-2 w-72 rounded-lg outline-none bg-gray-300 uppercase">
                 </div>
                 <div class="mb-4">
                     <label for="tipePintu" class="block mb-2 text-sm">tipe pintu</label>
-                    <input type="text" v-model="updateRak.tipePintu" name="tipePintu" id="tipePintu" class="p-2 w-72 rounded-lg outline-none bg-gray-300">
+                    <input type="text" v-model="updateRak.tipePintu" name="tipePintu" id="tipePintu" class="p-2 w-72 rounded-lg outline-none bg-gray-300 uppercase">
                 </div>
                 <div class="mb-4">
                     <label for="namaProduk" class="block mb-2 text-sm">nama produk</label>
-                    <input type="text" v-model="updateRak.namaProduk" name="namaProduk" id="namaProduk" class="p-2 w-72 rounded-lg outline-none bg-gray-300">
+                    <input type="text" v-model="updateRak.namaProduk" name="namaProduk" id="namaProduk" class="p-2 w-72 rounded-lg outline-none bg-gray-300 uppercase">
                 </div>
                 <div class="mb-4">
                     <label for="dimensi" class="block mb-2 text-sm">dimensi</label>
-                    <input type="text" v-model="updateRak.dimensi" name="dimensi" id="dimensi" class="p-2 w-72 rounded-lg outline-none bg-gray-300">
+                    <input type="text" v-model="updateRak.dimensi" name="dimensi" id="dimensi" class="p-2 w-72 rounded-lg outline-none bg-gray-300 uppercase">
                 </div>
                 <div class="mb-4">
                     <label for="berat" class="block mb-2 text-sm">berat</label>
-                    <input type="text" v-model="updateRak.berat" name="berat" id="berat" class="p-2 w-72 rounded-lg outline-none bg-gray-300">
+                    <input type="text" v-model="updateRak.berat" name="berat" id="berat" class="p-2 w-72 rounded-lg outline-none bg-gray-300 uppercase">
                 </div>
                 <div class="mb-4">
                     <label for="tahun" class="block mb-2 text-sm">tahun</label>

@@ -28,7 +28,7 @@
                     <label for="merek" class="block mb-2 text-sm">merek</label>
                     <div class="flex flex-col w-72">
                         <ValidationProvider rules="required|passchar">
-                            <input type="text" v-model="inputKeyboard.merek" name="merek" id="merek" class="p-2 w-full rounded-lg bg-gray-300 outline-none">
+                            <input type="text" v-model="inputKeyboard.merek" name="merek" id="merek" class="p-2 w-full rounded-lg bg-gray-300 outline-none uppercase">
                             <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
                         </ValidationProvider>
                     </div>
@@ -39,7 +39,7 @@
                     <label for="model" class="block mb-2 text-sm">model</label>
                     <div class="flex flex-col w-72">
                         <ValidationProvider rules="required|passchar" v-slot={errors}>
-                            <input type="text" v-model="inputKeyboard.model" name="model" id="model" class="p-2 w-72 rounded-lg bg-gray-300 outline-none" :disabled="inputKeyboard.merek === ''">
+                            <input type="text" v-model="inputKeyboard.model" name="model" id="model" class="p-2 w-72 rounded-lg bg-gray-300 outline-none uppercase" :disabled="inputKeyboard.merek === ''">
                             <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
                         </ValidationProvider>
                     </div>
@@ -50,7 +50,7 @@
                     <label for="tipe" class="block mb-2 text-sm">tipe</label>
                     <div class="flex flex-col w-72">
                         <ValidationProvider rules="required|passchar" v-slot={errors}>
-                            <input type="text" v-model="inputKeyboard.tipe" name="tipe" id="tipe" class="p-2 w-72 rounded-lg  bg-gray-300 outline-none" :disabled="inputKeyboard.model === ''">
+                            <input type="text" v-model="inputKeyboard.tipe" name="tipe" id="tipe" class="p-2 w-72 rounded-lg  bg-gray-300 outline-none uppercase" :disabled="inputKeyboard.model === ''">
                             <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
                         </ValidationProvider>
                     </div>
@@ -72,7 +72,7 @@
                     <label for="garansi" class="block mb-2 text-sm">garansi</label>
                     <div class="flex flex-col w-72">
                         <ValidationProvider rules="required" v-slot={errors}>
-                            <input type="date" v-model="inputKeyboard.garansi" name="garansi" id="garansi" class="p-2 w-72 rounded-lg bg-gray-300 outline-none">
+                            <input type="date" v-model="inputKeyboard.garansi" name="garansi" id="garansi" class="p-2 w-72 rounded-lg bg-gray-300 outline-none uppercase">
                             <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
                         </ValidationProvider>
                     </div>

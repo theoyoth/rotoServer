@@ -19,35 +19,35 @@
                     <span class="tooltip text-xs rounded shadow-lg p-1 bg-gray-700 text-white ml-32">masukan nama produk</span>
                     <label for="produk" class="block mb-2 text-sm">produk</label>
                     <div class="flex flex-col w-72">
-                    <input type="text" name="produk" v-model="updateServer.produk" id="produk" class="p-2 w-full rounded-lg outline-none bg-gray-300">
+                    <input type="text" name="produk" v-model="updateServer.produk" id="produk" class="p-2 w-full rounded-lg outline-none bg-gray-300 uppercase">
                     </div>
                 </div>
                 <div class="mb-4 has-tooltip">
                      <span class="tooltip text-xs rounded shadow-lg p-1 bg-gray-700 text-white ml-32">masukan nama merek</span>
                     <label for="merek" class="block mb-2 text-sm">merek</label>
                     <div class="flex flex-col w-72">
-                    <input type="text"  name="merek" v-model="updateServer.merek" id="merek" class="p-2 w-full rounded-lg outline-none bg-gray-300" >
+                    <input type="text"  name="merek" v-model="updateServer.merek" id="merek" class="p-2 w-full rounded-lg outline-none bg-gray-300 uppercase" >
                     </div>
                 </div>
                 <div class="mb-4 has-tooltip">
                     <span class="tooltip text-xs rounded shadow-lg p-1 bg-gray-700 text-white ml-32">masukan nama modelnya</span>
                     <label for="model" class="block mb-2 text-sm">model</label>
                     <div class="flex flex-col w-72">
-                    <input type="text"  name="model" v-model="updateServer.model" id="model" class="p-2 w-full rounded-lg outline-none bg-gray-300" >
+                    <input type="text"  name="model" v-model="updateServer.model" id="model" class="p-2 w-full rounded-lg outline-none bg-gray-300 uppercase" >
                     </div>
                 </div>                
                 <div class="mb-4 has-tooltip">
                     <span class="tooltip text-xs rounded shadow-lg p-1 bg-gray-700 text-white ml-24">masukan jenis processor-nya</span>
                     <label for="processor" class="block mb-2 text-sm">processor</label>
                     <div class="flex flex-col w-72">
-                    <input type="text" name="processor" id="processor" v-model="updateServer.processor" class="p-2 w-full rounded-lg outline-none bg-gray-300">
+                    <input type="text" name="processor" id="processor" v-model="updateServer.processor" class="p-2 w-full rounded-lg outline-none bg-gray-300 uppercase">
                     </div>
                 </div>
                 <div class="mb-4 has-tooltip">
                     <span class="tooltip text-xs rounded shadow-lg p-1 bg-gray-700 text-white ml-32">masukan jumlah memori</span>
                     <label for="memori" class="block mb-2 text-sm">memori</label>
                     <div class="flex w-72">
-                    <input type="text" name="memori" id="memori" v-model="updateServer.memori" class="p-2 w-full rounded-lg outline-none bg-gray-300" >
+                    <input type="text" name="memori" id="memori" v-model="updateServer.memori" class="p-2 w-full rounded-lg outline-none bg-gray-300 uppercase" >
                     <select name="kapasitas" id="kapasitas" class="p-2 rounded-r-lg ring-gray-500 -ml-2 bg-gray-300">
                         <option value="gb">GB</option>
                         <option value="tb">TB</option>
@@ -58,7 +58,7 @@
                     <span class="tooltip text-xs rounded shadow-lg p-1 bg-gray-700 text-white ml-20">masukan jumlah internal storage</span>
                     <label for="internalStorage" class="block mb-2 text-sm">internal Storage</label>
                     <div class="flex w-72">
-                    <input type="text" name="internalStorage" id="internalStorage" v-model="updateServer.internalStorage" class="p-2 w-full rounded-lg outline-none bg-gray-300">
+                    <input type="text" name="internalStorage" id="internalStorage" v-model="updateServer.internalStorage" class="p-2 w-full rounded-lg outline-none bg-gray-300 uppercase">
                      <select name="kapasitas" id="kapasitas" class="p-2 rounded-r-lg ring-gray-500 -ml-2 bg-gray-300">
                         <option value="gb">GB</option>
                         <option value="tb">TB</option>
@@ -69,14 +69,14 @@
                     <span class="tooltip text-xs rounded shadow-lg p-1 bg-gray-700 text-white ml-20">masukan nama network controller</span>
                     <div class="flex flex-col w-72">
                     <label for="netwokController" class="block mb-2 text-sm">network Controller</label>
-                    <input type="text" name="networkController" id="netwokController" v-model="updateServer.networkController" class="p-2 w-full rounded-lg outline-none bg-gray-300">
+                    <input type="text" name="networkController" id="netwokController" v-model="updateServer.networkController" class="p-2 w-full rounded-lg outline-none bg-gray-300 uppercase">
                     </div>
                 </div>
                 <div class="mb-4 has-tooltip relative">
                      <span class="tooltip text-xs rounded shadow-lg p-1 bg-gray-700 text-white ml-20">masukan besar sumber daya listrik</span>
                     <label for="sumberDayaListrik" class="block mb-2 text-sm">power supply</label>
                     <div class="flex flex-col w-72">
-                    <input type="text" name="sumberDayaListrik" id="sumberDayaListrik" v-model="updateServer.sumberDayaListrik" class="p-2 w-full rounded-lg outline-none bg-gray-300">
+                    <input type="text" name="sumberDayaListrik" id="sumberDayaListrik" v-model="updateServer.sumberDayaListrik" class="p-2 w-full rounded-lg outline-none bg-gray-300 uppercase">
                     <input type="text" value="watt" readonly="readonly" class="absolute w-14 right-6 bottom-1 p-1 rounded bg-gray-300">
                     </div>
                 </div>

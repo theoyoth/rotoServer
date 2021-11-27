@@ -62,16 +62,16 @@
                 <tr class="text-xs text-gray-200"> 
                     <th class="font-semibold py-3 px-2 w-4">no.</th>
                     <th class="font-semibold py-3 w-32">tanggal</th>
-                    <th class="font-semibold" >nama penambah</th>
-                    <th class="font-semibold" >nama barang</th>
-                    <th class="font-semibold" >kuantitas</th>
+                    <th class="font-semibold w-44">nama penambah</th>
+                    <th class="font-semibold w-36">nama barang</th>
+                    <th class="font-semibold w-20">kuantitas</th>
                     <th class="font-semibold" >kepentingan</th>
-                    <th class="font-semibold" >penanggung jawab</th>
+                    <th class="font-semibold w-48">penanggung jawab</th>
                     <th class="font-semibold w-24" >aksi</th>
                 </tr>
             </thead>
             <tbody v-if="caribarang !== ''" class="text-center bg-white bg-opacity-40 divide-y divide-gray-300">
-                <tr class="text-sm" v-for="(hasilcari,index) in caridatabarang" :key="index">
+                <tr class="text-sm uppercase" v-for="(hasilcari,index) in caridatabarang" :key="index">
                     <td>{{index+1}}</td>
                     <td>{{$moment(hasilcari.tanggal).format('DD-MM-YYYY')}}</td>
                     <td>{{hasilcari.nama_penambah}}</td>
@@ -79,7 +79,27 @@
                     <td>{{hasilcari.kuantitas}}</td>
                     <td>{{hasilcari.kepentingan}}</td>
                     <td>{{hasilcari.penanggung_jawab}}</td>
-                    <td class="py-3 flex justify-around w-full">
+                    <td class="py-3 flex justify-between w-full lowercase">
+                        <div class="has-tooltip">
+                        <span
+                        class="
+                            tooltip
+                            rounded
+                            text-xs
+                            shadow-lg
+                            p-1
+                            bg-gray-700
+                            text-white
+                            mt-7 -ml-4
+                        "
+                        >print</span
+                        >
+                            <div class="bg-gray-700 w-7 h-7 rounded-xl flex items-center justify-center">
+                                <NuxtLink :to="{name:'inout-tambahbarang-print-printform',params:{id:hasilcari.id_tambah_barang}}">
+                                    <font-awesome-icon :icon="['fas','print']" class="text-yellow-500"/>
+                                </NuxtLink>
+                            </div>
+                         </div>
                         <div class="has-tooltip">
                         <span
                         class="
@@ -124,7 +144,7 @@
                 </tr>
             </tbody>  
             <tbody v-else class="text-center bg-white bg-opacity-40 divide-y divide-gray-300">
-                <tr class="text-sm" v-for="(barang,index) in barangs" :key="index">
+                <tr class="text-sm uppercase" v-for="(barang,index) in barangs" :key="index">
                     <td>{{index+1}}</td>
                     <td>{{$moment(barang.tanggal).format('DD-MM-YYYY')}}</td>
                     <td>{{barang.nama_penambah}}</td>
@@ -132,7 +152,7 @@
                     <td>{{barang.kuantitas}}</td>
                     <td>{{barang.kepentingan}}</td>
                     <td>{{barang.penanggung_jawab}}</td>
-                    <td class="py-3 flex justify-between w-full">
+                    <td class="py-3 flex justify-between w-full lowercase">
                         <div class="has-tooltip">
                         <span
                         class="
@@ -270,7 +290,7 @@ export default {
         },
         async caridatatambahbarang(){
             this.caridatabarang = []
-            const res = await axios.get(`http://localhost:3000/server/inout/tambahbarang/caribarang/${this.caribarang}/${this.$auth.user.lokasi}`)
+            const res = await axios.get(`http://localhost:3000/server/inout/tambahbarang/caribarang/${this.caribarang}/${this.$auth.user.lokasi}/${this.$auth.user.id}`)
             res.data.forEach(val =>{
                 this.caridatabarang.push(val)
             })

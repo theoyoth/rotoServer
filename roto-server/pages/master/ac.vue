@@ -29,30 +29,30 @@
         <p class="text-white bg-blue-500 font-semibold p-2 rounded-lg">{{ deletemsg }}</p>
         </div> -->
 
-        <table class="table space-y-6 container mx-auto table-auto border-collapse border border-white mt-7 divide-y divide-gray-300">
+        <table class="table space-y-6 container mx-auto table-auto border-collapse mt-7 divide-y divide-gray-300">
             <thead class="bg-gray-700 text-sm has-tooltip">
                 <span class="tooltip rounded shadow-lg p-1 bg-gray-700 text-white -mt-10 absolute left-2/4 transform -translate-x-2/4">semua detail barang</span>
                 <tr class="text-xs text-gray-200"> 
                     <th class="font-semibold py-3 px-2 w-4">no.</th>
-                    <th class="font-semibold py-3">Merek</th>
-                    <th class="font-semibold py-3">Model</th>
+                    <th class="font-semibold py-3 w-44">Merek</th>
+                    <th class="font-semibold py-3 w-44">Model</th>
                     <th class="font-semibold">sumber daya listrik</th>
-                    <th class="font-semibold">dimensi</th>
+                    <th class="font-semibold w-40">dimensi</th>
                     <th class="font-semibold">kapasitas pendingin</th>
-                    <th class="font-semibold">garansi</th>
+                    <th class="font-semibold w-32">garansi</th>
                     <th class="font-semibold w-24">aksi</th>
                 </tr>
             </thead>
             <tbody v-if="caribarang !== ''" class="text-center bg-white bg-opacity-40 divide-y divide-gray-300">
-                <tr class="text-sm" v-for="(hasilcari,index) in cariac" :key="index">
+                <tr class="text-sm uppercase" v-for="(hasilcari,index) in cariac" :key="index">
                     <td>{{index+1}}</td>
-                    <td class="py-3 w-32">{{hasilcari.merek}}</td>
-                    <td class="w-32">{{hasilcari.model}}</td>
-                    <td class="w-24">{{hasilcari.sumber_daya_listrik}}</td>
-                    <td class="w-24">{{hasilcari.dimensi}}</td>
-                    <td class="w-24">{{hasilcari.kapasitas_pendingin}}</td>
-                    <td class="w-24">{{$moment(hasilcari.garansi).format('DD-MM-YYYY')}}</td>
-                    <td class="py-3 flex justify-around w-full">
+                    <td class="py-3">{{hasilcari.merek}}</td>
+                    <td>{{hasilcari.model}}</td>
+                    <td>{{hasilcari.sumber_daya_listrik}}</td>
+                    <td>{{hasilcari.dimensi}}</td>
+                    <td>{{hasilcari.kapasitas_pendingin}}</td>
+                    <td>{{$moment(hasilcari.garansi).format('DD-MM-YYYY')}}</td>
+                    <td class="py-3 flex justify-around w-full lowercase">
                         <div class="has-tooltip">
                              <span
                             class="
@@ -124,15 +124,16 @@
                     </td>
                 </tr>
             </tbody>
-            <tbody v-else class="text-center bg-white bg-opacity-40 divide-y divide-gray-300"><tr class="text-sm" v-for="(ac,index) in acs" :key="index">
+            <tbody v-else class="text-center bg-white bg-opacity-40 divide-y divide-gray-300">
+                <tr class="text-sm uppercase" v-for="(ac,index) in acs" :key="index">
                     <td>{{index+1}}</td>
-                    <td class="py-3 w-32">{{ac.merek}}</td>
-                    <td class="w-32">{{ac.model}}</td>
-                    <td class="w-32">{{ac.sumber_daya_listrik}}</td>
-                    <td class="w-32">{{ac.dimensi}}</td>
-                    <td class="w-32">{{ac.kapasitas_pendingin}}</td>
-                    <td class="w-28">{{$moment(ac.garansi).format("DD-MM-YYYY")}}</td>
-                    <td class="py-3 flex justify-around w-full">
+                    <td class="py-3">{{ac.merek}}</td>
+                    <td>{{ac.model}}</td>
+                    <td>{{ac.sumber_daya_listrik}}</td>
+                    <td>{{ac.dimensi}}</td>
+                    <td>{{ac.kapasitas_pendingin}}</td>
+                    <td>{{$moment(ac.garansi).format("DD-MM-YYYY")}}</td>
+                    <td class="py-3 flex justify-around w-full lowercase">
                         <div class="has-tooltip">
                              <span
                             class="

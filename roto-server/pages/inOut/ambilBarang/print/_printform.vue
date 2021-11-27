@@ -2,7 +2,7 @@
   <div class="bg-gray-300 min-h-screen w-widthContent ml-auto">
     <Navbar/>
     <section class="bg-gray-100 min-h-screen w-widthContentField m-auto mt-7 p-4">
-      <NuxtLink to="/inout/tambahbarang"
+      <NuxtLink to="/inout/ambilbarang"
           class="flex items-center justify-between rounded-md w-28 px-4 py-2 bg-gray-700">
           <div>
             <font-awesome-icon :icon="['fas', 'arrow-left']" class="text-gray-200" />
@@ -27,8 +27,8 @@
           </table>
           <div class="flex justify-between w-full" style="display: flex;justify-content:space-around;margin-top:10px;">
             <div class="h-20 flex flex-col justify-between text-center" style="text-align: center;">
-              <p>Nama penambah</p>
-              <p style="transform:translateY(20px);">{{dataPrint.namaPenambah}}</p>
+              <p>Nama pengambil</p>
+              <p style="transform:translateY(20px);">{{dataPrint.namaPengambil}}</p>
             </div>
             <div class="h-20 flex flex-col justify-between text-center" style="text-align:center;">
               <p>Penanggung jawab</p>
@@ -53,7 +53,7 @@ export default {
   data(){
     return{
       dataPrint:{
-        namaPenambah:"",
+        namaPengambil:"",
         namaBarang : "",
         penanggungJawab : "",
         tanggal: "",
@@ -66,11 +66,11 @@ export default {
     const lokasi = this.$auth.user.lokasi
     const id = this.$route.params.id
 
-    const resp = await axios.get(`http://localhost:3000/server/inout/tambahbarang/update/${id}/${lokasi}`)
+    const resp = await axios.get(`http://localhost:3000/server/inout/ambilbarang/update/${id}/${lokasi}`)
     if(resp){
         resp.data.forEach(barang=>{
             this.dataPrint.tanggal = moment(barang.tanggal).format('DD-MM-YYYY')
-            this.dataPrint.namaPenambah = barang.nama_penambah
+            this.dataPrint.namaPengambil = barang.nama_pengambil
             this.dataPrint.namaBarang = barang.nama_barang
             this.dataPrint.kuantitas = barang.kuantitas
             this.dataPrint.kepentingan = barang.kepentingan

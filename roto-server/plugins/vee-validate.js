@@ -24,7 +24,7 @@ extend('numeric', {
 
 extend('alpha_spaces', {
   ...alpha_spaces,
-  message: 'isikan huruf dan spasi',
+  message: 'isikan huruf',
 })
 
 extend('alpha_dash', {
@@ -51,8 +51,15 @@ extend('passchar', {
     }
   },
 })
-// extend('passwordcheck',{
-//   validate: (value) => {
-//     const minpass = /^[min:8]/
-//   }
-// })
+extend('nospace', {
+  message: 'tidak boleh spasi',
+  validate: (value) => {
+    const space = /^[A-Za-z\d\S]*$/
+    const anyspace = space.test(value)
+    if (anyspace) {
+      return true
+    } else {
+      return false
+    }
+  },
+})

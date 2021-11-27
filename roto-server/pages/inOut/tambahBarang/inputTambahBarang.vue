@@ -23,7 +23,7 @@
                     <label for="tanggal" class="block mb-2 text-sm">tanggal</label>
                     <div class="flex flex-col w-72">
                         <ValidationProvider rules="required" v-slot={errors}>
-                            <input type="date" v-model="inputTambahBarang.tanggal" name="tanggal" id="tanggal" class="p-2 w-full rounded-lg outline-none bg-gray-200">
+                            <input type="date" v-model="inputTambahBarang.tanggal" name="tanggal" id="tanggal" class="p-2 w-full rounded-lg outline-none bg-gray-200 uppercase">
                             <p class="text-xs mt-1 text-right text-red-500">{{ errors[0] }}</p>
                         </ValidationProvider>
                     </div>
@@ -34,7 +34,7 @@
                     <label for="namaBarang" class="block mb-2 text-sm">nama barang</label>
                     <div class="flex flex-col w-72">
                         <ValidationProvider rules="required|alpha_spaces" v-slot={errors}>
-                            <input type="text" v-model="inputTambahBarang.namaBarang" name="namaBarang" id="namaBarang" class="p-2 w-full rounded-lg outline-none bg-gray-200">
+                            <input type="text" v-model="inputTambahBarang.namaBarang" name="namaBarang" id="namaBarang" class="p-2 w-full rounded-lg outline-none bg-gray-200 uppercase">
                             <p class="text-xs mt-1 text-right text-red-500">{{ errors[0] }}</p>
                         </ValidationProvider>
                     </div>
@@ -46,7 +46,7 @@
 
                     <div class="flex flex-col w-72">
                         <ValidationProvider rules="required|numeric" v-slot={errors}>
-                            <input type="text" v-model="inputTambahBarang.kuantitas" name="kuantitas" id="kuantitas" class="p-2 w-full rounded-lg outline-none  bg-gray-200" :disabled="inputTambahBarang.namaBarang === ''">
+                            <input type="text" v-model="inputTambahBarang.kuantitas" name="kuantitas" id="kuantitas" class="p-2 w-full rounded-lg outline-none  bg-gray-200 " :disabled="inputTambahBarang.namaBarang === ''">
                             <p class="text-xs mt-1 text-right text-red-500">{{ errors[0] }}</p>
                         </ValidationProvider>
                     </div>
@@ -59,7 +59,7 @@
 
                     <div class="flex flex-col w-72">
                         <ValidationProvider rules="required|passchar" v-slot={errors}>
-                            <input type="text" v-model="inputTambahBarang.kepentingan" name="kepentingan" id="kepentingan" class="p-2 w-full rounded-lg outline-none bg-gray-200" :disabled="inputTambahBarang.kuantitas === ''">
+                            <input type="text" v-model="inputTambahBarang.kepentingan" name="kepentingan" id="kepentingan" class="p-2 w-full rounded-lg outline-none bg-gray-200 uppercase" :disabled="inputTambahBarang.kuantitas === ''">
                             <p class="text-xs mt-1 text-right text-red-500">{{ errors[0] }}</p>
                         </ValidationProvider>
                     </div>
@@ -69,12 +69,15 @@
 
                     <label for="penanggungJawab" class="block mb-2 text-sm">penanggung jawab</label>
                     <div class="flex flex-col w-72">
+                    <ValidationProvider rules="required" v-slot={errors}>
                         <select name="penanggungJawab" id="penanggungJawab" class="p-2 w-full rounded-lg" v-model="inputTambahBarang.penanggungJawab">
                             <option disabled value="">penanggung jawab</option>
                             <option v-for="(pa,index) in userpa" :key="index">
                                 <option :value="pa.nama">{{pa.nama}}</option>
                             </option>
                         </select> 
+                        <p class="text-xs mt-1 text-right text-red-500">{{ errors[0] }}</p>
+                    </ValidationProvider>
                     </div>
                 </div>
             </div>

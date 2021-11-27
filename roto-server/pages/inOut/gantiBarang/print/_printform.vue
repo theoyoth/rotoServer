@@ -2,7 +2,7 @@
   <div class="bg-gray-300 min-h-screen w-widthContent ml-auto">
     <Navbar/>
     <section class="bg-gray-100 min-h-screen w-widthContentField m-auto mt-7 p-4">
-      <NuxtLink to="/inout/tambahbarang"
+      <NuxtLink to="/inout/gantibarang"
           class="flex items-center justify-between rounded-md w-28 px-4 py-2 bg-gray-700">
           <div>
             <font-awesome-icon :icon="['fas', 'arrow-left']" class="text-gray-200" />
@@ -14,21 +14,23 @@
           <table width="100%" border="1" style="border-collapse: collapse;" class="mt-2">
             <thead>
               <th class="border border-black py-2" style="border-width:1px;border-color:black;padding-top:2px;font-weight:bold;">Tanggal input</th>
-              <th class="border border-black"  style="padding-top:2px;font-weight:bold;">Nama Barang</th>
+              <th class="border border-black"  style="padding-top:2px;font-weight:bold;">Nama Barang Baru</th>
+              <th class="border border-black"  style="padding-top:2px;font-weight:bold;">Nama Barang Lama</th>
               <th class="border border-black"  style="padding-top:2px;font-weight:bold;">Kuantitas</th>
             </thead>
             <tbody>
               <tr>
                 <td class="border border-black py-2" style="text-align: center;padding-top:2px;">{{dataPrint.tanggal}}</td>
-                <td class="border border-black " style="text-align: center;padding-top:2px;">{{dataPrint.namaBarang}}</td>
+                <td class="border border-black " style="text-align: center;padding-top:2px;">{{dataPrint.namaBarangBaru}}</td>
+                <td class="border border-black " style="text-align: center;padding-top:2px;">{{dataPrint.namaBarangLama}}</td>
                 <td class="border border-black " style="text-align: center;padding-top:2px;">{{dataPrint.kuantitas}}</td>
               </tr>
             </tbody>
           </table>
           <div class="flex justify-between w-full" style="display: flex;justify-content:space-around;margin-top:10px;">
             <div class="h-20 flex flex-col justify-between text-center" style="text-align: center;">
-              <p>Nama penambah</p>
-              <p style="transform:translateY(20px);">{{dataPrint.namaPenambah}}</p>
+              <p>Nama pengganti</p>
+              <p style="transform:translateY(20px);">{{dataPrint.namaPengganti}}</p>
             </div>
             <div class="h-20 flex flex-col justify-between text-center" style="text-align:center;">
               <p>Penanggung jawab</p>
@@ -53,8 +55,9 @@ export default {
   data(){
     return{
       dataPrint:{
-        namaPenambah:"",
-        namaBarang : "",
+        namaPengganti:"",
+        namaBarangBaru : "",
+        namaBarangLama : "",
         penanggungJawab : "",
         tanggal: "",
         kepentingan : "",
@@ -66,12 +69,13 @@ export default {
     const lokasi = this.$auth.user.lokasi
     const id = this.$route.params.id
 
-    const resp = await axios.get(`http://localhost:3000/server/inout/tambahbarang/update/${id}/${lokasi}`)
+    const resp = await axios.get(`http://localhost:3000/server/inout/gantibarang/update/${id}/${lokasi}`)
     if(resp){
         resp.data.forEach(barang=>{
             this.dataPrint.tanggal = moment(barang.tanggal).format('DD-MM-YYYY')
-            this.dataPrint.namaPenambah = barang.nama_penambah
-            this.dataPrint.namaBarang = barang.nama_barang
+            this.dataPrint.namaPengganti = barang.nama_pengganti
+            this.dataPrint.namaBarangBaru = barang.nama_barang_baru
+            this.dataPrint.namaBarangLama = barang.nama_barang_lama
             this.dataPrint.kuantitas = barang.kuantitas
             this.dataPrint.kepentingan = barang.kepentingan
             this.dataPrint.penanggungJawab = barang.penanggung_jawab

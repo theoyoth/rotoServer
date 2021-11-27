@@ -27,7 +27,7 @@
                     <label for="upsCriticalLoad" class="block mb-2 text-sm">ups critical load</label>
                     <div class="flex flex-col w-72">
                         <ValidationProvider rules="required|numeric" v-slot={errors}>
-                            <input type="text" v-model="inputUps.upsCriticalLoad" name="upsCriticalLoad" id="upsCriticalLoad" class="p-2 w-full rounded-lg outline-none bg-gray-200">
+                            <input type="text" v-model="inputUps.upsCriticalLoad" name="upsCriticalLoad" id="upsCriticalLoad" class="p-2 w-full rounded-lg outline-none bg-gray-200 uppercase">
                             <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
                         </ValidationProvider>
                     </div>
@@ -38,7 +38,7 @@
                     <label for="upsCriticalTemperature" class="block mb-2 text-sm">ups critical temperature</label>
                     <div class="flex flex-col w-72">
                         <ValidationProvider rules="required|numeric" v-slot={errors}>
-                            <input type="text" v-model="inputUps.upsCriticalTemperature" name="upsCriticalTemperature" id="upsCriticalTemperature" class="p-2 w-full rounded-lg outline-none bg-gray-200" :disabled="inputUps.upsCriticalLoad === ''">
+                            <input type="text" v-model="inputUps.upsCriticalTemperature" name="upsCriticalTemperature" id="upsCriticalTemperature" class="p-2 w-full rounded-lg outline-none bg-gray-200 uppercase" :disabled="inputUps.upsCriticalLoad === ''">
                             <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
                         </ValidationProvider>
                     </div>
@@ -49,7 +49,7 @@
                     <label for="upsCriticalCapacity" class="block mb-2 text-sm">ups critical capacity</label>
                     <div class="flex flex-col w-72">
                         <ValidationProvider rules="required|numeric" v-slot={errors}>
-                            <input type="text" v-model="inputUps.upsCriticalCapacity" name="upsCriticalCapacity" id="upsCriticalCapacity" class="p-2 w-full rounded-lg outline-none bg-gray-200" :disabled="inputUps.upsCriticalTemperature === ''">
+                            <input type="text" v-model="inputUps.upsCriticalCapacity" name="upsCriticalCapacity" id="upsCriticalCapacity" class="p-2 w-full rounded-lg outline-none bg-gray-200 uppercase" :disabled="inputUps.upsCriticalTemperature === ''">
                             <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
                         </ValidationProvider>
                     </div>
@@ -60,7 +60,7 @@
                     <label for="nomorSerial" class="block mb-2 text-sm">nomor serial</label>
                     <div class="flex flex-col w-72">
                         <ValidationProvider rules="required|alpha_dash" v-slot={errors}>
-                            <input type="text" v-model="inputUps.nomorSerial" name="nomorSerial" id="nomorSerial" class="p-2 w-full rounded-lg outline-none bg-gray-200" :disabled="inputUps.upsCriticalCapacity === ''">
+                            <input type="text" v-model="inputUps.nomorSerial" name="nomorSerial" id="nomorSerial" class="p-2 w-full rounded-lg outline-none bg-gray-200 uppercase" :disabled="inputUps.upsCriticalCapacity === ''">
                             <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
                         </ValidationProvider>
                     </div>
@@ -71,7 +71,7 @@
                     <label for="namaSistem" class="block mb-2 text-sm">nama sistem</label>
                     <div class="flex flex-col w-72">
                         <ValidationProvider rules="required|passchar" v-slot={errors}>
-                            <input type="text" v-model="inputUps.namaSistem" name="namaSistem" id="namaSistem" class="p-2 w-full rounded-lg outline-none bg-gray-200" :disabled="inputUps.nomorSerial === ''">
+                            <input type="text" v-model="inputUps.namaSistem" name="namaSistem" id="namaSistem" class="p-2 w-full rounded-lg outline-none bg-gray-200 uppercase" :disabled="inputUps.nomorSerial === ''">
                             <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
                         </ValidationProvider>
                     </div>
@@ -82,7 +82,7 @@
                     <label for="model" class="block mb-2 text-sm">model</label>
                     <div class="flex flex-col w-72">
                         <ValidationProvider rules="required|passchar" v-slot={errors}>
-                            <input type="text" v-model="inputUps.model" name="model" id="model" class="p-2 w-full rounded-lg outline-none bg-gray-200" :disabled="inputUps.namaSistem === ''">
+                            <input type="text" v-model="inputUps.model" name="model" id="model" class="p-2 w-full rounded-lg outline-none bg-gray-200 uppercase" :disabled="inputUps.namaSistem === ''">
                             <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
                         </ValidationProvider>
                     </div>
@@ -93,7 +93,7 @@
                     <label for="manufaktur" class="block mb-2 text-sm">manufaktur</label>
                     <div class="flex flex-col w-72">
                         <ValidationProvider rules="required|passchar" v-slot={errors}>
-                            <input type="text" v-model="inputUps.manufaktur" name="manufaktur" id="manufaktur" class="p-2 w-full rounded-lg outline-none bg-gray-200" :disabled="inputUps.model === ''">
+                            <input type="text" v-model="inputUps.manufaktur" name="manufaktur" id="manufaktur" class="p-2 w-full rounded-lg outline-none bg-gray-200 uppercase" :disabled="inputUps.model === ''">
                             <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
                         </ValidationProvider>
                     </div>
@@ -104,7 +104,7 @@
                     <label for="peringkatTegangan" class="block mb-2 text-sm">peringkat tegangan</label>
                     <div class="flex flex-col w-72">
                         <ValidationProvider rules="required|numeric" v-slot={errors}>
-                            <input type="text" v-model="inputUps.peringkatTegangan" name="peringkatTegangan" id="peringkatTegangan" class="p-2 w-full rounded-lg outline-none bg-gray-200" :disabled="inputUps.manufaktur === ''">
+                            <input type="text" v-model="inputUps.peringkatTegangan" name="peringkatTegangan" id="peringkatTegangan" class="p-2 w-full rounded-lg outline-none bg-gray-200 uppercase" :disabled="inputUps.manufaktur === ''">
                             <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
                         </ValidationProvider>
                     </div>
@@ -115,7 +115,7 @@
                     <label for="peringkatFrekuensi" class="block mb-2 text-sm">peringkat frekuensi</label>
                     <div class="flex flex-col w-72">
                         <ValidationProvider rules="required|numeric" v-slot={errors}>
-                            <input type="text" v-model="inputUps.peringkatFrekuensi" name="peringkatFrekuensi" id="peringkatFrekuensi" class="p-2 w-full rounded-lg outline-none bg-gray-200" :disabled="inputUps.peringkatTegangan === ''">
+                            <input type="text" v-model="inputUps.peringkatFrekuensi" name="peringkatFrekuensi" id="peringkatFrekuensi" class="p-2 w-full rounded-lg outline-none bg-gray-200 uppercase" :disabled="inputUps.peringkatTegangan === ''">
                             <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
                         </ValidationProvider>
                     </div>
@@ -126,7 +126,7 @@
                     <label for="peringkatTeganganBaterai" class="block mb-2 text-sm">peringkat tegangan baterai</label>
                     <div class="flex flex-col w-72">
                         <ValidationProvider rules="required|numeric" v-slot={errors}>
-                            <input type="text" v-model="inputUps.peringkatTeganganBaterai" name="peringkatTeganganBaterai" id="peringkatTeganganBaterai" class="p-2 w-full rounded-lg outline-none bg-gray-200" :disabled="inputUps.peringkatFrekuensi === ''">
+                            <input type="text" v-model="inputUps.peringkatTeganganBaterai" name="peringkatTeganganBaterai" id="peringkatTeganganBaterai" class="p-2 w-full rounded-lg outline-none bg-gray-200 uppercase" :disabled="inputUps.peringkatFrekuensi === ''">
                             <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
                         </ValidationProvider>
                     </div>
@@ -137,7 +137,7 @@
                     <label for="tahun" class="block mb-2 text-sm">tahun</label>
                     <div class="flex flex-col w-72">
                         <ValidationProvider rules="required" v-slot={errors}>
-                            <input type="date" v-model="inputUps.tahun" name="tahun" id="tahun" class="p-2 w-full rounded-lg outline-none bg-gray-200" :disabled="inputUps.peringkatTeganganBaterai === ''">
+                            <input type="date" v-model="inputUps.tahun" name="tahun" id="tahun" class="p-2 w-full rounded-lg outline-none bg-gray-200 uppercase" :disabled="inputUps.peringkatTeganganBaterai === ''">
                             <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
                         </ValidationProvider>
                     </div>
@@ -148,7 +148,7 @@
                     <label for="garansi" class="block mb-2 text-sm">garansi</label>
                     <div class="flex flex-col w-72">
                         <ValidationProvider rules="required" v-slot={errors}>
-                            <input type="date" v-model="inputUps.garansi" name="garansi" id="garansi" class="p-2 w-full rounded-lg outline-none bg-gray-200" :disabled="inputUps.peringkatTeganganBaterai === ''">
+                            <input type="date" v-model="inputUps.garansi" name="garansi" id="garansi" class="p-2 w-full rounded-lg outline-none bg-gray-200 uppercase" :disabled="inputUps.peringkatTeganganBaterai === ''">
                             <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
                         </ValidationProvider>
                     </div>

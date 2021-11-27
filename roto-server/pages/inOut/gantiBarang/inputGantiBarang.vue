@@ -23,7 +23,7 @@
                     <label for="tanggal" class="block mb-2 text-sm">tanggal</label>
                     <div class="flex flex-col w-72">
                         <ValidationProvider rules="required" v-slot={errors}>
-                            <input type="date" v-model="inputGantiBarang.tanggal" name="tanggal" id="tanggal" class="p-2 w-full rounded-lg outline-none bg-gray-200">
+                            <input type="date" v-model="inputGantiBarang.tanggal" name="tanggal" id="tanggal" class="p-2 w-full rounded-lg outline-none bg-gray-200 uppercase">
                             <p class="text-xs mt-1 text-right text-red-500">{{ errors[0] }}</p>
                         </ValidationProvider>
                     </div>
@@ -34,7 +34,7 @@
                     <label for="namaBarangBaru" class="block mb-2 text-sm">nama barang baru</label>
                     <div class="flex flex-col w-72">
                         <ValidationProvider rules="required|alpha_spaces" v-slot={errors}>
-                            <input type="text" v-model="inputGantiBarang.namaBarangBaru" name="namaBarangBaru" id="namaBarangBaru" class="p-2 w-full rounded-lg outline-none bg-gray-200">
+                            <input type="text" v-model="inputGantiBarang.namaBarangBaru" name="namaBarangBaru" id="namaBarangBaru" class="p-2 w-full rounded-lg outline-none bg-gray-200 uppercase">
                             <p class="text-xs mt-1 text-right text-red-500">{{ errors[0] }}</p>
                         </ValidationProvider>
                     </div>
@@ -45,7 +45,7 @@
                     <label for="namaBarangLama" class="block mb-2 text-sm">nama barang lama</label>
                     <div class="flex flex-col w-72">
                         <ValidationProvider rules="required|alpha_spaces" v-slot={errors}>
-                            <input type="text" v-model="inputGantiBarang.namaBarangLama" name="namaBarangLama" id="namaBarangLama" class="p-2 w-full rounded-lg outline-none bg-gray-200" :disabled="inputGantiBarang.namaBarangBaru === ''">
+                            <input type="text" v-model="inputGantiBarang.namaBarangLama" name="namaBarangLama" id="namaBarangLama" class="p-2 w-full rounded-lg outline-none bg-gray-200 uppercase" :disabled="inputGantiBarang.namaBarangBaru === ''">
                             <p class="text-xs mt-1 text-right text-red-500">{{ errors[0] }}</p>
                         </ValidationProvider>
                     </div>
@@ -70,7 +70,7 @@
 
                     <div class="flex flex-col w-72">
                         <ValidationProvider rules="required|alpha_spaces" v-slot={errors}>
-                            <input type="text" v-model="inputGantiBarang.kepentingan" name="kepentingan" id="kepentingan" class="p-2 w-full rounded-lg outline-none bg-gray-200" :disabled="inputGantiBarang.kuantitas === ''">
+                            <input type="text" v-model="inputGantiBarang.kepentingan" name="kepentingan" id="kepentingan" class="p-2 w-full rounded-lg outline-none bg-gray-200 uppercase" :disabled="inputGantiBarang.kuantitas === ''">
                             <p class="text-xs mt-1 text-right text-red-500">{{ errors[0] }}</p>
                         </ValidationProvider>
                     </div>
@@ -80,8 +80,13 @@
 
                     <label for="penanggungJawab" class="block mb-2 text-sm">penanggung jawab</label>
                     <div class="flex flex-col w-72">
-                    <ValidationProvider rules="required|alpha_spaces" v-slot={errors}>
-                        <input type="text" v-model="inputGantiBarang.penanggungJawab" name="penanggungJawab" id="penanggungJawab" class="p-2 w-full rounded-lg outline-none bg-gray-200" :disabled="inputGantiBarang.kepentingan === ''">
+                    <ValidationProvider rules="required" v-slot={errors}>
+                        <select name="penanggungJawab" id="penanggungJawab" class="p-2 w-full rounded-lg" v-model="inputGantiBarang.penanggungJawab">
+                            <option disabled value="">penanggung jawab</option>
+                            <option v-for="(pa,index) in userpa" :key="index">
+                                <option :value="pa.nama">{{pa.nama}}</option>
+                            </option>
+                        </select>
                         <p class="text-xs mt-1 text-right text-red-500">{{ errors[0] }}</p>
                     </ValidationProvider>
                     </div>
@@ -92,7 +97,7 @@
                     <label for="penanggungJawab" class="block mb-2 text-sm">keterangan</label>
                     <div class="flex flex-col w-72">
                     <ValidationProvider rules="required|alpha_spaces" v-slot={errors}>
-                        <textarea type="text" v-model="inputGantiBarang.keterangan" name="keterangan" id="keterangan" class="p-2 w-full rounded-lg outline-none bg-gray-200" :disabled="inputGantiBarang.penanggungJawab === ''">
+                        <textarea type="text" rows="4" v-model="inputGantiBarang.keterangan" name="keterangan" id="keterangan" class="p-2 w-full rounded-lg outline-none bg-gray-200 uppercase" :disabled="inputGantiBarang.penanggungJawab === ''">
                         </textarea>
                         <p class="text-xs mt-1 text-right text-red-500">{{ errors[0] }}</p>
                     </ValidationProvider>
@@ -117,6 +122,11 @@ export default {
     components:{
         ValidationObserver,
         ValidationProvider
+    },
+    computed:{
+        userpa(){
+            return this.$store.state.getUserPa.alluserpa
+        }
     },
     data(){
         return{
@@ -154,6 +164,9 @@ export default {
                 swal('Error',resp.data.errmsg,{icon:'error'})
             }
         }
+    },
+    mounted(){
+        this.$store.dispatch('getUserPa/getallUserPa')
     }
 }
 </script>

@@ -256,6 +256,8 @@ router.get(
 )
 
 router.get('/lokasi', lokasiServer.lokasiserver)
+
+// USER
 router.get('/users', userController.getAllUsers)
 router.get('/cariuser', userController.cariuser)
 
@@ -297,7 +299,7 @@ router.post(
 )
 // cari ==================
 router.get(
-  '/inout/tambahbarang/caribarang/:cari/:lokasi',
+  '/inout/tambahbarang/caribarang/:cari/:lokasi/:id',
   readtambahController.caridataTambahBarang
 )
 // ===========================================
@@ -319,7 +321,7 @@ router.get(
 router.post('/inout/ambilbarang/update', updateambilController.updateDataBarang)
 // cari ==================
 router.get(
-  '/inout/ambilbarang/caribarang/:cari/:lokasi',
+  '/inout/ambilbarang/caribarang/:cari/:lokasi/:id',
   readambilController.caridataAmbilBarang
 )
 // ===========================================
@@ -341,8 +343,13 @@ router.get(
 router.post('/inout/gantibarang/update', updategantiController.updateDataBarang)
 // cari ==================
 router.get(
-  '/inout/gantibarang/caribarang/:cari/:lokasi',
+  '/inout/gantibarang/caribarang/:cari/:lokasi/:id',
   readgantiController.caridataGantiBarang
+)
+// detail ganti barang ==========
+router.get(
+  '/inout/gantibarang/detail/:lokasi/:id',
+  readgantiController.detailGantiBarang
 )
 
 // FORM UPLOAD DOKUMEN

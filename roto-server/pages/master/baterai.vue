@@ -35,10 +35,10 @@
                 <span class="tooltip rounded shadow-lg p-1 bg-gray-700 text-white -mt-10 absolute left-2/4 transform -translate-x-2/4">semua detail barang</span>
                 <tr class="text-xs text-gray-200"> 
                     <th class="font-semibold py-3">accu</th>
-                    <th class="font-semibold">kuantitas</th>
+                    <th class="font-semibold w-36">kuantitas</th>
                     <th class="font-semibold">voltage</th>
-                    <th class="font-semibold">tahun</th>
-                    <th class="font-semibold">garansi</th>
+                    <th class="font-semibold w-32">tahun</th>
+                    <th class="font-semibold w-32">garansi</th>
                     <th class="font-semibold w-20">aksi</th>
                 </tr>
             </thead>
@@ -47,8 +47,8 @@
                     <td class="py-3">{{hasilcari.accu}}</td>
                     <td>{{hasilcari.kuantitas}}</td>
                     <td>{{hasilcari.voltage}}</td>
-                    <td class="w-32">{{$moment(hasilcari.tahun).format('DD-MM-YYYY')}}</td>
-                    <td class="w-32">{{$moment(hasilcari.garansi).format('DD-MM-YYYY')}}</td>
+                    <td>{{$moment(hasilcari.tahun).format('DD-MM-YYYY')}}</td>
+                    <td>{{$moment(hasilcari.garansi).format('DD-MM-YYYY')}}</td>
                     <td class="py-3 flex justify-evenly w-full ">
                         <div class="has-tooltip">
                             <span
@@ -98,8 +98,8 @@
                     <td class="py-3">{{baterai.accu}}</td>
                     <td>{{baterai.kuantitas}}</td>
                     <td>{{baterai.voltage}}</td>
-                    <td class="w-32">{{$moment(baterai.tahun).format('DD-MM-YYYY')}}</td>
-                    <td class="w-32">{{$moment(baterai.garansi).format('DD-MM-YYYY')}}</td>
+                    <td>{{$moment(baterai.tahun).format('DD-MM-YYYY')}}</td>
+                    <td>{{$moment(baterai.garansi).format('DD-MM-YYYY')}}</td>
                     <td class="py-3 flex justify-evenly w-full ">
                         <div class="has-tooltip">
                             <span
