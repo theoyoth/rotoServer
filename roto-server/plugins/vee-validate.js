@@ -63,3 +63,32 @@ extend('nospace', {
     }
   },
 })
+extend('min4', {
+  message: 'minimal 4 karakter',
+  validate: (value) => {
+    const minvalue = /^.{4,}$/
+    const vmin = minvalue.test(value)
+    if (vmin) {
+      return true
+    } else {
+      return false
+    }
+  },
+})
+
+extend('suhudown', {
+  message: 'suhu rendah',
+  validate: (value) => {
+    if (value < 20) {
+      return false
+    }
+  },
+})
+extend('suhuup', {
+  message: 'suhu tinggi',
+  validate: (value) => {
+    if (value > 30) {
+      return false
+    }
+  },
+})

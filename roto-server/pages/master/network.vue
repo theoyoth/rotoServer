@@ -6,8 +6,8 @@
         <p class="text-center text-lg text-gray-700 font-semibold">Halaman master Network</p>
         <div class="flex justify-between mt-8">
             <div class="flex">
-                <input type="text" placeholder="cari" name="cari" v-model.lazy="caribarang" @keyup.enter="$fetch" class="rounded-l-lg p-2 w-52 outline-none bg-gray-200">
-                <button class="p-2 rounded-r-lg bg-gray-700 flex items-center justify-center w-12" @click="$fetch">
+                <input type="text" placeholder="cari" name="cari" v-model="caribarang" class="transition-all duration-200 ease-in-out rounded-l-lg p-2 bg-gray-200 outline-none w-52 focus:ring-2 focus:ring-gray-700">
+                <button class="p-2 cursor-default rounded-r-lg bg-gray-700 flex items-center justify-center w-12">
                     <font-awesome-icon :icon="['fas','search']" class="text-yellow-500"/>
                 </button>
             </div>
@@ -45,7 +45,7 @@
                 </tr>
             </thead>
             <tbody v-if="caribarang !== ''" class="text-center bg-white bg-opacity-40 divide-y divide-gray-300">
-                <tr class="text-sm uppercase" v-for="(hasilcari,index) in carinetwork" :key="index">
+                <tr class="text-sm uppercase" v-for="(hasilcari,index) in filteredList" :key="index">
                     <td>{{index+1}}</td>
                     <td>{{hasilcari.merek}}</td>
                     <td>{{hasilcari.model}}</td>
@@ -172,12 +172,21 @@ export default {
             deletemsg:"",
         }
     },
-    async fetch(){
-        if(this.caribarang !== ""){
-            await this.caribarangnetwork()
-        return
+    computed:{
+        filteredList() {
+            return this.networks.filter(hasil=>{
+                if(hasil.merek.toLowerCase().includes(this.caribarang.toLowerCase()) || hasil.model.toLowerCase().includes(this.caribarang.toLowerCase()) || hasil.tipe.toLowerCase().includes(this.caribarang.toLowerCase()) || hasil.kuantitas.toLowerCase().includes(this.caribarang.toLowerCase()) || hasil.kanal.toLowerCase().includes(this.caribarang.toLowerCase()) ){
+                    return hasil
+                }
+            })
         }
     },
+    // async fetch(){
+    //     if(this.caribarang !== ""){
+    //         await this.caribarangnetwork()
+    //     return
+    //     }
+    // },
     methods:{
          deleteData(id){
              swal({
@@ -211,13 +220,13 @@ export default {
                 swal('Error','ada yang salah',{icon:'error'})
             })
         },
-        async caribarangnetwork(){
-            this.carinetwork = []
-            const res = await axios.get(`http://localhost:3000/server/carinetwork?cari=${this.caribarang}`)
-            res.data.forEach(val =>{
-                this.carinetwork.push(val)
-            })
-        },
+        // async caribarangnetwork(){
+        //     this.carinetwork = []
+        //     const res = await axios.get(`http://localhost:3000/server/carinetwork?cari=${this.caribarang}`)
+        //     res.data.forEach(val =>{
+        //         this.carinetwork.push(val)
+        //     })
+        // },
     },
     async mounted(){
         try{

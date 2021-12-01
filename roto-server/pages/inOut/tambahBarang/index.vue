@@ -10,20 +10,19 @@
                     type="text"
                     placeholder="cari"
                     name="cari"
-                    v-model.lazy="caribarang"
-                    class="rounded-l-lg p-2 w-52 outline-none bg-gray-200" @keyup.enter="$fetch"
+                    v-model="caribarang"
+                    class="transition-all duration-200 ease-in-out rounded-l-lg p-2 bg-gray-200 outline-none w-52 focus:ring-2 focus:ring-gray-700"
                 />
                 <button
                     class="
                     p-2
                     rounded-r-lg
                     bg-gray-700
-                    flex
+                    flex cursor-default
                     items-center
                     justify-center
                     w-12
                     "
-                    @click="$fetch"
                 >
                     <font-awesome-icon :icon="['fas', 'search']" class="text-yellow-500" />
                 </button>
@@ -71,7 +70,7 @@
                 </tr>
             </thead>
             <tbody v-if="caribarang !== ''" class="text-center bg-white bg-opacity-40 divide-y divide-gray-300">
-                <tr class="text-sm uppercase" v-for="(hasilcari,index) in caridatabarang" :key="index">
+                <tr class="text-sm uppercase" v-for="(hasilcari,index) in filteredList" :key="index">
                     <td>{{index+1}}</td>
                     <td>{{$moment(hasilcari.tanggal).format('DD-MM-YYYY')}}</td>
                     <td>{{hasilcari.nama_penambah}}</td>
@@ -235,10 +234,13 @@ export default {
             caridatabarang:[],
         }
     },
-    async fetch(){
-        if(this.caribarang !== ""){
-            await this.caridatatambahbarang();
-        return
+    computed:{
+        filteredList() {
+            return this.barangs.filter(hasil=>{
+                if(hasil.nama_barang.toLowerCase().includes(this.caribarang.toLowerCase()) || hasil.kuantitas.toString().includes(this.caribarang.toString()) || hasil.kepentingan.toLowerCase().includes(this.caribarang.toLowerCase()) ){
+                    return hasil
+                }
+            })
         }
     },
     async mounted(){
@@ -286,13 +288,6 @@ export default {
                 }
             }).catch(err=>{
                 swal('Error', 'gagal menghapus',{icon:'error'})
-            })
-        },
-        async caridatatambahbarang(){
-            this.caridatabarang = []
-            const res = await axios.get(`http://localhost:3000/server/inout/tambahbarang/caribarang/${this.caribarang}/${this.$auth.user.lokasi}/${this.$auth.user.id}`)
-            res.data.forEach(val =>{
-                this.caridatabarang.push(val)
             })
         },
     }

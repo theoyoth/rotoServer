@@ -6,8 +6,8 @@
         <p class="text-center text-lg text-gray-700 font-semibold">Halaman master AC</p>
         <div class="flex justify-between mt-8">
             <div class="flex">
-                <input type="text" placeholder="cari" name="cari" v-model.lazy="caribarang" @keyup.enter="$fetch" class="rounded-l-lg p-2 outline-none w-52 bg-gray-200">
-                <button class="p-2 rounded-r-lg bg-gray-700 flex items-center justify-center w-12" @click="$fetch">
+                <input type="text" placeholder="cari" name="cari" v-model="caribarang" class="transition-all duration-200 ease-in-out rounded-l-lg p-2 bg-gray-200 outline-none w-52 focus:ring-2 focus:ring-gray-700">
+                <button class="p-2 cursor-default rounded-r-lg bg-gray-700 flex items-center justify-center w-12" >
                     <font-awesome-icon :icon="['fas','search']" class="text-yellow-500"/>
                 </button>
             </div>
@@ -44,7 +44,7 @@
                 </tr>
             </thead>
             <tbody v-if="caribarang !== ''" class="text-center bg-white bg-opacity-40 divide-y divide-gray-300">
-                <tr class="text-sm uppercase" v-for="(hasilcari,index) in cariac" :key="index">
+                <tr class="text-sm uppercase" v-for="(hasilcari,index) in filteredList" :key="index">
                     <td>{{index+1}}</td>
                     <td class="py-3">{{hasilcari.merek}}</td>
                     <td>{{hasilcari.model}}</td>
@@ -225,52 +225,48 @@ export default {
             deletemsg:"",
         }
     },
-    async fetch(){
-        if(this.caribarang !== ""){
-            await this.caribarangac()
-        return
+    computed:{ 
+        filteredList() {
+            return this.acs.filter(hasil=>{
+                if(hasil.merek.toLowerCase().includes(this.caribarang.toLowerCase()) || hasil.model.toLowerCase().includes(this.caribarang.toLowerCase()) || hasil.sumber_daya_listrik.toLowerCase().includes(this.caribarang.toLowerCase()) || hasil.dimensi.toLowerCase().includes(this.caribarang.toLowerCase()) || hasil.kapasitas_pendingin.toLowerCase().includes(this.caribarang.toLowerCase())){
+                    return hasil
+                }
+            })
         }
     },
     methods:{
-    deleteData(id){
-        swal({
-            title: 'anda yakin?',
-            text: 'sekali dihapus, data tidak akan bisa kembali',
-            icon: 'warning',
-            buttons: true,
-            dangerMode: true
-        }).then(suc=>{
-            if(suc){
-                let indexOfArrayItem = this.acs.findIndex(i => i.id_ac === id)
+        deleteData(id){
+            swal({
+                title: 'anda yakin?',
+                text: 'sekali dihapus, data tidak akan bisa kembali',
+                icon: 'warning',
+                buttons: true,
+                dangerMode: true
+            }).then(suc=>{
+                if(suc){
+                    let indexOfArrayItem = this.acs.findIndex(i => i.id_ac === id)
 
-                const lokasi = this.$auth.user.lokasi
-                axios.delete(`/server/master/deleteac/${id}/${lokasi}`)
-                .then(resp=>{
-                    if(resp){
-                        this.acs.splice(indexOfArrayItem, 1);
-                        this.$router.push('/master/ac')
-                        swal('data dihapus',{icon:'success'})
+                    const lokasi = this.$auth.user.lokasi
+                    axios.delete(`/server/master/deleteac/${id}/${lokasi}`)
+                    .then(resp=>{
+                        if(resp){
+                            this.acs.splice(indexOfArrayItem, 1);
+                            this.$router.push('/master/ac')
+                            swal('data dihapus',{icon:'success'})
+                        }
+                    }).catch(err=>{
+                        if(err.data.errmsg){
+                            this.$router.push('/master/ac')
+                            swal("error", err.data.errmsg,{icon:'error'})
+                        }
+                    })
+                } else{
+                        swal('Error','gagal menghapus',{icon:'error'})
                     }
-                }).catch(err=>{
-                    if(err.data.errmsg){
-                        this.$router.push('/master/ac')
-                        swal("error", err.data.errmsg,{icon:'error'})
-                    }
-                })
-            } else{
-                    swal('Error','gagal menghapus',{icon:'error'})
-                }
-        }).catch(err=>{
-                swal('Error','ada yang salah',{icon:'error'})
+            }).catch(err=>{
+                    swal('Error','ada yang salah',{icon:'error'})
             })
-    },
-    async caribarangac(){
-        this.cariac = []
-        const res = await axios.get(`http://localhost:3000/server/cariac?cari=${this.caribarang}`)
-        res.data.forEach(val =>{
-            this.cariac.push(val)
-        })
-    },
+        },
     },
     async mounted(){
         try{

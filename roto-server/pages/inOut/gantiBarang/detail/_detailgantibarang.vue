@@ -1,7 +1,7 @@
 <template>
-  <div class="bg-gray-200 min-h-screen w-widthContent ml-auto">
+  <div class="bg-gray-300 min-h-screen w-widthContent ml-auto">
     <Navbar/>
-    <section class="bg-white min-h-screen w-widthContentField m-auto mt-7 py-4 px-6 relative">
+    <section class="bg-gray-100 min-h-screen w-widthContentField m-auto mt-7 py-4 px-6 relative">
         <NuxtLink to="/inout/gantibarang"
           class="flex items-center justify-between rounded-md w-28 px-4 py-2 bg-gray-700">
           <div>
@@ -9,42 +9,93 @@
           </div>
           <p class="font-medium text-sm text-gray-200">kembali</p>
         </NuxtLink> 
-        <p class="text-center text-gray-700 font-semibold mt-4">DETAIL GANTI BARANG</p>
-        <div class="grid grid-cols-2 w-3/4 bg-gray-200 text-gray-900 text-sm m-auto mt-10">
-          <div class="border border-gray-400 divide-y divide-gray-300">
-              <p class="py-2 px-6">tanggal di input</p>
-              <p class="py-2 px-6">nama pengganti</p>
-              <p class="py-2 px-6">nama barang baru</p>
-              <p class="py-2 px-6">nama barang lama</p>
-              <p class="py-2 px-6">kuantitas</p>
-              <p class="py-2 px-6">kepentingan</p>
-              <p class="py-2 px-6">penanggung jawab</p>
-              <p class="py-2 px-6">keterangan</p>
-          </div>
-          <div class="border border-gray-400 divide-y divide-gray-300" v-for="(det,index) in detail" :key="index">
-              <p class="py-2 px-6">{{$moment().format('DD-MM-YYYY')}}</p>
-              <p class="py-2 px-6">{{det.nama_pengganti}}</p>
-              <p class="py-2 px-6">{{det.nama_barang_baru}}</p>
-              <p class="py-2 px-6">{{det.nama_barang_lama}}</p>
-              <p class="py-2 px-6">{{det.kuantitas}}</p>
-              <p class="py-2 px-6">{{det.kepentingan}}</p>
-              <p class="py-2 px-6">{{det.penanggung_jawab}}</p>
-              <p class="py-2 px-6">{{det.keterangan}}</p>
-              <div>
-                <!-- <NuxtLink
-                  :to="{
-                    name: 'master-update-updateserver-server',
-                    params: { id: det.id_server },
-                  }"
-                >
-                  <font-awesome-icon
-                    :icon="['fas', 'pencil-alt']"
-                    class="text-yellow-500"
-                  />
-                </NuxtLink> -->
-              </div>
-          </div>
-        </div>
+
+        <div class="bg-white shadow overflow-hidden sm:rounded-lg mt-6">
+  <div class="px-4 py-5 sm:px-6 bg-gray-200 text-center">
+    <h3 class="text-lg leading-6 font-medium text-gray-900">
+      Detail Ganti barang
+    </h3>
+    <p class="mt-1 text-sm text-gray-500">
+      InOut ganti barang
+    </p>
+  </div>
+  <div class="border-t border-gray-200">
+    <dl v-for="(det,index) in detail" :key="index">
+      <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+        <dt class="text-sm font-medium text-gray-500 flex">
+          <div class="px-2 shadow mr-4">1</div>
+          Tanggal input
+        </dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+          {{$moment(det.tanggal).format('DD-MM-YYYY') }}
+        </dd>
+      </div>
+      <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+        <dt class="text-sm font-medium text-gray-500 flex">
+          <div class="px-2 shadow mr-4">2</div>
+          Nama Pengganti
+        </dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+          {{det.nama_pengganti}}
+        </dd>
+      </div>
+      <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+        <dt class="text-sm font-medium text-gray-500 flex">
+          <div class="px-2 shadow mr-4">3</div>
+          Nama barang baru
+        </dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+          {{det.nama_barang_baru}}
+        </dd>
+      </div>
+      <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+        <dt class="text-sm font-medium text-gray-500 flex">
+          <div class="px-2 shadow mr-4">4</div>
+          Nama barang lama
+        </dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+          {{det.nama_barang_lama}}
+        </dd>
+      </div>
+      <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+        <dt class="text-sm font-medium text-gray-500 flex">
+          <div class="px-2 shadow mr-4">5</div>
+          Kuantitas
+        </dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+          {{det.kuantitas}}
+        </dd>
+      </div>
+      <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+        <dt class="text-sm font-medium text-gray-500 flex">
+          <div class="px-2 shadow mr-4">6</div>
+          Kepentingan
+        </dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+          {{det.kepentingan}}
+        </dd>
+      </div>
+      <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+        <dt class="text-sm font-medium text-gray-500 flex">
+          <div class="px-2 shadow mr-4">7</div>
+          Penanggung jawab
+        </dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+          {{det.penanggung_jawab}}
+        </dd>
+      </div>
+      <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+        <dt class="text-sm font-medium text-gray-500 flex">
+          <div class="px-2 shadow mr-4">8</div>
+          Keterangan
+        </dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+          {{det.keterangan}}
+        </dd>
+      </div>
+    </dl>
+  </div>
+</div>
     </section>
   </div>
 </template>
@@ -72,5 +123,3 @@ export default {
 </script>
 
 <style>
-
-</style>

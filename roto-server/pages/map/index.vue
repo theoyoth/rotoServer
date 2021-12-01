@@ -1,5 +1,5 @@
 <template>
-<div class="bg-gray-300 h-screen">
+<div class="bg-gray-300 w-widthContent ml-auto">
     <Navbar/>
     <Map/>
 </div>
@@ -8,6 +8,7 @@
 
 <script>
 export default {
+    middleware:"isAuthenticated",
 
 }
 </script>

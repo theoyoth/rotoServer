@@ -110,7 +110,7 @@
                     </div>
                 </div>
                 <div class="mb-4 has-tooltip" :class="[inputUps.peringkatTegangan !== '' ? 'incop' : 'decop']">
-                     <span class="tooltip text-xs rounded shadow-lg p-1 bg-gray-700 text-white ml-32">masukan peringkat frekuensi atau rating frequency</span>
+                     <span class="tooltip text-xs rounded shadow-lg p-1 bg-gray-700 text-white ml-4">masukan peringkat frekuensi atau rating frequency</span>
 
                     <label for="peringkatFrekuensi" class="block mb-2 text-sm">peringkat frekuensi</label>
                     <div class="flex flex-col w-72">

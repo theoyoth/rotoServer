@@ -28,7 +28,7 @@ module.exports.addBarang = async (req, res) => {
       }
     } else if (lokasiServer == 'rotogravure 2') {
       const resp = await conn.query(
-        `INSERT INTO ambil_barang_roto_2 VALUES('','${tanggal}','${namauser}','${namaBarangBaru}','${namaBarangLama}','${kuantitas}','${kepentingan}','${penanggungJawab}','${keterangan}','${iduser}')`
+        `INSERT INTO ganti_barang_roto_2 VALUES('','${tanggal}','${namauser}','${namaBarangBaru}','${namaBarangLama}','${kuantitas}','${kepentingan}','${penanggungJawab}','${keterangan}','${iduser}')`
       )
       if (resp.affectedRows > 0) {
         res.redirect('/inout/gantibarang')
@@ -37,7 +37,7 @@ module.exports.addBarang = async (req, res) => {
       }
     } else if (lokasiServer == 'rotogravure 3') {
       const resp = await conn.query(
-        `INSERT INTO ambil_barang_roto_3 VALUES('','${tanggal}','${namauser}','${namaBarangBaru}','${namaBarangLama}','${kuantitas}','${kepentingan}','${penanggungJawab}','${keterangan}','${iduser}')`
+        `INSERT INTO ganti_barang_roto_3 VALUES('','${tanggal}','${namauser}','${namaBarangBaru}','${namaBarangLama}','${kuantitas}','${kepentingan}','${penanggungJawab}','${keterangan}','${iduser}')`
       )
       if (resp.affectedRows > 0) {
         res.redirect('/inout/gantibarang')
@@ -46,7 +46,7 @@ module.exports.addBarang = async (req, res) => {
       }
     } else if (lokasiServer == 'rotogravure tinta') {
       const resp = await conn.query(
-        `INSERT INTO ambil_barang_tinta VALUES('','${tanggal}','${namauser}','${namaBarangBaru}','${namaBarangLama}','${kuantitas}','${kepentingan}','${penanggungJawab}','${keterangan}','${iduser}')`
+        `INSERT INTO ganti_barang_tinta VALUES('','${tanggal}','${namauser}','${namaBarangBaru}','${namaBarangLama}','${kuantitas}','${kepentingan}','${penanggungJawab}','${keterangan}','${iduser}')`
       )
       if (resp.affectedRows > 0) {
         res.redirect('/inout/gantibarang')

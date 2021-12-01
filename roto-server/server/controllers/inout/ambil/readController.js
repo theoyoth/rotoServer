@@ -9,22 +9,22 @@ module.exports.getAmbilBarang = async (req, res) => {
 
     if (lokasiServer == 'rotogravure 1') {
       const rows = await conn.query(
-        `SELECT * FROM ambil_barang INNER JOIN users ON ambil_barang.id_users=users.id_user WHERE users.id_user=${idlogin}`
+        `SELECT * FROM ambil_barang INNER JOIN users ON ambil_barang.id_users=users.id_user WHERE users.id_user=${idlogin} ORDER BY id_ambil_barang DESC`
       )
       res.send(rows)
     } else if (lokasiServer == 'rotogravure 2') {
       const rows = await conn.query(
-        `SELECT * FROM ambil_barang_roto_2 INNER JOIN users ON ambil_barang_roto_2.id_users=users.id_user WHERE users.id_user=${idlogin}`
+        `SELECT * FROM ambil_barang_roto_2 INNER JOIN users ON ambil_barang_roto_2.id_users=users.id_user WHERE users.id_user=${idlogin} ORDER BY id_ambil_barang DESC`
       )
       res.send(rows)
     } else if (lokasiServer == 'rotogravure 3') {
       const rows = await conn.query(
-        `SELECT * FROM ambil_barang_roto_3 INNER JOIN users ON ambil_barang_roto_3.id_users=users.id_user WHERE users.id_user=${idlogin}`
+        `SELECT * FROM ambil_barang_roto_3 INNER JOIN users ON ambil_barang_roto_3.id_users=users.id_user WHERE users.id_user=${idlogin} ORDER BY id_ambil_barang DESC`
       )
       res.send(rows)
     } else if (lokasiServer == 'rotogravure tinta') {
       const rows = await conn.query(
-        `SELECT * FROM ambil_barang_tinta INNER JOIN users ON ambil_barang_tinta.id_users=users.id_user WHERE users.id_user=${idlogin}`
+        `SELECT * FROM ambil_barang_tinta INNER JOIN users ON ambil_barang_tinta.id_users=users.id_user WHERE users.id_user=${idlogin} ORDER BY id_ambil_barang DESC`
       )
       res.send(rows)
     }

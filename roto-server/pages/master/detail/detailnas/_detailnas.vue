@@ -9,46 +9,110 @@
           </div>
           <p class="font-medium text-sm text-gray-200">kembali</p>
         </NuxtLink> 
-        <p class="text-center text-gray-700 font-semibold mt-4">DETAIL BARANG NAS</p>
-        <div class="grid grid-cols-2 w-3/4 bg-gray-200 text-gray-900 text-sm m-auto mt-10">
-          <div class="border border-gray-400 divide-y divide-gray-300">
-              <p class="py-2 px-6">tanggal di input</p>
-              <p class="py-2 px-6">merek</p>
-              <p class="py-2 px-6">model</p>
-              <p class="py-2 px-6">processor</p>
-              <p class="py-2 px-6">storage</p>
-              <p class="py-2 px-6">tipe</p>
-              <p class="py-2 px-6">CPU</p>
-              <p class="py-2 px-6">RAID</p>
-              <p class="py-2 px-6">tahun</p>
-              <p class="py-2 px-6">garansi</p>
-          </div>
-          <div class="border border-gray-400 divide-y divide-gray-300" v-for="(det,index) in detail" :key="index">
-              <p class="py-2 px-6">{{$moment().format('DD-MM-YYYY')}}</p>
-              <p class="py-2 px-6">{{det.merek}}</p>
-              <p class="py-2 px-6">{{det.model}}</p>
-              <p class="py-2 px-6">{{det.processor}}</p>
-              <p class="py-2 px-6">{{det.storage}}</p>
-              <p class="py-2 px-6">{{det.tipe}}</p>
-              <p class="py-2 px-6">{{det.cpu}}</p>
-              <p class="py-2 px-6">{{det.raid}}</p>
-              <p class="py-2 px-6">{{$moment(det.tahun).format('DD-MM-YYYY')}}</p>
-              <p class="py-2 px-6">{{$moment(det.garansi).format('DD-MM-YYYY')}}</p>
-              <div>
-                <!-- <NuxtLink
-                  :to="{
-                    name: 'master-update-updateserver-server',
-                    params: { id: det.id_server },
-                  }"
-                >
-                  <font-awesome-icon
-                    :icon="['fas', 'pencil-alt']"
-                    class="text-yellow-500"
-                  />
-                </NuxtLink> -->
-              </div>
-          </div>
-        </div>
+    <div class="bg-white shadow overflow-hidden sm:rounded-lg mt-6">
+  <div class="px-4 py-5 sm:px-6 bg-gray-200 text-center">
+    <h3 class="text-lg leading-6 font-medium text-gray-900">
+      Detail NAS
+    </h3>
+    <p class="mt-1 text-sm text-gray-500">
+      Master barang NAS
+    </p>
+  </div>
+  <div class="border-t border-gray-200">
+    <dl v-for="(det,index) in detail" :key="index">
+      <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+        <dt class="text-sm font-medium text-gray-500 flex">
+          <div class="px-2 shadow mr-4">1</div>
+          Tanggal input
+        </dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+          {{$moment(det.tanggal).format('DD-MM-YYYY') }}
+        </dd>
+      </div>
+      <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+        <dt class="text-sm font-medium text-gray-500 flex">
+          <div class="px-2 shadow mr-4">2</div>
+          Merek
+        </dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+          {{det.merek}}
+        </dd>
+      </div>
+      <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+        <dt class="text-sm font-medium text-gray-500 flex">
+          <div class="px-2 shadow mr-4">3</div>
+          Model
+        </dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+          {{det.model}}
+        </dd>
+      </div>
+      <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+        <dt class="text-sm font-medium text-gray-500 flex">
+          <div class="px-2 shadow mr-4">4</div>
+          Processor
+        </dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+          {{det.processor}}
+        </dd>
+      </div>
+      <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+        <dt class="text-sm font-medium text-gray-500 flex">
+          <div class="px-2 shadow mr-4">5</div>
+          Storage
+        </dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+          {{det.storage}}
+        </dd>
+      </div>
+      <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+        <dt class="text-sm font-medium text-gray-500 flex">
+          <div class="px-2 shadow mr-4">6</div>
+          Tipe
+        </dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+          {{det.tipe}}
+        </dd>
+      </div>
+      <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+        <dt class="text-sm font-medium text-gray-500 flex">
+          <div class="px-2 shadow mr-4">7</div>
+          CPU
+        </dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+          {{det.cpu}}
+        </dd>
+      </div>
+      <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+        <dt class="text-sm font-medium text-gray-500 flex">
+          <div class="px-2 shadow mr-4">8</div>
+          RAID
+        </dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+          {{det.raid}}
+        </dd>
+      </div>
+      <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+        <dt class="text-sm font-medium text-gray-500 flex">
+          <div class="px-2 shadow mr-4">9</div>
+          Tahun
+        </dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+          {{$moment(det.tahun).format('DD-MM-YYYY') }}
+        </dd>
+      </div>
+      <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+        <dt class="text-sm font-medium text-gray-500 flex">
+          <div class="px-2 shadow mr-4">10</div>
+          Garansi
+        </dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+          {{$moment(det.garansi).format('DD-MM-YYYY') }}
+        </dd>
+      </div>
+    </dl>
+  </div>
+</div>
     </section>
   </div>
 </template>

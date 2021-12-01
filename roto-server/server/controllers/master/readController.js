@@ -475,26 +475,27 @@ module.exports.caribarangserver = async (req, res) => {
   try {
     const value = req.params.cari
     const lokasiServer = req.params.lokasi
+    const iduser = req.params.id
     conn = await pool.getConnection()
 
     if (lokasiServer == 'rotogravure 1') {
       const barang = await conn.query(
-        `SELECT * FROM master_server WHERE merek LIKE '${value}%' OR model LIKE '${value}%'`
+        `SELECT * FROM master_server WHERE merek LIKE '${value}%' AND id_users=${iduser} OR model LIKE '${value}%' AND id_users=${iduser}`
       )
       res.send(barang)
     } else if (lokasiServer == 'rotogravure 2') {
       const barang = await conn.query(
-        `SELECT * FROM master_server_roto_2 WHERE merek LIKE '${value}%' OR model LIKE '${value}%'`
+        `SELECT * FROM master_server_roto_2 WHERE merek LIKE '${value}%' AND id_users=${iduser} OR model LIKE '${value}%' AND id_users=${iduser}`
       )
       res.send(barang)
     } else if (lokasiServer == 'rotogravure 3') {
       const barang = await conn.query(
-        `SELECT * FROM master_server_roto_3 WHERE merek LIKE '${value}%' OR model LIKE '${value}%'`
+        `SELECT * FROM master_server_roto_3 WHERE merek LIKE '${value}%' AND id_users=${iduser} OR model LIKE '${value}%' AND id_users=${iduser}`
       )
       res.send(barang)
     } else if (lokasiServer == 'rotogravure tinta') {
       const barang = await conn.query(
-        `SELECT * FROM master_server_tinta WHERE merek LIKE '${value}%' OR model LIKE '${value}%'`
+        `SELECT * FROM master_server_tinta WHERE merek LIKE '${value}%' AND id_users=${iduser} OR model LIKE '${value}%' AND id_users=${iduser}`
       )
       res.send(barang)
     }
@@ -509,27 +510,28 @@ module.exports.caribarangrak = async (req, res) => {
   try {
     const value = req.params.cari
     const lokasiServer = req.params.lokasi
+    const iduser = req.params.id
 
     conn = await pool.getConnection()
 
     if (lokasiServer == 'rotogravure 1') {
       const barang = await conn.query(
-        `SELECT * FROM master_rak WHERE nama_produk LIKE '${value}%'`
+        `SELECT * FROM master_rak WHERE nama_produk LIKE '${value}%' AND id_users=${iduser} OR tipe_rak LIKE '${value}%' AND id_users=${iduser} OR tipe_pintu LIKE '${value}%' AND id_users=${iduser}`
       )
       res.send(barang)
     } else if (lokasiServer == 'rotogravure 2') {
       const barang = await conn.query(
-        `SELECT * FROM master_rak_roto_2 WHERE nama_produk LIKE '${value}%'`
+        `SELECT * FROM master_rak_roto_2 WHERE nama_produk LIKE '${value}%' AND id_users=${iduser} OR tipe_rak LIKE '${value}%' AND id_users=${iduser} OR tipe_pintu LIKE '${value}%' AND id_users=${iduser}`
       )
       res.send(barang)
     } else if (lokasiServer == 'rotogravure 3') {
       const barang = await conn.query(
-        `SELECT * FROM master_rak_roto_3 WHERE nama_produk LIKE '${value}%'`
+        `SELECT * FROM master_rak_roto_3 WHERE nama_produk LIKE '${value}%' AND id_users=${iduser} OR tipe_rak LIKE '${value}%' AND id_users=${iduser} OR tipe_pintu LIKE '${value}%' AND id_users=${iduser}`
       )
       res.send(barang)
     } else if (lokasiServer == 'rotogravure tinta') {
       const barang = await conn.query(
-        `SELECT * FROM master_rak_tinta WHERE nama_produk LIKE '${value}%'`
+        `SELECT * FROM master_rak_tinta WHERE nama_produk LIKE '${value}%' AND id_users=${iduser} OR tipe_rak LIKE '${value}%' AND id_users=${iduser} OR tipe_pintu LIKE '${value}%' AND id_users=${iduser}`
       )
       res.send(barang)
     }
@@ -543,13 +545,32 @@ module.exports.caribarangups = async (req, res) => {
   let conn
 
   try {
-    const value = req.query.cari
+    const value = req.params.value
+    const lokasiServer = req.params.lokasi
+    const iduser = req.params.id
 
     conn = await pool.getConnection()
-    const barang = await conn.query(
-      `SELECT * FROM master_ups WHERE model LIKE '${value}%'`
-    )
-    res.send(barang)
+    if (lokasiServer == 'rotogravure 1') {
+      const barang = await conn.query(
+        `SELECT * FROM master_ups WHERE model LIKE '${value}%' AND id_users=${iduser} OR nomor_serial LIKE '${value}%' AND id_users=${iduser} OR nama_sistem LIKE '${value}%' AND id_users=${iduser}`
+      )
+      res.send(barang)
+    } else if (lokasiServer == 'rotogravure 2') {
+      const barang = await conn.query(
+        `SELECT * FROM master_ups_roto_2 WHERE model LIKE '${value}%' AND id_users=${iduser} OR nomor_serial LIKE '${value}%' AND id_users=${iduser} OR nama_sistem LIKE '${value}%' AND id_users=${iduser}`
+      )
+      res.send(barang)
+    } else if (lokasiServer == 'rotogravure 3') {
+      const barang = await conn.query(
+        `SELECT * FROM master_ups_roto_3 WHERE model LIKE '${value}%' AND id_users=${iduser} OR nomor_serial LIKE '${value}%' AND id_users=${iduser} OR nama_sistem LIKE '${value}%' AND id_users=${iduser}`
+      )
+      res.send(barang)
+    } else if (lokasiServer == 'rotogravure tinta') {
+      const barang = await conn.query(
+        `SELECT * FROM master_ups_tinta WHERE model LIKE '${value}%' AND id_users=${iduser} OR nomor_serial LIKE '${value}%' AND id_users=${iduser} OR nama_sistem LIKE '${value}%' AND id_users=${iduser}`
+      )
+      res.send(barang)
+    }
     conn.release()
   } catch (err) {
     console.log(err)
@@ -559,13 +580,32 @@ module.exports.caribarangbaterai = async (req, res) => {
   let conn
 
   try {
-    const value = req.query.cari
+    const value = req.params.cari
+    const lokasiServer = req.params.lokasi
+    const iduser = req.params.id
 
     conn = await pool.getConnection()
-    const barang = await conn.query(
-      `SELECT * FROM master_baterai WHERE accu LIKE '${value}%' OR voltage LIKE '${value}%'`
-    )
-    res.send(barang)
+    if (lokasiServer == 'rotogravure 1') {
+      const barang = await conn.query(
+        `SELECT * FROM master_baterai WHERE accu LIKE '${value}%' AND id_users=${iduser} OR voltage LIKE '${value}%' AND id_users=${iduser}`
+      )
+      res.send(barang)
+    } else if (lokasiServer == 'rotogravure 2') {
+      const barang = await conn.query(
+        `SELECT * FROM master_baterai_roto_2 WHERE accu LIKE '${value}%' AND id_users=${iduser} OR voltage LIKE '${value}%' AND id_users=${iduser}`
+      )
+      res.send(barang)
+    } else if (lokasiServer == 'rotogravure 3') {
+      const barang = await conn.query(
+        `SELECT * FROM master_baterai_roto_3 WHERE accu LIKE '${value}%' AND id_users=${iduser} OR voltage LIKE '${value}%' AND id_users=${iduser}`
+      )
+      res.send(barang)
+    } else if (lokasiServer == 'rotogravure tinta') {
+      const barang = await conn.query(
+        `SELECT * FROM master_baterai_tinta WHERE accu LIKE '${value}%' AND id_users=${iduser} OR voltage LIKE '${value}%' AND id_users=${iduser}`
+      )
+      res.send(barang)
+    }
     conn.release()
   } catch (err) {
     console.log(err)
@@ -575,13 +615,17 @@ module.exports.caribarangac = async (req, res) => {
   let conn
 
   try {
-    const value = req.query.cari
+    const value = req.params.cari
+    const lokasiServer = req.params.lokasi
+    const iduser = req.params.id
 
     conn = await pool.getConnection()
-    const barang = await conn.query(
-      `SELECT * FROM master_ac WHERE model LIKE '${value}%' OR merek LIKE '${value}%'`
-    )
-    res.send(barang)
+    if (lokasiServer == 'rotogravure 1') {
+      const barang = await conn.query(
+        `SELECT * FROM master_ac WHERE model LIKE '${value}%' AND id_users=${iduser} OR merek LIKE '${value}%' AND id_users=${iduser}`
+      )
+      res.send(barang)
+    }
     conn.release()
   } catch (err) {
     console.log(err)

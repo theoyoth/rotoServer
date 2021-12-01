@@ -66,7 +66,7 @@ module.exports.updateDataBarang = async (req, res) => {
       }
     } else if (lokasiServer == 'rotogravure 2') {
       const resp = await conn.query(
-        `UPDATE ambil_barang_roto_2 SET tanggal='${tanggal}', nama_pengganti='${namaPengganti}', nama_barang_baru='${namaBarangBaru}',nama_barang_lama='${namaBarangLama}', kuantitas='${kuantitas}', kepentingan='${kepentingan}',penanggung_jawab='${penanggungJawab}',id_users='${iduser}' WHERE id_ganti_barang = ${idgantibarang}`
+        `UPDATE ganti_barang_roto_2 SET tanggal='${tanggal}', nama_pengganti='${namaPengganti}', nama_barang_baru='${namaBarangBaru}',nama_barang_lama='${namaBarangLama}', kuantitas='${kuantitas}', kepentingan='${kepentingan}',penanggung_jawab='${penanggungJawab}',id_users='${iduser}' WHERE id_ganti_barang = ${idgantibarang}`
       )
       if (resp.affectedRows > 0) {
         res.redirect('/inout/gantibarang')
@@ -75,7 +75,7 @@ module.exports.updateDataBarang = async (req, res) => {
       }
     } else if (lokasiServer == 'rotogravure 3') {
       const resp = await conn.query(
-        `UPDATE ambil_barang_roto_3 SET tanggal='${tanggal}', nama_pengganti='${namaPengganti}', nama_barang_baru='${namaBarangBaru}',nama_barang_lama='${namaBarangLama}', kuantitas='${kuantitas}', kepentingan='${kepentingan}',penanggung_jawab='${penanggungJawab}',id_users='${iduser}' WHERE id_ganti_barang = ${idgantibarang}`
+        `UPDATE ganti_barang_roto_3 SET tanggal='${tanggal}', nama_pengganti='${namaPengganti}', nama_barang_baru='${namaBarangBaru}',nama_barang_lama='${namaBarangLama}', kuantitas='${kuantitas}', kepentingan='${kepentingan}',penanggung_jawab='${penanggungJawab}',id_users='${iduser}' WHERE id_ganti_barang = ${idgantibarang}`
       )
       if (resp.affectedRows > 0) {
         res.redirect('/inout/gantibarang')
@@ -84,7 +84,7 @@ module.exports.updateDataBarang = async (req, res) => {
       }
     } else if (lokasiServer == 'rotogravure tinta') {
       const resp = await conn.query(
-        `UPDATE ambil_barang_tinta SET tanggal='${tanggal}', nama_pengganti='${namaPengganti}', nama_barang_baru='${namaBarangBaru}',nama_barang_lama='${namaBarangLama}', kuantitas='${kuantitas}', kepentingan='${kepentingan}',penanggung_jawab='${penanggungJawab}',id_users='${iduser}' WHERE id_ganti_barang = ${idgantibarang}`
+        `UPDATE ganti_barang_tinta SET tanggal='${tanggal}', nama_pengganti='${namaPengganti}', nama_barang_baru='${namaBarangBaru}',nama_barang_lama='${namaBarangLama}', kuantitas='${kuantitas}', kepentingan='${kepentingan}',penanggung_jawab='${penanggungJawab}',id_users='${iduser}' WHERE id_ganti_barang = ${idgantibarang}`
       )
       if (resp.affectedRows > 0) {
         res.redirect('/inout/gantibarang')

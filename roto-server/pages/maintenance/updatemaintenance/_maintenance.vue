@@ -45,10 +45,6 @@
                     <input type="text" v-model="updateMaintenance.baterai" name="baterai" id="baterai" class="p-2 w-72 rounded-lg outline-none bg-gray-300" required>
                 </div>
                 <div class="mb-4">
-                    <label for="network" class="block mb-2 text-sm">network</label>
-                    <input type="text" v-model="updateMaintenance.network" name="network" id="network" class="p-2 w-72 rounded-lg outline-none bg-gray-300" required>
-                </div>
-                <div class="mb-4">
                     <label for="server" class="block mb-2 text-sm">server</label>
                     <input type="text" v-model="updateMaintenance.server" name="server" id="server" class="p-2 w-72 rounded-lg outline-none bg-gray-300" required>
                 </div>
@@ -100,7 +96,6 @@ export default {
             ac : this.updateMaintenance.ac,
             ups : this.updateMaintenance.ups,
             baterai : this.updateMaintenance.baterai,
-            network : this.updateMaintenance.network,
             server : this.updateMaintenance.server,
             keterangan : this.updateMaintenance.keterangan,
           })
@@ -128,7 +123,6 @@ export default {
             this.updateMaintenance.ac = dmain.ac
             this.updateMaintenance.ups = dmain.ups
             this.updateMaintenance.baterai = dmain.baterai
-            this.updateMaintenance.network = dmain.network
             this.updateMaintenance.server = dmain.server
             this.updateMaintenance.keterangan = dmain.keterangan
         })

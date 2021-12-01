@@ -11,8 +11,8 @@
             type="text"
             placeholder="cari"
             name="cari"
-            v-model.lazy="caribarang"
-            class="rounded-l-lg p-2 w-52 outline-none bg-gray-200" @keyup.enter="$fetch"
+            v-model="caribarang"
+            class="transition-all duration-200 ease-in-out rounded-l-lg p-2 outline-none bg-gray-200 outline-none w-40 w-52 focus:ring-2 focus:ring-gray-700"
           />
           <button
             class="
@@ -20,11 +20,11 @@
               rounded-r-lg
               bg-gray-700
               flex
+              cursor-default
               items-center
               justify-center
               w-12
             "
-            @click="$fetch"
           >
             <font-awesome-icon :icon="['fas', 'search']" class="text-yellow-500" />
           </button>
@@ -85,9 +85,9 @@
         <tbody
           v-if="caribarang !== ''"
           class="text-center bg-white bg-opacity-40 divide-y divide-gray-300">
-          <tr class="text-sm uppercase" v-for="(hasilcari, index) in hasilcariserver" :key="index">
+          <tr class="text-sm uppercase" v-for="(hasilcari, index) in filteredList" :key="index">
             <td>{{index+1}}</td>
-            <td>{{ $moment().format('YYYY-MM-DD') }}</td>
+            <td>{{ $moment().format('DD-MM-YYYY') }}</td>
             <td>{{ hasilcari.merek }}</td>
             <td>{{ hasilcari.model }}</td>
             <td>{{ hasilcari.processor }}</td>
@@ -95,7 +95,7 @@
             <td class="text-xs">
               {{ $moment(hasilcari.garansi).format('DD-MM-YYYY') }}
             </td>
-            <td class="py-3 flex justify-between w-full bg-gray-700">
+            <td class="py-3 flex justify-between w-full lowercase">
               <div class="has-tooltip">
                 <span
                   class="
@@ -190,7 +190,7 @@
             <td class="text-xs">
               {{ $moment(server.garansi).format('DD-MM-YYYY') }}
             </td>
-            <td class="py-3 flex justify-between w-full">
+            <td class="py-3 flex justify-between w-full lowercase">
               <div class="has-tooltip">
                  <span
                   class="
@@ -297,12 +297,13 @@ export default {
     computed: {
         user(){
           return this.$auth.user
-        }
-    },
-    async fetch(){
-        if(this.caribarang !== ""){
-            await this.caribarangserver()
-        return
+        },
+        filteredList() {
+          return this.servers.filter(hasil=>{
+            if(hasil.merek.toLowerCase().includes(this.caribarang.toLowerCase()) || hasil.model.toLowerCase().includes(this.caribarang.toLowerCase()) || hasil.processor.toLowerCase().includes(this.caribarang.toLowerCase()) || hasil.memori.toString().includes(this.caribarang.toString())){
+              return hasil
+            }
+          })
         }
     },
     methods:{
@@ -338,13 +339,6 @@ export default {
                 swal('Error','ada yang salah',{icon:'error'})
             })
         },
-        async caribarangserver(){
-          this.hasilcariserver = []
-            const res = await axios.get(`http://localhost:3000/server/cariserver/${this.caribarang}/${this.$auth.user.lokasi}`)
-            res.data.forEach(val =>{
-                this.hasilcariserver.push(val)
-          })
-        }
     },
     async mounted(){
         const lokasiserver = this.$auth.user.lokasi

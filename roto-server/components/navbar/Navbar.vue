@@ -1,3 +1,4 @@
+
 <template>
   <section>
     <div class="bg-gray-100 w-full py-4 px-7 flex justify-between items-center text-gray-700">
@@ -19,7 +20,8 @@
             "
           >
             <h2 class="font-medium">Logout</h2>
-            <font-awesome-icon :icon="['fas', 'arrow-alt-circle-right']" class="text-gray-700" />
+            <p class="text-lg">
+            <font-awesome-icon :icon="['fas', 'sign-out-alt']" class="text-gray-700" /></p>
           </button>
     </div>
   </section>

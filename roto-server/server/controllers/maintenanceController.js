@@ -13,7 +13,6 @@ module.exports.inputmaintenance = async (req, res) => {
       ac,
       ups,
       baterai,
-      network,
       server,
       keterangan,
     } = req.body
@@ -22,7 +21,7 @@ module.exports.inputmaintenance = async (req, res) => {
 
     if (lokasiServer == 'rotogravure 1') {
       const data = await conn.query(
-        `INSERT INTO maintenance VALUES ('','${nama}','${tanggal}','${suhu}','${kelembapan}','${ac}','${ups}','${baterai}','${network}','${server}','${keterangan}','${iduser}')`
+        `INSERT INTO maintenance VALUES ('','${nama}','${tanggal}','${suhu}','${kelembapan}','${ac}','${ups}','${baterai}','${server}','${keterangan}','${iduser}')`
       )
       if (data.affectedRows > 0) {
         res.redirect('/maintenance')
@@ -31,7 +30,7 @@ module.exports.inputmaintenance = async (req, res) => {
       }
     } else if (lokasiServer == 'rotogravure 2') {
       const data = await conn.query(
-        `INSERT INTO maintenance_roto_2 VALUES ('','${nama}','${tanggal}','${suhu}','${kelembapan}','${ac}','${ups}','${baterai}','${network}','${server}','${keterangan}','${iduser}')`
+        `INSERT INTO maintenance_roto_2 VALUES ('','${nama}','${tanggal}','${suhu}','${kelembapan}','${ac}','${ups}','${baterai}','${server}','${keterangan}','${iduser}')`
       )
       if (data.affectedRows > 0) {
         res.redirect('/maintenance')
@@ -40,7 +39,7 @@ module.exports.inputmaintenance = async (req, res) => {
       }
     } else if (lokasiServer == 'rotogravure 3') {
       const data = await conn.query(
-        `INSERT INTO maintenance_roto_3 VALUES ('','${nama}','${tanggal}','${suhu}','${kelembapan}','${ac}','${ups}','${baterai}','${network}','${server}','${keterangan}','${iduser}')`
+        `INSERT INTO maintenance_roto_3 VALUES ('','${nama}','${tanggal}','${suhu}','${kelembapan}','${ac}','${ups}','${baterai}','${server}','${keterangan}','${iduser}')`
       )
       if (data.affectedRows > 0) {
         res.redirect('/maintenance')
@@ -49,7 +48,7 @@ module.exports.inputmaintenance = async (req, res) => {
       }
     } else if (lokasiServer == 'rotogravure tinta') {
       const data = await conn.query(
-        `INSERT INTO maintenance_tinta VALUES ('','${nama}','${tanggal}','${suhu}','${kelembapan}','${ac}','${ups}','${baterai}','${network}','${server}','${keterangan}','${iduser}')`
+        `INSERT INTO maintenance_tinta VALUES ('','${nama}','${tanggal}','${suhu}','${kelembapan}','${ac}','${ups}','${baterai}','${server}','${keterangan}','${iduser}')`
       )
       if (data.affectedRows > 0) {
         res.redirect('/maintenance')
@@ -169,7 +168,6 @@ module.exports.updateMaintenance = async (req, res) => {
       ac,
       ups,
       baterai,
-      network,
       server,
       keterangan,
     } = req.body
@@ -178,7 +176,7 @@ module.exports.updateMaintenance = async (req, res) => {
 
     if (lokasiServer == 'rotogravure 1') {
       const resp = await conn.query(
-        `UPDATE maintenance SET nama_pemeriksa='${nama}',tanggal='${tanggal}',suhu='${suhu}',kelembapan='${kelembapan}',ac='${ac}',ups='${ups}',baterai='${baterai}',network='${network}',server='${server}',keterangan='${keterangan}',id_users='${iduser}' WHERE id_maintenance=${idmaintenance}`
+        `UPDATE maintenance SET nama_pemeriksa='${nama}',tanggal='${tanggal}',suhu='${suhu}',kelembapan='${kelembapan}',ac='${ac}',ups='${ups}',baterai='${baterai}',server='${server}',keterangan='${keterangan}',id_users='${iduser}' WHERE id_maintenance=${idmaintenance}`
       )
       if (resp.affectedRows > 0) {
         res.redirect('/maintenance')
@@ -187,7 +185,7 @@ module.exports.updateMaintenance = async (req, res) => {
       }
     } else if (lokasiServer == 'rotogravure 2') {
       const resp = await conn.query(
-        `UPDATE maintenance_roto_2 SET nama_pemeriksa='${nama}',tanggal='${tanggal}',suhu='${suhu}',kelembapan='${kelembapan}',ac='${ac}',ups='${ups}',baterai='${baterai}',network='${network}',server='${server}',keterangan='${keterangan}',id_users='${iduser}' WHERE id_maintenance=${idmaintenance}`
+        `UPDATE maintenance_roto_2 SET nama_pemeriksa='${nama}',tanggal='${tanggal}',suhu='${suhu}',kelembapan='${kelembapan}',ac='${ac}',ups='${ups}',baterai='${baterai}',server='${server}',keterangan='${keterangan}',id_users='${iduser}' WHERE id_maintenance=${idmaintenance}`
       )
       if (resp.affectedRows > 0) {
         res.redirect('/maintenance')
@@ -196,7 +194,7 @@ module.exports.updateMaintenance = async (req, res) => {
       }
     } else if (lokasiServer == 'rotogravure 3') {
       const resp = await conn.query(
-        `UPDATE maintenance_roto_3 SET nama_pemeriksa='${nama}',tanggal='${tanggal}',suhu='${suhu}',kelembapan='${kelembapan}',ac='${ac}',ups='${ups}',baterai='${baterai}',network='${network}',server='${server}',keterangan='${keterangan}',id_users='${iduser}' WHERE id_maintenance=${idmaintenance}`
+        `UPDATE maintenance_roto_3 SET nama_pemeriksa='${nama}',tanggal='${tanggal}',suhu='${suhu}',kelembapan='${kelembapan}',ac='${ac}',ups='${ups}',baterai='${baterai}',server='${server}',keterangan='${keterangan}',id_users='${iduser}' WHERE id_maintenance=${idmaintenance}`
       )
       if (resp.affectedRows > 0) {
         res.redirect('/maintenance')
@@ -205,7 +203,7 @@ module.exports.updateMaintenance = async (req, res) => {
       }
     } else if (lokasiServer == 'rotogravure tinta') {
       const resp = await conn.query(
-        `UPDATE maintenance_tinta SET nama_pemeriksa='${nama}',tanggal='${tanggal}',suhu='${suhu}',kelembapan='${kelembapan}',ac='${ac}',ups='${ups}',baterai='${baterai}',network='${network}',server='${server}',keterangan='${keterangan}',id_users='${iduser}' WHERE id_maintenance=${idmaintenance}`
+        `UPDATE maintenance_tinta SET nama_pemeriksa='${nama}',tanggal='${tanggal}',suhu='${suhu}',kelembapan='${kelembapan}',ac='${ac}',ups='${ups}',baterai='${baterai}',server='${server}',keterangan='${keterangan}',id_users='${iduser}' WHERE id_maintenance=${idmaintenance}`
       )
       if (resp.affectedRows > 0) {
         res.redirect('/maintenance')

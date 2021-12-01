@@ -33,7 +33,7 @@
 
                     <label for="namaBarangBaru" class="block mb-2 text-sm">nama barang baru</label>
                     <div class="flex flex-col w-72">
-                        <ValidationProvider rules="required|alpha_spaces" v-slot={errors}>
+                        <ValidationProvider rules="required|passchar" v-slot={errors}>
                             <input type="text" v-model="inputGantiBarang.namaBarangBaru" name="namaBarangBaru" id="namaBarangBaru" class="p-2 w-full rounded-lg outline-none bg-gray-200 uppercase">
                             <p class="text-xs mt-1 text-right text-red-500">{{ errors[0] }}</p>
                         </ValidationProvider>
@@ -44,7 +44,7 @@
 
                     <label for="namaBarangLama" class="block mb-2 text-sm">nama barang lama</label>
                     <div class="flex flex-col w-72">
-                        <ValidationProvider rules="required|alpha_spaces" v-slot={errors}>
+                        <ValidationProvider rules="required|passchar" v-slot={errors}>
                             <input type="text" v-model="inputGantiBarang.namaBarangLama" name="namaBarangLama" id="namaBarangLama" class="p-2 w-full rounded-lg outline-none bg-gray-200 uppercase" :disabled="inputGantiBarang.namaBarangBaru === ''">
                             <p class="text-xs mt-1 text-right text-red-500">{{ errors[0] }}</p>
                         </ValidationProvider>
@@ -179,7 +179,7 @@ export default {
     opacity: 0.1;
 }
 .activesubmit {
-    background-color: rgb(40, 45, 58);
+    background-color: rgb(43, 48, 61);
     color:whitesmoke;
     width:6rem;
     cursor:pointer;

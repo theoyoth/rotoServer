@@ -94,7 +94,7 @@
                     <label for="garansi" class="block mb-2 text-sm">garansi</label>
                     <div class="flex flex-col w-72">
                         <ValidationProvider rules="required" v-slot={errors}>
-                            <input type="date" v-model="inputNetwork.garansi" name="garansi" id="garansi" class="p-2 w-full rounded-lg outline-none bg-gray-200" :disabled="inputNetwork.kanal === ''">
+                            <input type="date" v-model="inputNetwork.garansi" name="garansi" id="garansi" class="p-2 w-full rounded-lg outline-none bg-gray-200 uppercase" :disabled="inputNetwork.kanal === ''">
                             <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
                         </ValidationProvider>
                     </div>

@@ -6,8 +6,8 @@
         <p class="text-center text-lg text-gray-700 font-semibold">Halaman master NAS</p>
         <div class="flex justify-between mt-8">
             <div class="flex">
-                <input type="text" placeholder="cari" name="cari" v-model.lazy="caribarang" @keyup.enter="$fetch" class="rounded-l-lg w-52 p-2 outline-none bg-gray-200">
-                <button class="p-2 rounded-r-lg bg-gray-700 flex items-center justify-center w-12" @click="$fetch">
+                <input type="text" placeholder="cari" name="cari" v-model="caribarang" class="transition-all duration-200 ease-in-out rounded-l-lg p-2 bg-gray-200 outline-none w-52 focus:ring-2 focus:ring-gray-700">
+                <button class="p-2 rounded-r-lg bg-gray-700 flex items-center justify-center w-12">
                     <font-awesome-icon :icon="['fas','search']" class="text-yellow-500"/>
                 </button>
             </div>
@@ -39,7 +39,7 @@
                 </tr>
             </thead>
             <tbody v-if="caribarang !== ''" class="text-center bg-white bg-opacity-40 divide-y divide-gray-300">
-                <tr class="text-sm uppercase" v-for="(hasilcari,index) in carinas" :key="index">
+                <tr class="text-sm uppercase" v-for="(hasilcari,index) in filteredList" :key="index">
                     <td>{{index+1}}</td>
                     <td>{{hasilcari.merek}}</td>
                     <td>{{hasilcari.processor}}</td>
@@ -214,10 +214,13 @@ export default {
             deletemsg:"",
         }
     },
-    async fetch(){
-        if(this.caribarang !== ""){
-            await this.caribarangnas()
-        return 
+    computed:{
+        filteredList() {
+            return this.nass.filter(hasil =>{
+                if(hasil.merek.toLowerCase().includes(this.caribarang.toLowerCase()) || hasil.processor.toLowerCase().includes(this.caribarang.toLowerCase()) || hasil.storage.toLowerCase().includes(this.caribarang.toLowerCase()) || hasil.cpu.toLowerCase().includes(this.caribarang.toLowerCase()) ){
+                    return hasil
+                }
+            })
         }
     },
     methods:{
@@ -251,13 +254,6 @@ export default {
                 }
             }).catch(err=>{
                 swal('Error','ada yang salah',{icon:'error'})
-            })
-        },
-        async caribarangnas(){
-            this.carinas = []
-            const res = await axios.get(`http://localhost:3000/server/carinas?cari=${this.caribarang}`)
-            res.data.forEach(val =>{
-                this.carinas.push(val)
             })
         },
     },

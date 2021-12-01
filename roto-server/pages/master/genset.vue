@@ -6,8 +6,8 @@
         <p class="text-center text-lg text-gray-700 font-semibold">Halaman master Genset</p>
         <div class="flex justify-between mt-8">
             <div class="flex">
-                <input type="text" placeholder="cari" name="cari" v-model.lazy="caribarang" @keyup.enter="$fetch" class="rounded-l-lg p-2 w-52 outline-none bg-gray-200">
-                <button class="p-2 rounded-r-lg bg-gray-700 flex items-center justify-center" @click="$fetch">
+                <input type="text" placeholder="cari" name="cari" v-model="caribarang" class="transition-all duration-200 ease-in-out rounded-l-lg p-2 bg-gray-200 outline-none w-40 w-52 focus:ring-2 focus:ring-gray-700">
+                <button class="p-2 rounded-r-lg bg-gray-700 flex cursor-default items-center justify-center w-12">
                     <font-awesome-icon :icon="['fas','search']" class="text-yellow-500"/>
                 </button>
             </div>
@@ -38,8 +38,8 @@
                     <th class="font-semibold w-20">aksi</th>
                 </tr>
             </thead>
-            <tbody v-if="caribarang !== ''" class="text-center bg-white bg-opacity-40 divide-y divide-gray-300">
-                <tr class="text-sm uppercase" v-for="(hasilcari,index) in carigenset" :key="index">
+            <tbody class="text-center bg-white bg-opacity-40 divide-y divide-gray-300" v-if="caribarang !== ''">
+                <tr v-for="(hasilcari,index) in filteredList" :key="index" class="uppercase text-sm">
                     <td>{{index+1}}</td>
                     <td class="py-3">{{hasilcari.merek}}</td>
                     <td>{{hasilcari.model}}</td>
@@ -165,12 +165,14 @@ export default {
     computed:{
         user(){
             return this.$auth.user
-        }
-    },
-    async fetch(){
-        if(this.caribarang !== ""){
-            await this.caribaranggenset();
-        return
+        },
+        filteredList(){
+            return this.gensets.filter(hasil=>{
+                // this.carigenset.push(hasil)
+                if (hasil.merek.toLowerCase().includes(this.caribarang.toLowerCase()) || hasil.model.toLowerCase().includes(this.caribarang.toLowerCase()) || hasil.tipe.toLowerCase().includes(this.caribarang.toLowerCase()) ) {
+                    return hasil
+                }
+            })
         }
     },
     methods:{
@@ -206,13 +208,13 @@ export default {
                 swal('Error','ada yang salah',{icon:'error'})
             })
         },
-        async caribaranggenset(){
-            this.carigenset = []
-            const res = await axios.get(`http://localhost:3000/server/carigenset?cari=${this.caribarang}`)
-            res.data.forEach(val =>{
-                this.carigenset.push(val)
-            })
-        },
+        // async caribaranggenset(){
+        //     this.carigenset = []
+        //     const res = await axios.get(`http://localhost:3000/server/carigenset?cari=${this.caribarang}`)
+        //     res.data.forEach(val =>{
+        //         this.carigenset.push(val)
+        //     })
+        // },
     },
     async mounted(){
         try{
@@ -225,7 +227,7 @@ export default {
         }
         catch(err){
             console.error(err);
-        };
+        }
     }
 
 }

@@ -10,17 +10,21 @@
         <h1 class="text-center text-xl font-semibold mb-2">Upload file</h1>
         <form @submit.prevent="onSubmit" enctype="multipart/form-data">
           <div class="w-full mt-6">
-            <div class="relative w-56 mx-auto">
-              <label for="file" class="labelinput px-12 py-3 bg-blue-600 rounded-lg cursor-pointer text-gray-100">upload file...
+            <div class="relative mx-auto text-center dropbox">
+              <!-- <label for="file" class="labelinput px-12 py-3 bg-blue-600 rounded-lg cursor-pointer text-gray-100">upload file...</label> -->
                 <input
                   type="file"
                   ref="file"
                   id="file"
-                  class="hidden"
-                  @change="onSelect" required
+                  required
+                  accept=".pdf"
+                  class="input-file border border-black"
+                  @change="onSelect" 
                 />
-                <font-awesome-icon :icon="['fas','upload']" class="text-gray-200"/>
-              </label>
+                <p class="text-center mt-6">
+                  Drag your file here to begin<br> or click to browse
+                </p>
+                <font-awesome-icon :icon="['fas','upload']" class="text-blue-500"/>
             </div>
             <div v-if="file" class="text-center mt-5">{{file.name}}</div>
             <div v-if="message" class="mt-4">
@@ -66,7 +70,6 @@
         height="100%"
         width="100%"
     ></iframe> -->
-      <!-- <embed src="672018139_1637655401673.pdf" width="800px" height="2100px" /> -->
     </section>
   </div>
 </template>
@@ -153,4 +156,28 @@ export default {
 </script>
 
 <style>
+.dropbox {
+  outline: 2px dashed grey; /* the dash box */
+  outline-offset: -10px;
+  background: rgb(236, 255, 255);
+  color: dimgray;
+  padding: 10px 10px;
+  height: 150px; /* minimum height */
+  position: relative;
+  transition: .4s;
+  cursor: pointer;
+}
+.dropbox:hover{
+  background: lightblue;
+}
+.input-file {
+  opacity: 0; /* invisible but it's there! */
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top:0;
+  left:0;
+  cursor: pointer;
+}
+  
 </style>

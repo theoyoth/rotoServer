@@ -9,48 +9,120 @@
           </div>
           <p class="font-medium text-sm text-gray-200">kembali</p>
         </NuxtLink> 
-        <p class="text-center text-gray-700 text-lg font-semibold mt-4">DETAIL BARANG SERVER</p>
-        <div class="grid grid-cols-2 w-3/4 bg-gray-200 text-gray-900 text-sm m-auto mt-10">
-          <div class="border border-gray-400 divide-y divide-gray-300 font-semibold">
-              <p class="py-2 px-6">tanggal di input</p>
-              <p class="py-2 px-6">produk</p>
-              <p class="py-2 px-6">merek</p>
-              <p class="py-2 px-6">model</p>
-              <p class="py-2 px-6">processor</p>
-              <p class="py-2 px-6">memori</p>
-              <p class="py-2 px-6">internal storage</p>
-              <p class="py-2 px-6">network controller</p>
-              <p class="py-2 px-6">sumber daya lispik</p>
-              <p class="py-2 px-6">tahun</p>
-              <p class="py-2 px-6">garansi</p>
-          </div>
-          <div class="border border-gray-400 divide-y divide-gray-300" v-for="(det,index) in detail" :key="index">
-              <p class="py-2 px-6">{{$moment().format('DD-MM-YYYY')}}</p>
-              <p class="py-2 px-6">{{det.produk}}</p>
-              <p class="py-2 px-6">{{det.merek}}</p>
-              <p class="py-2 px-6">{{det.model}}</p>
-              <p class="py-2 px-6">{{det.processor}}</p>
-              <p class="py-2 px-6">{{det.memori}}</p>
-              <p class="py-2 px-6">{{det.internal_storage}}</p>
-              <p class="py-2 px-6">{{det.network_controller}}</p>
-              <p class="py-2 px-6">{{det.sumber_daya_listrik}}</p>
-              <p class="py-2 px-6">{{$moment(det.tahun).format('DD-MM-YYYY')}}</p>
-              <p class="py-2 px-6">{{$moment(det.garansi).format('DD-MM-YYYY')}}</p>
-              <div>
-                <!-- <NuxtLink
-                  :to="{
-                    name: 'master-update-updateserver-server',
-                    params: { id: det.id_server },
-                  }"
-                >
-                  <font-awesome-icon
-                    :icon="['fas', 'pencil-alt']"
-                    class="text-yellow-500"
-                  />
-                </NuxtLink> -->
-              </div>
-          </div>
-        </div>
+
+        <div class="bg-white shadow overflow-hidden sm:rounded-lg mt-6">
+  <div class="px-4 py-5 sm:px-6 bg-gray-200 text-center">
+    <h3 class="text-lg leading-6 font-medium text-gray-900">
+      Detail Server
+    </h3>
+    <p class="mt-1 text-sm text-gray-500">
+      Master barang server
+    </p>
+  </div>
+  <div class="border-t border-gray-200">
+    <dl v-for="(det,index) in detail" :key="index">
+      <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+        <dt class="text-sm font-medium text-gray-500 flex">
+          <div class="px-2 shadow mr-4">1</div>
+          Tanggal input
+        </dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+          {{$moment(det.tanggal).format('DD-MM-YYYY')}}
+        </dd>
+      </div>
+      <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+        <dt class="text-sm font-medium text-gray-500 flex">
+          <div class="px-2 shadow mr-4">2</div>
+          Produk
+        </dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+          {{det.produk}}
+        </dd>
+      </div>
+      <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+        <dt class="text-sm font-medium text-gray-500 flex">
+          <div class="px-2 shadow mr-4">3</div>
+          Merek
+        </dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+          {{det.merek}}
+        </dd>
+      </div>
+      <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+        <dt class="text-sm font-medium text-gray-500 flex">
+          <div class="px-2 shadow mr-4">4</div>
+          Model
+        </dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+          {{det.model}}
+        </dd>
+      </div>
+      <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+        <dt class="text-sm font-medium text-gray-500 flex">
+          <div class="px-2 shadow mr-4">5</div>
+          Processor
+        </dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+          {{det.processor}}
+        </dd>
+      </div>
+      <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+        <dt class="text-sm font-medium text-gray-500 flex">
+          <div class="px-2 shadow mr-4">6</div>
+          Memori
+        </dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+          {{det.memori}}
+        </dd>
+      </div>
+      <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+        <dt class="text-sm font-medium text-gray-500 flex">
+          <div class="px-2 shadow mr-4">7</div>
+          Internal Storage
+        </dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+          {{det.internal_storage}}
+        </dd>
+      </div>
+      <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+        <dt class="text-sm font-medium text-gray-500 flex">
+          <div class="px-2 shadow mr-4">8</div>
+          Network controller
+        </dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+          {{det.network_controller}}
+        </dd>
+      </div>
+      <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+        <dt class="text-sm font-medium text-gray-500 flex">
+          <div class="px-2 shadow mr-4">9</div>
+          Sumber daya listrik
+        </dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+          {{det.sumber_daya_listrik}}
+        </dd>
+      </div>
+      <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+        <dt class="text-sm font-medium text-gray-500 flex">
+          <div class="px-2 shadow mr-4">10</div>
+          Tahun
+        </dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+          {{$moment(det.tahun).format('DD-MM-YYYY') }}
+        </dd>
+      </div>
+      <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+        <dt class="text-sm font-medium text-gray-500 flex">
+          <div class="px-2 shadow mr-4">11</div>
+          Garansi
+        </dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+          {{$moment(det.garansi).format('DD-MM-YYYY') }}
+        </dd>
+      </div>
+    </dl>
+  </div>
+</div>
     </section>
   </div>
 </template>

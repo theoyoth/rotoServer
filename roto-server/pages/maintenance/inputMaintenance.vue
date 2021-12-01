@@ -21,80 +21,129 @@
                     <input type="date" v-model="inputMaintenance.tanggal" name="tanggal" id="tanggal" class="p-2 w-72 rounded-lg focus:ring-blue-500 bg-gray-200" >
                 </div> -->
                 <div class="mb-4">
-                    <label for="suhu" class="block mb-2 text-sm">suhu</label>
-                    <div class="flex flex-col w-72">
-                        <ValidationProvider rules="required|numeric" v-slot={errors}>
-                        <input type="text" v-model="inputMaintenance.suhu" name="suhu" id="suhu" class="p-2 w-full rounded-lg bg-gray-300 outline-none" >
-                        <p class="text-xs mt-1 text-right text-red-500">{{ errors[0] }}</p>
-                        </ValidationProvider>
+                    <div class="has-tooltip">
+                        <span class="tooltip text-xs rounded shadow-lg p-1 bg-gray-700 text-white ml-24">masukan suhu ruangan server</span>
+                        <label for="suhu" class="block mb-2 text-sm">suhu</label>
+                        <div class="flex flex-col w-72">
+                            <ValidationProvider rules="required|numeric" v-slot={errors}>
+                            <div class="flex items-center w-full">
+                                <input type="text" v-model="inputMaintenance.suhu" name="suhu" id="suhu" class="p-2 w-full rounded-lg bg-gray-300 outline-none" >
+                                <font-awesome-icon :icon="['fas', 'check-circle']" class="transition-all duration-200 text-green-500 ml-2 opacity-10" :class="{checktrue : inputMaintenance.suhu!=='' && !errors[0]}"/>
+                            </div>
+                            <p class="text-xs mt-1 text-right text-red-500">{{ errors[0] }}</p>
+                            </ValidationProvider>
+                        </div>
+                        <small v-if="inputMaintenance.suhu > 50" class="text-green-500">suhu ruangan tinggi, harap hubungi EDP</small>
                     </div>
                 </div>
                 <div class="mb-2" :class="[inputMaintenance.suhu !== '' ? 'incop' : 'decop']">
-                    <label for="kelembapan" class="block mb-2 text-sm">kelembapan</label>
-                    <div class="flex flex-col w-72">
-                        <ValidationProvider rules="required|numeric" v-slot={errors}>
-                        <input type="text" v-model="inputMaintenance.kelembapan" name="kelembapan" id="kelembapan" class="p-2 w-full rounded-lg outline-none bg-gray-300" :disabled="inputMaintenance.suhu === ''">
-                        <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
-                        </ValidationProvider>
+                    <div class="has-tooltip">
+                        <span class="tooltip text-xs rounded shadow-lg p-1 bg-gray-700 text-white ml-36">masukan kelembapan ruangan server</span>
+                        <label for="kelembapan" class="block mb-2 text-sm">kelembapan</label>
+                        <div class="flex flex-col w-72">
+                            <ValidationProvider rules="required|numeric" v-slot={errors}>
+                            <div class="flex items-center">
+                                <input type="text" v-model="inputMaintenance.kelembapan" name="kelembapan" id="kelembapan" class="p-2 w-full rounded-lg outline-none bg-gray-300" :disabled="inputMaintenance.suhu === ''">
+                                <font-awesome-icon :icon="['fas', 'check-circle']" class="transition-all duration-200 text-green-500 ml-2 opacity-10" :class="{checktrue : inputMaintenance.kelembapan !=='' && !errors[0]}"/>
+                            </div>
+                            <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
+                            </ValidationProvider>
+                        </div>
+                        <small v-if="inputMaintenance.kelembapan > 80" class="text-green-500">kelembapan ruangan tinggi, harap hubungi EDP</small>
                     </div>
                 </div>
                 <div class="mb-2" :class="[inputMaintenance.kelembapan !== '' ? 'incop' : 'decop']">
-                    <label for="ac" class="block mb-2 text-sm">AC</label>
-                    <div class="flex flex-col w-72">
-                        <ValidationProvider rules="required|numeric" v-slot={errors}>
-                        <input type="text" v-model="inputMaintenance.ac" name="ac" id="ac" class="p-2 w-full rounded-lg  bg-gray-300 outline-none" :disabled="inputMaintenance.kelembapan === ''">
-                        <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
-                        </ValidationProvider>
+                    <div class="has-tooltip">
+                        <span class="tooltip text-xs rounded shadow-lg p-1 bg-gray-700 text-white ml-36">masukan kondisi suhu AC</span>
+                        <label for="ac" class="block mb-2 text-sm">AC</label>
+                        <div class="flex flex-col w-72">
+                            <ValidationProvider rules="required" v-slot={errors}>
+                            <div class="flex items-center">
+                                <select name="ac" id="ac" class="p-2 w-full rounded-lg  bg-gray-300 outline-none" v-model="inputMaintenance.ac" :disabled="inputMaintenance.kelembapan === ''">
+                                    <option value="" disabled>pilih kondisi</option>
+                                    <option value="baik">baik</option>
+                                    <option value="tidak baik">tidak baik</option>
+                                </select>
+                                <font-awesome-icon :icon="['fas', 'check-circle']" class="transition-all duration-200 text-green-500 ml-2 opacity-10" :class="{checktrue : inputMaintenance.ac !=='' && !errors[0]}"/>
+                            </div>
+                            <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
+                            </ValidationProvider>
+                        </div>
+                        <small v-if="inputMaintenance.ac > 30" class="text-green-500">suhu AC tinggi</small>
                     </div>
                 </div>
                 <div class="mb-2" :class="[inputMaintenance.ac !== '' ? 'incop' : 'decop']">
-                    <label for="ups" class="block mb-2 text-sm">UPS</label>
-                    <div class="flex flex-col w-72">
-                        <ValidationProvider rules="required|numeric" v-slot={errors}>
-                        <input type="text" v-model="inputMaintenance.ups" name="ups" id="ups" class="p-2 w-full rounded-lg bg-gray-300 outline-none" :disabled="inputMaintenance.ac === ''">
-                        <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
-                        </ValidationProvider>
+                    <div class="has-tooltip">
+                        <span class="tooltip text-xs rounded shadow-lg p-1 bg-gray-700 text-white ml-36">masukan kondisi UPS</span>
+                        <label for="ups" class="block mb-2 text-sm">UPS</label>
+                        <div class="flex flex-col w-72">
+                            <ValidationProvider rules="required" v-slot={errors}>
+                            <div class="flex items-center">
+                                <select name="ups" id="ups" class="p-2 w-full rounded-lg bg-gray-300  outline-none" v-model="inputMaintenance.ups" :disabled="inputMaintenance.ac === ''">
+                                    <option value="" disabled>pilih kondisi</option>
+                                    <option value="baik">baik</option>
+                                    <option value="tidak baik">tidak baik</option>
+                                </select>
+                                <font-awesome-icon :icon="['fas', 'check-circle']" class="transition-all duration-200 text-green-500 ml-2 opacity-10" :class="{checktrue : inputMaintenance.ups !=='' && !errors[0]}"/>
+                            </div>
+                            <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
+                            </ValidationProvider>
+                        </div>
                     </div>
                 </div>
                 <div class="mb-2" :class="[inputMaintenance.ups !== '' ? 'incop' : 'decop']">
-                    <label for="baterai" class="block mb-2 text-sm">baterai</label>
-                    <div class="flex flex-col w-72">
-                        <ValidationProvider rules="required|numeric" v-slot={errors}>
-                        <input type="text" v-model="inputMaintenance.baterai" name="baterai" id="baterai" class="p-2 w-full rounded-lg bg-gray-300 outline-none" :disabled="inputMaintenance.ups === ''">
-                        <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
-                        </ValidationProvider>
+                    <div class="has-tooltip">
+                        <span class="tooltip text-xs rounded shadow-lg p-1 bg-gray-700 text-white ml-36">masukan kondisi baterai</span>
+                        <label for="baterai" class="block mb-2 text-sm">baterai</label>
+                        <div class="flex flex-col w-72">
+                            <ValidationProvider rules="required" v-slot={errors}>
+                            <div class="flex items-center">
+                                <select v-model="inputMaintenance.baterai" name="baterai" id="baterai" class="p-2 w-full rounded-lg bg-gray-300 outline-none" :disabled="inputMaintenance.ups === ''">
+                                    <option value="" disabled>pilih kondisi</option>
+                                    <option value="baik">baik</option>
+                                    <option value="tidak baik">tidak baik</option>
+                                </select>
+                                <font-awesome-icon :icon="['fas', 'check-circle']" class="transition-all duration-200 text-green-500 ml-2 opacity-10" :class="{checktrue : inputMaintenance.baterai !== '' && !errors[0]}"/>
+                            </div>
+                            <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
+                            </ValidationProvider>
+                        </div>
                     </div>
                 </div>
                 <div class="mb-2" :class="[inputMaintenance.baterai !== '' ? 'incop' : 'decop']">
-                    <label for="network" class="block mb-2 text-sm">network</label>
-                    <div class="flex flex-col w-72">
-                        <ValidationProvider rules="required|numeric" v-slot={errors}>
-                        <input type="text" v-model="inputMaintenance.network" name="network" id="network" class="p-2 w-full rounded-lg bg-gray-300 outline-none" :disabled="inputMaintenance.baterai === ''">
-                        <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
-                        </ValidationProvider>
-                    </div>
-                </div>
-                <div class="mb-2" :class="[inputMaintenance.network !== '' ? 'incop' : 'decop']">
-                    <label for="server" class="block mb-2 text-sm">server</label>
-                    <div class="flex flex-col w-72">
-                        <ValidationProvider rules="required|alpha_spaces" v-slot={errors}>
-                        <input type="text" v-model="inputMaintenance.server" name="server" id="server" class="p-2 w-full rounded-lg bg-gray-300 outline-none" :disabled="inputMaintenance.network === ''">
-                        <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
-                        </ValidationProvider>
+                    <div class="has-tooltip">
+                        <span class="tooltip text-xs rounded shadow-lg p-1 bg-gray-700 text-white ml-20">masukan kondisi server baik atau tidak</span>
+                        <label for="server" class="block mb-2 text-sm">server</label>
+                        <div class="flex flex-col w-72">
+                            <ValidationProvider rules="required|alpha_spaces" v-slot={errors}>
+                            <div class="flex items-center">
+                                <select v-model="inputMaintenance.server" name="server" id="server" class="p-2 w-full rounded-lg bg-gray-300 outline-none" :disabled="inputMaintenance.baterai === ''">
+                                    <option value="" disabled>pilih kondisi</option>
+                                    <option value="baik">baik</option>
+                                    <option value="tidak baik">tidak baik</option>
+                                </select>
+                                <font-awesome-icon :icon="['fas', 'check-circle']" class="transition-all duration-200 text-green-500 ml-2 opacity-10" :class="{checktrue : inputMaintenance.server !== '' && !errors[0]}"/>
+                            </div>
+                            <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
+                            </ValidationProvider>
+                        </div>
                     </div>
                 </div>
                 <div class="mb-2" :class="[inputMaintenance.server !== '' ? 'incop' : 'decop']">
-                    <label for="keterangan" class="block mb-2 text-sm">keterangan</label>
-                    <div class="flex flex-col w-72">
-                        <ValidationProvider rules="required|alpha_spaces" v-slot={errors}>
-                        <textarea rows="4" form="inputmaintenance" type="text" v-model="inputMaintenance.keterangan" name="keterangan" id="keterangan" class="p-2 w-full rounded-lg bg-gray-300 outline-none" :disabled="inputMaintenance.server === ''"></textarea>
-                        <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
-                        </ValidationProvider>
+                    <div class="has-tooltip">
+                        <span class="tooltip text-xs rounded shadow-lg p-1 bg-gray-700 text-white ml-20">masukan keterangan</span>
+                        <label for="keterangan" class="block mb-2 text-sm">keterangan</label>
+                        <div class="flex flex-col w-72">
+                            <ValidationProvider rules="required|passchar" v-slot={errors}>
+                            <textarea rows="4" form="inputmaintenance" type="text" v-model="inputMaintenance.keterangan" name="keterangan" id="keterangan" class="p-2 w-full rounded-lg bg-gray-300 outline-none" :disabled="inputMaintenance.server === ''"></textarea>
+                            <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
+                            </ValidationProvider>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-        <button class="opacity-10 bg-gray-700 text-gray-200 py-2 rounded cursor-default" :class="{activesubmit : valid}" type="submit" :disabled="invalid">kirim</button>
+        <button class="opacity-10 px-6 bg-gray-700 text-gray-200 py-2 rounded cursor-default mt-4" :class="{activesubmit : valid}" type="submit" :disabled="invalid">kirim</button>
     </form>
     </ValidationObserver>
 </section>
@@ -121,7 +170,6 @@ export default {
                 ac:'',
                 ups:'',
                 baterai:'',
-                network:'',
                 server:'',
                 keterangan:''
             },
@@ -149,7 +197,7 @@ export default {
                 lokasiServer:this.$auth.user.lokasi,
                 tanggal:this.inputMaintenance.tanggal,
                 suhu: this.inputMaintenance.suhu,
-                kelembapan : this.inputMaintenance.kelembapan,
+                kelembapan: this.inputMaintenance.kelembapan,
                 ac: this.inputMaintenance.ac,
                 ups: this.inputMaintenance.ups,
                 baterai: this.inputMaintenance.baterai,
@@ -170,6 +218,9 @@ export default {
 </script>
 
 <style>
+.checktrue{
+    opacity:1;
+}
     .activesubmit {
         background-color: rgb(55, 65, 81);
         color:whitesmoke;

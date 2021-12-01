@@ -10,20 +10,19 @@
                     type="text"
                     placeholder="cari"
                     name="cari"
-                    v-model.lazy="caribarang"
-                    class="rounded-l-lg p-2 w-52 outline-none bg-gray-200" @keyup.enter="$fetch"
+                    v-model="caribarang"
+                    class="transition-all duration-200 ease-in-out rounded-l-lg p-2 outline-none bg-gray-200 outline-none w-52 focus:ring-2 focus:ring-gray-700"
                 />
                 <button
                     class="
                     p-2
                     rounded-r-lg
                     bg-gray-700
-                    flex
+                    flex curso-default
                     items-center
                     justify-center
                     w-12
                     "
-                    @click="$fetch"
                 >
                     <font-awesome-icon :icon="['fas', 'search']" class="text-yellow-500" />
                 </button>
@@ -62,7 +61,7 @@
                 <tr class="text-xs text-gray-200"> 
                     <th class="font-semibold py-3 px-2 w-4">no.</th>
                     <th class="font-semibold py-3 w-32">tanggal</th>
-                    <th class="font-semibold" >nama pengganti</th>
+                    <th class="font-semibold w-44">nama pengganti</th>
                     <th class="font-semibold" >nama barang baru</th>
                     <th class="font-semibold" >nama barang lama</th>
                     <th class="font-semibold w-44">penanggung jawab</th>
@@ -70,7 +69,7 @@
                 </tr>
             </thead>
             <tbody v-if="caribarang !== ''" class="text-center bg-white bg-opacity-40">
-                <tr class="text-sm uppercase" v-for="(hasilcari,index) in caridatabarang" :key="index">
+                <tr class="text-sm uppercase divide-y divide-gray-300" v-for="(hasilcari,index) in filteredList" :key="index">
                     <td>{{index+1}}</td>
                     <td>{{$moment(hasilcari.tanggal).format('DD-MM-YYYY')}}</td>
                     <td>{{hasilcari.nama_pengganti}}</td>
@@ -170,7 +169,7 @@
                 </tr>
             </tbody> 
             <tbody v-else class="text-center bg-white bg-opacity-40">
-                <tr class="text-sm uppercase" v-for="(barang,index) in barangs" :key="index">
+                <tr class="text-sm uppercase divide-y divide-gray-300" v-for="(barang,index) in barangs" :key="index">
                     <td>{{index+1}}</td>
                     <td>{{$moment(barang.tanggal).format('DD-MM-YYYY')}}</td>
                     <td>{{barang.nama_pengganti}}</td>
@@ -287,10 +286,13 @@ export default {
             caridatabarang:[],
         }
     },
-    async fetch(){
-        if(this.caribarang !== ""){
-            await this.caridatagantibarang();
-        return
+    computed:{ 
+        filteredList() {
+            return this.barangs.filter(hasil=>{
+                if(hasil.nama_barang_baru.toLowerCase().includes(this.caribarang.toLowerCase()) || hasil.nama_barang_lama.toLowerCase().includes(this.caribarang.toLowerCase()) || hasil.penanggung_jawab.toLowerCase().includes(this.caribarang.toLowerCase()) ){
+                    return hasil
+                }
+            })
         }
     },
     async mounted(){
@@ -337,13 +339,6 @@ export default {
                 }
             }).catch(err=>{
                 swal('Error','ada yang salah',{icon:'error'})
-            })
-        },
-        async caridatagantibarang(){
-            this.caridatabarang = []
-            const res = await axios.get(`http://localhost:3000/server/inout/gantibarang/caribarang/${this.caribarang}/${this.$auth.user.lokasi}/${this.$auth.user.id}`)
-            res.data.forEach(val =>{
-                this.caridatabarang.push(val)
             })
         },
     }

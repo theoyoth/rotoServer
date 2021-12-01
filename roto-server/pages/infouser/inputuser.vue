@@ -49,7 +49,7 @@
                     <label for="model" class="block mb-2 text-sm">sandi</label>
                     <div class="flex flex-col">
                       <div v-if="inputUser.role == 'Admin teknisi' || inputUser.role == 'Teknisi listrik' || inputUser.role == 'Teknisi ac' || inputUser.role == 'Security'">
-                        <ValidationProvider rules="required" v-slot={errors} vid="confirm">
+                        <ValidationProvider rules="required|min4" v-slot={errors} vid="confirm">
                           <div class="flex">
                             <input :type="passwordFieldType" v-model="inputUser.sandi" name="model" id="model" class="p-2 w-full rounded-l-lg outline-none bg-gray-200">
                             <div type="password" class="flex cursor-pointer items-center p-2 bg-gray-200 rounded-r-lg" @click="showpassword();changeicon();">

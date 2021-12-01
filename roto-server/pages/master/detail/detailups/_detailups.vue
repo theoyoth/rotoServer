@@ -9,52 +9,131 @@
           </div>
           <p class="font-medium text-sm text-gray-200">kembali</p>
         </NuxtLink> 
-        <p class="text-center text-gray-700 font-semibold mt-4">DETAIL BARANG UPS</p>
-        <div class="grid grid-cols-2 w-3/4 bg-gray-200 text-gray-900 text-sm m-auto mt-10">
-          <div class="border border-gray-400 divide-y divide-gray-300">
-              <p class="py-2 px-6">tanggal di input</p>
-              <p class="py-2 px-6">model</p>
-              <p class="py-2 px-6">UPS critical load</p>
-              <p class="py-2 px-6">UPS critical temperature</p>
-              <p class="py-2 px-6">UPS critical capacity</p>
-              <p class="py-2 px-6">nomor serial</p>
-              <p class="py-2 px-6">nama sistem</p>
-              <p class="py-2 px-6">manufaktur</p>
-              <p class="py-2 px-6">peringkat tegangan</p>
-              <p class="py-2 px-6">peringkat frekuensi</p>
-              <p class="py-2 px-6">peringkat tegangan baterai</p>
-              <p class="py-2 px-6">tahun</p>
-              <p class="py-2 px-6">garansi</p>
-          </div>
-          <div class="border border-gray-400 divide-y divide-gray-300" v-for="(det,index) in detail" :key="index">
-              <p class="py-2 px-6">{{$moment().format('DD-MM-YYYY')}}</p>
-              <p class="py-2 px-6">{{det.model}}</p>
-              <p class="py-2 px-6">{{det.ups_critical_load}}</p>
-              <p class="py-2 px-6">{{det.ups_critical_temperature}}</p>
-              <p class="py-2 px-6">{{det.ups_critical_capacity}}</p>
-              <p class="py-2 px-6">{{det.nomor_serial}}</p>
-              <p class="py-2 px-6">{{det.nama_sistem}}</p>
-              <p class="py-2 px-6">{{det.manufaktur}}</p>
-              <p class="py-2 px-6">{{det.peringkat_tegangan}}</p>
-              <p class="py-2 px-6">{{det.peringkat_frekuensi}}</p>
-              <p class="py-2 px-6">{{det.peringkat_tegangan_baterai}}</p>
-              <p class="py-2 px-6">{{$moment(det.tahun).format('DD-MM-YYYY')}}</p>
-              <p class="py-2 px-6">{{$moment(det.garansi).format('DD-MM-YYYY')}}</p>
-              <div>
-                <!-- <NuxtLink
-                  :to="{
-                    name: 'master-update-updateserver-server',
-                    params: { id: det.id_server },
-                  }"
-                >
-                  <font-awesome-icon
-                    :icon="['fas', 'pencil-alt']"
-                    class="text-yellow-500"
-                  />
-                </NuxtLink> -->
-              </div>
-          </div>
-        </div>
+        
+        <!-- This example requires Tailwind CSS v2.0+ -->
+<div class="bg-white shadow overflow-hidden sm:rounded-lg mt-6">
+  <div class="px-4 py-5 sm:px-6 bg-gray-200 text-center">
+    <h3 class="text-lg leading-6 font-medium text-gray-900">
+      Detail UPS
+    </h3>
+    <p class="mt-1 text-sm text-gray-500">
+      Master barang UPS
+    </p>
+  </div>
+  <div class="border-t border-gray-200">
+    <dl v-for="(det,index) in detail" :key="index">
+      <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+        <dt class="text-sm font-medium text-gray-500 flex">
+          <div class="px-2 shadow mr-4">1</div>
+          UPS critical load
+        </dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+          {{det.ups_critical_load}}
+        </dd>
+      </div>
+      <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+        <dt class="text-sm font-medium text-gray-500 flex">
+          <div class="px-2 shadow mr-4">2</div>
+          UPS critical temperature
+        </dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+          {{det.ups_critical_temperature}}
+        </dd>
+      </div>
+      <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+        <dt class="text-sm font-medium text-gray-500 flex">
+          <div class="px-2 shadow mr-4">3</div>
+          UPS critical capacity
+        </dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+          {{det.ups_critical_capacity}}
+        </dd>
+      </div>
+      <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+        <dt class="text-sm font-medium text-gray-500 flex">
+          <div class="px-2 shadow mr-4">4</div>
+          Nomor serial
+        </dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+          {{det.nomor_serial}}
+        </dd>
+      </div>
+      <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+        <dt class="text-sm font-medium text-gray-500 flex">
+          <div class="px-2 shadow mr-4">5</div>
+          Nama sistem
+        </dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+          {{det.nama_sistem}}
+        </dd>
+      </div>
+      <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+        <dt class="text-sm font-medium text-gray-500 flex">
+          <div class="px-2 shadow mr-4">6</div>
+          Model
+        </dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+          {{det.model}}
+        </dd>
+      </div>
+      <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+        <dt class="text-sm font-medium text-gray-500 flex">
+          <div class="px-2 shadow mr-4">7</div>
+          Manufaktur
+        </dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+          {{det.manufaktur}}
+        </dd>
+      </div>
+      <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+        <dt class="text-sm font-medium text-gray-500 flex">
+          <div class="px-2 shadow mr-4">8</div>
+          Peringkat tegangan
+        </dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+          {{det.peringkat_tegangan}}
+        </dd>
+      </div>
+      <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+        <dt class="text-sm font-medium text-gray-500 flex">
+          <div class="px-2 shadow mr-4">9</div>
+          Peringkat frekuensi
+        </dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+          {{det.peringkat_frekuensi}}
+        </dd>
+      </div>
+      <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+        <dt class="text-sm font-medium text-gray-500 flex">
+          <div class="px-2 shadow mr-3">10</div>
+          Peringkat tegangan baterai
+        </dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+          {{det.peringkat_tegangan_baterai}}
+        </dd>
+      </div>
+      <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+        <dt class="text-sm font-medium text-gray-500 flex">
+          <div class="px-2 shadow mr-4">11</div>
+          Tahun
+        </dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+          {{$moment(det.tahun).format('DD-MM-YYYY') }}
+        </dd>
+      </div>
+      <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+        <dt class="text-sm font-medium text-gray-500 flex">
+          <div class="px-2 shadow mr-4">12</div>
+          Garansi
+        </dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+          {{$moment(det.garansi).format('DD-MM-YYYY') }}
+        </dd>
+      </div>
+    </dl>
+  </div>
+</div>
+
     </section>
   </div>
 </template>

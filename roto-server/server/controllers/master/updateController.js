@@ -1147,7 +1147,6 @@ module.exports.inputmasternasupdate = async (req, res) => {
       }
     }
 
-    res.redirect('/master/nas')
     conn.release()
   } catch (err) {
     console.log(err)

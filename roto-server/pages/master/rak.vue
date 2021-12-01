@@ -6,14 +6,14 @@
     <p class="text-center text-lg text-gray-700 font-semibold">Halaman master rak</p>
     <div class="flex justify-between mt-8">
         <div class="flex">
-            <input type="text" placeholder="cari" name="cari" v-model.lazy="caribarang" @keyup.enter="$fetch" class="rounded-l-lg p-2 outline-none bg-gray-200 w-52">
-            <button class="p-2
+            <input type="text" placeholder="cari" name="cari" v-model="caribarang" class="transition-all duration-200 ease-in-out rounded-l-lg p-2 bg-gray-200 outline-none w-52 focus:ring-2 focus:ring-gray-700">
+            <button class="p-2 cursor-default
               rounded-r-lg
               bg-gray-700
               flex
               items-center
               justify-center
-              w-12" @click="$fetch">
+              w-12">
                 <font-awesome-icon :icon="['fas','search']" class="text-yellow-500"/>
             </button>
         </div>
@@ -56,7 +56,7 @@
                 </tr>
             </thead>
             <tbody v-if="caribarang !== ''" class="text-center bg-white bg-opacity-40 divide-y divide-gray-300">
-                <tr class="text-sm uppercase" v-for="(hasilcari,index) in carirak" :key="index">
+                <tr class="text-sm uppercase" v-for="(hasilcari,index) in filteredList" :key="index">
                     <td>{{index+1}}</td>
                     <td>{{hasilcari.nama_produk}}</td>
                     <td class="py-3">{{hasilcari.tipe_rak}}</td>
@@ -181,10 +181,13 @@ export default {
             deletemsg:"",
         }
     },
-    async fetch(){
-        if(this.caribarang !== ""){
-            await this.caribarangrak()
-        return
+    computed:{
+        filteredList() {
+            return this.raks.filter(hasil=>{
+                if(hasil.nama_produk.toLowerCase().includes(this.caribarang.toLowerCase()) || hasil.tipe_rak.toLowerCase().includes(this.caribarang.toLowerCase()) || hasil.tipe_pintu.toLowerCase().includes(this.caribarang.toLowerCase()) || hasil.berat.toString().includes(this.caribarang.toString()) || hasil.dimensi.toLowerCase().includes(this.caribarang.toLowerCase())){
+                    return hasil
+                }
+            })
         }
     },
     methods:{
@@ -220,13 +223,6 @@ export default {
                 swal('Error','ada yang salah',{icon:'error'})
             })
             
-        },
-        async caribarangrak(){
-            this.carirak = []
-            const res = await axios.get(`http://localhost:3000/server/carirak/${this.caribarang}/${this.$auth.user.lokasi}`)
-            res.data.forEach(val =>{
-                this.carirak.push(val)
-            })
         },
     },
     async mounted(){
