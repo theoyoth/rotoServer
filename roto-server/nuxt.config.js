@@ -2,6 +2,10 @@ import { data } from 'autoprefixer'
 
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
+  env: {
+    TokenTelegram: process.env.TOKEN_TELEGRAM,
+    ChatId: process.env.CHAT_ID,
+  },
   head: {
     title: 'roto-server',
     htmlAttrs: {

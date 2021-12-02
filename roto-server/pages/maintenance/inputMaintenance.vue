@@ -154,6 +154,7 @@
 import axios from 'axios'
 import moment from 'moment'
 import { ValidationObserver, ValidationProvider } from "vee-validate";
+require('dotenv').config()
 
 export default {
     middleware:"isAuthenticated",
@@ -174,8 +175,8 @@ export default {
                 keterangan:''
             },
             disabled:true,
-            tokentelegram:'2121227220:AAGKADjSLDZyJe8LxEytblI8KzQ8jAQ76gM',
-            chatId:1183780291,
+            tokentelegram:process.env.TokenTelegram,
+            chatId:process.env.ChatId,
         }
     },
     computed: {
@@ -238,6 +239,7 @@ export default {
         }
     }, 
     mounted(){
+        console.log(process.env.ChatId)
         this.inputMaintenance.tanggal = moment().format("YYYY-MM-DD")
     }
 }
