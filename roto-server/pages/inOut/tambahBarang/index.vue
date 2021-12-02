@@ -237,7 +237,7 @@ export default {
     computed:{
         filteredList() {
             return this.barangs.filter(hasil=>{
-                if(hasil.nama_barang.toLowerCase().includes(this.caribarang.toLowerCase()) || hasil.kuantitas.toString().includes(this.caribarang.toString()) || hasil.kepentingan.toLowerCase().includes(this.caribarang.toLowerCase()) ){
+                if(hasil.nama_barang.toLowerCase().includes(this.caribarang.toLowerCase()) || hasil.kuantitas.toString().includes(this.caribarang.toString()) || hasil.kepentingan.toLowerCase().includes(this.caribarang.toLowerCase()) || hasil.penanggung_jawab.toLowerCase().includes(this.caribarang.toLowerCase()) ){
                     return hasil
                 }
             })

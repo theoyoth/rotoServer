@@ -2,10 +2,9 @@
   <div id="container"></div>
 </template>
 
-<script>
+<script type="module">
 import * as THREE from 'three';
-// import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
-// import {TubePainter} from 'three/examples/jsm/misc/TubePainter'
+// import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 
 export default {
     data() {
@@ -14,46 +13,173 @@ export default {
         scene: null,
         renderer: null,
         mesh: null,
-        // controls: null,
-        // controller1: null,
-        // controller2: null,
-        // cursor:new Three.Vector3(),
+        controls: null,
+        raycaster: false,
+        pointer: false,
+        isShiftDown:false,
+        cubeGeo: null,
+        cubeMaterial: null,
+        rollOverGeo: null,
+        rollOverMaterial: null,
+        rollOverMesh: null,
+        object:[],
       }
     },
     methods: {
       init() {
-        // let container = document.getElementById('container');
+        let container = document.getElementById('container');
 
-        // this.camera = new THREE.PerspectiveCamera(80, container.clientWidth/container.clientHeight, 0.01, 100);
+        this.camera = new THREE.PerspectiveCamera(80, container.clientWidth/container.clientHeight, 0.01, 100);
 
-        // const controls = new OrbitControls( this.camera, container );
         
-        // this.camera.position.z = 2;
-        // controls.update();
+        this.camera.position.z = 2.5;
+        this.camera.position.y = 0.5;
 
-        // this.scene = new THREE.Scene();
-        // this.scene.background = new THREE.Color(0x222222);
+        this.scene = new THREE.Scene();
+        this.scene.background = new THREE.Color(0x222222);
 
-        // let geometry = new THREE.BoxGeometry(0.2, 0.2, 0.2);
-        // let material = new THREE.MeshNormalMaterial();
+        // box 1
+        let geometry = new THREE.BoxGeometry(0.2, 0.2, 0.2);
+        let material = new THREE.MeshBasicMaterial({color: 0x2442aa});
+        this.mesh = new THREE.Mesh(geometry, material);
+        this.mesh.position.y = 0.1;
+        this.scene.add(this.mesh);
 
-        // this.mesh = new THREE.Mesh(geometry, material);
-        // this.mesh.matrix.setPosition(1,1.2,1);
-        // this.scene.add(this.mesh);
+        // box 2
+        let geometrybox2 = new THREE.BoxGeometry(0.2, 0.2, 0.5);
+        let materialbox2 = new THREE.MeshBasicMaterial({color: 0x334455});
+        this.mesh = new THREE.Mesh(geometrybox2, materialbox2);
+        this.mesh.position.x = -1.3;
+        this.mesh.position.y = 0.1;
+        this.mesh.position.z = 0.6;
+        this.scene.add(this.mesh);
+        // box 3
+        let geometrybox3 = new THREE.BoxGeometry(0.2, 0.2, 0.5);
+        let materialbox3 = new THREE.MeshBasicMaterial({color: 0x2442aa});
+        this.mesh = new THREE.Mesh(geometrybox3, materialbox3);
+        this.mesh.position.x = -1.3;
+        this.mesh.position.y = 0.1;
+        this.scene.add(this.mesh);
+        // box 4
+        let geometrybox4 = new THREE.BoxGeometry(0.2, 0.6, 0.5);
+        let materialbox4 = new THREE.MeshBasicMaterial({color: 0xaa4244});
+        this.mesh = new THREE.Mesh(geometrybox4, materialbox4);
+        this.mesh.position.x = 1.3;
+        this.mesh.position.y = 0.3;
+        this.scene.add(this.mesh);
 
-        // const floorGometry = new THREE.PlaneGeometry( 3,3 );
-				// const floorMaterial = new THREE.MeshBasicMaterial( {
-        //   color: 0xaaaaaa, 
-        //   side: THREE.DoubleSide
-        // } );
-				// const floor = new THREE.Mesh( floorGometry, floorMaterial );
-				// floor.rotation.x = - Math.PI / 2;
-				// this.scene.add( floor );
+        const floorGometry = new THREE.PlaneGeometry( 3,3 );
+				const floorMaterial = new THREE.MeshBasicMaterial( {
+          color: 0x777777, 
+          side: THREE.DoubleSide
+        } );
+				const floor = new THREE.Mesh( floorGometry, floorMaterial );
+				floor.rotation.x = - Math.PI / 2;
+				this.scene.add( floor );
 
-        // this.renderer = new THREE.WebGLRenderer({antialias: true});
-        // this.renderer.setSize(container.clientWidth, container.clientHeight);
-        // container.appendChild(this.renderer.domElement);
+        this.rollOverGeo = new THREE.BoxGeometry( 50, 50, 50 );
+				this.rollOverMaterial = new THREE.MeshBasicMaterial( { color: 0xff0000, opacity: 0.5, transparent: true } );
+				this.rollOverMesh = new THREE.Mesh( this.rollOverGeo, this.rollOverMaterial );
+				this.scene.add( this.rollOverMesh );
+
+				// cubes
+				this.cubeGeo = new THREE.BoxGeometry( 50, 50, 50 );
+				this.cubeMaterial = new THREE.MeshLambertMaterial( { color: 0xfeb74c})
+        
+        const gridHelper = new THREE.GridHelper( 5, 10 );
+				this.scene.add( gridHelper );
+
+        this.raycaster = new THREE.Raycaster();
+				this.pointer = new THREE.Vector2();
+
+        this.renderer = new THREE.WebGLRenderer({antialias: true});
+        this.renderer.setSize(container.clientWidth, container.clientHeight);
+        // this.controls = new OrbitControls( this.camera, container );
+        // this.controls.update();
+        container.appendChild(this.renderer.domElement);
       },
+      onPointerMove( event ) {
+
+				this.pointer.set( ( event.clientX / window.innerWidth ) * 2 - 1, - ( event.clientY / window.innerHeight ) * 2 + 1 );
+
+				this.raycaster.setFromCamera( this.pointer, this.camera );
+
+				const intersects = this.raycaster.intersectObjects( objects, false );
+
+				if ( intersects.length > 0 ) {
+
+					const intersect = intersects[ 0 ];
+
+					this.rollOverMesh.position.copy( intersect.point ).add( intersect.face.normal );
+					this.rollOverMesh.position.divideScalar( 50 ).floor().multiplyScalar( 50 ).addScalar( 25 );
+
+				}
+
+				animate();
+
+			},
+      onPointerDown( event ) {
+
+				this.pointer.set( ( event.clientX / window.innerWidth ) * 2 - 1, - ( event.clientY / window.innerHeight ) * 2 + 1 );
+
+				this.raycaster.setFromCamera( this.pointer, this.camera );
+
+				const intersects = this.raycaster.intersectObjects( this.objects, false );
+
+				if ( intersects.length > 0 ) {
+
+					const intersect = intersects[ 0 ];
+
+					// delete cube
+
+					if ( this.isShiftDown ) {
+
+						if ( intersect.object !== plane ) {
+
+							this.scene.remove( intersect.object );
+
+							this.objects.splice( this.objects.indexOf( intersect.object ), 1 );
+
+						}
+
+						// create cube
+
+					} else {
+
+						const voxel = new THREE.Mesh( this.cubeGeo, this.cubeMaterial );
+						voxel.position.copy( intersect.point ).add( intersect.face.normal );
+						voxel.position.divideScalar( 50 ).floor().multiplyScalar( 50 ).addScalar( 25 );
+						this.scene.add( voxel );
+
+						this.objects.push( voxel );
+
+					}
+
+					animate();
+
+				}
+
+			},
+      onDocumentKeyDown( event ) {
+
+				switch ( event.keyCode ) {
+
+					case 16: this.isShiftDown = true; break;
+
+				}
+
+			},
+
+			onDocumentKeyUp( event ) {
+
+				switch ( event.keyCode ) {
+
+					case 16: this.isShiftDown = false; break;
+
+				}
+
+			},
+
       animate(){
         requestAnimationFrame(this.animate);
         this.renderer.render(this.scene, this.camera);

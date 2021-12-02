@@ -140,7 +140,7 @@
                         class="text-gray-200 text-lg z-10"
                     />
                   </div>
-                  <h1 class="text-xl font-semibold">{{hasilMaintenanceSecurity.ups}}%</h1>
+                  <h1 class="text-xl font-semibold">{{hasilMaintenanceSecurity.ups}}</h1>
                   <p class="text-xs">UPS</p>
                 </div>
               </div>
@@ -227,7 +227,7 @@ export default {
       localStorage.setItem("app-logout", 'logout' + Math.random())
       return true
     },
-    async fillData(){
+    async fillDataSuhu(){
       const lokasi = this.$auth.user.lokasi
       try {
         const resp = await axios.get(
@@ -255,8 +255,11 @@ export default {
             maintainAspectRatio: false,
             scales: {
               y: {
-                // stacked: true,
-                beginAtZero: true,
+                // beginAtZero: true,
+                title: {
+                  display: true,
+                  text: 'suhu'
+                },
                 ticks: {
                   color: "#E8EAF6",
                 },
@@ -265,6 +268,10 @@ export default {
                 },
               },
               x: {
+                title: {
+                  display: true,
+                  text: 'tanggal'
+                },
                 ticks: {
                   color: "#E8EAF6",
                 },
@@ -272,13 +279,8 @@ export default {
                   color: "rgb(232, 234, 246)"
                 }
               }
-            }
+            },
           }
-          // resp.data.forEach(data => {
-          //   this.labels.push(data.tanggal.toString());
-          //   this.suhus.push(data.suhu.toString())
-          //   this.kelembapans.push(data.kelembapan.toString())
-          // })
         } 
       } catch (err) {
         console.log(err)
@@ -337,7 +339,7 @@ export default {
     }
   },
   mounted(){
-    this.fillData(),
+    this.fillDataSuhu(),
     this.fillDataKelembapan()
     
     const data = {

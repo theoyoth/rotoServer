@@ -13,7 +13,7 @@
         <p class="text-center text-xl text-gray-700 font-semibold">Input maintenance</p>
 
     <ValidationObserver v-slot={invalid,valid} ref="obserf">
-    <form @submit.prevent="postInputMaintenance" class="min-w-min mt-10" id="inputmaintenance">
+    <form @submit.prevent="[postInputMaintenance(),sendNotifyMaintenance()]" class="min-w-min mt-10" id="inputmaintenance">
         <div>
             <div class="grid grid-cols-2">
                 <!-- <div class="mb-4">
@@ -33,7 +33,7 @@
                             <p class="text-xs mt-1 text-right text-red-500">{{ errors[0] }}</p>
                             </ValidationProvider>
                         </div>
-                        <small v-if="inputMaintenance.suhu > 50" class="text-green-500">suhu ruangan tinggi, harap hubungi EDP</small>
+                        <small v-if="inputMaintenance.suhu > 50" class="text-green-500">suhu ruangan tinggi</small>
                     </div>
                 </div>
                 <div class="mb-2" :class="[inputMaintenance.suhu !== '' ? 'incop' : 'decop']">
@@ -49,7 +49,7 @@
                             <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
                             </ValidationProvider>
                         </div>
-                        <small v-if="inputMaintenance.kelembapan > 80" class="text-green-500">kelembapan ruangan tinggi, harap hubungi EDP</small>
+                        <small v-if="inputMaintenance.kelembapan > 80" class="text-green-500">kelembapan ruangan tinggi</small>
                     </div>
                 </div>
                 <div class="mb-2" :class="[inputMaintenance.kelembapan !== '' ? 'incop' : 'decop']">
@@ -174,6 +174,8 @@ export default {
                 keterangan:''
             },
             disabled:true,
+            tokentelegram:'2121227220:AAGKADjSLDZyJe8LxEytblI8KzQ8jAQ76gM',
+            chatId:1183780291,
         }
     },
     computed: {
@@ -209,6 +211,30 @@ export default {
                     swal('data berhasil ditambahkan',{icon:'success'})
                     this.$router.push('/maintenance')
                 }
+        },
+        async sendNotifyMaintenance(){
+            if(this.inputMaintenance.suhu > 50 && this.$auth.user.role === 'Security'){
+                const flashMessage = `suhu ruangan server : ${this.inputMaintenance.suhu}℃. suhu terlalu tinggi. harap melakukan pemeriksaan`
+                const resp = await axios.post(`https://api.telegram.org/bot${this.tokentelegram}/sendMessage?chat_id=${this.chatId}&text=${flashMessage}`)
+                if(resp){
+                    swal('pesan di kirim ke EDP dan PA',{icon:'success'})
+                    this.$router.push('/maintenance')
+                }
+                else{ 
+                    swal('data tidak terkirim',{icon:'error'})
+                }
+            }
+            if(this.inputMaintenance.kelembapan > 80 && this.$auth.user.role === 'Security'){
+                const flashMessage = `kelembapan ruangan server : ${this.inputMaintenance.kelembapan}%. kelembapan terlalu tinggi. harap melakukan pemeriksaan`
+                const resp = await axios.post(`https://api.telegram.org/bot${this.tokentelegram}/sendMessage?chat_id=${this.chatId}&text=${flashMessage}`)
+                if(resp){
+                    swal('pesan di kirim ke EDP dan PA',{icon:'success'})
+                    this.$router.push('/maintenance')
+                }
+                else{ 
+                    swal('data tidak terkirim',{icon:'error'})
+                }
+            }
         }
     }, 
     mounted(){

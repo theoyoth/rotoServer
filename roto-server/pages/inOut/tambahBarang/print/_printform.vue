@@ -11,23 +11,23 @@
         </NuxtLink> 
         <div id="printform" class="mt-8">
           <h1 class="text-xl font-semibold" style="text-align: center">Data Barang</h1>
-          <table width="100%" border="1" style="border-collapse: collapse;border-width:1px;border-color:black;" class="mt-2">
+          <table width="100%" border="1" style="border-collapse: collapse;" class="mt-2 border-collapse">
             <thead>
-              <th class="border border-black py-2" style="border-width:1px;border-color:black;padding-top:2px;font-weight:bold;">Tanggal input</th>
-              <th class="border border-black"  style="padding-top:2px;font-weight:bold;">Nama Barang</th>
-              <th class="border border-black"  style="padding-top:2px;font-weight:bold;">Kuantitas</th>
+              <th class="border border-black py-2" style="border-width:2px;border-color:black;border-collapse:collapse;padding-top:2px;font-weight:bold;">Tanggal</th>
+              <th class="border border-black"  style="border-width:2px;border-color:black;border-collapse:collapse;padding-top:2px;font-weight:bold;">Nama Barang</th>
+              <th class="border border-black"  style="border-width:2px;border-color:black;border-collapse:collapse;padding-top:2px;font-weight:bold;">Kuantitas</th>
             </thead>
             <tbody>
-              <tr style="border:1px solid black">
-                <td class="border border-black py-2" style="text-align: center;padding-top:2px;">{{dataPrint.tanggal}}</td>
-                <td class="border border-black " style="text-align: center;padding-top:2px;">{{dataPrint.namaBarang}}</td>
-                <td class="border border-black " style="text-align: center;padding-top:2px;">{{dataPrint.kuantitas}}</td>
+              <tr>
+                <td class="border border-black border-collapse py-2" style="border-width:2px;border-color:black;border-collapse:collapse;text-align: center;padding-top:2px;">{{dataPrint.tanggal}}</td>
+                <td class="border border-black border-collapse" style="border-width:2px;border-color:black;border-collapse:collapse;text-align: center;padding-top:2px;">{{dataPrint.namaBarang}}</td>
+                <td class="border border-black border-collapse" style="border-width:2px;border-color:black;border-collapse:collapse;text-align: center;padding-top:2px;">{{dataPrint.kuantitas}}</td>
               </tr>
             </tbody>
           </table>
           <div class="flex justify-between w-full" style="display: flex;justify-content:space-around;margin-top:10px;">
             <div class="h-20 flex flex-col justify-between text-center" style="text-align: center;">
-              <p>Nama penambah</p>
+              <p>Nama pemambah</p>
               <p style="transform:translateY(20px);">{{dataPrint.namaPenambah}}</p>
             </div>
             <div class="h-20 flex flex-col justify-between text-center" style="text-align:center;">
@@ -47,6 +47,7 @@
 <script>
 import axios from 'axios'
 import moment from 'moment'
+import printJS from 'print-js'
 
 export default {  
   middleware:"isAuthenticated",
@@ -86,26 +87,12 @@ export default {
       //         '~/public/printer.css'
       //       ]
       //     };
+      // printJS('printform','html');
       this.$htmlToPaper('printform');
-      // window.print()
     }
   }
 }
 </script>
 
 <style>
-@media print {
-  table{
-    border:1px solid black;
-  }
-  thead{
-    border:1px solid black;
-  }
-  tbody{
-    border: 1px solid black;
-  }
-  table { page-break-inside:auto }
-  tr    { page-break-inside:avoid; page-break-after:auto }
-  thead { display:table-header-group }
-}
 </style>

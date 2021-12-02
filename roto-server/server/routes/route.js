@@ -195,21 +195,6 @@ router.get('/homepage', isAuthent, authController.homepage)
 // logout
 router.post('/logout', authController.logout)
 
-// cari barang ===================================================
-router.get('/cariserver/:cari/:lokasi/:id', readController.caribarangserver)
-router.get('/carirak/:cari/:lokasi/:id', readController.caribarangrak)
-router.get('/cariups/:cari/:lokasi/:id', readController.caribarangups)
-router.get('/caribaterai/:cari/:lokasi/:id', readController.caribarangbaterai)
-router.get('/cariac/:cari/:lokasi/:id', readController.caribarangac)
-router.get('/caricctv/:cari/:lokasi/:id', readController.caribarangcctv)
-router.get('/carinetwork/:cari/:lokasi/:id', readController.caribarangnetwork)
-router.get('/cariapar/:cari/:lokasi/:id', readController.caribarangapar)
-router.get('/carimonitor/:cari/:lokasi/:id', readController.caribarangmonitor)
-router.get('/carikeyboard/:cari/:lokasi/:id', readController.caribarangkeyboard)
-router.get('/carimouse/:cari/:lokasi/:id', readController.caribarangmouse)
-router.get('/carinas/:cari/:lokasi/:id', readController.caribarangnas)
-router.get('/carigenset/:cari/:lokasi/:id', readController.caribaranggenset)
-
 // ===============================================
 // MAINTENANCE SERVER
 router.post('/inputmaintenance', maintenanceController.inputmaintenance)
@@ -220,10 +205,6 @@ router.get(
 router.delete(
   '/maintenance/delete/:id/:lokasi',
   maintenanceController.deleteMaintenance
-)
-router.get(
-  '/maintenance/carimaintenance/:value/:lokasi/:id',
-  maintenanceController.carimaintenance
 )
 router.get(
   '/maintenance/getdatamaintenanceupdate/:id/:lokasi',

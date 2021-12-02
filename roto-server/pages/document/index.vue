@@ -150,7 +150,7 @@ export default {
     //   /^.*\.pdf$/
     // )
 
-    // require.context('~/uploads/', true, /\.pdf$/)
+    require.context('~/uploads/', true, /\.pdf$/)
   },
 }
 </script>

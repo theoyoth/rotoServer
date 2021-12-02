@@ -1,8 +1,6 @@
 <script>
 import Chart from 'chart.js'
-import axios from 'axios'
-import moment from 'moment'
-import {Bar,Line, mixins} from 'vue-chartjs';
+import {Line, mixins} from 'vue-chartjs';
 const {reactiveProp} = mixins
 
 export default {

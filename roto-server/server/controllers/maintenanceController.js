@@ -256,43 +256,6 @@ module.exports.getdatamaintenanceupdate = async (req, res) => {
   }
 }
 
-module.exports.carimaintenance = async (req, res) => {
-  let conn
-  try {
-    const value = req.params.value
-    const id = req.params.id
-    const lokasiServer = req.params.lokasi
-    conn = await pool.getConnection()
-
-    if (lokasiServer == 'rotogravure 1') {
-      const carimaint = await conn.query(
-        `SELECT * FROM maintenance WHERE suhu LIKE '${value}%' AND id_users=${id} OR kelembapan LIKE '${value}%' AND id_users=${id}`
-      )
-      res.send(carimaint)
-    } else if (lokasiServer == 'rotogravure 2') {
-      const carimaint = await conn.query(
-        `SELECT * FROM maintenance_roto_2 WHERE suhu LIKE '${value}%' AND id_users=${id} OR kelembapan LIKE '${value}%' AND id_users=${id}`
-      )
-      res.send(carimaint)
-    } else if (lokasiServer == 'rotogravure 3') {
-      const carimaint = await conn.query(
-        `SELECT * FROM maintenance_roto_3 WHERE suhu LIKE '${value}%' AND id_users=${id} OR kelembapan LIKE '${value}%' AND id_users=${id}`
-      )
-      res.send(carimaint)
-    } else if (lokasiServer == 'rotogravure tinta') {
-      const carimaint = await conn.query(
-        `SELECT * FROM maintenance_tinta WHERE suhu LIKE '${value}%' AND id_users=${id} OR kelembapan LIKE '${value}%' AND id_users=${id}`
-      )
-      res.send(carimaint)
-    }
-    conn.release()
-  } catch (err) {
-    console.log(err)
-  } finally {
-    if (conn) return conn.end()
-  }
-}
-
 module.exports.detailMaintenance = async (req, res) => {
   let conn
   try {
