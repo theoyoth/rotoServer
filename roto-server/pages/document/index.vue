@@ -11,7 +11,6 @@
         <form @submit.prevent="onSubmit" enctype="multipart/form-data">
           <div class="w-full mt-6">
             <div class="relative mx-auto text-center dropbox">
-              <!-- <label for="file" class="labelinput px-12 py-3 bg-blue-600 rounded-lg cursor-pointer text-gray-100">upload file...</label> -->
                 <input
                   type="file"
                   ref="file"
@@ -39,15 +38,16 @@
           </div>
         </form>
       </div>
-      <div class="grid grid-cols-4 mt-5 gap-y-6 place-items-center relative">
+      <div class="grid grid-cols-4 mt-5 gap-y-6 py-4 place-items-center relative border border-gray-500">
         <div v-for="(fil, index) in allfiles" :key="index" class="w-48 h-44 bg-gray-400 rounded-lg relative">
           <div class="w-24 mx-auto transform translate-y-4">
             <img src="~/assets/img/pdf.png" alt="pdf-icon">
           </div>
           <div class="p-2 bg-gray-300 absolute bottom-0 w-full text-center rounded-b-lg">
             <div class="w-full"><p class="text-xs text-center break-words">{{ fil.name }}</p></div>
+            
             <div class="flex">
-              <a :href="fil.name" target="_blank">
+              <a href="../../uploads/indihome_1638517468303.pdf" target="_blank">
                 <div class="cursor-pointer w-6">
                   <font-awesome-icon :icon="['fas','eye']" class="text-gray-700"/>
                 </div>
@@ -63,27 +63,18 @@
           </div>
         </div>
       </div>
-      <!-- <iframe
-        src="../../uploads/672018139_1637655401673.pdf"
-        frameBorder="0"
-        scrolling="auto"
-        height="100%"
-        width="100%"
-    ></iframe> -->
     </section>
   </div>
 </template>
 
 <script>
-import axios from 'axios'
 import { ValidationObserver, ValidationProvider } from "vee-validate";
-// import pdf from 'vue-pdf'
-// import VuePdfApp from "vue-pdf-app";
+
 export default {
   middleware: 'isAuthenticated',
   components:{
     ValidationObserver,
-    ValidationProvider
+    ValidationProvider,
   },
   data() {
     return {
@@ -108,7 +99,7 @@ export default {
       let formData = new FormData()
       formData.append('file', this.file)
       try {
-        const resp = await axios.post('http://localhost:3000/server/document', formData)
+        const resp = await this.$axios.post('/document', formData)
         if (resp) {
           swal(resp.data.msg, { icon: 'success' })
         } else {
@@ -119,7 +110,7 @@ export default {
       }
     },
     downloadFile(filename) {
-          axios.get(`http://localhost:3000/server/document/list/${filename}`)
+          this.$axios.get(`/document/list/${filename}`)
           .then((response) => {
             swal(response.data.msg,{icon:'success'})
           }).catch(err=>{
@@ -127,7 +118,7 @@ export default {
           })
     },
     deleteFile(filename){
-      axios.delete(`http://localhost:3000/server/document/list/${filename}`)
+      this.$axios.delete(`/document/list/${filename}`)
       .then(resp=>{
         swal(resp.data.msg,{icon:'success'})
       }).catch(err=>{
@@ -137,7 +128,7 @@ export default {
   },
   async mounted() {
     try {
-      const resp = await axios.get('http://localhost:3000/server/document/list')
+      const resp = await this.$axios.get('/document/list')
       if (resp) {
         this.allfiles = resp.data
       }
@@ -150,19 +141,19 @@ export default {
     //   /^.*\.pdf$/
     // )
 
-    require.context('~/uploads/', true, /\.pdf$/)
+    require.context('~/uploads/', false, /\.pdf$/)
   },
 }
 </script>
 
 <style>
 .dropbox {
-  outline: 2px dashed grey; /* the dash box */
+  outline: 2px dashed grey; 
   outline-offset: -10px;
   background: rgb(236, 255, 255);
   color: dimgray;
   padding: 10px 10px;
-  height: 150px; /* minimum height */
+  height: 150px; 
   position: relative;
   transition: .4s;
   cursor: pointer;
@@ -171,7 +162,7 @@ export default {
   background: lightblue;
 }
 .input-file {
-  opacity: 0; /* invisible but it's there! */
+  opacity: 0; 
   width: 100%;
   height: 100%;
   position: absolute;

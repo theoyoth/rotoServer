@@ -128,8 +128,6 @@
 </template>
 
 <script>
-import axios from 'axios'
-import moment from 'moment'
 
 export default {
   middleware:"isAuthenticated",
@@ -141,8 +139,8 @@ export default {
   async mounted(){
     const lokasi = this.$auth.user.lokasi
     const iddetail = this.$route.params.id
-    const resp = await axios.get(
-      `http://localhost:3000/server/master/server/detail/${lokasi}/${iddetail}`
+    const resp = await this.$axios.get(
+      `/master/server/detail/${lokasi}/${iddetail}`
     )
     this.detail = resp.data
   }

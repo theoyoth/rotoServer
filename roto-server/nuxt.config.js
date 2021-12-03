@@ -100,7 +100,7 @@ export default {
             propertyName: false,
           },
         },
-        // tokenRequired: false,
+        // tokenRequired: true,
         // tokenType: false,
       },
     },

@@ -147,8 +147,6 @@
 </template>
 
 <script>
-import axios from 'axios'
-import moment from 'moment'
 export default {
     middleware:"isAuthenticated",
     data(){
@@ -184,7 +182,7 @@ export default {
                     let indexOfArrayItem = this.cctvs.findIndex(i => i.id_cctv === id)
 
                     const lokasi = this.$auth.user.lokasi
-                    axios.delete(`http://localhost:3000/server/master/deletecctv/${id}/${lokasi}`)
+                    this.$axios.delete(`/master/deletecctv/${id}/${lokasi}`)
                     .then(resp=>{
                         if(resp){
                             this.cctvs.splice(indexOfArrayItem, 1);
@@ -204,20 +202,13 @@ export default {
                 swal('Error','ada yang salah',{icon:'error'})
             })
         },
-        async caribarangcctv(){
-            this.caricctv = []
-            const res = await axios.get(`http://localhost:3000/server/caricctv?cari=${this.caribarang}`)
-            res.data.forEach(val =>{
-                this.caricctv.push(val)
-            })
-        },
     },
     async mounted(){
         try{
             const lokasi = this.$auth.user.lokasi
             const idlogin = this.$auth.user.id
 
-            const resp = await axios.get(`http://localhost:3000/server/mastercctv/${lokasi}/${idlogin}`)
+            const resp = await this.$axios.get(`/mastercctv/${lokasi}/${idlogin}`)
             resp.data.forEach(cctv => {
                 this.cctvs.push(cctv)
             })

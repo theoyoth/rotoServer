@@ -100,9 +100,6 @@ export default {
         }
     },
     computed:{
-        lokasiserver(){
-            return this.$store.state.lokasiServer.lokasi
-        },
         eyeIcon () {
           return this.ruleIcon === 'asc' ? ['fas', 'eye'] : ['fas', 'eye-slash'];
         }
@@ -140,7 +137,6 @@ export default {
         if(this.$auth.loggedIn){
             return this.$router.go(-1)
         }
-        this.$store.dispatch('lokasiServer/getLokasi')
     }
 }
 </script>

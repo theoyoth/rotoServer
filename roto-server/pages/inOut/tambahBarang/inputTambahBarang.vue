@@ -91,7 +91,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 import moment from 'moment'
 import { ValidationObserver, ValidationProvider } from "vee-validate";
 
@@ -110,12 +109,16 @@ export default {
                 kepentingan:"",
                 penanggungJawab: "",
             },
-            userpa:[],
+        }
+    },
+    computed:{
+        userpa(){
+            return this.$store.state.getUserPa.alluserpa
         }
     },
     methods:{
         async postTambahBarang(){
-            const resp = await axios.post('http://localhost:3000/server/tambahbarang/input',{
+            const resp = await this.$axios.post('/tambahbarang/input',{
                 iduser:this.$auth.user.id,
                 namauser : this.$auth.user.nama,
                 lokasiServer : this.$auth.user.lokasi,
@@ -136,17 +139,8 @@ export default {
             }
         }
     },
-    async mounted(){
-        try{
-            const resp = await axios.get('http://localhost:3000/server/users/pa')
-            if(resp){
-                resp.data.forEach(pa=>{
-                    this.userpa.push(pa)
-                })
-            }
-        }catch(err){
-            console.log(err)
-        }
+    mounted(){
+        this.$store.dispatch('getUserPa/getallUserPa')
     }
 }
 </script>

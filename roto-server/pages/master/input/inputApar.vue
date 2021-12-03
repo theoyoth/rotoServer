@@ -83,7 +83,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 import moment from 'moment'
 import { ValidationObserver, ValidationProvider } from "vee-validate";
 
@@ -108,7 +107,7 @@ export default {
     },
     methods:{
         async postInputApar(){
-            const res = await axios.post('http://localhost:3000/server/master/inputapar',{
+            const res = await this.$axios.post('/master/inputapar',{
                 iduser: this.$auth.user.id,
                 lokasiServer: this.$auth.user.lokasi,
                 model:this.inputApar.model,
@@ -126,7 +125,7 @@ export default {
                 this.$router.push('/master/apar')
             }
         }
-    }
+    },
 }
 </script>
 

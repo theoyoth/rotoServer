@@ -27,7 +27,7 @@
           </table>
           <div class="flex justify-between w-full" style="display: flex;justify-content:space-around;margin-top:10px;">
             <div class="h-20 flex flex-col justify-between text-center" style="text-align: center;">
-              <p>Nama pemambah</p>
+              <p>Nama penambah</p>
               <p style="transform:translateY(20px);">{{dataPrint.namaPenambah}}</p>
             </div>
             <div class="h-20 flex flex-col justify-between text-center" style="text-align:center;">
@@ -45,9 +45,7 @@
 </template>
 
 <script>
-import axios from 'axios'
 import moment from 'moment'
-import printJS from 'print-js'
 
 export default {  
   middleware:"isAuthenticated",
@@ -67,7 +65,7 @@ export default {
     const lokasi = this.$auth.user.lokasi
     const id = this.$route.params.id
 
-    const resp = await axios.get(`http://localhost:3000/server/inout/tambahbarang/update/${id}/${lokasi}`)
+    const resp = await this.$axios.get(`/inout/tambahbarang/update/${id}/${lokasi}`)
     if(resp){
         resp.data.forEach(barang=>{
             this.dataPrint.tanggal = moment(barang.tanggal).format('DD-MM-YYYY')
@@ -81,13 +79,6 @@ export default {
   },
   methods:{
     async printtheform(){
-      // Pass the element id here
-      // const localOptions = {
-      //       styles: [
-      //         '~/public/printer.css'
-      //       ]
-      //     };
-      // printJS('printform','html');
       this.$htmlToPaper('printform');
     }
   }

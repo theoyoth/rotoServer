@@ -158,6 +158,7 @@
             <div class="mt-10">
               <BarChartkelembapan :chart-data="kelembapans" :options="optionKelem"/>
             </div>
+              <!-- <BarChartdata :bar-char="barcharlabel" :bardata="barchardata"/> -->
           </div>
         </div>       
       </div>
@@ -166,7 +167,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 import moment from 'moment'
 
 export default {
@@ -181,6 +181,8 @@ export default {
       chartData:null,
       options:{},
       optionKelem:{},
+      barcharlabel:null,
+      barchardata:null,
     }
   },
   computed: {
@@ -230,12 +232,14 @@ export default {
     async fillDataSuhu(){
       const lokasi = this.$auth.user.lokasi
       try {
-        const resp = await axios.get(
-          `http://localhost:3000/server/maintenance/security/alldata/${lokasi}`
+        const resp = await this.$axios.get(
+          `/maintenance/security/alldata/${lokasi}`
         )
         if (resp.data) {
           const daftarLabel = resp.data.map(list => moment(list.tanggal).format('DD-MM-YYYY'))
           const daftarSuhu = resp.data.map(list => list.suhu)
+          this.barcharlabel = daftarLabel
+          this.barchardata = daftarSuhu
           // const daftarSuhu = resp.data.map(list => list.suhu)
           this.chartData = {
             labels: daftarLabel,
@@ -254,31 +258,29 @@ export default {
             responsive: true,
             maintainAspectRatio: false,
             scales: {
-              y: {
+              yAxes: [{
                 // beginAtZero: true,
-                title: {
-                  display: true,
-                  text: 'suhu'
+                // title: {
+                //   display: true,
+                //   text: 'suhu'
+                // },
+                ticks: {
+                  max:50,
+                  color: "#E8EAF6",
                 },
+                grid: {
+                  color: "rgb(232, 234, 246)"
+                },
+              }],
+              xAxes: {
                 ticks: {
                   color: "#E8EAF6",
+                  maxTicksLimit: 8
                 },
                 grid: {
                   color: "rgb(232, 234, 246)"
                 },
               },
-              x: {
-                title: {
-                  display: true,
-                  text: 'tanggal'
-                },
-                ticks: {
-                  color: "#E8EAF6",
-                },
-                grid: {
-                  color: "rgb(232, 234, 246)"
-                }
-              }
             },
           }
         } 
@@ -289,8 +291,8 @@ export default {
      async fillDataKelembapan(){
       const lokasi = this.$auth.user.lokasi
       try {
-        const resp = await axios.get(
-          `http://localhost:3000/server/maintenance/security/alldata/${lokasi}`
+        const resp = await this.$axios.get(
+          `/maintenance/security/alldata/${lokasi}`
         )
         if (resp.data) {
           const daftarLabel = resp.data.map(list => moment(list.tanggal).format('DD-MM-YYYY'))
@@ -312,24 +314,25 @@ export default {
             responsive: true,
             maintainAspectRatio: false,
             scales: {
-              y: {
+              yAxes: [{
                 // stacked: true,
-                beginAtZero: true,
+                // beginAtZero: true,
+                ticks: {
+                  max:80,
+                  color: "#E8EAF6",
+                },
+                grid: {
+                  color: "rgb(232, 234, 246)"
+                },
+              }],
+              xAxes: [{
                 ticks: {
                   color: "#E8EAF6",
                 },
                 grid: {
                   color: "rgb(232, 234, 246)"
                 },
-              },
-              x: {
-                ticks: {
-                  color: "#E8EAF6",
-                },
-                grid: {
-                  color: "rgb(232, 234, 246)"
-                }
-              }
+              }],
             }
           }
         } 

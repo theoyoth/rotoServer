@@ -149,8 +149,6 @@
 </div>
 </template>
 <script>
-import axios from 'axios'
-import moment from 'moment'
 export default {
     middleware:"isAuthenticated",
     data(){
@@ -184,7 +182,7 @@ export default {
             }).then(suc=>{
                 if(suc){
                     const lokasi = this.$auth.user.lokasi
-                    axios.delete(`/server/master/deletebaterai/${id}/${lokasi}`)
+                    this.$axios.delete(`/master/deletebaterai/${id}/${lokasi}`)
                     .then(resp=>{
                         if(resp){
                             this.baterais.splice(this.baterais.indexOf(id), 1);
@@ -213,7 +211,7 @@ export default {
         try{
             const lokasi = this.$auth.user.lokasi
             const idlogin = this.$auth.user.id
-            const resp = await axios.get(`http://localhost:3000/server/masterbaterai/${lokasi}/${idlogin}`)
+            const resp = await this.$axios.get(`/masterbaterai/${lokasi}/${idlogin}`)
             resp.data.forEach(baterai => {
                 this.baterais.push(baterai)
             })

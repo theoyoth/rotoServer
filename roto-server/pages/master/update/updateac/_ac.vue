@@ -57,7 +57,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 import moment from 'moment'
 
 export default {
@@ -80,7 +79,7 @@ export default {
         const lokasi = this.$auth.user.lokasi
         const id = this.$route.params.id
 
-        const resp = await axios.get(`http://localhost:3000/server/master/ac/update/${id}/${lokasi}`)
+        const resp = await this.$axios.get(`/master/ac/update/${id}/${lokasi}`)
         if(resp){
             resp.data.forEach(ac=>{
                 this.updateAc.merek = ac.merek
@@ -96,7 +95,7 @@ export default {
     },
     methods:{
         async updateDataAc(){
-            const resp = await axios.post('http://localhost:3000/server/master/ac/update',{
+            const resp = await this.$axios.post('/master/ac/update',{
             lokasiServer : this.$auth.user.lokasi,
             iduser : this.$auth.user.id,
             idac : this.$route.params.id,

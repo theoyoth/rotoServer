@@ -11,17 +11,17 @@
         </NuxtLink> 
         <div id="printform" class="mt-8">
           <h1 class="text-xl font-semibold" style="text-align: center">Data Barang</h1>
-          <table width="100%" border="1" style="border-collapse: collapse;" class="mt-2">
+          <table width="100%" border="1" style="border-collapse: collapse;" class="mt-2 border-collapse">
             <thead>
-              <th class="border border-black py-2" style="border-width:1px;border-color:black;padding-top:2px;font-weight:bold;">Tanggal input</th>
-              <th class="border border-black"  style="padding-top:2px;font-weight:bold;">Nama Barang</th>
-              <th class="border border-black"  style="padding-top:2px;font-weight:bold;">Kuantitas</th>
+              <th class="border border-black py-2" style="border-width:2px;border-color:black;border-collapse:collapse;padding-top:2px;font-weight:bold;">Tanggal input</th>
+              <th class="border border-black"  style="border-width:2px;border-color:black;border-collapse:collapse;padding-top:2px;font-weight:bold;">Nama Barang</th>
+              <th class="border border-black"  style="border-width:2px;border-color:black;border-collapse:collapse;padding-top:2px;font-weight:bold;">Kuantitas</th>
             </thead>
             <tbody>
               <tr>
-                <td class="border border-black py-2" style="text-align: center;padding-top:2px;">{{dataPrint.tanggal}}</td>
-                <td class="border border-black " style="text-align: center;padding-top:2px;">{{dataPrint.namaBarang}}</td>
-                <td class="border border-black " style="text-align: center;padding-top:2px;">{{dataPrint.kuantitas}}</td>
+                <td class="border border-black py-2" style="border-width:2px;border-color:black;border-collapse:collapse;text-align: center;padding-top:2px;">{{dataPrint.tanggal}}</td>
+                <td class="border border-black " style="border-width:2px;border-color:black;border-collapse:collapse;text-align: center;padding-top:2px;">{{dataPrint.namaBarang}}</td>
+                <td class="border border-black " style="border-width:2px;border-color:black;border-collapse:collapse;text-align: center;padding-top:2px;">{{dataPrint.kuantitas}}</td>
               </tr>
             </tbody>
           </table>
@@ -45,7 +45,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 import moment from 'moment'
 
 export default {  
@@ -66,7 +65,7 @@ export default {
     const lokasi = this.$auth.user.lokasi
     const id = this.$route.params.id
 
-    const resp = await axios.get(`http://localhost:3000/server/inout/ambilbarang/update/${id}/${lokasi}`)
+    const resp = await this.$axios.get(`/inout/ambilbarang/update/${id}/${lokasi}`)
     if(resp){
         resp.data.forEach(barang=>{
             this.dataPrint.tanggal = moment(barang.tanggal).format('DD-MM-YYYY')

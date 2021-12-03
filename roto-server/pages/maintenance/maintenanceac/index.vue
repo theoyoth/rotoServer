@@ -6,8 +6,8 @@
         <p class="text-center text-lg text-gray-700 font-semibold">Maintenance teknisi AC</p>
         <div class="flex justify-between mt-8 ">
             <div class="flex">
-                <input type="text" placeholder="cari" name="cari" v-model.lazy="carimaintenance" class="rounded-l-lg w-52 p-2 outline-none bg-gray-200" @keyup.enter="$fetch">
-                <button class="p-2 rounded-r-lg bg-gray-700 flex items-center justify-center w-12" @click="$fetch">
+                <input type="text" placeholder="cari" name="cari" v-model="carimaintenance" class="rounded-l-lg w-52 p-2 outline-none bg-gray-200">
+                <button class="p-2 rounded-r-lg bg-gray-700 flex items-center justify-center w-12">
                     <font-awesome-icon :icon="['fas','search']" class="text-yellow-500"/>
                 </button>
             </div>
@@ -31,7 +31,7 @@
                 </tr>
             </thead>
             <tbody v-if="carimaintenance !== ''" class="text-center bg-white bg-opacity-40 divide-y divide-gray-300">
-                <tr class="text-sm" v-for="(hasilcari,index) in hasilcarimaintenance" :key="index">
+                <tr class="text-sm" v-for="(hasilcari,index) in filteredList" :key="index">
                     <td>{{index+1}}</td>
                     <td class="py-3">{{hasilcari.nama_pemeriksa}}</td>
                     <td>{{$moment(hasilcari.tanggal).format("DD-MM-YYYY")}}</td>
@@ -58,8 +58,6 @@
 </template>
 
 <script>
-import axios from 'axios'
-import moment from 'moment'
 
 export default {
     middleware:"isAuthenticated",
@@ -67,30 +65,21 @@ export default {
         return{
             carimaintenance:"",
             hasilMaintenanceac:[],
-            hasilcarimaintenance:[],
         }
     },   
-   
-    async fetch(){
-        if(this.carimaintenance !== ''){
-            await this.caridimaintenance()
-        return
+    computed:{ 
+        filteredList() {
+            return this.hasilMaintenanceac.filter(hasil=>{
+                if(hasil.suhu.toString().includes(this.carimaintenance.toString()) || hasil.kelembapan.toString().includes(this.carimaintenance.toString()) || hasil.ac.toLowerCase().includes(this.carimaintenance.toLowerCase()) || hasil.ups.toLowerCase().includes(this.carimaintenance.toLowerCase())){
+                    return hasil
+                }
+            })        
         }
-    },
-    methods:{
-        async caridimaintenance(){
-            this.hasilcarimaintenance = []
-            const resp = await axios.get(`http://localhost:3000/server/maintenance/carimaintenance/${this.carimaintenance}/${this.$auth.user.lokasi}/${this.$auth.user.id}`)
-            resp.data.forEach(val =>{
-                this.hasilcarimaintenance.push(val)
-            })
-        },
     },
     async mounted(){
           const lokasi = this.$auth.user.lokasi
-          // const iduser = this.$auth.user.id
         try{
-            const resp = await axios.get(`http://localhost:3000/server/maintenance/teknisiac/${lokasi}`)
+            const resp = await this.$axios.get(`/maintenance/teknisiac/${lokasi}`)
             if(resp){
                 resp.data.forEach(maintenance => {
                     this.hasilMaintenanceac.push(maintenance)

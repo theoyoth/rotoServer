@@ -210,8 +210,6 @@
 </div>
 </template>
 <script>
-import axios from 'axios'
-import moment from 'moment'
 export default {
     middleware:"isAuthenticated",
     data(){
@@ -247,7 +245,7 @@ export default {
                     let indexOfArrayItem = this.acs.findIndex(i => i.id_ac === id)
 
                     const lokasi = this.$auth.user.lokasi
-                    axios.delete(`/server/master/deleteac/${id}/${lokasi}`)
+                    this.$axios.delete(`/master/deleteac/${id}/${lokasi}`)
                     .then(resp=>{
                         if(resp){
                             this.acs.splice(indexOfArrayItem, 1);
@@ -272,7 +270,7 @@ export default {
         try{
             const lokasi = this.$auth.user.lokasi
             const idlogin = this.$auth.user.id
-            const resp = await axios.get(`http://localhost:3000/server/masterac/${lokasi}/${idlogin}`)
+            const resp = await this.$axios.get(`/masterac/${lokasi}/${idlogin}`)
             resp.data.forEach(ac => {
                 this.acs.push(ac)
             })

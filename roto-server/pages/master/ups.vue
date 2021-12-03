@@ -207,8 +207,6 @@
 </template>
 
 <script>
-import axios from 'axios'
-import moment from 'moment'
 export default {
     middleware:"isAuthenticated",
     data(){
@@ -244,7 +242,7 @@ export default {
                     let indexOfArrayItem = this.upss.findIndex(i => i.id_ups === id)
 
                     const lokasi = this.$auth.user.lokasi
-                    axios.delete(`/server/master/deleteups/${id}/${lokasi}`)
+                    this.$axios.delete(`/master/deleteups/${id}/${lokasi}`)
                     .then(resp=>{
                         if(resp){
                             this.upss.splice(indexOfArrayItem, 1);
@@ -263,21 +261,13 @@ export default {
             }).catch(err=>{
                 swal('Error','ada yang salah',{icon:'error'})
             })
-    },
-        
-        async caribarangups(){
-            this.cariups = []
-            const res = await axios.get(`http://localhost:3000/server/cariups/${this.caribarang}/${this.$auth.user.lokasi}/${this.$auth.user.id}`)
-            res.data.forEach(val =>{
-                this.cariups.push(val)
-            })
         },
     },
     async mounted(){
         try{
             const lokasi = this.$auth.user.lokasi
             const idlogin = this.$auth.user.id
-            const resp = await axios.get(`http://localhost:3000/server/masterups/${lokasi}/${idlogin}`)
+            const resp = await this.$axios.get(`/masterups/${lokasi}/${idlogin}`)
             resp.data.forEach(ups =>{
                 this.upss.push(ups)            
             })

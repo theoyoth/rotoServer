@@ -36,7 +36,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 import moment from 'moment'
 
 export default {
@@ -55,7 +54,7 @@ export default {
             const lokasi = this.$auth.user.lokasi
             const id = this.$route.params.id
 
-            const resp = await axios.get(`http://localhost:3000/server/master/cctv/update/${id}/${lokasi}`)
+            const resp = await this.$axios.get(`/master/cctv/update/${id}/${lokasi}`)
             if(resp){
                 resp.data.forEach(cctv=>{
                     this.updateCctv.merek = cctv.merek
@@ -72,7 +71,7 @@ export default {
     },
     methods:{
         async updateDataCctv(){
-            const resp = await axios.post('http://localhost:3000/server/master/cctv/update',{
+            const resp = await this.$axios.post('/master/cctv/update',{
                 iduser: this.$auth.user.id,
                 lokasiServer: this.$auth.user.lokasi,
                 idcctv: this.$route.params.id,

@@ -56,7 +56,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 import moment from 'moment'
 
 export default {
@@ -79,7 +78,7 @@ export default {
         const lokasi = this.$auth.user.lokasi
         const id = this.$route.params.id
 
-        const resp = await axios.get(`http://localhost:3000/server/inout/gantibarang/update/${id}/${lokasi}`)
+        const resp = await this.$axios.get(`/inout/gantibarang/update/${id}/${lokasi}`)
         if(resp){
             resp.data.forEach(barang=>{
                 this.updateGantiBarang.tanggal = moment(barang.tanggal).format('YYYY-MM-DD')
@@ -95,7 +94,7 @@ export default {
     },
     methods:{
         async updateDataGantiBarang(){
-            const resp = await axios.post('http://localhost:3000/server/inout/gantibarang/update',{
+            const resp = await this.$axios.post('/inout/gantibarang/update',{
             lokasiServer : this.$auth.user.lokasi,
             iduser : this.$auth.user.id,
             idgantibarang : this.$route.params.id,

@@ -66,10 +66,10 @@
                                 </select>
                                 <font-awesome-icon :icon="['fas', 'check-circle']" class="transition-all duration-200 text-green-500 ml-2 opacity-10" :class="{checktrue : inputMaintenance.ac !=='' && !errors[0]}"/>
                             </div>
+                            <textarea v-if="inputMaintenance.ac === 'tidak baik'" v-model="inputMaintenance.keteranganAc" name="acexplain" id="acexplain" cols="15" rows="3" class="bg-gray-300 mt-1 p-2 outline-none rounded-lg" placeholder="note..."></textarea>
                             <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
                             </ValidationProvider>
                         </div>
-                        <small v-if="inputMaintenance.ac > 30" class="text-green-500">suhu AC tinggi</small>
                     </div>
                 </div>
                 <div class="mb-2" :class="[inputMaintenance.ac !== '' ? 'incop' : 'decop']">
@@ -86,6 +86,7 @@
                                 </select>
                                 <font-awesome-icon :icon="['fas', 'check-circle']" class="transition-all duration-200 text-green-500 ml-2 opacity-10" :class="{checktrue : inputMaintenance.ups !=='' && !errors[0]}"/>
                             </div>
+                            <textarea v-if="inputMaintenance.ups === 'tidak baik'" v-model="inputMaintenance.keteranganUps" name="acexplain" id="acexplain" cols="15" rows="3" class="bg-gray-300 mt-1 p-2 outline-none rounded-lg" placeholder="note..."></textarea>
                             <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
                             </ValidationProvider>
                         </div>
@@ -105,6 +106,7 @@
                                 </select>
                                 <font-awesome-icon :icon="['fas', 'check-circle']" class="transition-all duration-200 text-green-500 ml-2 opacity-10" :class="{checktrue : inputMaintenance.baterai !== '' && !errors[0]}"/>
                             </div>
+                            <textarea v-if="inputMaintenance.baterai === 'tidak baik'" v-model="inputMaintenance.keteranganBaterai" name="acexplain" id="acexplain" cols="15" rows="3" class="bg-gray-300 mt-1 p-2 outline-none rounded-lg" placeholder="note..."></textarea>
                             <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
                             </ValidationProvider>
                         </div>
@@ -112,7 +114,7 @@
                 </div>
                 <div class="mb-2" :class="[inputMaintenance.baterai !== '' ? 'incop' : 'decop']">
                     <div class="has-tooltip">
-                        <span class="tooltip text-xs rounded shadow-lg p-1 bg-gray-700 text-white ml-20">masukan kondisi server baik atau tidak</span>
+                        <span class="tooltip text-xs rounded shadow-lg p-1 bg-gray-700 text-white ml-20">masukan kondisi server</span>
                         <label for="server" class="block mb-2 text-sm">server</label>
                         <div class="flex flex-col w-72">
                             <ValidationProvider rules="required|alpha_spaces" v-slot={errors}>
@@ -124,6 +126,7 @@
                                 </select>
                                 <font-awesome-icon :icon="['fas', 'check-circle']" class="transition-all duration-200 text-green-500 ml-2 opacity-10" :class="{checktrue : inputMaintenance.server !== '' && !errors[0]}"/>
                             </div>
+                            <textarea v-if="inputMaintenance.server === 'tidak baik'" v-model="inputMaintenance.keteranganServer" name="acexplain" id="acexplain" cols="15" rows="3" class="bg-gray-300 mt-1 p-2 outline-none rounded-lg" placeholder="note..."></textarea>
                             <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
                             </ValidationProvider>
                         </div>
@@ -131,13 +134,10 @@
                 </div>
                 <div class="mb-2" :class="[inputMaintenance.server !== '' ? 'incop' : 'decop']">
                     <div class="has-tooltip">
-                        <span class="tooltip text-xs rounded shadow-lg p-1 bg-gray-700 text-white ml-20">masukan keterangan</span>
+                        <span class="tooltip text-xs rounded shadow-lg p-1 bg-gray-700 text-white ml-28">masukan keterangan</span>
                         <label for="keterangan" class="block mb-2 text-sm">keterangan</label>
                         <div class="flex flex-col w-72">
-                            <ValidationProvider rules="required|passchar" v-slot={errors}>
                             <textarea rows="4" form="inputmaintenance" type="text" v-model="inputMaintenance.keterangan" name="keterangan" id="keterangan" class="p-2 w-full rounded-lg bg-gray-300 outline-none" :disabled="inputMaintenance.server === ''"></textarea>
-                            <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
-                            </ValidationProvider>
                         </div>
                     </div>
                 </div>
@@ -151,7 +151,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 import moment from 'moment'
 import { ValidationObserver, ValidationProvider } from "vee-validate";
 require('dotenv').config()
@@ -172,7 +171,11 @@ export default {
                 ups:'',
                 baterai:'',
                 server:'',
-                keterangan:''
+                keterangan:'',
+                keteranganAc:'',
+                keteranganUps:'',
+                keteranganBaterai:'',
+                keteranganServer:''
             },
             disabled:true,
             tokentelegram:process.env.TokenTelegram,
@@ -194,7 +197,7 @@ export default {
     },
     methods:{
         async postInputMaintenance(){
-            const resp = await axios.post('http://localhost:3000/server/inputmaintenance',{
+            const resp = await this.$axios.post('/inputmaintenance',{
                 iduser: this.$auth.user.id,
                 nama:this.$auth.user.nama,
                 lokasiServer:this.$auth.user.lokasi,
@@ -207,6 +210,10 @@ export default {
                 network: this.inputMaintenance.network,
                 server: this.inputMaintenance.server,
                 keterangan: this.inputMaintenance.keterangan,
+                keteranganAc: this.inputMaintenance.keteranganAc,
+                keteranganUps: this.inputMaintenance.keteranganUps,
+                keteranganBaterai: this.inputMaintenance.keteranganBaterai,
+                keteranganServer: this.inputMaintenance.keteranganServer,
             })
                 if(resp){
                     swal('data berhasil ditambahkan',{icon:'success'})
@@ -216,7 +223,7 @@ export default {
         async sendNotifyMaintenance(){
             if(this.inputMaintenance.suhu > 50 && this.$auth.user.role === 'Security'){
                 const flashMessage = `suhu ruangan server : ${this.inputMaintenance.suhu}℃. suhu terlalu tinggi. harap melakukan pemeriksaan`
-                const resp = await axios.post(`https://api.telegram.org/bot${this.tokentelegram}/sendMessage?chat_id=${this.chatId}&text=${flashMessage}`)
+                const resp = await this.$axios.post(`https://api.telegram.org/bot${this.tokentelegram}/sendMessage?chat_id=${this.chatId}&text=${flashMessage}`)
                 if(resp){
                     swal('pesan di kirim ke EDP dan PA',{icon:'success'})
                     this.$router.push('/maintenance')
@@ -227,7 +234,7 @@ export default {
             }
             if(this.inputMaintenance.kelembapan > 80 && this.$auth.user.role === 'Security'){
                 const flashMessage = `kelembapan ruangan server : ${this.inputMaintenance.kelembapan}%. kelembapan terlalu tinggi. harap melakukan pemeriksaan`
-                const resp = await axios.post(`https://api.telegram.org/bot${this.tokentelegram}/sendMessage?chat_id=${this.chatId}&text=${flashMessage}`)
+                const resp = await this.$axios.post(`https://api.telegram.org/bot${this.tokentelegram}/sendMessage?chat_id=${this.chatId}&text=${flashMessage}`)
                 if(resp){
                     swal('pesan di kirim ke EDP dan PA',{icon:'success'})
                     this.$router.push('/maintenance')

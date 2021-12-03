@@ -87,7 +87,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 import moment from 'moment'
 import { ValidationObserver, ValidationProvider } from "vee-validate";
 
@@ -112,7 +111,7 @@ export default {
     },
     methods:{
         async postInputKeyboard(){
-            const res = await axios.post('http://localhost:3000/server/master/inputkeyboard',{
+            const res = await this.$axios.post('/master/inputkeyboard',{
                 iduser: this.$auth.user.id,
                 lokasiServer: this.$auth.user.lokasi,
                 model:this.inputKeyboard.model,

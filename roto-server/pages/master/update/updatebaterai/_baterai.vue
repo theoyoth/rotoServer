@@ -45,7 +45,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 import moment from 'moment'
 
 export default {
@@ -63,7 +62,7 @@ export default {
     },
     methods:{
         async updateDataBaterai(){
-            const resp = await axios.post('http://localhost:3000/server/master/baterai/update',{
+            const resp = await this.$axios.post('/master/baterai/update',{
                 lokasiServer : this.$auth.user.lokasi,
                 iduser : this.$auth.user.id,
                 idbaterai : this.$route.params.id,
@@ -87,7 +86,7 @@ export default {
         const lokasi = this.$auth.user.lokasi
         const id = this.$route.params.id
 
-        const resp = await axios.get(`http://localhost:3000/server/master/baterai/update/${id}/${lokasi}`)
+        const resp = await this.$axios.get(`/master/baterai/update/${id}/${lokasi}`)
         if(resp){
             resp.data.forEach(baterai=>{
                 this.updateBaterai.accu = baterai.accu

@@ -4,7 +4,7 @@
 
 <script type="module">
 import * as THREE from 'three';
-// import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
+// import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 
 export default {
     data() {
@@ -32,7 +32,7 @@ export default {
         this.camera = new THREE.PerspectiveCamera(80, container.clientWidth/container.clientHeight, 0.01, 100);
 
         
-        this.camera.position.z = 2.5;
+        this.camera.position.z = 2.8;
         this.camera.position.y = 0.5;
 
         this.scene = new THREE.Scene();
@@ -47,7 +47,7 @@ export default {
 
         // box 2
         let geometrybox2 = new THREE.BoxGeometry(0.2, 0.2, 0.5);
-        let materialbox2 = new THREE.MeshBasicMaterial({color: 0x334455});
+        let materialbox2 = new THREE.MeshBasicMaterial({color: 0xbb9922});
         this.mesh = new THREE.Mesh(geometrybox2, materialbox2);
         this.mesh.position.x = -1.3;
         this.mesh.position.y = 0.1;
@@ -70,7 +70,7 @@ export default {
 
         const floorGometry = new THREE.PlaneGeometry( 3,3 );
 				const floorMaterial = new THREE.MeshBasicMaterial( {
-          color: 0x777777, 
+          color: 0x666666, 
           side: THREE.DoubleSide
         } );
 				const floor = new THREE.Mesh( floorGometry, floorMaterial );
@@ -98,87 +98,6 @@ export default {
         // this.controls.update();
         container.appendChild(this.renderer.domElement);
       },
-      onPointerMove( event ) {
-
-				this.pointer.set( ( event.clientX / window.innerWidth ) * 2 - 1, - ( event.clientY / window.innerHeight ) * 2 + 1 );
-
-				this.raycaster.setFromCamera( this.pointer, this.camera );
-
-				const intersects = this.raycaster.intersectObjects( objects, false );
-
-				if ( intersects.length > 0 ) {
-
-					const intersect = intersects[ 0 ];
-
-					this.rollOverMesh.position.copy( intersect.point ).add( intersect.face.normal );
-					this.rollOverMesh.position.divideScalar( 50 ).floor().multiplyScalar( 50 ).addScalar( 25 );
-
-				}
-
-				animate();
-
-			},
-      onPointerDown( event ) {
-
-				this.pointer.set( ( event.clientX / window.innerWidth ) * 2 - 1, - ( event.clientY / window.innerHeight ) * 2 + 1 );
-
-				this.raycaster.setFromCamera( this.pointer, this.camera );
-
-				const intersects = this.raycaster.intersectObjects( this.objects, false );
-
-				if ( intersects.length > 0 ) {
-
-					const intersect = intersects[ 0 ];
-
-					// delete cube
-
-					if ( this.isShiftDown ) {
-
-						if ( intersect.object !== plane ) {
-
-							this.scene.remove( intersect.object );
-
-							this.objects.splice( this.objects.indexOf( intersect.object ), 1 );
-
-						}
-
-						// create cube
-
-					} else {
-
-						const voxel = new THREE.Mesh( this.cubeGeo, this.cubeMaterial );
-						voxel.position.copy( intersect.point ).add( intersect.face.normal );
-						voxel.position.divideScalar( 50 ).floor().multiplyScalar( 50 ).addScalar( 25 );
-						this.scene.add( voxel );
-
-						this.objects.push( voxel );
-
-					}
-
-					animate();
-
-				}
-
-			},
-      onDocumentKeyDown( event ) {
-
-				switch ( event.keyCode ) {
-
-					case 16: this.isShiftDown = true; break;
-
-				}
-
-			},
-
-			onDocumentKeyUp( event ) {
-
-				switch ( event.keyCode ) {
-
-					case 16: this.isShiftDown = false; break;
-
-				}
-
-			},
 
       animate(){
         requestAnimationFrame(this.animate);

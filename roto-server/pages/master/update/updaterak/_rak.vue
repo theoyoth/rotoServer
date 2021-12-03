@@ -49,7 +49,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 import moment from 'moment'
 
 export default {
@@ -68,7 +67,7 @@ export default {
     },
     methods:{
         async updateDataRak(){
-            const resp = await axios.post('http://localhost:3000/server/master/rak/update',{
+            const resp = await this.$axios.post('/master/rak/update',{
                 iduser: this.$auth.user.id,
                 lokasiServer: this.$auth.user.lokasi,
                 idrak: this.$route.params.id,
@@ -93,7 +92,7 @@ export default {
         try{
             const lokasi = this.$auth.user.lokasi
             const id = this.$route.params.id
-            const resp = await axios.get(`http://localhost:3000/server/master/rak/update/${id}/${lokasi}`)
+            const resp = await this.$axios.get(`/master/rak/update/${id}/${lokasi}`)
             if(resp){
                 resp.data.forEach(rak=>{
                     this.updateRak.tipeRak = rak.tipe_rak

@@ -51,7 +51,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 import moment from 'moment'
 
 export default {
@@ -74,7 +73,7 @@ export default {
             const lokasi = this.$auth.user.lokasi
             const id = this.$route.params.id
 
-            const resp = await axios.get(`http://localhost:3000/server/master/network/update/${id}/${lokasi}`)
+            const resp = await this.$axios.get(`/master/network/update/${id}/${lokasi}`)
             if(resp){
                 resp.data.forEach(network=>{
                     this.updateNetwork.merek = network.merek
@@ -94,7 +93,7 @@ export default {
     },
     methods:{
         async updateDataNetwork(){
-            const resp = await axios.post('http://localhost:3000/server/master/network/update',{
+            const resp = await this.$axios.post('/master/network/update',{
                 lokasiServer : this.$auth.user.lokasi,
                 iduser : this.$auth.user.id,
                 idnetwork : this.$route.params.id,

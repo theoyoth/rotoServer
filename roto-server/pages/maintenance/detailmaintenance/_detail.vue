@@ -42,7 +42,7 @@
       <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
         <dt class="text-sm font-medium text-gray-500 flex">
           <div class="px-2 shadow mr-4">3</div>
-          suhu
+          Suhu
         </dt>
         <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
           {{det.suhu}}
@@ -51,7 +51,7 @@
       <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
         <dt class="text-sm font-medium text-gray-500 flex">
           <div class="px-2 shadow mr-4">4</div>
-          kelembapan
+          Kelembapan
         </dt>
         <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
           {{det.kelembapan}}
@@ -66,18 +66,36 @@
           {{det.ac}}
         </dd>
       </div>
-      <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+      <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
         <dt class="text-sm font-medium text-gray-500 flex">
           <div class="px-2 shadow mr-4">6</div>
+          Keterangan AC
+        </dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+          {{det.keterangan_ac}}
+        </dd>
+      </div>
+      <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+        <dt class="text-sm font-medium text-gray-500 flex">
+          <div class="px-2 shadow mr-4">7</div>
           UPS
         </dt>
         <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
           {{det.ups}}
         </dd>
       </div>
+      <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+        <dt class="text-sm font-medium text-gray-500 flex">
+          <div class="px-2 shadow mr-4">8</div>
+          Keterangan UPS
+        </dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+          {{det.keterangan_ups}}
+        </dd>
+      </div>
       <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
         <dt class="text-sm font-medium text-gray-500 flex">
-          <div class="px-2 shadow mr-4">7</div>
+          <div class="px-2 shadow mr-4">9</div>
           Baterai
         </dt>
         <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
@@ -86,8 +104,35 @@
       </div>
       <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
         <dt class="text-sm font-medium text-gray-500 flex">
-          <div class="px-2 shadow mr-4">8</div>
-          Tahun
+          <div class="px-2 shadow mr-4">10</div>
+          Keterangan Baterai
+        </dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+          {{det.keterangan_baterai}}
+        </dd>
+      </div>
+      <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+        <dt class="text-sm font-medium text-gray-500 flex">
+          <div class="px-2 shadow mr-4">11</div>
+          Server
+        </dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+          {{det.server}}
+        </dd>
+      </div>
+      <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+        <dt class="text-sm font-medium text-gray-500 flex">
+          <div class="px-2 shadow mr-4">12</div>
+          Keterangan Server
+        </dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+          {{det.keterangan_server}}
+        </dd>
+      </div>
+      <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+        <dt class="text-sm font-medium text-gray-500 flex">
+          <div class="px-2 shadow mr-4">14</div>
+          Keterangan
         </dt>
         <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
           {{det.keterangan }}
@@ -101,8 +146,6 @@
 </template>
 
 <script>
-import axios from 'axios'
-import moment from 'moment'
 
 export default {
   middleware:"isAuthenticated",
@@ -114,8 +157,8 @@ export default {
   async mounted(){
     const lokasi = this.$auth.user.lokasi
     const iddetail = this.$route.params.id
-    const resp = await axios.get(
-      `http://localhost:3000/server/maintenance/detail/${lokasi}/${iddetail}`
+    const resp = await this.$axios.get(
+      `/maintenance/detail/${lokasi}/${iddetail}`
     )
     this.detail = resp.data
   }

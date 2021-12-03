@@ -151,9 +151,6 @@
 </div>
 </template>
 <script>
-import axios from 'axios'
-import moment from 'moment'
-
 export default {
     middleware:"isAuthenticated",
     data(){
@@ -176,12 +173,6 @@ export default {
             })
         }
     },
-    // async fetch(){
-    //     if(this.caribarang !== ""){
-    //         await this.caribarangkeyboard()
-    //     return
-    //     }
-    // },
     methods:{
         deleteData(id){
             swal({
@@ -195,7 +186,7 @@ export default {
                     let indexOfArrayItem = this.keyboards.findIndex(i => i.id_keyboard === id)
 
                     const lokasi = this.$auth.user.lokasi
-                    axios.delete(`/server/master/deletekeyboard/${id}/${lokasi}`)
+                    this.$axios.delete(`/master/deletekeyboard/${id}/${lokasi}`)
                     .then(resp=>{
                         if(resp){
                             this.keyboards.splice(indexOfArrayItem, 1);
@@ -215,19 +206,12 @@ export default {
                 swal('Error','ada yang salah',{icon:'error'})
             })
         },
-         async caribarangkeyboard(){
-             this.carikeyboard = []
-            const res = await axios.get(`http://localhost:3000/server/carikeyboard?cari=${this.caribarang}`)
-            res.data.forEach(val =>{
-                this.carikeyboard.push(val)
-            })
-        },
     },
     async mounted(){
         try{
             const lokasi = this.$auth.user.lokasi
             const idlogin = this.$auth.user.id
-            const resp = await axios.get(`http://localhost:3000/server/masterkeyboard/${lokasi}/${idlogin}`)
+            const resp = await this.$axios.get(`/masterkeyboard/${lokasi}/${idlogin}`)
             resp.data.forEach(keyboard => {
                 this.keyboards.push(keyboard)
             })

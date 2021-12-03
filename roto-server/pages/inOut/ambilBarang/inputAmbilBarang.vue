@@ -90,7 +90,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 import moment from 'moment'
 import { ValidationObserver, ValidationProvider } from "vee-validate";
 
@@ -118,7 +117,7 @@ export default {
     },
     methods:{
         async postAmbilBarang(){
-            const resp = await axios.post('http://localhost:3000/server/inout/ambilbarang/input',{
+            const resp = await this.$axios.post('/inout/ambilbarang/input',{
                 iduser:this.$auth.user.id,
                 namauser : this.$auth.user.nama,
                 lokasiServer : this.$auth.user.lokasi,

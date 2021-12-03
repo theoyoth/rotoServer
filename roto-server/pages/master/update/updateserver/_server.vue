@@ -99,7 +99,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 import moment from 'moment'
 
 export default {
@@ -126,7 +125,7 @@ export default {
         try{
             const lokasi = this.$auth.user.lokasi
             const idserver = this.$route.params.id
-            const resp = await axios.get(`http://localhost:3000/server/master/update/updateserver/${idserver}/${lokasi}`)
+            const resp = await this.$axios.get(`/master/update/updateserver/${idserver}/${lokasi}`)
             if(resp){
                 resp.data.forEach(servers=>{
                     this.updateServer.produk = servers.produk
@@ -151,7 +150,7 @@ export default {
     },
     methods:{
         async updateData(){
-            const resp = await axios.post(`http://localhost:3000/server/master/server/update`,{
+            const resp = await this.$axios.post(`/master/server/update`,{
                 lokasiServer : this.$auth.user.lokasi,
                 iduser : this.$auth.user.id,
                 idproduk:this.updateServer.idserver,

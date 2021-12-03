@@ -43,7 +43,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 import moment from 'moment'
 
 export default {
@@ -64,7 +63,7 @@ export default {
         try{
             const lokasi = this.$auth.user.lokasi
             const id = this.$route.params.id
-            const resp = await axios.get(`http://localhost:3000/server/master/genset/update/${id}/${lokasi}`) 
+            const resp = await this.$axios.get(`/master/genset/update/${id}/${lokasi}`) 
             if(resp){
                 resp.data.forEach(genset=>{
                     this.updateGenset.merek = genset.merek
@@ -81,7 +80,7 @@ export default {
     },
      methods: {
         async updateDataGenset(){
-            const resp = await axios.post('http://localhost:3000/server/master/genset/update',{
+            const resp = await this.$axios.post('/master/genset/update',{
                 lokasiServer : this.$auth.user.lokasi,
                 iduser : this.$auth.user.id,
                 idgenset : this.$route.params.id,

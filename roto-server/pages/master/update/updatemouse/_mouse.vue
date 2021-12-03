@@ -43,7 +43,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 import moment from 'moment'
 
 export default {
@@ -64,7 +63,7 @@ export default {
             const id = this.$route.params.id
             const lokasi = this.$auth.user.lokasi
 
-            const resp = await axios.get(`http://localhost:3000/server/master/mouse/update/${id}/${lokasi}`)
+            const resp = await this.$axios.get(`/master/mouse/update/${id}/${lokasi}`)
             if(resp){
                 resp.data.forEach(mouse=>{
                     this.updateMouse.merek = mouse.merek
@@ -81,7 +80,7 @@ export default {
     },
     methods: {
         async updateDataMouse(){
-            const resp = await axios.post('http://localhost:3000/server/master/mouse/update',{
+            const resp = await this.$axios.post('/master/mouse/update',{
                 lokasiServer : this.$auth.user.lokasi,
                 iduser : this.$auth.user.id,
                 idmouse : this.$route.params.id,

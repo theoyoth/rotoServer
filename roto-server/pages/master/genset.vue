@@ -147,8 +147,6 @@
 </div>
 </template>
 <script>
-import axios from 'axios'
-import moment from 'moment'
 export default {
     middleware:"isAuthenticated",
     data(){
@@ -188,7 +186,7 @@ export default {
                     let indexOfArrayItem = this.gensets.findIndex(i => i.id_genset === id)
 
                     const lokasi = this.$auth.user.lokasi
-                    axios.delete(`/server/master/genset/delete/${id}/${lokasi}`)
+                    this.$axios.delete(`/master/genset/delete/${id}/${lokasi}`)
                     .then(resp=>{
                         if(resp){
                             this.gensets.splice(indexOfArrayItem, 1);
@@ -208,19 +206,12 @@ export default {
                 swal('Error','ada yang salah',{icon:'error'})
             })
         },
-        // async caribaranggenset(){
-        //     this.carigenset = []
-        //     const res = await axios.get(`http://localhost:3000/server/carigenset?cari=${this.caribarang}`)
-        //     res.data.forEach(val =>{
-        //         this.carigenset.push(val)
-        //     })
-        // },
     },
     async mounted(){
         try{
             const lokasi = this.$auth.user.lokasi
             const idlogin = this.$auth.user.id
-            const resp = await axios.get(`http://localhost:3000/server/mastergenset/${lokasi}/${idlogin}`)
+            const resp = await this.$axios.get(`/mastergenset/${lokasi}/${idlogin}`)
             resp.data.forEach(genset => {
                 this.gensets.push(genset)
             })

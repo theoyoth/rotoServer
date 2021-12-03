@@ -143,7 +143,7 @@ export default {
     },
     methods:{
         async postGantiBarang(){
-            const resp = await axios.post('http://localhost:3000/server/inout/gantibarang/input',{
+            const resp = await this.$axios.post('/inout/gantibarang/input',{
                 iduser:this.$auth.user.id,
                 namauser : this.$auth.user.nama,
                 lokasiServer : this.$auth.user.lokasi,

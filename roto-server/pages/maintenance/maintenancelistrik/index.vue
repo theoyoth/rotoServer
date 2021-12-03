@@ -31,7 +31,7 @@
                 </tr>
             </thead>
             <tbody v-if="carimaintenance !== ''" class="text-center bg-white bg-opacity-40 divide-y divide-gray-300">
-                <tr class="text-sm" v-for="(hasilcari,index) in hasilcarimaintenance" :key="index">
+                <tr class="text-sm" v-for="(hasilcari,index) in filteredList" :key="index">
                     <td>{{index+1}}</td>
                     <td class="py-3">{{hasilcari.nama_pemeriksa}}</td>
                     <td>{{$moment(hasilcari.tanggal).format("DD-MM-YYYY")}}</td>
@@ -58,8 +58,6 @@
 </template>
 
 <script>
-import axios from 'axios'
-import moment from 'moment'
 
 export default {
     middleware:"isAuthenticated",
@@ -67,30 +65,22 @@ export default {
         return{
             carimaintenance:"",
             hasilMaintenancelistrik:[],
-            hasilcarimaintenance:[],
         }
     },   
-   
-    async fetch(){
-        if(this.carimaintenance !== ''){
-            await this.caridimaintenance()
-        return
+    computed:{ 
+        filteredList() {
+            return this.hasilMaintenancelistrik.filter(hasil=>{
+                if(hasil.suhu.toString().includes(this.carimaintenance.toString()) || hasil.kelembapan.toString().includes(this.carimaintenance.toString()) || hasil.ac.toLowerCase().includes(this.carimaintenance.toLowerCase()) || hasil.ups.toLowerCase().includes(this.carimaintenance.toLowerCase())){
+                    return hasil
+                }
+            })        
         }
-    },
-    methods:{
-        async caridimaintenance(){
-            this.hasilcarimaintenance = []
-            const resp = await axios.get(`http://localhost:3000/server/maintenance/carimaintenance/${this.carimaintenance}/${this.$auth.user.lokasi}/${this.$auth.user.id}`)
-            resp.data.forEach(val =>{
-                this.hasilcarimaintenance.push(val)
-            })
-        },
     },
     async mounted(){
           const lokasi = this.$auth.user.lokasi
           // const iduser = this.$auth.user.id
         try{
-            const resp = await axios.get(`http://localhost:3000/server/maintenance/teknisilistrik/${lokasi}`)
+            const resp = await this.$axios.get(`/maintenance/teknisilistrik/${lokasi}`)
             if(resp){
                 resp.data.forEach(maintenance => {
                     this.hasilMaintenancelistrik.push(maintenance)

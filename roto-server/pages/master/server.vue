@@ -319,7 +319,7 @@ export default {
                 let indexOfArrayItem = this.servers.findIndex(i => i.id_server === id)
 
                 const lokasi = this.$auth.user.lokasi
-                  axios.delete(`http://localhost:3000/server/master/server/delete/${id}/${lokasi}`)
+                  this.$axios.delete(`/master/server/delete/${id}/${lokasi}`)
                   .then(resp=>{
                     if(resp) {
                       this.servers.splice(indexOfArrayItem, 1);
@@ -344,7 +344,7 @@ export default {
         const lokasiserver = this.$auth.user.lokasi
         const idlogin = this.$auth.user.id
         try{
-            const resp = await axios.get(`http://localhost:3000/server/masterserver/${lokasiserver}/${idlogin}`)
+            const resp = await this.$axios.get(`/masterserver/${lokasiserver}/${idlogin}`)
             resp.data.forEach(server => {
                 this.servers.push(server)
             })

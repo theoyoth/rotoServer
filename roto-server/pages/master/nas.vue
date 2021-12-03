@@ -199,8 +199,6 @@
 </div>
 </template>
 <script>
-import axios from 'axios'
-import moment from 'moment'
 export default {
     middleware:"isAuthenticated",
     data(){
@@ -236,7 +234,7 @@ export default {
                     let indexOfArrayItem = this.nass.findIndex(i => i.id_nas === id)
 
                     const lokasi = this.$auth.user.lokasi
-                    axios.delete(`/server/master/nas/delete/${id}/${lokasi}`)
+                    this.$axios.delete(`/master/nas/delete/${id}/${lokasi}`)
                     .then(resp=>{
                         if(resp){
                             this.nass.splice(indexOfArrayItem, 1);
@@ -261,7 +259,7 @@ export default {
         try{
             const lokasi = this.$auth.user.lokasi
             const idlogin = this.$auth.user.id
-            const resp = await axios.get(`http://localhost:3000/server/masternas/${lokasi}/${idlogin}`)
+            const resp = await this.$axios.get(`/masternas/${lokasi}/${idlogin}`)
             resp.data.forEach(nas => {
                 this.nass.push(nas)
             })

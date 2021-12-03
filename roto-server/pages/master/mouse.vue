@@ -151,8 +151,6 @@
 </div>
 </template>
 <script>
-import axios from 'axios'
-import moment from 'moment'
 export default {
     middleware:"isAuthenticated",
     data(){
@@ -175,12 +173,6 @@ export default {
             })
         }
     },
-    //  async fetch(){
-    //     if(this.caribarang !== ""){
-    //         await this.caribarangmouse();
-    //     return
-    //     }
-    // },
     methods:{
         deleteData(id){
             swal({
@@ -194,7 +186,7 @@ export default {
                     let indexOfArrayItem = this.mouses.findIndex(i => i.id_mouse === id)
 
                     const lokasi = this.$auth.user.lokasi
-                    axios.delete(`/server/master/deletemouse/${id}/${lokasi}`)
+                    this.$axios.delete(`/master/deletemouse/${id}/${lokasi}`)
                     .then(resp=>{
                         if(resp){
                             this.mouses.splice(indexOfArrayItem, 1);
@@ -215,19 +207,12 @@ export default {
             })
 
         },
-        // async caribarangmouse(){
-        //     this.carimouse = []
-        //     const res = await axios.get(`http://localhost:3000/server/carimouse?cari=${this.caribarang}`)
-        //     res.data.forEach(val =>{
-        //         this.carimouse.push(val)
-        //     })
-        // },
     },
     async mounted(){
         try{
             const lokasi = this.$auth.user.lokasi
             const idlogin = this.$auth.user.id
-            const resp = await axios.get(`http://localhost:3000/server/mastermouse/${lokasi}/${idlogin}`)
+            const resp = await this.$axios.get(`/mastermouse/${lokasi}/${idlogin}`)
             resp.data.forEach(mouse => {
             this.mouses.push(mouse)
         })

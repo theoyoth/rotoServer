@@ -14,16 +14,6 @@ export default {
       // auth : false,
     }
   },
-  // computed:{
-  //   isLoggedin() {
-  //     this.$store.$auth.isLoggedin
-  //   }
-  // },
-  // mounted(){
-    // this.$nuxt.$on('auth',auth => {
-    //   this.auth = auth;
-    // })
-  // }
   
 }
 </script>

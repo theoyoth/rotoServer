@@ -65,7 +65,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 import moment from 'moment'
 export default {
   data(){
@@ -88,7 +87,7 @@ export default {
         try{
             const lokasi = this.$auth.user.lokasi
             const id = this.$route.params.id
-            const resp = await axios.get(`http://localhost:3000/server/master/nas/update/${id}/${lokasi}`)
+            const resp = await this.$axios.get(`/master/nas/update/${id}/${lokasi}`)
             if(resp){
                 resp.data.forEach(nas=>{
                     this.updateNas.merek = nas.merek
@@ -110,7 +109,7 @@ export default {
     },
     methods: {
         async updateDataNas(){
-            const resp = await axios.post('http://localhost:3000/server/master/nas/update',{
+            const resp = await this.$axios.post('/master/nas/update',{
                 lokasiServer : this.$auth.user.lokasi,
                 iduser : this.$auth.user.id,
                 idnas : this.$route.params.id,

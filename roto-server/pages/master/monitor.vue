@@ -151,8 +151,6 @@
 </div>
 </template>
 <script>
-import axios from 'axios'
-import moment from 'moment'
 export default {
     middleware:"isAuthenticated",
     data(){
@@ -175,12 +173,6 @@ export default {
             })
         }
     },
-    // async fetch(){
-    //     if(this.caribarang !== ""){
-    //         await this.caribarangmonitor()
-    //     return
-    //     }
-    // },
     methods:{
         deleteData(id){
             swal({
@@ -194,7 +186,7 @@ export default {
                     let indexOfArrayItem = this.monitors.findIndex(i => i.id_monitor === id)
 
                     const lokasi = this.$auth.user.lokasi
-                    axios.delete(`/server/master/deletemonitor/${id}/${lokasi}`)
+                    this.$axios.delete(`/master/deletemonitor/${id}/${lokasi}`)
                     .then(resp=>{
                         if(resp){
                             this.monitors.splice(indexOfArrayItem, 1);
@@ -214,19 +206,12 @@ export default {
                 swal('Error','ada yang salah',{icon:'error'})
             })
         },
-        async caribarangmonitor(){
-            this.carimonitor = []
-            const res = await axios.get(`http://localhost:3000/server/carimonitor?cari=${this.caribarang}`)
-            res.data.forEach(val =>{
-                this.carimonitor.push(val)
-            })
-        },
     },
     async mounted(){
         try{
             const lokasi = this.$auth.user.lokasi
             const idlogin = this.$auth.user.id
-            const resp = await axios.get(`http://localhost:3000/server/mastermonitor/${lokasi}/${idlogin}`)
+            const resp = await this.$axios.get(`/mastermonitor/${lokasi}/${idlogin}`)
             resp.data.forEach(monitor => {
                 this.monitors.push(monitor)
             })

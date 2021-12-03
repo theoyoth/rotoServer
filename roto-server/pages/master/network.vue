@@ -25,10 +25,6 @@
             </NuxtLink>
         </div>
 
-        <!-- <div v-if="deletemsg" class="relative mt-5 w-1/4 text-center m-auto">
-        <p class="text-white bg-blue-500 font-semibold p-2 rounded-lg">{{ deletemsg }}</p>
-        </div> -->
-
         <table class="table space-y-6 container mx-auto table-auto border-collapse mt-7 divide-y divide-gray-300">
             <thead class="bg-gray-700 text-sm has-tooltip">
                 <span class="tooltip rounded shadow-lg p-1 bg-gray-700 text-white -mt-10 absolute left-2/4 transform -translate-x-2/4">semua detail barang</span>
@@ -157,8 +153,6 @@
     </div>
 </template>
 <script>
-import axios from 'axios'
-import moment from 'moment'
 export default {
     middleware:"isAuthenticated",
     data(){
@@ -181,12 +175,6 @@ export default {
             })
         }
     },
-    // async fetch(){
-    //     if(this.caribarang !== ""){
-    //         await this.caribarangnetwork()
-    //     return
-    //     }
-    // },
     methods:{
          deleteData(id){
              swal({
@@ -200,7 +188,7 @@ export default {
                     let indexOfArrayItem = this.networks.findIndex(i => i.id_network === id)
 
                     const lokasi = this.$auth.user.lokasi
-                    axios.delete(`/server/master/deletenetwork/${id}/${lokasi}`)
+                    this.$axios.delete(`/master/deletenetwork/${id}/${lokasi}`)
                     .then(resp=>{
                         if(resp){
                             this.networks.splice(indexOfArrayItem, 1);
@@ -220,20 +208,13 @@ export default {
                 swal('Error','ada yang salah',{icon:'error'})
             })
         },
-        // async caribarangnetwork(){
-        //     this.carinetwork = []
-        //     const res = await axios.get(`http://localhost:3000/server/carinetwork?cari=${this.caribarang}`)
-        //     res.data.forEach(val =>{
-        //         this.carinetwork.push(val)
-        //     })
-        // },
     },
     async mounted(){
         try{
             const lokasi = this.$auth.user.lokasi
             const idlogin = this.$auth.user.id
 
-            const resp = await axios.get(`http://localhost:3000/server/masternetwork/${lokasi}/${idlogin}`)
+            const resp = await this.$axios.get(`/masternetwork/${lokasi}/${idlogin}`)
             resp.data.forEach(network => {
                 this.networks.push(network)   
             })

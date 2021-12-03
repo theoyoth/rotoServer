@@ -211,8 +211,6 @@
 </template>
 
 <script>
-import axios from 'axios'
-import moment from 'moment'
 
 export default {
     middleware:"isAuthenticated",
@@ -245,7 +243,7 @@ export default {
                 if(suc){
                     let indexOfArrayItem = this.hasilMaintenance.findIndex(i => i.id_maintenance === id)
                     const lokasi = this.$auth.user.lokasi
-                    axios.delete(`/server/maintenance/delete/${id}/${lokasi}`)
+                    this.$axios.delete(`/maintenance/delete/${id}/${lokasi}`)
                     .then(resp=>{
                         if(resp){
                             this.hasilMaintenance.splice(indexOfArrayItem, 1);
@@ -271,7 +269,7 @@ export default {
           const lokasi = this.$auth.user.lokasi
           const idlogin = this.$auth.user.id
         try{
-            const resp = await axios.get(`http://localhost:3000/server/inputmaintenance/${lokasi}/${idlogin}`)
+            const resp = await this.$axios.get(`/inputmaintenance/${lokasi}/${idlogin}`)
             if(resp){
                 resp.data.reverse()
                 resp.data.forEach(maintenance => {

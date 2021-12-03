@@ -72,7 +72,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 import moment from 'moment'
 
 export default {
@@ -98,7 +97,7 @@ export default {
     async mounted(){
         const lokasi = this.$auth.user.lokasi
         const id = this.$route.params.id
-        const resp = await axios.get(`http://localhost:3000/server/master/ups/update/${id}/${lokasi}`)
+        const resp = await this.$axios.get(`/master/ups/update/${id}/${lokasi}`)
         if(resp){
             resp.data.forEach(ups=>{
                 this.updateUps.model = ups.model
@@ -118,7 +117,7 @@ export default {
     },
     methods:{
         async updateDataUps(){
-            const resp = await axios.post('http://localhost:3000/server/master/ups/update',{
+            const resp = await this.$axios.post('/master/ups/update',{
                 iduser: this.$auth.user.id,
                 lokasiServer: this.$auth.user.lokasi,
                 idups: this.$route.params.id,
