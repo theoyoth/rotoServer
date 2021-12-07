@@ -2,7 +2,7 @@ const fs = require('fs')
 const https = require('https')
 const path = require('path')
 const multer = require('multer')
-const baseUrl = 'http://localhost:3000/server/document/list/'
+const baseUrl = './uploads/'
 
 module.exports.uploadFiledoc = async (req, res) => {
   try {
@@ -56,7 +56,7 @@ module.exports.deleteFile = async (req, res) => {
         errmsg: 'gagal menghapus, data tidak ditemukan',
       })
     } else {
-      return res.send({ msg: 'file dihapus' })
+      return res.send({ status: 200 })
     }
   })
 }

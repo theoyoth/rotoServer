@@ -11,11 +11,6 @@
                     <font-awesome-icon :icon="['fas','search']" class="text-yellow-500"/>
                 </button>
             </div>
-            <!-- <select id="date" ref="date" class="rounded-lg p-2 outline-none ml-8 cursor-pointer">
-                <option value="hari">hari</option>
-                <option value="bulan">bulan</option>
-                <option value="tahun">tahun</option>
-            </select> -->
         </div>
 
         <table class="table space-y-6 container mx-auto table-auto border-collapse mt-7 divide-y divide-gray-300" ref="listitem" id="listitem">
@@ -77,12 +72,13 @@ export default {
         }
     },
     async mounted(){
-          const lokasi = this.$auth.user.lokasi
+        const lokasi = this.$auth.user.lokasi
         try{
             const resp = await this.$axios.get(`/maintenance/teknisiac/${lokasi}`)
-            if(resp){
-                resp.data.forEach(maintenance => {
-                    this.hasilMaintenanceac.push(maintenance)
+            if(resp.data){
+                resp.data.reverse()
+                resp.data.forEach(maint => {
+                    this.hasilMaintenanceac.push(maint)
                 })
             } else{
                 console.log('error')

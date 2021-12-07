@@ -260,6 +260,7 @@ export default {
             const lokasi = this.$auth.user.lokasi
             const idlogin = this.$auth.user.id
             const resp = await this.$axios.get(`/masternas/${lokasi}/${idlogin}`)
+            resp.data.reverse()
             resp.data.forEach(nas => {
                 this.nass.push(nas)
             })

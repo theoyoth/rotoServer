@@ -128,11 +128,11 @@
                       shadow-lg
                       p-1
                       bg-gray-700
-                      w-44
+                      w-40
                       text-white
-                      absolute -top-7 left-8
+                      absolute -top-7 left-10
                     "
-                    >hasil maintenance baterai</span
+                    >hasil maintenance UPS</span
                   >
                   <div class="bg-gray-700 w-8 h-8 rounded-xl flex items-center justify-center">
                     <font-awesome-icon
@@ -152,13 +152,14 @@
           <h1 class="text-3xl mt-4 text-gray-700 font-semibold">Graphic</h1>
           <div class="w-full mt-10">
             <div>
-              <BarChartsuhu :chart-data="chartData" :options="options"/>
+              <BarChartsuhu :chartData="chartData" :options="options"/>
             </div>
-              <!-- <BarChartdata :labels="labels" :chartData="suhus"/> -->
             <div class="mt-10">
               <BarChartkelembapan :chart-data="kelembapans" :options="optionKelem"/>
             </div>
-              <!-- <BarChartdata :bar-char="barcharlabel" :bardata="barchardata"/> -->
+            <!-- <div>
+              <BarChartdata :labels="Labelsuhuline" :chartData="Datasuhuline"/>
+            </div> -->
           </div>
         </div>       
       </div>
@@ -177,12 +178,14 @@ export default {
       errors: null,
       labels:[],
       suhus:[],
-      kelembapans:null,
-      chartData:null,
+      kelembapans:{},
+      chartData:{},
       options:{},
       optionKelem:{},
-      barcharlabel:null,
-      barchardata:null,
+      barcharlabel: "",
+      barchardata: "",
+      Datasuhuline:null,
+      Labelsuhuline:null,
     }
   },
   computed: {
@@ -240,16 +243,18 @@ export default {
           const daftarSuhu = resp.data.map(list => list.suhu)
           this.barcharlabel = daftarLabel
           this.barchardata = daftarSuhu
-          // const daftarSuhu = resp.data.map(list => list.suhu)
+          // this.Datasuhuline = daftarSuhu
+          // this.Optionsuhuline = daftarLabel
+
           this.chartData = {
-            labels: daftarLabel,
+            labels: this.barcharlabel,
             datasets: [
               {
                 label: "suhu",
                 backgroundColor: 'rgb(147, 197, 254)',
                 borderColor: "rgb(100,200,225)",
                 pointBackgroundColor:"rgb(100,100,100)",
-                data: daftarSuhu,
+                data: this.barchardata,
                 fill: true
               }
             ]
@@ -259,11 +264,13 @@ export default {
             maintainAspectRatio: false,
             scales: {
               yAxes: [{
-                // beginAtZero: true,
-                // title: {
-                //   display: true,
-                //   text: 'suhu'
-                // },
+                beginAtZero: true,
+                display: true,
+                title: {
+                  display: true,
+                  text: 'Suhu',
+                  color: '#911',
+                },
                 ticks: {
                   max:50,
                   color: "#E8EAF6",
@@ -272,15 +279,22 @@ export default {
                   color: "rgb(232, 234, 246)"
                 },
               }],
-              xAxes: {
+              xAxes:[{
+                display: true,
+                title: {
+                  display: true,
+                  text: 'Day',
+                  color: '#333',
+                },
                 ticks: {
                   color: "#E8EAF6",
-                  maxTicksLimit: 8
+                  min:0,
+                  max:10,
                 },
                 grid: {
                   color: "rgb(232, 234, 246)"
                 },
-              },
+              }],
             },
           }
         } 

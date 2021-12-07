@@ -6,8 +6,8 @@
         <p class="text-center text-lg text-gray-700 font-semibold">Maintenance teknisi listrik</p>
         <div class="flex justify-between mt-8 ">
             <div class="flex">
-                <input type="text" placeholder="cari" name="cari" v-model.lazy="carimaintenance" class="rounded-l-lg w-52 p-2 outline-none bg-gray-200" @keyup.enter="$fetch">
-                <button class="p-2 rounded-r-lg bg-gray-700 flex items-center justify-center w-12" @click="$fetch">
+                <input type="text" placeholder="cari" name="cari" v-model="carimaintenance" class="rounded-l-lg w-52 p-2 outline-none bg-gray-200">
+                <button class="p-2 rounded-r-lg bg-gray-700 flex items-center justify-center w-12">
                     <font-awesome-icon :icon="['fas','search']" class="text-yellow-500"/>
                 </button>
             </div>
@@ -78,10 +78,10 @@ export default {
     },
     async mounted(){
           const lokasi = this.$auth.user.lokasi
-          // const iduser = this.$auth.user.id
         try{
             const resp = await this.$axios.get(`/maintenance/teknisilistrik/${lokasi}`)
-            if(resp){
+            if(resp.data){
+                resp.data.reverse()
                 resp.data.forEach(maintenance => {
                     this.hasilMaintenancelistrik.push(maintenance)
                 })

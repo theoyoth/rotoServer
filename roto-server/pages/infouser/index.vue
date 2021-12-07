@@ -4,8 +4,8 @@
     <section class="bg-gray-100 min-h-screen w-widthContentField m-auto mt-7 p-4">
       <div class="flex justify-between mt-8">
             <div class="flex">
-                <input type="text" placeholder="cari" name="cari" v-model.lazy="cariuser" class="transition-all duration-200 ease-in-out rounded-l-lg p-2 bg-gray-200 outline-none w-40 focus:w-52 focus:ring-2 focus:ring-gray-700" @keyup.enter="$fetch">
-                <button @click="$fetch" class="p-2 rounded-r-lg bg-gray-700 flex items-center justify-center w-12" >
+                <input type="text" placeholder="cari" name="cari" v-model="cariuser" class="transition-all duration-200 ease-in-out rounded-l-lg p-2 bg-gray-200 outline-none w-52 focus:ring-2 focus:ring-gray-700">
+                <button class="p-2 rounded-r-lg bg-gray-700 cursor-default flex items-center justify-center w-12" >
                     <font-awesome-icon :icon="['fas','search']" class="text-yellow-500"/>
                 </button>
             </div>
@@ -36,7 +36,7 @@
               </tr>
           </thead>
           <tbody v-if="cariuser !== ''" class="text-center bg-white bg-opacity-40 divide-y divide-gray-300">
-              <tr class="text-sm" v-for="(hasilcari,index) in hasilcariusers" :key="index">
+              <tr class="text-sm" v-for="(hasilcari,index) in filteredList" :key="index">
                   <td>{{index+1}}</td>
                   <td class="py-3">{{hasilcari.nama}}</td>
                   <td>{{hasilcari.role}}</td>
@@ -139,37 +139,24 @@
 </template>
 
 <script>
-import axios from 'axios'
-
 export default {
   middleware:"isAuthenticated",
   data(){
     return {
       users:[],
-      hasilcariusers:[],
       cariuser:"",
     }
   },
-  async fetch(){
-    if(this.cariuser !== ''){
-      await this.getuser()
-      return
+  computed:{
+    filteredList(){
+      return this.users.filter(hasil=>{
+        if(hasil.nama.toLowerCase().includes(this.cariuser.toLowerCase()) || hasil.role.toLowerCase().includes(this.cariuser.toLowerCase()) ){
+          return hasil
+        }
+      })
     }
   },
   methods:{
-    async getuser(){
-        this.hasilcariusers = []
-        const resp = await axios.get(`http://localhost:3000/server/cariuser?cari=${this.cariuser}`)
-        if(resp.data) {
-          resp.data.forEach(us=>{
-            this.hasilcariusers.push(us)
-          })
-        }
-        else{
-          swal('data user tidak ada',{icon:'error'})
-        }
-      
-    },
     deleteData(id){
             swal({
                 title: 'anda yakin?',
@@ -181,7 +168,7 @@ export default {
               if(suc){
                 let indexOfArrayItem = this.users.findIndex(i => i.id_user === id)
                 
-                axios.delete(`http://localhost:3000/server/user/delete/${id}`)
+                this.$axios.delete(`/user/delete/${id}`)
                 .then(resp=>{
                   if(resp) {
                     this.users.splice(indexOfArrayItem, 1);
@@ -204,8 +191,9 @@ export default {
   },
   async mounted(){
     try {
-      const resp = await axios.get('http://localhost:3000/server/users')
+      const resp = await this.$axios.get('/users')
       if (resp.data){
+        resp.data.reverse()
         this.users = resp.data
       }
       

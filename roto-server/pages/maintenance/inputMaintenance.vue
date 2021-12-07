@@ -134,7 +134,7 @@
                 </div>
                 <div class="mb-2" :class="[inputMaintenance.server !== '' ? 'incop' : 'decop']">
                     <div class="has-tooltip">
-                        <span class="tooltip text-xs rounded shadow-lg p-1 bg-gray-700 text-white ml-28">masukan keterangan</span>
+                        <span class="tooltip text-xs rounded shadow-lg p-1 bg-gray-700 text-white ml-20">masukan keterangan</span>
                         <label for="keterangan" class="block mb-2 text-sm">keterangan</label>
                         <div class="flex flex-col w-72">
                             <textarea rows="4" form="inputmaintenance" type="text" v-model="inputMaintenance.keterangan" name="keterangan" id="keterangan" class="p-2 w-full rounded-lg bg-gray-300 outline-none" :disabled="inputMaintenance.server === ''"></textarea>
@@ -246,7 +246,6 @@ export default {
         }
     }, 
     mounted(){
-        console.log(process.env.ChatId)
         this.inputMaintenance.tanggal = moment().format("YYYY-MM-DD")
     }
 }

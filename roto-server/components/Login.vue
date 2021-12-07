@@ -64,7 +64,7 @@
                     <option value="rotogravure tinta">rotogravure tinta</option>
                 </select>
               </div>
-              <nuxt-link to="">
+              <nuxt-link to="/forgot">
                   <p class="text-xs text-gray-700 text-center mt-5">lupa kata sandi?</p>
               </nuxt-link>
               <div class="text-center mt-6">

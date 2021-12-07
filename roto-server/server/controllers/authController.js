@@ -31,13 +31,14 @@ module.exports.login = async (req, res) => {
               lokasiid: lokasi.id_lokasi,
               lokasi: lokasi.nama_lokasi,
             },
-            process.env.TOKEN_KEY
+            process.env.TOKEN_KEY,
+            { expiresIn: '2h' }
           )
           res.cookie('aksestoken', token, {
             httpOnly: true,
             sameSite: 'strict',
             secure: true,
-            maxAge: 9000000,
+            maxAge: 72000,
           })
           res.json({ token })
         } else {

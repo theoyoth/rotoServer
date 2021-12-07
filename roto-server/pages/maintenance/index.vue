@@ -11,11 +11,6 @@
                     <font-awesome-icon :icon="['fas','search']" class="text-yellow-500"/>
                 </button>
             </div>
-            <!-- <select id="date" ref="date" class="rounded-lg p-2 outline-none ml-8 cursor-pointer">
-                <option value="hari">hari</option>
-                <option value="bulan">bulan</option>
-                <option value="tahun">tahun</option>
-            </select> -->
             <NuxtLink to="/maintenance/inputmaintenance"
             class="flex items-center justify-between rounded-md px-3 w-20 bg-gray-700">
             <p class="font-medium text-sm text-gray-200">input</p>
@@ -25,16 +20,11 @@
             </NuxtLink>
         </div>
 
-        <!-- <div v-if="deletemsg" class="relative mt-5 w-1/4 text-center m-auto">
-        <p class="text-white bg-blue-500 font-semibold p-2 rounded-lg">{{ deletemsg }}</p>
-        </div> -->
-
-
         <table class="table space-y-6 container mx-auto table-auto border-collapse mt-7 divide-y divide-gray-300" ref="listitem" id="listitem">
             <thead class="bg-white text-sm bg-gray-700">
                 <tr class="text-xs text-gray-200"> 
                     <th class="font-semibold py-3 px-2 w-4">no.</th>
-                    <th class="font-semibold py-3 w-52">nama</th>
+                    <th classp="font-semibold py-3 w-52">nama</th>
                     <th class="font-semibold py-3 w-32">tanggal input</th>
                     <th class="font-semibold w-32">suhu</th>
                     <th class="font-semibold w-32">kelembapan</th>
@@ -286,5 +276,4 @@ export default {
 </script>
 
 <style>
-
 </style>

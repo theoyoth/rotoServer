@@ -215,6 +215,7 @@ export default {
             const idlogin = this.$auth.user.id
 
             const resp = await this.$axios.get(`/masternetwork/${lokasi}/${idlogin}`)
+            resp.data.reverse()
             resp.data.forEach(network => {
                 this.networks.push(network)   
             })

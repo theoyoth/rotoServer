@@ -213,6 +213,7 @@ export default {
             const lokasi = this.$auth.user.lokasi
             const idlogin = this.$auth.user.id
             const resp = await this.$axios.get(`/mastermouse/${lokasi}/${idlogin}`)
+            resp.data.reverse()
             resp.data.forEach(mouse => {
             this.mouses.push(mouse)
         })

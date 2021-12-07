@@ -173,12 +173,6 @@ export default {
             })
         }
     },
-    // async fetch(){
-    //     if(this.caribarang !== ""){
-    //         await this.caribarangapar();
-    //     return
-    //     }
-    // },
     methods:{
         deleteData(id){
             swal({
@@ -212,19 +206,13 @@ export default {
                 swal('Error','ada yang salah',{icon:'error'})
             })
         },
-        //  async caribarangapar(){
-        //     this.cariapar = []
-        //     const res = await axios.get(`http://localhost:3000/server/cariapar?cari=${this.caribarang}`)
-        //     res.data.forEach(val =>{
-        //         this.cariapar.push(val)
-        //     })
-        // },
     },
     async mounted(){
         try{
             const lokasi = this.$auth.user.lokasi
             const idlogin = this.$auth.user.id
             const resp = await this.$axios.get(`/masterapar/${lokasi}/${idlogin}`)
+            resp.data.reverse()
             resp.data.forEach(apar => {
                 this.apars.push(apar)
             })

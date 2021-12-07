@@ -271,6 +271,7 @@ export default {
             const lokasi = this.$auth.user.lokasi
             const idlogin = this.$auth.user.id
             const resp = await this.$axios.get(`/masterac/${lokasi}/${idlogin}`)
+            resp.data.reverse()
             resp.data.forEach(ac => {
                 this.acs.push(ac)
             })

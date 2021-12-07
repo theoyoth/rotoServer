@@ -345,6 +345,7 @@ export default {
         const idlogin = this.$auth.user.id
         try{
             const resp = await this.$axios.get(`/masterserver/${lokasiserver}/${idlogin}`)
+            resp.data.reverse()
             resp.data.forEach(server => {
                 this.servers.push(server)
             })

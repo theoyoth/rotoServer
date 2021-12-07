@@ -1,5 +1,5 @@
 <template>
-<div class="bg-gray-200 min-h-screen w-widthContent ml-auto">
+<div class="bg-gray-300 min-h-screen w-widthContent ml-auto">
     <!-- <HeaderListItem :ups="master.nama"/> -->
     <Navbar/>
     <section class="bg-gray-100 min-h-screen w-widthContentField m-auto mt-7 p-4">
@@ -268,6 +268,7 @@ export default {
             const lokasi = this.$auth.user.lokasi
             const idlogin = this.$auth.user.id
             const resp = await this.$axios.get(`/masterups/${lokasi}/${idlogin}`)
+            resp.data.reverse()
             resp.data.forEach(ups =>{
                 this.upss.push(ups)            
             })

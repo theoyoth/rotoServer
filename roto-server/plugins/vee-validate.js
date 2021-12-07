@@ -6,6 +6,7 @@ import {
   alpha_dash,
   confirmed,
   min,
+  email,
 } from 'vee-validate/dist/rules'
 
 // Object.keys(rules).forEach((rule) => {
@@ -34,6 +35,10 @@ extend('alpha_dash', {
 extend('confirmed', {
   ...confirmed,
   message: 'password tidak cocok',
+})
+extend('email', {
+  ...email,
+  message: 'masukan email yang benar',
 })
 extend('min', {
   ...min,

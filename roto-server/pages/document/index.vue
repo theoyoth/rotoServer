@@ -21,7 +21,7 @@
                   @change="onSelect" 
                 />
                 <p class="text-center mt-6">
-                  Drag your file here to begin<br> or click to browse
+                  Drag your file here <br> or click to browse
                 </p>
                 <font-awesome-icon :icon="['fas','upload']" class="text-blue-500"/>
             </div>
@@ -38,7 +38,7 @@
           </div>
         </form>
       </div>
-      <div class="grid grid-cols-4 mt-5 gap-y-6 py-4 place-items-center relative border border-gray-500">
+      <div class="grid grid-cols-4 mt-5 gap-y-6 py-4 place-items-center relative">
         <div v-for="(fil, index) in allfiles" :key="index" class="w-48 h-44 bg-gray-400 rounded-lg relative">
           <div class="w-24 mx-auto transform translate-y-4">
             <img src="~/assets/img/pdf.png" alt="pdf-icon">
@@ -47,11 +47,9 @@
             <div class="w-full"><p class="text-xs text-center break-words">{{ fil.name }}</p></div>
             
             <div class="flex">
-              <a href="../../uploads/indihome_1638517468303.pdf" target="_blank">
-                <div class="cursor-pointer w-6">
-                  <font-awesome-icon :icon="['fas','eye']" class="text-gray-700"/>
-                </div>
-              </a>
+              <div class="cursor-pointer w-6">
+                <font-awesome-icon :icon="['fas','eye']" class="text-gray-700"/>
+              </div>
 
               <div class="cursor-pointer w-6" @click="downloadFile(fil.name)">
                 <font-awesome-icon :icon="['fas','download']" class="text-gray-700"/>
@@ -68,7 +66,7 @@
 </template>
 
 <script>
-import { ValidationObserver, ValidationProvider } from "vee-validate";
+import { ValidationObserver, ValidationProvider } from "vee-validate"
 
 export default {
   middleware: 'isAuthenticated',
@@ -118,18 +116,42 @@ export default {
           })
     },
     deleteFile(filename){
-      this.$axios.delete(`/document/list/${filename}`)
-      .then(resp=>{
-        swal(resp.data.msg,{icon:'success'})
-      }).catch(err=>{
-        swal(err.data.errmsg,{icon:'error'})
-      })
+      swal({
+                title: 'anda yakin?',
+                text: 'sekali dihapus, file tidak akan bisa kembali',
+                icon: 'warning',
+                buttons: true,
+                dangerMode: true
+            }).then(suc=>{
+                if(suc){
+                    let indexOfArrayItem = this.allfiles.findIndex(i => i.name === filename)
+
+                    this.$axios.delete(`/document/list/${filename}`)
+                    .then(resp=>{
+                        if(resp){
+                            this.allfiles.splice(indexOfArrayItem, 1);
+                            this.$router.push('/document')
+                            swal('data dihapus',{icon:'success'})
+                        }
+                    }).catch(err=>{
+                        if(err.data.errmsg){
+                            this.$router.push('/document')
+                            swal('Error', err.data.errmsg,{icon:'error'})
+                        }
+                    })
+                }
+                else{
+                    swal('Error','gagal menghapus',{icon:'error'})
+                }
+            }).catch(err=>{
+                swal('Error','ada yang salah',{icon:'error'})
+            })
     }
   },
   async mounted() {
     try {
       const resp = await this.$axios.get('/document/list')
-      if (resp) {
+      if (resp.data) {
         this.allfiles = resp.data
       }
     } catch (err) {
@@ -141,7 +163,7 @@ export default {
     //   /^.*\.pdf$/
     // )
 
-    require.context('~/uploads/', false, /\.pdf$/)
+    // require.context('~/uploads/', false, /\.pdf$/)
   },
 }
 </script>
