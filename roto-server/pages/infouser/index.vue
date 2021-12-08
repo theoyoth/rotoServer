@@ -22,9 +22,7 @@
             </div>
             </NuxtLink>
       </div>
-      <!-- <div class="w-full mt-4 p-4">
-        
-      </div> -->
+      
         <table class="table space-y-6 container mx-auto table-auto border-collapse w-3/4 mt-10 divide-y divide-gray-300" ref="listitem" id="listitem">
           <thead class="text-sm bg-gray-700">
               <tr class="text-sm text-gray-200"> 
@@ -32,7 +30,6 @@
                   <th class="font-semibold py-3">nama</th>
                   <th class="font-semibold py-3 w-64">role</th>
                   <th class="font-semibold py-3 w-24">aksi</th>
-
               </tr>
           </thead>
           <tbody v-if="cariuser !== ''" class="text-center bg-white bg-opacity-40 divide-y divide-gray-300">
@@ -84,6 +81,7 @@
                     </td>
               </tr>
           </tbody> 
+         
           <tbody v-else class="text-center bg-white bg-opacity-40 divide-y divide-gray-300">
               <tr class="text-sm" v-for="(us,index) in users" :key="index">
                   <td>{{index+1}}</td>
@@ -154,6 +152,9 @@ export default {
           return hasil
         }
       })
+    },
+    filteredPA(){
+      return this.users.filter(hasil=>{this.selected.includes(hasil.role)})
     }
   },
   methods:{
@@ -188,6 +189,7 @@ export default {
                 swal('Error','ada yang salah',{icon:'error'})
             })
         },
+   
   },
   async mounted(){
     try {

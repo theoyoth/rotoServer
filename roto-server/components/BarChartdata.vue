@@ -1,8 +1,8 @@
 <script>
-import {Line, mixins} from 'vue-chartjs';
-const {reactiveProp} = mixins
+// import {Line, mixins} from 'vue-chartjs';
+// const {reactiveProp} = mixins
 
-export default{
+// export default{
     // extends:Line,
     // mixins: [reactiveProp],
     // props: {
@@ -63,6 +63,6 @@ export default{
     // async mounted(){
     //     await this.renderChart(this.barChartData,this.barChartOption);
     // },    
-}
+// }
 
 </script>

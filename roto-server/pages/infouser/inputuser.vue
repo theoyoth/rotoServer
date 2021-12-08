@@ -167,6 +167,7 @@ export default {
     background-color: rgb(37, 45, 56);
     color:whitesmoke;
     cursor:pointer;
+    width:100%;
     opacity:1;
     padding-top: .5rem;
     padding-bottom: .5rem;

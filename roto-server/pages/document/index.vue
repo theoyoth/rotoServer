@@ -6,7 +6,7 @@
     <section
       class="bg-gray-100 min-h-screen w-widthContentField m-auto mt-7 p-4"
     >
-      <div class="bg-gray-400 p-4">
+      <div class="bg-gray-400 p-4" v-show="this.$auth.user.role === 'PA' || this.$auth.user.role === 'EDP'">
         <h1 class="text-center text-xl font-semibold mb-2">Upload file</h1>
         <form @submit.prevent="onSubmit" enctype="multipart/form-data">
           <div class="w-full mt-6">

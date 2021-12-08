@@ -14,7 +14,6 @@
 
 
 export default {
-  props:"pdfurl",
   mounted(){
     // const canvas = document.getElementById("viewer")
     // const context = canvas.getContext("2d")

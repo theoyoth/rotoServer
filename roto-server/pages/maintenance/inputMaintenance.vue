@@ -221,7 +221,7 @@ export default {
                 }
         },
         async sendNotifyMaintenance(){
-            if(this.inputMaintenance.suhu > 50 && this.$auth.user.role === 'Security'){
+            if(this.inputMaintenance.suhu > 50 && this.$auth.user.role === 'Security' || this.inputMaintenance.suhu > 50 && this.$auth.user.role === 'Admin teknisi' || this.inputMaintenance.suhu > 50 && this.$auth.user.role === 'Teknisi listrik' || this.inputMaintenance.suhu > 50 && this.$auth.user.role === 'Teknisi AC'){
                 const flashMessage = `suhu ruangan server : ${this.inputMaintenance.suhu}℃. suhu terlalu tinggi. harap melakukan pemeriksaan`
                 const resp = await this.$axios.post(`https://api.telegram.org/bot${this.tokentelegram}/sendMessage?chat_id=${this.chatId}&text=${flashMessage}`)
                 if(resp){
@@ -232,8 +232,52 @@ export default {
                     swal('data tidak terkirim',{icon:'error'})
                 }
             }
-            if(this.inputMaintenance.kelembapan > 80 && this.$auth.user.role === 'Security'){
+            if(this.inputMaintenance.kelembapan > 80 && this.$auth.user.role === 'Security' || this.inputMaintenance.kelembapan > 80 && this.$auth.user.role === 'Admin teknisi' || this.inputMaintenance.kelembapan > 80 && this.$auth.user.role === 'Teknisi listrik' || this.inputMaintenance.kelembapan > 80 && this.$auth.user.role === 'Teknisi AC'){
                 const flashMessage = `kelembapan ruangan server : ${this.inputMaintenance.kelembapan}%. kelembapan terlalu tinggi. harap melakukan pemeriksaan`
+                const resp = await this.$axios.post(`https://api.telegram.org/bot${this.tokentelegram}/sendMessage?chat_id=${this.chatId}&text=${flashMessage}`)
+                if(resp){
+                    swal('pesan di kirim ke EDP dan PA',{icon:'success'})
+                    this.$router.push('/maintenance')
+                }
+                else{ 
+                    swal('data tidak terkirim',{icon:'error'})
+                }
+            }
+            if(this.inputMaintenance.ac === 'tidak baik' && this.$auth.user.role === "Security" || this.inputMaintenance.ac === 'tidak baik' && this.$auth.user.role === "Admin teknisi" || this.inputMaintenance.ac === 'tidak baik' && this.$auth.user.role === "Admin teknisi" || this.inputMaintenance.ac === 'tidak baik' && this.$auth.user.role === "Teknisi listrik" || this.inputMaintenance.ac === 'tidak baik' && this.$auth.user.role === "Teknisi AC"){
+                const flashMessage = `AC sedang bermasalah, harap melakukan pemeriksaan. note : ${this.inputMaintenance.keteranganAc}`
+                const resp = await this.$axios.post(`https://api.telegram.org/bot${this.tokentelegram}/sendMessage?chat_id=${this.chatId}&text=${flashMessage}`)
+                if(resp){
+                    swal('pesan di kirim ke EDP dan PA',{icon:'success'})
+                    this.$router.push('/maintenance')
+                }
+                else{ 
+                    swal('data tidak terkirim',{icon:'error'})
+                }
+            }
+            if(this.inputMaintenance.ups === 'tidak baik' && this.$auth.user.role === "Security" || this.inputMaintenance.ups === 'tidak baik' && this.$auth.user.role === "Admin teknisi" || this.inputMaintenance.ups === 'tidak baik' && this.$auth.user.role === "Teknisi listrik" || this.inputMaintenance.ups === 'tidak baik' && this.$auth.user.role === "Teknisi AC"){
+                const flashMessage = `UPS sedang bermasalah, harap melakukan pemeriksaan. note : ${this.inputMaintenance.keteranganUps}`
+                const resp = await this.$axios.post(`https://api.telegram.org/bot${this.tokentelegram}/sendMessage?chat_id=${this.chatId}&text=${flashMessage}`)
+                if(resp){
+                    swal('pesan di kirim ke EDP dan PA',{icon:'success'})
+                    this.$router.push('/maintenance')
+                }
+                else{ 
+                    swal('data tidak terkirim',{icon:'error'})
+                }
+            }
+            if(this.inputMaintenance.baterai === 'tidak baik' && this.$auth.user.role === "Security" || this.inputMaintenance.baterai === 'tidak baik' && this.$auth.user.role === "Admin teknisi" || this.inputMaintenance.baterai === 'tidak baik' && this.$auth.user.role === "Teknisi listrik" || this.inputMaintenance.baterai === 'tidak baik' && this.$auth.user.role === "Teknisi AC"){
+                const flashMessage = `Baterai sedang bermasalah, harap melakukan pemeriksaan. note : ${this.inputMaintenance.keteranganBaterai}`
+                const resp = await this.$axios.post(`https://api.telegram.org/bot${this.tokentelegram}/sendMessage?chat_id=${this.chatId}&text=${flashMessage}`)
+                if(resp){
+                    swal('pesan di kirim ke EDP dan PA',{icon:'success'})
+                    this.$router.push('/maintenance')
+                }
+                else{ 
+                    swal('data tidak terkirim',{icon:'error'})
+                }
+            }
+            if(this.inputMaintenance.server === 'tidak baik' && this.$auth.user.role === "Security" || this.inputMaintenance.server === 'tidak baik' && this.$auth.user.role === "Admin teknisi" || this.inputMaintenance.server === 'tidak baik' && this.$auth.user.role === "Teknisi listrik" || this.inputMaintenance.server === 'tidak baik' && this.$auth.user.role === "Teknisi AC"){
+                const flashMessage = `Server sedang bermasalah, harap melakukan pemeriksaan. note : ${this.inputMaintenance.keteranganServer}`
                 const resp = await this.$axios.post(`https://api.telegram.org/bot${this.tokentelegram}/sendMessage?chat_id=${this.chatId}&text=${flashMessage}`)
                 if(resp){
                     swal('pesan di kirim ke EDP dan PA',{icon:'success'})

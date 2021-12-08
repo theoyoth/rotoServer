@@ -9,6 +9,8 @@ import {
   CSS2DRenderer,
   CSS2DObject,
 } from 'three/examples/jsm/renderers/CSS2DRenderer.cjs';
+import texturewall from '~/assets/textures/Marble_White_007_basecolor.jpg';
+import texturefloor from '~/assets/textures/Wood_Floor_011_height.png'
 
 export default {
     data() {
@@ -52,6 +54,10 @@ export default {
         this.scene = new THREE.Scene();
         this.scene.background = new THREE.Color(0x222222);
 
+        // texture wall
+        const textureLoader = new THREE.TextureLoader();
+        const wallcolor = textureLoader.load(texturewall);
+        const floorcolor = textureLoader.load(texturefloor);
         // rak 1
         let geometry = new THREE.BoxGeometry(1.2, 0.5, 0.5);
         let material = new THREE.MeshBasicMaterial({color: 0x333333});
@@ -101,20 +107,44 @@ export default {
         this.mesh.position.y = 0.36;
         this.mesh.position.z = -0.8;
         this.scene.add(this.mesh);
-        // pintu 1
+        // door 1
         let geometrypintu1 = new THREE.BoxGeometry(0.04, 0.6, 0.3);
-        let materialpintu1 = new THREE.MeshBasicMaterial({color: 0xeeaa22});
+        let materialpintu1 = new THREE.MeshBasicMaterial({color: 0x666666});
         this.mesh = new THREE.Mesh(geometrypintu1, materialpintu1);
         this.mesh.position.x = 1.25;
-        this.mesh.position.y = 0.3;
+        this.mesh.position.y = 0.31;
         this.mesh.position.z = 1.2;
         this.scene.add(this.mesh);
-        // pintu 2
+        // door 2
         let geometrypintu2 = new THREE.BoxGeometry(0.04, 0.6, 0.3);
-        let materialpintu2 = new THREE.MeshBasicMaterial({color: 0xeeaa22});
+        let materialpintu2 = new THREE.MeshBasicMaterial({color: 0x666666});
         this.mesh = new THREE.Mesh(geometrypintu2, materialpintu2);
         this.mesh.position.x = -1.25;
-        this.mesh.position.y = 0.3;
+        this.mesh.position.y = 0.31;
+        this.mesh.position.z = 1.2;
+        this.scene.add(this.mesh);
+        // door
+        let boxdoor = new THREE.PlaneGeometry(0.2,0.2);
+        let materialboxdoor = new THREE.MeshBasicMaterial({
+          color: 0xaaaaaa,
+          side : THREE.DoubleSide,
+        });
+        this.mesh = new THREE.Mesh(boxdoor, materialboxdoor);
+        this.mesh.rotation.y = Math.PI / 2;
+        this.mesh.position.x = 1.22;
+        this.mesh.position.y = 0.4;
+        this.mesh.position.z = 1.2;
+        this.scene.add(this.mesh);
+        // door
+        let boxdoor2 = new THREE.PlaneGeometry(0.2,0.2);
+        let materialboxdoor2 = new THREE.MeshBasicMaterial({
+          color: 0xaaaaaa,
+          side : THREE.DoubleSide,
+        });
+        this.mesh = new THREE.Mesh(boxdoor2, materialboxdoor2);
+        this.mesh.rotation.y = Math.PI / 2;
+        this.mesh.position.x = -1.22;
+        this.mesh.position.y = 0.4;
         this.mesh.position.z = 1.2;
         this.scene.add(this.mesh);
         
@@ -173,52 +203,58 @@ export default {
         let geometrybaterai = new THREE.BoxGeometry(0.8, 0.4, 0.5);
         let materialbaterai = new THREE.MeshBasicMaterial({color: 0x323232});
         this.baterai = new THREE.Mesh(geometrybaterai, materialbaterai);
-        this.baterai.position.x = -0.2;
+        this.baterai.position.x = -0.18;
         this.baterai.position.y = 0.21;
-        this.baterai.position.z = -1.6;
+        this.baterai.position.z = -1.5;
         this.scene.add(this.baterai);
         
         // floor
-        const floorGometry = new THREE.PlaneGeometry( 2.5,3.35 );
+        const floorGometry = new THREE.PlaneGeometry( 2.6,3.35 );
 				const floorMaterial = new THREE.MeshBasicMaterial( {
-          color: 0x666666, 
+          map:floorcolor,
+          color:0xdddddd,
           side: THREE.DoubleSide
         } );
 				const floor = new THREE.Mesh( floorGometry, floorMaterial );
 				floor.rotation.x = - Math.PI / 2;
 				floor.position.z = -0.19;
 				this.scene.add( floor );
+
         // wall 1
-        const wallGometry = new THREE.PlaneGeometry( 2.5,1 );
+        const wallGometry = new THREE.BoxGeometry( 2.5,1,0.1 );
 				const wallMaterial = new THREE.MeshBasicMaterial( {
-          color: 0x444444, 
+          map:wallcolor,
+          color: 0xcccccc, 
           side: THREE.DoubleSide
         } );
 				const wall = new THREE.Mesh( wallGometry, wallMaterial );
-        wall.position.z = -1.86;
+        wall.position.z = -1.89;
         wall.position.y = 0.5;
 				this.scene.add( wall );
         // wall 2
-        const wall2Gometry = new THREE.PlaneGeometry( 3.35,1 );
+        const wall2Gometry = new THREE.BoxGeometry( 0.05,1,3.35 );
 				const wall2Material = new THREE.MeshBasicMaterial( {
-          color: 0x555555, 
+          map:wallcolor, 
+          color:0xdddddd,
           side: THREE.DoubleSide
         } );
 				const wall2 = new THREE.Mesh( wall2Gometry, wall2Material );
-        wall2.rotation.y = -Math.PI / 2;
-        wall2.position.x = -1.25;
+        // wall2.rotation.y = -Math.PI / 2;
+        wall2.position.x = -1.27;
         wall2.position.y = 0.5;
         wall2.position.z = -0.19;
 				this.scene.add( wall2 );
+
         // wall 
-        const wall3Gometry = new THREE.PlaneGeometry( 3.35,1 );
+        const wall3Gometry = new THREE.BoxGeometry( 0.05,1,3.35 );
 				const wall3Material = new THREE.MeshBasicMaterial( {
-          color: 0x555555, 
-          side: THREE.DoubleSide
+          map:wallcolor,
+          color:0xdddddd,
+          side:THREE.DoubleSide
         } );
 				const wall3 = new THREE.Mesh( wall3Gometry, wall3Material );
-        wall3.rotation.y = -Math.PI / 2;
-        wall3.position.x = 1.25;
+        // wall3.rotation.y = -Math.PI / 2;
+        wall3.position.x = 1.27;
         wall3.position.y = 0.5;
         wall3.position.z = -0.19;
 				this.scene.add( wall3 );
@@ -231,8 +267,8 @@ export default {
 				this.cubeGeo = new THREE.BoxGeometry( 50, 50, 50 );
 				this.cubeMaterial = new THREE.MeshLambertMaterial( { color: 0xfeb74c})
         
-        const gridHelper = new THREE.GridHelper( 2.5, 10 );
-				this.scene.add( gridHelper );
+        // const gridHelper = new THREE.GridHelper( 2.5, 10 );
+				// this.scene.add( gridHelper );
 
         this.raycaster = new THREE.Raycaster();
 				this.mouse = new THREE.Vector2();
