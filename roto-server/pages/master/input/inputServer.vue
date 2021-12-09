@@ -4,7 +4,7 @@
     <Navbar/>
     <section class="bg-white min-h-screen w-widthContentField m-auto mt-7 p-4 ">
         <NuxtLink to="/master/server"
-          class="flex items-center justify-between rounded-md w-28 px-4 py-2 bg-gray-700">
+          class="flex items-center justify-between rounded-md w-28 px-4 py-2 bg-gray-700 hover:bg-gray-600 transition duration-200">
           <div>
             <font-awesome-icon :icon="['fas', 'arrow-left']" class="text-gray-200" />
           </div>
@@ -12,11 +12,6 @@
         </NuxtLink> 
         <p class="text-center text-xl text-gray-700 font-semibold">Input data baru Server</p>
 
-    <!-- <div class="grid grid-cols-3 w-10/12 mt-6">
-        <div v-for="(err,index) in errors" :key="index" class="bg-white w-11/12 rounded-lg mb-1 bg-opacity-90">
-            <li class="text-red-400 text-xs p-2">{{err.msg}}</li>
-        </div>
-    </div> -->
     <ValidationObserver v-slot={invalid,valid}>
     <form @submit.prevent="postInputServer" class="min-w-min mt-10">
         <div class="grid grid-cols-2">
@@ -130,7 +125,10 @@
 
                     <div class="flex flex-col w-72">
                         <ValidationProvider rules="required|numeric" v-slot={errors}>
-                            <input type="text" name="sumberDayaListrik" id="sumberDayaListrik" class="p-2 w-full rounded-lg bg-gray-300 outline-none uppercase" v-model="inputServer.sumberDayaListrik" :disabled="inputServer.networkController === ''">
+                            <div class="flex">
+                                <input type="text" name="sumberDayaListrik" id="sumberDayaListrik" class="p-2 w-full rounded-l-lg bg-gray-300 outline-none uppercase" v-model="inputServer.sumberDayaListrik" :disabled="inputServer.networkController === ''">
+                                <input type="text" value="watt" readonly="readonly" class="w-16 p-1 rounded-r-lg bg-gray-200 outline-none text-center">
+                            </div>
                             <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
                         </ValidationProvider>
                     </div>
@@ -207,10 +205,6 @@ export default {
         
     },
     methods:{
-        // postInputServer(){
-        //     this.$store.dispatch('inputmasterbarang/postInputServer',this.inputServer)
-        //     this.errors = this.$store.state.inputmasterbarang.theerrors
-        // },
         async postInputServer(){
                 const res = await this.$axios.post('/master/inputserver',{
                     iduser : this.$auth.user.id,
@@ -249,21 +243,6 @@ export default {
 </script>
 
 <style lang="scss">
-.widthFormInput{
-    width:calc(100vw - 50%);
-}
-.widthinputfield{
-    width:1100px;
-    height:300px;
-}
-.btnnextactive{
-    transform:translateX(-1100px);
-    transition:all ease-in-out .5s;
-}
-.btnpreviousactive{
-    transform:translateX(0);
-    transition:all ease-in-out .5s;
-}
 .incop{
     opacity:1,
 }

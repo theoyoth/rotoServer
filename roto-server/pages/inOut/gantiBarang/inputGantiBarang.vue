@@ -5,7 +5,7 @@
     <section class="bg-gray-100 min-h-screen w-widthContentField m-auto mt-7 p-4 ">
 
         <NuxtLink to="/inout/gantibarang"
-          class="flex items-center justify-between rounded-md w-28 px-4 py-2 bg-gray-700">
+          class="flex items-center justify-between rounded-md w-28 px-4 py-2 bg-gray-700 hover:bg-gray-600 transition duration-200">
           <div>
             <font-awesome-icon :icon="['fas', 'arrow-left']" class="text-gray-200" />
           </div>
@@ -23,7 +23,7 @@
                     <label for="tanggal" class="block mb-2 text-sm">tanggal</label>
                     <div class="flex flex-col w-72">
                         <ValidationProvider rules="required" v-slot={errors}>
-                            <input type="date" v-model="inputGantiBarang.tanggal" name="tanggal" id="tanggal" class="p-2 w-full rounded-lg outline-none bg-gray-200 uppercase">
+                            <input type="date" v-model="inputGantiBarang.tanggal" name="tanggal" id="tanggal" class="p-2 w-full rounded-lg outline-none bg-gray-300 uppercase">
                             <p class="text-xs mt-1 text-right text-red-500">{{ errors[0] }}</p>
                         </ValidationProvider>
                     </div>
@@ -34,7 +34,7 @@
                     <label for="namaBarangBaru" class="block mb-2 text-sm">nama barang baru</label>
                     <div class="flex flex-col w-72">
                         <ValidationProvider rules="required|passchar" v-slot={errors}>
-                            <input type="text" v-model="inputGantiBarang.namaBarangBaru" name="namaBarangBaru" id="namaBarangBaru" class="p-2 w-full rounded-lg outline-none bg-gray-200 uppercase">
+                            <input type="text" v-model="inputGantiBarang.namaBarangBaru" name="namaBarangBaru" id="namaBarangBaru" class="p-2 w-full rounded-lg outline-none bg-gray-300 uppercase">
                             <p class="text-xs mt-1 text-right text-red-500">{{ errors[0] }}</p>
                         </ValidationProvider>
                     </div>
@@ -45,7 +45,7 @@
                     <label for="namaBarangLama" class="block mb-2 text-sm">nama barang lama</label>
                     <div class="flex flex-col w-72">
                         <ValidationProvider rules="required|passchar" v-slot={errors}>
-                            <input type="text" v-model="inputGantiBarang.namaBarangLama" name="namaBarangLama" id="namaBarangLama" class="p-2 w-full rounded-lg outline-none bg-gray-200 uppercase" :disabled="inputGantiBarang.namaBarangBaru === ''">
+                            <input type="text" v-model="inputGantiBarang.namaBarangLama" name="namaBarangLama" id="namaBarangLama" class="p-2 w-full rounded-lg outline-none bg-gray-300 uppercase" :disabled="inputGantiBarang.namaBarangBaru === ''">
                             <p class="text-xs mt-1 text-right text-red-500">{{ errors[0] }}</p>
                         </ValidationProvider>
                     </div>
@@ -57,7 +57,7 @@
 
                     <div class="flex flex-col w-72">
                         <ValidationProvider rules="required|numeric" v-slot={errors}>
-                            <input type="text" v-model="inputGantiBarang.kuantitas" name="kuantitas" id="kuantitas" class="p-2 w-full rounded-lg outline-none  bg-gray-200" :disabled="inputGantiBarang.namaBarangLama === ''">
+                            <input type="text" v-model="inputGantiBarang.kuantitas" name="kuantitas" id="kuantitas" class="p-2 w-full rounded-lg outline-none  bg-gray-300" :disabled="inputGantiBarang.namaBarangLama === ''">
                             <p class="text-xs mt-1 text-right text-red-500">{{ errors[0] }}</p>
                         </ValidationProvider>
                     </div>
@@ -69,8 +69,8 @@
                     <label for="kepentingan" class="block mb-2 text-sm">kepentingan</label>
 
                     <div class="flex flex-col w-72">
-                        <ValidationProvider rules="required|alpha_spaces" v-slot={errors}>
-                            <input type="text" v-model="inputGantiBarang.kepentingan" name="kepentingan" id="kepentingan" class="p-2 w-full rounded-lg outline-none bg-gray-200 uppercase" :disabled="inputGantiBarang.kuantitas === ''">
+                        <ValidationProvider rules="required|passchar" v-slot={errors}>
+                            <input type="text" v-model="inputGantiBarang.kepentingan" name="kepentingan" id="kepentingan" class="p-2 w-full rounded-lg outline-none bg-gray-300 uppercase" :disabled="inputGantiBarang.kuantitas === ''">
                             <p class="text-xs mt-1 text-right text-red-500">{{ errors[0] }}</p>
                         </ValidationProvider>
                     </div>
@@ -81,7 +81,7 @@
                     <label for="penanggungJawab" class="block mb-2 text-sm">penanggung jawab</label>
                     <div class="flex flex-col w-72">
                     <ValidationProvider rules="required" v-slot={errors}>
-                        <select name="penanggungJawab" id="penanggungJawab" class="p-2 w-full rounded-lg" v-model="inputGantiBarang.penanggungJawab">
+                        <select name="penanggungJawab" id="penanggungJawab" class="p-2 w-full rounded-lg bg-gray-300" v-model="inputGantiBarang.penanggungJawab">
                             <option disabled value="">penanggung jawab</option>
                             <option v-for="(pa,index) in userpa" :key="index">
                                 <option :value="pa.nama">{{pa.nama}}</option>
@@ -96,8 +96,8 @@
 
                     <label for="penanggungJawab" class="block mb-2 text-sm">keterangan</label>
                     <div class="flex flex-col w-72">
-                    <ValidationProvider rules="required|alpha_spaces" v-slot={errors}>
-                        <textarea type="text" rows="4" v-model="inputGantiBarang.keterangan" name="keterangan" id="keterangan" class="p-2 w-full rounded-lg outline-none bg-gray-200 uppercase" :disabled="inputGantiBarang.penanggungJawab === ''">
+                    <ValidationProvider rules="required|passchar" v-slot={errors}>
+                        <textarea type="text" rows="4" v-model="inputGantiBarang.keterangan" name="keterangan" id="keterangan" class="p-2 w-full rounded-lg outline-none bg-gray-300 uppercase" :disabled="inputGantiBarang.penanggungJawab === ''">
                         </textarea>
                         <p class="text-xs mt-1 text-right text-red-500">{{ errors[0] }}</p>
                     </ValidationProvider>
@@ -113,7 +113,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 import moment from 'moment'
 import { ValidationObserver, ValidationProvider } from "vee-validate";
 

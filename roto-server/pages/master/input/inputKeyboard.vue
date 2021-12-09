@@ -1,10 +1,9 @@
 <template>
 <div class="bg-gray-200 min-h-screen w-widthContent ml-auto">
-    <!-- <InputHeader item="Keyboard"/> -->
     <Navbar/>
     <section class="bg-white min-h-screen w-widthContentField m-auto mt-7 p-4">
         <NuxtLink to="/master/keyboard"
-          class="flex items-center justify-between rounded-md w-28 px-4 py-2 bg-gray-700">
+          class="flex items-center justify-between rounded-md w-28 px-4 py-2 bg-gray-700 hover:bg-gray-600 transition duration-200">
           <div>
             <font-awesome-icon :icon="['fas', 'arrow-left']" class="text-gray-200" />
           </div>
@@ -79,7 +78,7 @@
                 </div>
             </div>
         </div>
-        <button class="mt-10 opacity-10 bg-gray-700 text-gray-200 w-24 py-2 rounded cursor-default" type="submit" :class="{activesubmit : valid}" :disabled="invalid">kirim</button>
+        <button class="mt-10 opacity-10 bg-gray-700 text-gray-200 w-28 py-2 rounded cursor-default" type="submit" :class="{activesubmit : valid}" :disabled="invalid">kirim</button>
     </form>
     </ValidationObserver>
 </section>
@@ -146,9 +145,9 @@ export default {
     opacity: 0.1;
 }
 .activesubmit {
-    background-color: rgb(37, 45, 56);
+    background-color: rgb(55, 65, 81);
     color:whitesmoke;
-    width:6rem;
+    width:7rem;
     cursor:pointer;
     opacity:1;
     padding-top: .5rem;

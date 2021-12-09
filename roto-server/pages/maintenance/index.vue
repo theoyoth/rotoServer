@@ -12,7 +12,7 @@
                 </button>
             </div>
             <NuxtLink to="/maintenance/inputmaintenance"
-            class="flex items-center justify-between rounded-md px-3 w-20 bg-gray-700">
+            class="flex items-center justify-between rounded-md px-3 w-20 bg-gray-700 hover:bg-gray-600 transition duration-200">
             <p class="font-medium text-sm text-gray-200">input</p>
             <div>
                 <font-awesome-icon :icon="['fas', 'plus']" class="text-gray-200" />

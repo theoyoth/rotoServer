@@ -4,13 +4,14 @@
     <Navbar/>
     <section class="bg-gray-100 min-h-screen w-widthContentField m-auto mt-7 p-4 ">
         <NuxtLink to="/maintenance"
-          class="flex items-center justify-between rounded-md w-28 px-4 py-2 bg-gray-700">
+          class="flex items-center justify-between rounded-md w-28 px-4 py-2 bg-gray-700 hover:bg-gray-600 transition duration-200">
           <div>
             <font-awesome-icon :icon="['fas', 'arrow-left']" class="text-gray-200" />
           </div>
           <p class="font-medium text-sm text-gray-200">kembali</p>
         </NuxtLink> 
-        <p class="text-center text-xl text-gray-700 font-semibold">Input maintenance</p>
+        <p class="text-center text-xl text-gray-700 font-semibold mt-4 mb-4">Input maintenance</p>
+        <hr>
 
     <ValidationObserver v-slot={invalid,valid} ref="obserf">
     <form @submit.prevent="[postInputMaintenance(),sendNotifyMaintenance()]" class="min-w-min mt-10" id="inputmaintenance">

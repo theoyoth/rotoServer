@@ -4,19 +4,13 @@
     <Navbar/>
     <section class="bg-white min-h-screen w-widthContentField m-auto mt-7 p-4 ">
         <NuxtLink to="/master/ac"
-          class="flex items-center justify-between rounded-md w-28 px-4 py-2 bg-gray-700">
+          class="flex items-center justify-between rounded-md w-28 px-4 py-2 bg-gray-700 hover:bg-gray-600 transition duration-200">
           <div>
             <font-awesome-icon :icon="['fas', 'arrow-left']" class="text-gray-200" />
           </div>
           <p class="font-medium text-sm text-gray-200">kembali</p>
         </NuxtLink> 
         <p class="text-center text-xl text-gray-700 font-semibold">Input data baru</p>
-    
-    <div class="grid grid-cols-3 w-10/12 mt-6">
-        <div v-for="(err,index) in errors" :key="index" class="bg-white w-4/5 rounded-lg mb-1 bg-opacity-90">
-            <li class="text-red-400 text-xs p-2">{{err.msg}}</li>
-        </div>
-    </div>
 
     <ValidationObserver v-slot={invalid,valid}>
     <form class="mt-8 min-w-min" @submit.prevent="postInputAc">

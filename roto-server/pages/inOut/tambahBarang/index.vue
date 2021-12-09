@@ -33,7 +33,7 @@
                 <option value="tahun">tahun</option>
             </select> -->
             <NuxtLink to="/inout/tambahbarang/inputtambahbarang"
-            class="flex items-center justify-between rounded-md px-3 w-20 bg-gray-700 hover:shadow-lg transition duraiton-300">
+            class="flex items-center justify-between rounded-md px-3 w-20 bg-gray-700 hover:shadow-lg hover:bg-gray-600 transition duraiton-200">
             <p class="font-medium text-sm text-gray-200">input</p>
             <div>
                 <font-awesome-icon :icon="['fas', 'plus']" class="text-gray-200" />

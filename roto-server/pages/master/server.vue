@@ -29,13 +29,8 @@
             <font-awesome-icon :icon="['fas', 'search']" class="text-yellow-500" />
           </button>
         </div>
-        <!-- <select id="date" class="rounded-lg p-2 outline-none ml-8 cursor-pointer">
-              <option value="hari">hari</option>
-              <option value="bulan">bulan</option>
-              <option value="tahun">tahun</option>
-          </select> -->
         <NuxtLink to="/master/input/inputserver"
-          class="flex items-center justify-between rounded-md px-3 w-20 bg-gray-700 hover:shadow-lg transition duraiton-300">
+          class="flex items-center justify-between rounded-md px-3 w-20 bg-gray-700 hover:shadow-lg hover:bg-gray-600 transition duraiton-200">
           <p class="font-medium text-sm text-gray-200">input</p>
           <div>
             <font-awesome-icon :icon="['fas', 'plus']" class="text-gray-200" />

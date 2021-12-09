@@ -5,7 +5,7 @@
     <section class="bg-gray-100 min-h-screen w-widthContentField m-auto mt-7 p-4 ">
 
         <NuxtLink to="/master/rak"
-          class="flex items-center justify-between rounded-md w-28 px-4 py-2 bg-gray-700">
+          class="flex items-center justify-between rounded-md w-28 px-4 py-2 bg-gray-700 hover:bg-gray-600 transition duration-200">
           <div>
             <font-awesome-icon :icon="['fas', 'arrow-left']" class="text-gray-200" />
           </div>
@@ -23,7 +23,7 @@
                     <label for="tipeRak" class="block mb-2 text-sm">tipe rak</label>
                     <div class="flex flex-col w-72">
                         <ValidationProvider rules="required|passchar" v-slot={errors}>
-                            <input type="text" v-model="inputRak.tipeRak" name="tipeRak" id="tipeRak" class="p-2 w-full rounded-lg outline-none bg-gray-200 uppercase">
+                            <input type="text" v-model="inputRak.tipeRak" name="tipeRak" id="tipeRak" class="p-2 w-full rounded-lg outline-none bg-gray-300 uppercase">
                             <p class="text-xs mt-1 text-right text-red-500">{{ errors[0] }}</p>
                         </ValidationProvider>
                     </div>
@@ -35,7 +35,7 @@
 
                     <div class="flex flex-col w-72">
                         <ValidationProvider rules="required|passchar" v-slot={errors}>
-                            <input type="text" v-model="inputRak.tipePintu" name="tipePintu" id="tipePintu" class="p-2 w-full rounded-lg outline-none  bg-gray-200 uppercase" :disabled="inputRak.tipeRak === ''">
+                            <input type="text" v-model="inputRak.tipePintu" name="tipePintu" id="tipePintu" class="p-2 w-full rounded-lg outline-none  bg-gray-300 uppercase" :disabled="inputRak.tipeRak === ''">
                             <p class="text-xs mt-1 text-right text-red-500">{{ errors[0] }}</p>
                         </ValidationProvider>
                     </div>
@@ -48,7 +48,7 @@
 
                     <div class="flex flex-col w-72">
                         <ValidationProvider rules="required|passchar" v-slot={errors}>
-                            <input type="text" v-model="inputRak.namaProduk" name="namaProduk" id="namaProduk" class="p-2 w-full rounded-lg outline-none bg-gray-200 uppercase" :disabled="inputRak.tipePintu === ''">
+                            <input type="text" v-model="inputRak.namaProduk" name="namaProduk" id="namaProduk" class="p-2 w-full rounded-lg outline-none bg-gray-300 uppercase" :disabled="inputRak.tipePintu === ''">
                             <p class="text-xs mt-1 text-right text-red-500">{{ errors[0] }}</p>
                         </ValidationProvider>
                     </div>
@@ -59,7 +59,7 @@
                     <label for="dimensi" class="block mb-2 text-sm">dimensi</label>
                     <div class="flex flex-col w-72">
                     <ValidationProvider rules="required|passchar" v-slot={errors}>
-                        <input type="text" v-model="inputRak.dimensi" name="dimensi" id="dimensi" class="p-2 w-full rounded-lg outline-none bg-gray-200 uppercase" :disabled="inputRak.namaProduk === ''">
+                        <input type="text" v-model="inputRak.dimensi" name="dimensi" id="dimensi" class="p-2 w-full rounded-lg outline-none bg-gray-300 uppercase" :disabled="inputRak.namaProduk === ''">
                         <p class="text-xs mt-1 text-right text-red-500">{{ errors[0] }}</p>
                     </ValidationProvider>
                     </div>
@@ -67,10 +67,13 @@
                 <div class="mb-4 has-tooltip relative" :class="[inputRak.dimensi !== '' ? 'incop' : 'decop']">
                      <span class="tooltip text-xs rounded shadow-lg p-1 bg-gray-700 text-white ml-32">masukan berat rak</span>
 
-                    <label for="berat" class="block mb-2 text-sm">berat (dalam KG)</label>
+                    <label for="berat" class="block mb-2 text-sm">berat</label>
                     <div class="flex flex-col w-72">
                     <ValidationProvider rules="required|numeric" v-slot={errors}>
-                        <input type="text" v-model="inputRak.berat" name="berat" id="berat" class="p-2 w-full rounded-lg outline-none bg-gray-200 uppercase" :disabled="inputRak.dimensi === ''">
+                        <div class="flex">
+                            <input type="text" v-model="inputRak.berat" name="berat" id="berat" class="p-2 w-full rounded-l-lg outline-none bg-gray-300 uppercase" :disabled="inputRak.dimensi === ''">
+                            <input type="text" readonly value="KG" class="p-1 w-16 text-center bg-gray-200 rounded-r-lg">
+                        </div>
                         <p class="text-xs mt-1 text-right text-red-500">{{ errors[0] }}</p>
                     </ValidationProvider>
                     </div>
@@ -82,14 +85,14 @@
                     <label for="tahun" class="block mb-2 text-sm">tahun</label>
                     <div class="flex flex-col w-72">
                         <ValidationProvider rules="required" v-slot={errors}>
-                            <input type="date" v-model="inputRak.tahun" name="tahun" id="tahun" class="p-2 w-full rounded-lg outline-none bg-gray-200 uppercase" >
+                            <input type="date" v-model="inputRak.tahun" name="tahun" id="tahun" class="p-2 w-full rounded-lg outline-none bg-gray-300 uppercase" >
                             <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
                         </ValidationProvider>
                     </div>
                 </div>
             </div>
         </div>
-        <button class="mt-10 opacity-10 bg-gray-700 text-gray-200 w-24 py-2 rounded cursor-default" type="submit" :class="{activesubmit : valid}" :disabled="invalid">kirim</button>
+        <button class="mt-10 opacity-10 bg-gray-700 text-gray-200 w-28 py-2 rounded cursor-default" type="submit" :class="{activesubmit : valid}" :disabled="invalid">kirim</button>
     </form>
     </ValidationObserver>
 </section>
@@ -157,9 +160,9 @@ export default {
     opacity: 0.1;
 }
 .activesubmit {
-    background-color: rgb(39, 39, 39);
+    background-color: rgb(55, 65, 81);
     color:whitesmoke;
-    width:6rem;
+    width:7rem;
     cursor:pointer;
     opacity:1;
     padding-top: .5rem;

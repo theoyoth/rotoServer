@@ -5,7 +5,7 @@
     <section class="bg-gray-100 min-h-screen w-widthContentField m-auto mt-7 p-4 ">
 
         <NuxtLink to="/inout/ambilbarang"
-          class="flex items-center justify-between rounded-md w-28 px-4 py-2 bg-gray-700">
+          class="flex items-center justify-between rounded-md w-28 px-4 py-2 bg-gray-700 hover:bg-gray-600 transition duration-200">
           <div>
             <font-awesome-icon :icon="['fas', 'arrow-left']" class="text-gray-200" />
           </div>
@@ -82,7 +82,7 @@
                 </div>
             </div>
         </div>
-        <button class="mt-10 opacity-10 bg-gray-700 text-gray-200 w-24 py-2 rounded cursor-default" type="submit" :class="{activesubmit : valid}" :disabled="invalid">kirim</button>
+        <button class="mt-10 opacity-10 bg-gray-700 text-gray-200 w-24 py-2 rounded-lg cursor-default" type="submit" :class="{activesubmit : valid}" :disabled="invalid">kirim</button>
     </form>
     </ValidationObserver>
 </section>

@@ -17,17 +17,13 @@
                 <option value="tahun">tahun</option>
             </select> -->
             <NuxtLink to="/master/input/inputmonitor"
-            class="flex items-center justify-between rounded-md px-3 w-20 bg-gray-700">
+            class="flex items-center justify-between rounded-md px-3 w-20 bg-gray-700 hover:bg-gray-600 transition duration-200">
             <p class="font-medium text-sm text-gray-200">input</p>
             <div>
                 <font-awesome-icon :icon="['fas', 'plus']" class="text-gray-200" />
             </div>
             </NuxtLink>
         </div>
-
-        <!-- <div v-if="deletemsg" class="relative mt-5 w-1/4 text-center m-auto">
-        <p class="text-white bg-blue-500 font-semibold p-2 rounded-lg">{{ deletemsg }}</p>
-        </div> -->
 
         <table class="table space-y-6 container mx-auto table-auto border-collapse mt-7 divide-y divide-gray-300">
             <thead class="bg-gray-700 text-sm has-tooltip">
