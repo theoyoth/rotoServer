@@ -82,12 +82,12 @@
           class="text-center bg-white bg-opacity-40 divide-y divide-gray-300">
           <tr class="text-sm uppercase" v-for="(hasilcari, index) in filteredList" :key="index">
             <td>{{index+1}}</td>
-            <td>{{ $moment().format('DD-MM-YYYY') }}</td>
+            <td>{{ $moment(hasilcari.tanggal).format('DD-MM-YYYY') }}</td>
             <td>{{ hasilcari.merek }}</td>
             <td>{{ hasilcari.model }}</td>
             <td>{{ hasilcari.processor }}</td>
             <td>{{ hasilcari.memori }}</td>
-            <td class="text-xs">
+            <td>
               {{ $moment(hasilcari.garansi).format('DD-MM-YYYY') }}
             </td>
             <td class="py-3 flex justify-between w-full lowercase">
@@ -177,12 +177,12 @@
         <tbody v-else class="text-center bg-white bg-opacity-40 divide-y divide-gray-300">
           <tr class="text-sm uppercase" v-for="(server, index) in servers" :key="index">
             <td>{{index+1}}</td>
-            <td>{{ $moment().format('DD-MM-YYYY') }}</td>
+            <td>{{ $moment(server.tanggal).format('DD-MM-YYYY') }}</td>
             <td>{{ server.merek }}</td>
             <td>{{ server.model }}</td>
             <td>{{ server.processor }}</td>
             <td>{{ server.memori }}</td>
-            <td class="text-xs">
+            <td>
               {{ $moment(server.garansi).format('DD-MM-YYYY') }}
             </td>
             <td class="py-3 flex justify-between w-full lowercase">
@@ -274,8 +274,6 @@
 </template>
 
 <script>
-import axios from "axios"
-import moment from "moment"
 export default {
   middleware:"isAuthenticated",
     data(){

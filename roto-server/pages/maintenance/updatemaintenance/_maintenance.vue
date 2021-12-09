@@ -17,10 +17,6 @@
         <div>
             <input type="hidden" name="id" :value="maintenances.id">
             <div class="grid grid-cols-3">
-                <!-- <div class="mb-4">
-                    <label for="nama" class="block mb-2 text-sm">nama</label>
-                    <input type="text" :value="maintenances.nama" name="nama" id="nama" class="p-2 w-72 rounded-lg outline-none bg-gray-300">
-                </div> -->
                 <div class="mb-4">
                     <label for="tanggal" class="block mb-2 text-sm">tanggal</label>
                     <input type="date" v-model="updateMaintenance.tanggal" name="tanggal" id="tanggal" class="p-2 w-72 rounded-lg outline-none bg-gray-300">

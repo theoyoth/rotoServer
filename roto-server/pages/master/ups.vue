@@ -11,11 +11,7 @@
                     <font-awesome-icon :icon="['fas','search']" class="text-yellow-500"/>
                 </button>
             </div>
-            <!-- <select id="date" class="rounded-lg p-2 outline-none ml-8 cursor-pointer">
-                <option value="hari">hari</option>
-                <option value="bulan">bulan</option>
-                <option value="tahun">tahun</option>
-            </select> -->
+
             <NuxtLink to="/master/input/inputups"
             class="flex items-center justify-between rounded-md px-3 w-20 bg-gray-700 hover:bg-gray-600 transition duration-200">
             <p class="font-medium text-sm text-gray-200">input</p>
@@ -24,10 +20,6 @@
             </div>
             </NuxtLink>
         </div>
-
-        <!-- <div v-if="deletemsg" class="relative mt-5 w-1/4 text-center m-auto">
-        <p class="text-white bg-blue-500 font-semibold p-2 rounded-lg">{{ deletemsg }}</p>
-        </div> -->
 
         <table class="table space-y-6 container mx-auto table-auto border-collapse mt-7 divide-y divide-gray-300">
             <thead class="bg-gray-700 text-sm has-tooltip">
@@ -51,7 +43,7 @@
                     <td>{{hasilcari.nomor_serial}}</td>
                     <td>{{hasilcari.nama_sistem}}</td>
                     <td>{{hasilcari.manufaktur}}</td>
-                    <td class="text-xs">{{$moment(hasilcari.garansi).format('DD-MM-YYYY')}}</td>
+                    <td>{{$moment(hasilcari.garansi).format('DD-MM-YYYY')}}</td>
                     <td class="py-3 flex justify-between w-full lowercase">
                         <div class="has-tooltip">
                             <span
@@ -130,7 +122,7 @@
                     <td>{{ups.nomor_serial}}</td>
                     <td>{{ups.nama_sistem}}</td>
                     <td>{{ups.manufaktur}}</td>
-                    <td class="text-xs">{{$moment(ups.garansi).format('DD-MM-YYYY')}}</td>
+                    <td>{{$moment(ups.garansi).format('DD-MM-YYYY')}}</td>
                     <td class="py-3 flex justify-between w-full lowercase">
                         <div class="has-tooltip">
                             <span

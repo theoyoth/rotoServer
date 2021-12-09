@@ -76,7 +76,7 @@
                         <ValidationProvider rules="required|passchar" v-slot={errors}>
                             <div class="flex">
                             <input type="text"  name="memori" id="memori" class="p-2 w-full rounded-lg outline-none bg-gray-300 uppercase" v-model="inputServer.memori" :disabled="inputServer.processor === ''" >
-                            <select name="kapasitas" id="kapasitas" class="p-2 rounded-r-lg -ml-2" :disabled="inputServer.processor === ''" >
+                            <select name="kapasitas" id="kapasitas" class="p-2 rounded-r-lg -ml-2 cursor-pointer" :disabled="inputServer.processor === ''" >
                                 <option value="gb">GB</option>
                                 <option value="tb">TB</option>
                             </select> 
@@ -95,7 +95,7 @@
                         <ValidationProvider rules="required|passchar" v-slot={errors}>
                             <div class="flex">
                             <input type="text"  name="internalStorage" id="internalStorage" class="p-2 w-full rounded-lg bg-gray-300 outline-none uppercase" v-model="inputServer.internalStorage" :disabled="inputServer.memori === ''" >
-                            <select name="kapasitas" id="kapasitas" class="p-2 rounded-r-lg -ml-2 ring-blue-500" :disabled="inputServer.memori === ''" >
+                            <select name="kapasitas" id="kapasitas" class="p-2 cursor-pointer rounded-r-lg -ml-2 ring-blue-500" :disabled="inputServer.memori === ''" >
                                 <option value="gb">GB</option>
                                 <option value="tb">TB</option>
                             </select>
@@ -127,7 +127,7 @@
                         <ValidationProvider rules="required|numeric" v-slot={errors}>
                             <div class="flex">
                                 <input type="text" name="sumberDayaListrik" id="sumberDayaListrik" class="p-2 w-full rounded-l-lg bg-gray-300 outline-none uppercase" v-model="inputServer.sumberDayaListrik" :disabled="inputServer.networkController === ''">
-                                <input type="text" value="watt" readonly="readonly" class="w-16 p-1 rounded-r-lg bg-gray-200 outline-none text-center">
+                                <input type="text" value="watt" readonly="readonly" class="w-16 p-1 rounded-r-lg bg-gray-200 outline-none text-center cursor-default">
                             </div>
                             <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
                         </ValidationProvider>
@@ -161,7 +161,7 @@
                 </div>
             </div>
         </div>
-        <button class="mt-10 opacity-10 bg-gray-700 text-gray-200 w-24 py-2 rounded cursor-default" type="submit" :class="{activesubmit : valid}" :disabled="invalid">kirim</button>
+        <button class="mt-10 opacity-10 bg-gray-700 text-gray-200 w-28 py-2 rounded cursor-default" type="submit" :class="{activesubmit : valid}" :disabled="invalid">kirim</button>
     </form>
     </ValidationObserver>
 </section>
@@ -183,6 +183,7 @@ export default {
             item : "server",
             inputServer : {
                 produk:"",
+                tanggal:"",
                 merek : "",
                 model : "",
                 processor:"",
@@ -210,6 +211,7 @@ export default {
                     iduser : this.$auth.user.id,
                     lokasiServer : this.$auth.user.lokasi,
                     produk : this.inputServer.produk,
+                    tanggal: moment().format('YYYY-MM-DD'),
                     merek : this.inputServer.merek,
                     model : this.inputServer.model,
                     processor : this.inputServer.processor,

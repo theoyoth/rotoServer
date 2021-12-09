@@ -8,6 +8,7 @@ module.exports.inputmasterserver = async (req, res) => {
       iduser,
       lokasiServer,
       produk,
+      tanggal,
       merek,
       model,
       processor,
@@ -23,7 +24,7 @@ module.exports.inputmasterserver = async (req, res) => {
 
     if (lokasiServer == 'rotogravure 1') {
       const data = await conn.query(
-        `INSERT INTO master_server VALUES ('','${produk}','${merek}','${model}','${processor}','${memori}','${internalStorage}','${networkController}','${sumberDayaListrik}','${tahun}','${garansi}','${iduser}')`
+        `INSERT INTO master_server VALUES ('','${tanggal}','${produk}','${merek}','${model}','${processor}','${memori}','${internalStorage}','${networkController}','${sumberDayaListrik}','${tahun}','${garansi}','${iduser}')`
       )
       if (data.affectedRows > 0) {
         res.redirect('/master/server')
@@ -34,7 +35,7 @@ module.exports.inputmasterserver = async (req, res) => {
       }
     } else if (lokasiServer == 'rotogravure 2') {
       const data = await conn.query(
-        `INSERT INTO master_server_roto_2 VALUES ('','${produk}','${merek}','${model}','${processor}','${memori}','${internalStorage}','${networkController}','${sumberDayaListrik}','${tahun}','${garansi}','${iduser}')`
+        `INSERT INTO master_server_roto_2 VALUES ('','${tanggal}','${produk}','${merek}','${model}','${processor}','${memori}','${internalStorage}','${networkController}','${sumberDayaListrik}','${tahun}','${garansi}','${iduser}')`
       )
       if (data.affectedRows > 0) {
         res.redirect('/master/server')
@@ -45,7 +46,7 @@ module.exports.inputmasterserver = async (req, res) => {
       }
     } else if (lokasiServer == 'rotogravure 3') {
       const data = await conn.query(
-        `INSERT INTO master_server_roto_3 VALUES ('','${produk}','${merek}','${model}','${processor}','${memori}','${internalStorage}','${networkController}','${sumberDayaListrik}','${tahun}','${garansi}','${iduser}')`
+        `INSERT INTO master_server_roto_3 VALUES ('','${tanggal}','${produk}','${merek}','${model}','${processor}','${memori}','${internalStorage}','${networkController}','${sumberDayaListrik}','${tahun}','${garansi}','${iduser}')`
       )
       if (data.affectedRows > 0) {
         res.redirect('/master/server')
@@ -56,7 +57,7 @@ module.exports.inputmasterserver = async (req, res) => {
       }
     } else if (lokasiServer == 'rotogravure tinta') {
       const data = await conn.query(
-        `INSERT INTO master_server_tinta VALUES ('','${produk}','${merek}','${model}','${processor}','${memori}','${internalStorage}','${networkController}','${sumberDayaListrik}','${tahun}','${garansi}','${iduser}')`
+        `INSERT INTO master_server_tinta VALUES ('','${tanggal}','${produk}','${merek}','${model}','${processor}','${memori}','${internalStorage}','${networkController}','${sumberDayaListrik}','${tahun}','${garansi}','${iduser}')`
       )
       if (data.affectedRows > 0) {
         res.redirect('/master/server')

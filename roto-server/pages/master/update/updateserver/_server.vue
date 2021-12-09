@@ -16,6 +16,10 @@
     <form @submit.prevent="updateData" class="w-11/12 mt-10">
         <div>
             <div class="grid grid-cols-3 grid-rows-4">
+                <div class="mb-4">
+                    <label for="tanggal" class="block mb-2 text-sm">tanggal</label>
+                    <input type="date" v-model="updateServer.tanggal" name="tanggal" id="tanggal" class="p-2 w-72 rounded-lg outline-none bg-gray-300">
+                </div>
                 <div class="mb-4 has-tooltip">
                     <span class="tooltip text-xs rounded shadow-lg p-1 bg-gray-700 text-white ml-32">masukan nama produk</span>
                     <label for="produk" class="block mb-2 text-sm">produk</label>
@@ -154,6 +158,7 @@ export default {
         return {
             updateServer:{
                 idserver:"",
+                tanggal:"",
                 produk : "",
                 merek : "",
                 model : "",
@@ -176,6 +181,7 @@ export default {
             if(resp){
                 resp.data.forEach(servers=>{
                     this.updateServer.produk = servers.produk
+                    this.updateServer.tanggal = moment(servers.tanggal).format('YYYY-MM-DD'),
                     this.updateServer.merek = servers.merek
                     this.updateServer.model = servers.model
                     this.updateServer.processor = servers.processor
@@ -201,6 +207,7 @@ export default {
                 lokasiServer : this.$auth.user.lokasi,
                 iduser : this.$auth.user.id,
                 idproduk:this.updateServer.idserver,
+                tanggal:this.updateServer.tanggal,
                 produk : this.updateServer.produk,
                 merek : this.updateServer.merek,
                 model : this.updateServer.model,

@@ -17,10 +17,6 @@
     <form @submit.prevent="[postInputMaintenance(),sendNotifyMaintenance()]" class="min-w-min mt-10" id="inputmaintenance">
         <div>
             <div class="grid grid-cols-2">
-                <!-- <div class="mb-4">
-                    <label for="tanggal" class="block mb-2 text-sm">tanggal</label>
-                    <input type="date" v-model="inputMaintenance.tanggal" name="tanggal" id="tanggal" class="p-2 w-72 rounded-lg focus:ring-blue-500 bg-gray-200" >
-                </div> -->
                 <div class="mb-4">
                     <div class="has-tooltip">
                         <span class="tooltip text-xs rounded shadow-lg p-1 bg-gray-700 text-white ml-24">masukan suhu ruangan server</span>
@@ -28,7 +24,10 @@
                         <div class="flex flex-col w-72">
                             <ValidationProvider rules="required|numeric" v-slot={errors}>
                             <div class="flex items-center w-full">
-                                <input type="text" v-model="inputMaintenance.suhu" name="suhu" id="suhu" class="p-2 w-full rounded-lg bg-gray-300 outline-none" >
+                                <div class="flex">
+                                    <input type="text" v-model="inputMaintenance.suhu" name="suhu" id="suhu" class="p-2 w-full rounded-l-lg bg-gray-300 outline-none">
+                                    <input type="text" readonly class="rounded-r-lg py-2 w-16 bg-gray-200 cursor-default text-center text-gray-700 outline-none" value="℃">
+                                </div>
                                 <font-awesome-icon :icon="['fas', 'check-circle']" class="transition-all duration-200 text-green-500 ml-2 opacity-10" :class="{checktrue : inputMaintenance.suhu!=='' && !errors[0]}"/>
                             </div>
                             <p class="text-xs mt-1 text-right text-red-500">{{ errors[0] }}</p>
@@ -44,7 +43,10 @@
                         <div class="flex flex-col w-72">
                             <ValidationProvider rules="required|numeric" v-slot={errors}>
                             <div class="flex items-center">
-                                <input type="text" v-model="inputMaintenance.kelembapan" name="kelembapan" id="kelembapan" class="p-2 w-full rounded-lg outline-none bg-gray-300" :disabled="inputMaintenance.suhu === ''">
+                                <div class="flex">
+                                    <input type="text" v-model="inputMaintenance.kelembapan" name="kelembapan" id="kelembapan" class="p-2 w-full rounded-l-lg outline-none bg-gray-300" :disabled="inputMaintenance.suhu === ''">
+                                    <input type="text" readonly class="rounded-r-lg py-2 w-16 bg-gray-200 cursor-default text-center text-gray-700 outline-none" value="%">
+                                </div>
                                 <font-awesome-icon :icon="['fas', 'check-circle']" class="transition-all duration-200 text-green-500 ml-2 opacity-10" :class="{checktrue : inputMaintenance.kelembapan !=='' && !errors[0]}"/>
                             </div>
                             <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
