@@ -49,7 +49,9 @@ module.exports.inputmasterserverupdate = async (req, res) => {
       model,
       processor,
       memori,
+      satuanMemori,
       internalStorage,
+      satuanInternalStorage,
       networkController,
       sumberDayaListrik,
       tahun,
@@ -60,7 +62,7 @@ module.exports.inputmasterserverupdate = async (req, res) => {
     conn = await pool.getConnection()
     if (lokasiServer == 'rotogravure 1') {
       const resp = await conn.query(
-        `UPDATE master_server SET tanggal='${tanggal}', produk='${produk}', merek='${merek}', model='${model}', processor='${processor}', memori='${memori}',internal_storage='${internalStorage}', network_controller='${networkController}', sumber_daya_listrik='${sumberDayaListrik}', tahun='${tahun}', garansi='${garansi}' WHERE id_server = ${idproduk}`
+        `UPDATE master_server SET tanggal='${tanggal}', produk='${produk}', merek='${merek}', model='${model}', processor='${processor}', memori='${memori}',satuan_memori='${satuanMemori}',internal_storage='${internalStorage}',satuan_internal_storage='${satuanInternalStorage}', network_controller='${networkController}', sumber_daya_listrik='${sumberDayaListrik}', tahun='${tahun}', garansi='${garansi}' WHERE id_server = ${idproduk}`
       )
       if (resp.affectedRows > 0) {
         res.redirect('/master/server')
@@ -69,7 +71,7 @@ module.exports.inputmasterserverupdate = async (req, res) => {
       }
     } else if (lokasiServer == 'rotogravure 2') {
       const resp = await conn.query(
-        `UPDATE master_server_roto_2 SET tanggal='${tanggal}',produk='${produk}', merek='${merek}', model='${model}', processor='${processor}', memori='${memori}',internal_storage='${internalStorage}', network_controller='${networkController}', sumber_daya_listrik='${sumberDayaListrik}', tahun='${tahun}', garansi='${garansi}' WHERE id_server = ${idproduk}`
+        `UPDATE master_server_roto_2 SET tanggal='${tanggal}', produk='${produk}', merek='${merek}', model='${model}', processor='${processor}', memori='${memori}',satuan_memori='${satuanMemori}',internal_storage='${internalStorage}',satuan_internal_storage='${satuanInternalStorage}', network_controller='${networkController}', sumber_daya_listrik='${sumberDayaListrik}', tahun='${tahun}', garansi='${garansi}' WHERE id_server = ${idproduk}`
       )
       if (resp.affectedRows > 0) {
         res.redirect('/master/server')
@@ -78,7 +80,7 @@ module.exports.inputmasterserverupdate = async (req, res) => {
       }
     } else if (lokasiServer == 'rotogravure 3') {
       const resp = await conn.query(
-        `UPDATE master_server_roto_3 SET tanggal='${tanggal}',produk='${produk}', merek='${merek}', model='${model}', processor='${processor}', memori='${memori}',internal_storage='${internalStorage}', network_controller='${networkController}', sumber_daya_listrik='${sumberDayaListrik}', tahun='${tahun}', garansi='${garansi}' WHERE id_server = ${idproduk}`
+        `UPDATE master_server_roto_3 SET tanggal='${tanggal}', produk='${produk}', merek='${merek}', model='${model}', processor='${processor}', memori='${memori}',satuan_memori='${satuanMemori}',internal_storage='${internalStorage}',satuan_internal_storage='${satuanInternalStorage}', network_controller='${networkController}', sumber_daya_listrik='${sumberDayaListrik}', tahun='${tahun}', garansi='${garansi}' WHERE id_server = ${idproduk}`
       )
       if (resp.affectedRows > 0) {
         res.redirect('/master/server')
@@ -87,7 +89,7 @@ module.exports.inputmasterserverupdate = async (req, res) => {
       }
     } else if (lokasiServer == 'rotogravure tinta') {
       const resp = await conn.query(
-        `UPDATE master_server_tinta SET tanggal='${tanggal}',produk='${produk}', merek='${merek}', model='${model}', processor='${processor}', memori='${memori}',internal_storage='${internalStorage}', network_controller='${networkController}', sumber_daya_listrik='${sumberDayaListrik}', tahun='${tahun}', garansi='${garansi}' WHERE id_server = ${idproduk}`
+        `UPDATE master_server_tinta SET tanggal='${tanggal}', produk='${produk}', merek='${merek}', model='${model}', processor='${processor}', memori='${memori}',satuan_memori='${satuanMemori}',internal_storage='${internalStorage}',satuan_internal_storage='${satuanInternalStorage}', network_controller='${networkController}', sumber_daya_listrik='${sumberDayaListrik}', tahun='${tahun}', garansi='${garansi}' WHERE id_server = ${idproduk}`
       )
       if (resp.affectedRows > 0) {
         res.redirect('/master/server')
@@ -1098,6 +1100,7 @@ module.exports.inputmasternasupdate = async (req, res) => {
       model,
       tipe,
       storage,
+      satuanStorage,
       processor,
       cpu,
       raid,
@@ -1108,7 +1111,7 @@ module.exports.inputmasternasupdate = async (req, res) => {
     conn = await pool.getConnection()
     if (lokasiServer == 'rotogravure 1') {
       const resp = await conn.query(
-        `UPDATE master_nas SET merek='${merek}',model='${model}',processor='${processor}',storage='${storage}',tipe='${tipe}',cpu='${cpu}',raid='${raid}',tahun='${tahun}',garansi='${garansi}',id_users='${iduser}' WHERE id_nas=${idnas}`
+        `UPDATE master_nas SET merek='${merek}',model='${model}',processor='${processor}',storage='${storage}',satuan_storage='${satuanStorage}',tipe='${tipe}',cpu='${cpu}',raid='${raid}',tahun='${tahun}',garansi='${garansi}',id_users='${iduser}' WHERE id_nas=${idnas}`
       )
 
       if (resp.affectedRows > 0) {
@@ -1118,7 +1121,7 @@ module.exports.inputmasternasupdate = async (req, res) => {
       }
     } else if (lokasiServer == 'rotogravure 2') {
       const resp = await conn.query(
-        `UPDATE master_nas_roto_2 SET merek='${merek}',model='${model}',processor='${processor}',storage='${storage}',tipe='${tipe}',cpu='${cpu}',raid='${raid}',tahun='${tahun}',garansi='${garansi}',id_users='${iduser}' WHERE id_nas=${idnas}`
+        `UPDATE master_nas_roto_2 SET merek='${merek}',model='${model}',processor='${processor}',storage='${storage}',satuan_storage='${satuanStorage}',tipe='${tipe}',cpu='${cpu}',raid='${raid}',tahun='${tahun}',garansi='${garansi}',id_users='${iduser}' WHERE id_nas=${idnas}`
       )
 
       if (resp.affectedRows > 0) {
@@ -1128,7 +1131,7 @@ module.exports.inputmasternasupdate = async (req, res) => {
       }
     } else if (lokasiServer == 'rotogravure 3') {
       const resp = await conn.query(
-        `UPDATE master_nas_roto_3 SET merek='${merek}',model='${model}',processor='${processor}',storage='${storage}',tipe='${tipe}',cpu='${cpu}',raid='${raid}',tahun='${tahun}',garansi='${garansi}',id_users='${iduser}' WHERE id_nas=${idnas}`
+        `UPDATE master_nas_roto_3 SET merek='${merek}',model='${model}',processor='${processor}',storage='${storage}',satuan_storage='${satuanStorage}',tipe='${tipe}',cpu='${cpu}',raid='${raid}',tahun='${tahun}',garansi='${garansi}',id_users='${iduser}' WHERE id_nas=${idnas}`
       )
 
       if (resp.affectedRows > 0) {
@@ -1138,7 +1141,7 @@ module.exports.inputmasternasupdate = async (req, res) => {
       }
     } else if (lokasiServer == 'rotogravure tinta') {
       const resp = await conn.query(
-        `UPDATE master_nas_tinta SET merek='${merek}',model='${model}',processor='${processor}',storage='${storage}',tipe='${tipe}',cpu='${cpu}',raid='${raid}',tahun='${tahun}',garansi='${garansi}',id_users='${iduser}' WHERE id_nas=${idnas}`
+        `UPDATE master_nas_tinta SET merek='${merek}',model='${model}',processor='${processor}',storage='${storage}',satuan_storage='${satuanStorage}',tipe='${tipe}',cpu='${cpu}',raid='${raid}',tahun='${tahun}',garansi='${garansi}',id_users='${iduser}' WHERE id_nas=${idnas}`
       )
 
       if (resp.affectedRows > 0) {

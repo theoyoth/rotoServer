@@ -56,9 +56,10 @@
                         <ValidationProvider rules="required|passchar" v-slot={errors}>
                             <div class="flex">
                             <input type="text" v-model="inputNas.storage" name="storage" id="storage" class="p-2 w-full rounded-l-lg outline-none bg-gray-300" :disabled="inputNas.tipe === ''">
-                            <select name="storage" id="storage" class="p-2 rounded-r-lg -ml-2" :disabled="inputNas.tipe === ''">
-                                <option value="gb">GB</option>
-                                <option value="tb">TB</option>
+                            <select name="storage" id="storage" class="p-2 rounded-r-lg -ml-2" :disabled="inputNas.tipe === ''" v-model="inputNas.satuanStorage" required>
+                                <option disabled value="" class="text-gray-700 text-xs">satuan</option>
+                                <option value="GB">GB</option>
+                                <option value="TB">TB</option>
                             </select>
                             </div>
                              <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
@@ -146,6 +147,7 @@ export default {
                 model: "",
                 processor: "",
                 storage : "",
+                satuanStorage: "",
                 tipe: "",
                 cpu: "",
                 raid:"",
@@ -163,6 +165,7 @@ export default {
                     model : this.inputNas.model,
                     processor : this.inputNas.processor,
                     storage: this.inputNas.storage,
+                    satuanStorage : this.inputNas.satuanStorage,
                     tipe: this.inputNas.tipe,
                     cpu : this.inputNas.cpu,
                     raid : this.inputNas.raid,

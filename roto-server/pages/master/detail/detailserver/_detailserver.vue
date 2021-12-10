@@ -72,7 +72,7 @@
           Memori
         </dt>
         <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-          {{det.memori}}
+          {{det.memori}} {{det.satuan_memori}}
         </dd>
       </div>
       <div class="bg-gray-100 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
@@ -81,7 +81,7 @@
           Internal Storage
         </dt>
         <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-          {{det.internal_storage}}
+          {{det.internal_storage}} {{det.satuan_internal_storage}}
         </dd>
       </div>
       <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">

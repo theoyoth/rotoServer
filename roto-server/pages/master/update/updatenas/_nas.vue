@@ -57,7 +57,7 @@
                         <ValidationProvider rules="required|passchar" v-slot={errors}>
                             <div class="flex">
                                 <input type="text" v-model="updateNas.storage" name="storage" id="storage" class="p-2 w-60 rounded-lg outline-none bg-gray-300">
-                                <select name="storage" id="storage" class="p-2 rounded-r-lg -ml-2">
+                                <select name="storage" id="storage" class="p-2 rounded-r-lg -ml-2" v-model="updateNas.satuanStorage">
                                     <option>GB</option>
                                     <option>TB</option>
                                 </select>
@@ -148,6 +148,7 @@ export default {
                 model: "",
                 processor : "",
                 storage: "",
+                satuanStorage : "",
                 tipe : "",
                 cpu: "",
                 raid : "",
@@ -168,6 +169,7 @@ export default {
                     this.updateNas.tipe = nas.tipe
                     this.updateNas.processor = nas.processor
                     this.updateNas.storage = nas.storage
+                    this.updateNas.satuanStorage = nas.satuan_storage
                     this.updateNas.tipe = nas.tipe
                     this.updateNas.cpu = nas.cpu
                     this.updateNas.raid = nas.raid
@@ -190,6 +192,7 @@ export default {
                 model : this.updateNas.model,
                 processor : this.updateNas.processor,
                 storage : this.updateNas.storage,
+                satuanStorage : this.updateNas.satuanStorage,
                 tipe : this.updateNas.tipe,
                 cpu : this.updateNas.cpu,
                 raid : this.updateNas.raid,

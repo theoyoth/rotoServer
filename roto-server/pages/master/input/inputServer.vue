@@ -76,9 +76,10 @@
                         <ValidationProvider rules="required|passchar" v-slot={errors}>
                             <div class="flex">
                             <input type="text"  name="memori" id="memori" class="p-2 w-full rounded-lg outline-none bg-gray-300 uppercase" v-model="inputServer.memori" :disabled="inputServer.processor === ''" >
-                            <select name="kapasitas" id="kapasitas" class="p-2 rounded-r-lg -ml-2 cursor-pointer" :disabled="inputServer.processor === ''" >
-                                <option value="gb">GB</option>
-                                <option value="tb">TB</option>
+                            <select name="kapasitas" id="kapasitas" class="p-2 rounded-r-lg -ml-2 cursor-pointer bg-gray-200" v-model="inputServer.satuanMemori" :disabled="inputServer.processor === ''" required>
+                                <option disabled class="text-gray-700 text-xs" value="">satuan</option>
+                                <option value="GB">GB</option>
+                                <option value="TB">TB</option>
                             </select> 
                             </div>
                             <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
@@ -95,9 +96,10 @@
                         <ValidationProvider rules="required|passchar" v-slot={errors}>
                             <div class="flex">
                             <input type="text"  name="internalStorage" id="internalStorage" class="p-2 w-full rounded-lg bg-gray-300 outline-none uppercase" v-model="inputServer.internalStorage" :disabled="inputServer.memori === ''" >
-                            <select name="kapasitas" id="kapasitas" class="p-2 cursor-pointer rounded-r-lg -ml-2 ring-blue-500" :disabled="inputServer.memori === ''" >
-                                <option value="gb">GB</option>
-                                <option value="tb">TB</option>
+                            <select name="kapasitas" id="kapasitas" class="p-2 cursor-pointer rounded-r-lg -ml-2 ring-blue-500 bg-gray-200" v-model="inputServer.satuanInternalStorage" :disabled="inputServer.memori === ''" required>
+                                <option disabled class="text-gray-700 text-xs" value="">satuan</option>
+                                <option value="GB">GB</option>
+                                <option value="TB">TB</option>
                             </select>
                             </div>
                             <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
@@ -188,7 +190,9 @@ export default {
                 model : "",
                 processor:"",
                 memori : "",
+                satuanMemori:"",
                 internalStorage : "",
+                satuanInternalStorage : "",
                 networkController: "",
                 sumberDayaListrik : "",
                 tahun : "",
@@ -216,7 +220,9 @@ export default {
                     model : this.inputServer.model,
                     processor : this.inputServer.processor,
                     memori : this.inputServer.memori,
+                    satuanMemori : this.inputServer.satuanMemori,
                     internalStorage : this.inputServer.internalStorage,
+                    satuanInternalStorage : this.inputServer.satuanInternalStorage,
                     networkController : this.inputServer.networkController,
                     sumberDayaListrik : this.inputServer.sumberDayaListrik,
                     tahun: this.inputServer.tahun,

@@ -13,7 +13,9 @@ module.exports.inputmasterserver = async (req, res) => {
       model,
       processor,
       memori,
+      satuanMemori,
       internalStorage,
+      satuanInternalStorage,
       networkController,
       sumberDayaListrik,
       tahun,
@@ -24,7 +26,7 @@ module.exports.inputmasterserver = async (req, res) => {
 
     if (lokasiServer == 'rotogravure 1') {
       const data = await conn.query(
-        `INSERT INTO master_server VALUES ('','${tanggal}','${produk}','${merek}','${model}','${processor}','${memori}','${internalStorage}','${networkController}','${sumberDayaListrik}','${tahun}','${garansi}','${iduser}')`
+        `INSERT INTO master_server VALUES ('','${tanggal}','${produk}','${merek}','${model}','${processor}','${memori}','${satuanMemori}','${internalStorage}','${satuanInternalStorage}','${networkController}','${sumberDayaListrik}','${tahun}','${garansi}','${iduser}')`
       )
       if (data.affectedRows > 0) {
         res.redirect('/master/server')
@@ -35,7 +37,7 @@ module.exports.inputmasterserver = async (req, res) => {
       }
     } else if (lokasiServer == 'rotogravure 2') {
       const data = await conn.query(
-        `INSERT INTO master_server_roto_2 VALUES ('','${tanggal}','${produk}','${merek}','${model}','${processor}','${memori}','${internalStorage}','${networkController}','${sumberDayaListrik}','${tahun}','${garansi}','${iduser}')`
+        `INSERT INTO master_server_roto_2 VALUES ('','${tanggal}','${produk}','${merek}','${model}','${processor}','${memori}','${satuanMemori}','${internalStorage}','${satuanInternalStorage}','${networkController}','${sumberDayaListrik}','${tahun}','${garansi}','${iduser}')`
       )
       if (data.affectedRows > 0) {
         res.redirect('/master/server')
@@ -46,7 +48,7 @@ module.exports.inputmasterserver = async (req, res) => {
       }
     } else if (lokasiServer == 'rotogravure 3') {
       const data = await conn.query(
-        `INSERT INTO master_server_roto_3 VALUES ('','${tanggal}','${produk}','${merek}','${model}','${processor}','${memori}','${internalStorage}','${networkController}','${sumberDayaListrik}','${tahun}','${garansi}','${iduser}')`
+        `INSERT INTO master_server_roto_3 VALUES ('','${tanggal}','${produk}','${merek}','${model}','${processor}','${memori}','${satuanMemori}','${internalStorage}','${satuanInternalStorage}','${networkController}','${sumberDayaListrik}','${tahun}','${garansi}','${iduser}')`
       )
       if (data.affectedRows > 0) {
         res.redirect('/master/server')
@@ -57,7 +59,7 @@ module.exports.inputmasterserver = async (req, res) => {
       }
     } else if (lokasiServer == 'rotogravure tinta') {
       const data = await conn.query(
-        `INSERT INTO master_server_tinta VALUES ('','${tanggal}','${produk}','${merek}','${model}','${processor}','${memori}','${internalStorage}','${networkController}','${sumberDayaListrik}','${tahun}','${garansi}','${iduser}')`
+        `INSERT INTO master_server_tinta VALUES ('','${tanggal}','${produk}','${merek}','${model}','${processor}','${memori}','${satuanMemori}','${internalStorage}','${satuanInternalStorage}','${networkController}','${sumberDayaListrik}','${tahun}','${garansi}','${iduser}')`
       )
       if (data.affectedRows > 0) {
         res.redirect('/master/server')
@@ -680,6 +682,7 @@ module.exports.inputmasternas = async (req, res) => {
       model,
       processor,
       storage,
+      satuanStorage,
       tipe,
       cpu,
       raid,
@@ -690,7 +693,7 @@ module.exports.inputmasternas = async (req, res) => {
     conn = await pool.getConnection()
     if (lokasiServer == 'rotogravure 1') {
       const resp = await conn.query(
-        `INSERT INTO master_nas VALUES ('','${merek}','${model}','${processor}','${storage}','${tipe}','${cpu}','${raid}','${tahun}','${garansi}','${iduser}')`
+        `INSERT INTO master_nas VALUES ('','${merek}','${model}','${processor}','${storage}','${satuanStorage}','${tipe}','${cpu}','${raid}','${tahun}','${garansi}','${iduser}')`
       )
       if (resp.affectedRows > 0) {
         res.redirect('/master/nas')
@@ -699,7 +702,7 @@ module.exports.inputmasternas = async (req, res) => {
       }
     } else if (lokasiServer == 'rotogravure 2') {
       const resp = await conn.query(
-        `INSERT INTO master_nas_roto_2 VALUES ('','${merek}','${model}','${processor}','${storage}','${tipe}','${cpu}','${raid}','${tahun}','${garansi}','${iduser}')`
+        `INSERT INTO master_nas_roto_2 VALUES ('','${merek}','${model}','${processor}','${storage}','${satuanStorage}','${tipe}','${cpu}','${raid}','${tahun}','${garansi}','${iduser}')`
       )
       if (resp.affectedRows > 0) {
         res.redirect('/master/nas')
@@ -708,7 +711,7 @@ module.exports.inputmasternas = async (req, res) => {
       }
     } else if (lokasiServer == 'rotogravure 3') {
       const resp = await conn.query(
-        `INSERT INTO master_nas_roto_3 VALUES ('','${merek}','${model}','${processor}','${storage}','${tipe}','${cpu}','${raid}','${tahun}','${garansi}','${iduser}')`
+        `INSERT INTO master_nas_roto_3 VALUES ('','${merek}','${model}','${processor}','${storage}','${satuanStorage}','${tipe}','${cpu}','${raid}','${tahun}','${garansi}','${iduser}')`
       )
       if (resp.affectedRows > 0) {
         res.redirect('/master/nas')
@@ -717,7 +720,7 @@ module.exports.inputmasternas = async (req, res) => {
       }
     } else if (lokasiServer == 'rotogravure tinta') {
       const resp = await conn.query(
-        `INSERT INTO master_nas_tinta VALUES ('','${merek}','${model}','${processor}','${storage}','${tipe}','${cpu}','${raid}','${tahun}','${garansi}','${iduser}')`
+        `INSERT INTO master_nas_tinta VALUES ('','${merek}','${model}','${processor}','${storage}','${satuanStorage}','${tipe}','${cpu}','${raid}','${tahun}','${garansi}','${iduser}')`
       )
       if (resp.affectedRows > 0) {
         res.redirect('/master/nas')

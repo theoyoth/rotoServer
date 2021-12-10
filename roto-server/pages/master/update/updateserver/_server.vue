@@ -67,9 +67,10 @@
                         <ValidationProvider rules="required|passchar" v-slot={errors}>
                             <div class="flex">
                                 <input type="text" name="memori" id="memori" v-model="updateServer.memori" class="p-2 w-full rounded-lg outline-none bg-gray-300 uppercase" >
-                                <select name="kapasitas" id="kapasitas" class="p-2 rounded-r-lg ring-gray-500 -ml-2 bg-gray-200">
-                                    <option value="gb">GB</option>
-                                    <option value="tb">TB</option>
+                                <select name="kapasitas" id="kapasitas" class="p-2 rounded-r-lg ring-gray-500 -ml-2 bg-gray-200" v-model="updateServer.satuanMemori">
+                                    <!-- <option disabled :value="updateServer."></option> -->
+                                    <option value="GB">GB</option>
+                                    <option value="TB">TB</option>
                                 </select>
                             </div>
                             <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
@@ -83,9 +84,9 @@
                         <ValidationProvider rules="required|passchar" v-slot={errors}>
                             <div class="flex">
                                 <input type="text" name="internalStorage" id="internalStorage" v-model="updateServer.internalStorage" class="p-2 w-full rounded-lg outline-none bg-gray-300 uppercase">
-                                <select name="kapasitas" id="kapasitas" class="p-2 rounded-r-lg ring-gray-500 -ml-2 bg-gray-200">
-                                    <option value="gb">GB</option>
-                                    <option value="tb">TB</option>
+                                <select name="kapasitas" id="kapasitas" class="p-2 rounded-r-lg ring-gray-500 -ml-2 bg-gray-200" v-model="updateServer.satuanInternalStorage">
+                                    <option value="GB">GB</option>
+                                    <option value="TB">TB</option>
                                 </select>
                             </div>
                             <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
@@ -164,7 +165,9 @@ export default {
                 model : "",
                 processor : "",
                 memori : "",
+                satuanMemori : "",
                 internalStorage : "",
+                satuanInternalStorage : "",
                 networkController : "",
                 sumberDayaListrik : "",
                 tahun : "",
@@ -186,7 +189,9 @@ export default {
                     this.updateServer.model = servers.model
                     this.updateServer.processor = servers.processor
                     this.updateServer.memori = servers.memori
+                    this.updateServer.satuanMemori = servers.satuan_memori
                     this.updateServer.internalStorage = servers.internal_storage
+                    this.updateServer.satuanInternalStorage = servers.satuan_internal_storage
                     this.updateServer.networkController = servers.network_controller
                     this.updateServer.sumberDayaListrik = servers.sumber_daya_listrik
                     this.updateServer.tahun = moment(servers.tahun).format('YYYY-MM-DD')
@@ -213,7 +218,9 @@ export default {
                 model : this.updateServer.model,
                 processor : this.updateServer.processor,
                 memori : this.updateServer.memori,
+                satuanMemori : this.updateServer.satuanMemori,
                 internalStorage : this.updateServer.internalStorage,
+                satuanInternalStorage : this.updateServer.satuanInternalStorage,
                 networkController : this.updateServer.networkController,
                 sumberDayaListrik : this.updateServer.sumberDayaListrik,
                 tahun : this.updateServer.tahun,

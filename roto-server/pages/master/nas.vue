@@ -39,7 +39,7 @@
                     <td>{{index+1}}</td>
                     <td>{{hasilcari.merek}}</td>
                     <td>{{hasilcari.processor}}</td>
-                    <td>{{hasilcari.storage}}</td>
+                    <td>{{hasilcari.storage}} {{hasilcari.satuan_storage}}</td>
                     <td>{{hasilcari.cpu}}</td>
                     <td>{{$moment(hasilcari.garansi).format('DD-MM-YYYY')}}</td>
                     <td class="py-3 flex justify-around w-full lowercase">
@@ -117,7 +117,7 @@
                     <td>{{index+1}}</td>
                     <td>{{nas.merek}}</td>
                     <td>{{nas.processor}}</td>
-                    <td>{{nas.storage}}</td>
+                    <td>{{nas.storage}} {{nas.satuan_storage}}</td>
                     <td>{{nas.cpu}}</td>
                     <td>{{$moment(nas.garansi).format('DD-MM-YYYY')}}</td>
                     <td class="py-3 flex justify-around w-full lowercase">
