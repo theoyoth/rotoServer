@@ -146,7 +146,7 @@
                 </div>
             </div>
         </div>
-        <button class="opacity-10 px-6 bg-gray-700 text-gray-200 py-2 rounded cursor-default mt-4" :class="{activesubmit : valid}" type="submit" :disabled="invalid">kirim</button>
+        <button class="opacity-10 px-6 bg-gray-700 text-gray-200 py-2 rounded cursor-default mt-4" :class="{activesubmit : valid}" type="submit" :disabled="invalid">simpan</button>
     </form>
     </ValidationObserver>
 </section>

@@ -27,11 +27,7 @@
                     <font-awesome-icon :icon="['fas', 'search']" class="text-yellow-500" />
                 </button>
             </div>
-            <!-- <select id="date" class="rounded-lg p-2 outline-none ml-8">
-                <option value="hari">hari</option>
-                <option value="bulan">bulan</option>
-                <option value="tahun">tahun</option>
-            </select> -->
+
             <NuxtLink to="/inout/gantibarang/inputgantibarang"
             class="flex items-center justify-between rounded-md px-3 w-20 bg-gray-700 hover:shadow-lg hover:bg-gray-600 transition duraiton-200">
             <p class="font-medium text-sm text-gray-200">input</p>
@@ -39,6 +35,7 @@
                 <font-awesome-icon :icon="['fas', 'plus']" class="text-gray-200" />
             </div>
             </NuxtLink>
+
         </div>
         <table class="table space-y-6 container mx-auto table-auto border-collapse mt-7" id="listitem">
             <thead class="bg-gray-700 text-sm has-tooltip">
@@ -68,8 +65,8 @@
                     <th class="font-semibold w-32">aksi</th>
                 </tr>
             </thead>
-            <tbody v-if="caribarang !== ''" class="text-center bg-white bg-opacity-40">
-                <tr class="text-sm uppercase divide-y divide-gray-300" v-for="(hasilcari,index) in filteredList" :key="index">
+            <tbody v-if="caribarang !== ''" class="text-center bg-white bg-opacity-40 divide-y divide-gray-300">
+                <tr class="text-sm uppercase" v-for="(hasilcari,index) in filteredList" :key="index">
                     <td>{{index+1}}</td>
                     <td>{{$moment(hasilcari.tanggal).format('DD-MM-YYYY')}}</td>
                     <td>{{hasilcari.nama_pengganti}}</td>
@@ -168,8 +165,8 @@
                     </td>
                 </tr>
             </tbody> 
-            <tbody v-else class="text-center bg-white bg-opacity-40">
-                <tr class="text-sm uppercase divide-y divide-gray-300" v-for="(barang,index) in barangs" :key="index">
+            <tbody v-else class="text-center bg-white bg-opacity-40 divide-y divide-gray-300">
+                <tr class="text-sm uppercase" v-for="(barang,index) in barangs" :key="index">
                     <td>{{index+1}}</td>
                     <td>{{$moment(barang.tanggal).format('DD-MM-YYYY')}}</td>
                     <td>{{barang.nama_pengganti}}</td>

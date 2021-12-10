@@ -11,6 +11,8 @@ import {
 } from 'three/examples/jsm/renderers/CSS2DRenderer.cjs';
 import texturewall from '~/assets/textures/Marble_White_007_basecolor.jpg';
 import texturefloor from '~/assets/textures/Wood_Floor_011_height.png'
+import {GLTFLoader} from 'three/examples/jsm/loaders/GLTFLoader.cjs'
+// import tokyo from '~/assets/model/LittlestTokyo.glb'
 
 export default {
     data() {
@@ -21,8 +23,10 @@ export default {
         mesh: null,
         controls: null,
         controls2: null,
+        controls3: null,
         raycaster: null,
         mouse: null,
+        lightsource:null,
         isShiftDown:false,
         cubeGeo: null,
         cubeMaterial: null,
@@ -38,6 +42,14 @@ export default {
         cctv:null,
         baterai: null,
         listrik: null,
+        moveForward : false,
+        moveBackward : false,
+        moveRight : false,
+        moveLeft : false,
+        canJump : false,
+        valocity: null,
+        direction: null,
+        vertex: null,
       }
     },
     methods: {
@@ -47,7 +59,7 @@ export default {
         this.camera = new THREE.PerspectiveCamera(80, container.clientWidth/container.clientHeight, 0.01, 100);
 
         
-        this.camera.position.z = 2.8;
+        this.camera.position.z = 2;
         this.camera.position.y = 0.5;
         this.camera.lookAt(0,0,0);
 
@@ -57,6 +69,8 @@ export default {
         // texture wall
         const textureLoader = new THREE.TextureLoader();
         const wallcolor = textureLoader.load(texturewall);
+        wallcolor.wrapS = wallcolor.wrapT = THREE.MirroredRepeatWrapping;
+        wallcolor.repeat.set(5,5);
         const floorcolor = textureLoader.load(texturefloor);
         // rak 1
         let geometry = new THREE.BoxGeometry(1.2, 0.5, 0.5);
@@ -64,7 +78,6 @@ export default {
         this.mesh = new THREE.Mesh(geometry, material);
         this.mesh.position.y = 0.27;
         this.mesh.position.x = -0.2;
-        this.mesh.name = 'server sjdfnjds fjsndfnsdf';
         this.scene.add(this.mesh);
 
         // set labels
@@ -239,7 +252,6 @@ export default {
           side: THREE.DoubleSide
         } );
 				const wall2 = new THREE.Mesh( wall2Gometry, wall2Material );
-        // wall2.rotation.y = -Math.PI / 2;
         wall2.position.x = -1.27;
         wall2.position.y = 0.5;
         wall2.position.z = -0.19;
@@ -253,7 +265,6 @@ export default {
           side:THREE.DoubleSide
         } );
 				const wall3 = new THREE.Mesh( wall3Gometry, wall3Material );
-        // wall3.rotation.y = -Math.PI / 2;
         wall3.position.x = 1.27;
         wall3.position.y = 0.5;
         wall3.position.z = -0.19;
@@ -266,18 +277,14 @@ export default {
 
 				this.cubeGeo = new THREE.BoxGeometry( 50, 50, 50 );
 				this.cubeMaterial = new THREE.MeshLambertMaterial( { color: 0xfeb74c})
-        
-        // const gridHelper = new THREE.GridHelper( 2.5, 10 );
-				// this.scene.add( gridHelper );
 
-        this.raycaster = new THREE.Raycaster();
+        this.raycaster = new THREE.Raycaster(new THREE.Vector3(), new THREE.Vector3( 0, - 1, 0 ), 0, 10);
 				this.mouse = new THREE.Vector2();
 
         this.renderer = new THREE.WebGLRenderer({antialias: true});
         this.renderer.setSize(container.clientWidth, container.clientHeight);
-        this.controls = new OrbitControls( this.camera, this.renderer.domElement);
+        // this.controls = new OrbitControls( this.camera, this.renderer.domElement);
         
-        // this.controls.enableDamping = true;
         container.appendChild(this.renderer.domElement);
 
         this.labelRenderer = new CSS2DRenderer();
@@ -290,6 +297,7 @@ export default {
         this.controls2 = new OrbitControls( this.camera, this.labelRenderer.domElement );
         this.controls2.minDistance = 0;
         this.controls2.maxDistance = 50;
+        
 
         container.addEventListener('mousemove', ({ clientX, clientY }) => {
           const { innerWidth, innerHeight } = window;
@@ -297,29 +305,65 @@ export default {
           this.mouse.x = (clientX / innerWidth) * 2 - 1;
           this.mouse.y = -(clientY / innerHeight) * 2 + 1;
         });
+
+        // keyboard controls AWSD
+        window.addEventListener('keydown',(event)=>{
+            switch ( event.code ) {
+
+              case 'ArrowUp':
+              case 'KeyW':
+                this.camera.position.z -= 0.1
+                break;
+
+              case 'ArrowLeft':
+              case 'KeyA':
+                this.camera.position.x -= 0.1
+                break;
+
+              case 'ArrowDown':
+              case 'KeyS':
+              this.camera.position.z += 0.1
+                break;
+
+              case 'ArrowRight':
+              case 'KeyD':
+                this.camera.position.x += 0.1
+                break;
+
+              case 'Space':
+                if ( this.canJump === true ) this.velocity.y += 300;
+                this.canJump = false;
+                break;w
+            }
+        })
+        window.addEventListener('keyup',(event)=>{
+          switch ( event.code ) {
+
+            case 'KeyW':
+              this.camera.position.z -= 0
+              break;
+
+            case 'KeyA':
+              this.camera.position.x -= 0
+              break;
+
+            case 'KeyS':
+              this.camera.position.z += 0
+              break;
+
+            case 'KeyD':
+              this.camera.position.x += 0
+              break;
+
+          }
+
+        })
       },
 
       animate(){
-        this.controls.update();
-
+        // this.controls2.update();
+        
         this.raycaster.setFromCamera(this.mouse,this.camera);
-        // const [hovered] = this.raycaster.intersectObjects(this.scene.children);
-        // if(hovered){
-        //   this.label.visible=true;
-        //   this.labelDiv.textContent = hovered.object.name;
-
-        //   const offset = new THREE.Vector3();
-        //   new THREE.Box3().setFromObject(hovered.object).getSize(offset);
-        //   this.label.position.set(
-        //     hovered.object.position.x,
-        //     offset.y/2,
-        //     hovered.object.position.x
-        //   );
-        // } else{
-        //   this.renderer.domElement.className = '';
-        //   this.label.visible=false;
-        //   this.labelDiv.textContent ='';
-        // }
         requestAnimationFrame(this.animate);
         this.renderer.render(this.scene, this.camera);
         this.labelRenderer.render(this.scene, this.camera);
@@ -338,6 +382,7 @@ export default {
 #container{
   width:100%;
   height:100vh;
+  overflow:hidden;
 }
 .label {
   color: #ffe;
