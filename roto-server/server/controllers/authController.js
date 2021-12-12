@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken')
 const dotenv = require('dotenv')
 const cookieParser = require('cookie-parser')
 const bcrypt = require('bcrypt')
+const { kirimEmail } = require('./helper.js')
 
 dotenv.config()
 
@@ -106,4 +107,39 @@ module.exports.homepage = async (req, res) => {
 module.exports.logout = async (req, res) => {
   res.clearCookie('aksestoken')
   res.redirect('/')
+}
+
+module.exports.forgotPassword = async (req, res) => {
+  let conn
+  const { nama, email } = req.body
+  try {
+    if (nama && email) {
+      conn = await pool.getConnection()
+      const resp = await conn.query(`SELECT * FROM users WHERE nama='${nama}'`)
+      if (resp) {
+        const userdata = resp[0]
+        const token = jwt.sign(
+          {
+            id: userdata.id_user,
+            nama: userdata.nama,
+          },
+          process.env.TOKEN_KEY,
+          { expiresIn: '10m' }
+        )
+
+        const templateEmail = {
+          from: '672018139@student.uksw.edu',
+          to: `${email}`,
+          subject: 'Link reset password',
+          html: `<p>silahkan klink link di bawah untuk reset password anda</p></br><p>http//localhost:3000/resetpassword/${token}</p>`,
+        }
+        kirimEmail(templateEmail)
+        return res.status(200).json({
+          message: 'Link reset password berhasil dikirim',
+        })
+      }
+    }
+  } catch (err) {
+    throw err
+  }
 }

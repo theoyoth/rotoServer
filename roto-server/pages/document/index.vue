@@ -47,9 +47,9 @@
             <div class="w-full"><p class="text-xs text-center break-words">{{ fil.name }}</p></div>
             
             <div class="flex">
-              <div class="cursor-pointer w-6">
+              <NuxtLink :to="{name: 'document-viewpdf-viewpdf',params:{id:fil.name}}" class="cursor-pointer w-6">
                 <font-awesome-icon :icon="['fas','eye']" class="text-gray-700"/>
-              </div>
+              </NuxtLink>
 
               <div class="cursor-pointer w-6" @click="downloadFile(fil.name)">
                 <font-awesome-icon :icon="['fas','download']" class="text-gray-700"/>
@@ -106,6 +106,10 @@ export default {
       } catch (err) {
         console.error(err)
       }
+    },
+    openpdf(filename){
+      window.open(filename);
+      return false;
     },
     downloadFile(filename) {
           this.$axios.get(`/document/list/${filename}`)

@@ -86,7 +86,7 @@
             <td>{{ hasilcari.merek }}</td>
             <td>{{ hasilcari.model }}</td>
             <td>{{ hasilcari.processor }}</td>
-            <td>{{ hasilcari.memori }}</td>
+            <td>{{ hasilcari.memori }} {{hasilcari.satuan_memori}}</td>
             <td>
               {{ $moment(hasilcari.garansi).format('DD-MM-YYYY') }}
             </td>
@@ -181,7 +181,7 @@
             <td>{{ server.merek }}</td>
             <td>{{ server.model }}</td>
             <td>{{ server.processor }}</td>
-            <td>{{ server.memori }}</td>
+            <td>{{ server.memori }} {{server.satuan_memori}}</td>
             <td>
               {{ $moment(server.garansi).format('DD-MM-YYYY') }}
             </td>

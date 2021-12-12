@@ -79,14 +79,7 @@ export default {
   },
   methods:{
     async printtheform(){
-      // Pass the element id here
-      // const localOptions = {
-      //       styles: [
-      //         '~/public/printer.css'
-      //       ]
-      //     };
       this.$htmlToPaper('printform');
-      // window.print()
     }
   }
 }

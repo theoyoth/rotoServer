@@ -75,7 +75,7 @@
                     <td>{{hasilcari.kepentingan}}</td>
                     <td>{{hasilcari.penanggung_jawab}}</td>
                     <td class="py-3 flex justify-between w-full lowercase">
-                         <div class="has-tooltip">
+                        <div class="has-tooltip">
                         <span
                         class="
                             tooltip

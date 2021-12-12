@@ -12,11 +12,20 @@
           </div>
           <ValidationObserver v-slot={invalid,valid}>
           <form @submit.prevent="userForgotPassword">
-            <label for="resetpassword"  class="block text-gray-700 text-xs font-bold mb-2" htmlFor="grid-password">Email</label>
-            <ValidationProvider rules="required|email" v-slot={errors}>
-            <input type="email" id="resetpassword" name="resetpassword" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" v-model="email">
-            <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
-            </ValidationProvider>
+            <div>
+              <label for="name"  class="block text-gray-700 text-xs font-bold mb-2" htmlFor="grid-password">Nama di sistem</label>
+              <ValidationProvider rules="required|alpha_spaces" v-slot={errors}>
+                <input type="text" id="name" name="name" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" v-model="nama">
+              <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
+              </ValidationProvider>
+            </div>
+            <div>
+              <label for="resetpassword"  class="block text-gray-700 text-xs font-bold mb-2" htmlFor="grid-password">Email</label>
+              <ValidationProvider rules="required|email" v-slot={errors}>
+                <input type="email" id="resetpassword" name="resetpassword" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" v-model="email">
+              <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
+              </ValidationProvider>
+            </div>
             <div class="text-center mt-6">
               <button
                 class="opacity-10 px-6 bg-gray-700 text-gray-200 py-2 rounded cursor-default mt-2 w-full"
@@ -41,6 +50,7 @@ export default {
   auth:"guest",
   data(){
     return{
+      nama:"",
       email:"",
     }
   },
@@ -50,7 +60,8 @@ export default {
   },
   methods:{
     async userForgotPassword(){
-      const resp = await this.$axios.post('/forgot',{
+      const resp = await this.$axios.post('/forgotpassword',{
+        nama:this.nama,
         email:this.email,
       })
       console.log(resp)

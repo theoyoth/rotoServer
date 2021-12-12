@@ -195,7 +195,7 @@ router.get('/homepage', isAuthent, authController.homepage)
 // logout
 router.post('/logout', authController.logout)
 // forgot password
-// router.post('/forgot', authController.forgotPassword)
+router.post('/forgotpassword', authController.forgotPassword)
 
 // ===============================================
 // MAINTENANCE SERVER
