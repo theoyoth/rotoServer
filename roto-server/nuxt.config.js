@@ -41,7 +41,20 @@ export default {
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
-
+  router: {
+    extendRoutes(routes, resolve) {
+      routes.push({
+        path: '/server/resetpassword/:token',
+        components: {
+          default: resolve(__dirname, 'pages/resetpassword.vue'), // or routes[index].component
+          modal: resolve(__dirname, 'components/ResetPassword.vue'),
+        },
+        chunkNames: {
+          modal: 'components/ResetPassword',
+        },
+      })
+    },
+  },
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
     '@nuxtjs/fontawesome',

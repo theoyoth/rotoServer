@@ -2,8 +2,9 @@ const pool = require('../db.js')
 const jwt = require('jsonwebtoken')
 const dotenv = require('dotenv')
 const cookieParser = require('cookie-parser')
+const nodemailer = require('nodemailer')
 const bcrypt = require('bcrypt')
-const { kirimEmail } = require('./helper.js')
+const salt = bcrypt.genSaltSync(10)
 
 dotenv.config()
 
@@ -126,18 +127,66 @@ module.exports.forgotPassword = async (req, res) => {
           process.env.TOKEN_KEY,
           { expiresIn: '10m' }
         )
-
+        conn.query(
+          `UPDATE users SET reset_sandi_token = '${token}' WHERE id_user='${userdata.id_user}'`
+        )
+        let transporter = nodemailer.createTransport({
+          host: 'smtp.gmail.com',
+          port: 587,
+          secure: false,
+          requireTLS: true,
+          auth: {
+            user: 'yofakeakun@gmail.com',
+            pass: process.env.MY_EMAIL_PASSWORD,
+          },
+        })
         const templateEmail = {
-          from: '672018139@student.uksw.edu',
-          to: `${email}`,
+          from: 'yofakeakun@gmail.com',
+          to: email,
           subject: 'Link reset password',
-          html: `<p>silahkan klink link di bawah untuk reset password anda</p></br><p>http//localhost:3000/resetpassword/${token}</p>`,
+          html: `<p>silahkan klink link di bawah untuk reset password anda</p></br><a href="http://localhost:3000/server/resetpassword/${token}">RESET PASSWORD</a>`,
         }
-        kirimEmail(templateEmail)
-        return res.status(200).json({
-          message: 'Link reset password berhasil dikirim',
+
+        transporter
+          .sendMail(templateEmail)
+          .then((info) => console.log('Email terkirim'))
+          .catch((err) => console.log('Terjadi kesalahan:' + err))
+      } else {
+        res.send({ errmsg: 'masukan data yang benar' })
+      }
+    }
+  } catch (err) {
+    throw err
+  }
+}
+
+module.exports.resetPassword = async (req, res) => {
+  let conn
+  const { sandibaru, token } = req.body
+  const hasSandiBaru = bcrypt.hashSync(sandibaru, salt)
+  try {
+    conn = await pool.getConnection()
+    const resp = await conn.query(
+      `SELECT * FROM users WHERE reset_sandi_token = '${token}'`
+    )
+    if (resp) {
+      const user = resp[0]
+      const data = await conn.query(
+        `UPDATE users SET sandi='${hasSandiBaru}' WHERE id_user = '${user.id_user}'`
+      )
+      if (data) {
+        return res.json({
+          msg: 'sandi berhasil di ubah',
+        })
+      } else {
+        return res.json({
+          errmsg: 'sandi gagal di ubah',
         })
       }
+    } else {
+      return res.json({
+        errmsg: 'sandi gagal di ubah',
+      })
     }
   } catch (err) {
     throw err

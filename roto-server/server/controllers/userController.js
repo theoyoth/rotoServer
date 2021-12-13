@@ -50,7 +50,7 @@ module.exports.addUser = async (req, res) => {
     } else {
       if (roleuser == 'EDP') {
         const resp = await conn.query(
-          `INSERT INTO users VALUES ('','${namauser}','${hasSandi}','${roleuser}','1')`
+          `INSERT INTO users VALUES ('','${namauser}','${hasSandi}','','${roleuser}','1')`
         )
         if (resp.affectedRows > 0) {
           res.send('/infouser')
@@ -59,7 +59,7 @@ module.exports.addUser = async (req, res) => {
         }
       } else if (roleuser == 'PA') {
         const resp = await conn.query(
-          `INSERT INTO users VALUES ('','${namauser}','${hasSandi}','${roleuser}','2')`
+          `INSERT INTO users VALUES ('','${namauser}','${hasSandi}','','${roleuser}','2')`
         )
         if (resp.affectedRows > 0) {
           res.send('/infouser')
@@ -68,7 +68,7 @@ module.exports.addUser = async (req, res) => {
         }
       } else if (roleuser == 'Admin teknisi') {
         const resp = await conn.query(
-          `INSERT INTO users VALUES ('','${namauser}','${hasSandi}','${roleuser}','3')`
+          `INSERT INTO users VALUES ('','${namauser}','${hasSandi}','','${roleuser}','3')`
         )
         if (resp.affectedRows > 0) {
           res.send('/infouser')
@@ -77,7 +77,7 @@ module.exports.addUser = async (req, res) => {
         }
       } else if (roleuser == 'Teknisi listrik') {
         const resp = await conn.query(
-          `INSERT INTO users VALUES ('','${namauser}','${hasSandi}','${roleuser}','4')`
+          `INSERT INTO users VALUES ('','${namauser}','${hasSandi}','','${roleuser}','4')`
         )
         if (resp.affectedRows > 0) {
           res.send('/infouser')
@@ -86,7 +86,7 @@ module.exports.addUser = async (req, res) => {
         }
       } else if (roleuser == 'Teknisi ac') {
         const resp = await conn.query(
-          `INSERT INTO users VALUES ('','${namauser}','${hasSandi}','${roleuser}','5')`
+          `INSERT INTO users VALUES ('','${namauser}','${hasSandi}','','${roleuser}','5')`
         )
         if (resp.affectedRows > 0) {
           res.send('/infouser')
@@ -95,7 +95,7 @@ module.exports.addUser = async (req, res) => {
         }
       } else if (roleuser == 'Security') {
         const resp = await conn.query(
-          `INSERT INTO users VALUES ('','${namauser}','${hasSandi}','${roleuser}','6')`
+          `INSERT INTO users VALUES ('','${namauser}','${hasSandi}','','${roleuser}','6')`
         )
         if (resp.affectedRows > 0) {
           res.send('/infouser')
