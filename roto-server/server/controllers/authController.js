@@ -117,7 +117,7 @@ module.exports.forgotPassword = async (req, res) => {
     if (nama && email) {
       conn = await pool.getConnection()
       const resp = await conn.query(`SELECT * FROM users WHERE nama='${nama}'`)
-      if (resp) {
+      if (resp.length > 0) {
         const userdata = resp[0]
         const token = jwt.sign(
           {
@@ -144,16 +144,20 @@ module.exports.forgotPassword = async (req, res) => {
           from: 'yofakeakun@gmail.com',
           to: email,
           subject: 'Link reset password',
-          html: `<p>silahkan klink link di bawah untuk reset password anda</p></br><a href="http://localhost:3000/server/resetpassword/${token}">RESET PASSWORD</a>`,
+          html: `<p>silahkan klink link di bawah untuk reset sandi anda</p></br><a href="http://localhost:3000/server/resetpassword/${token}">RESET PASSWORD</a>`,
         }
-
         transporter
           .sendMail(templateEmail)
           .then((info) => console.log('Email terkirim'))
           .catch((err) => console.log('Terjadi kesalahan:' + err))
+
+        res.json({ successmsg: 'silahkan cek email anda' })
       } else {
-        res.send({ errmsg: 'masukan data yang benar' })
+        return res.json({ errmsg: 'nama tidak ada, masukan nama yang benar' })
       }
+      conn.release()
+    } else {
+      return res.json({ errmsg: 'masukan data' })
     }
   } catch (err) {
     throw err

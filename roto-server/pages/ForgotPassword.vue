@@ -10,6 +10,7 @@
           <div class="text-gray-800 text-center mb-5 font-bold">
             <h1 class="text-xl">Reset Password</h1>
           </div>
+          
           <ValidationObserver v-slot={invalid,valid}>
           <form @submit.prevent="userForgotPassword">
             <div>
@@ -52,6 +53,8 @@ export default {
     return{
       nama:"",
       email:"",
+      errormsg:"",
+      successmsg:"",
     }
   },
   components:{
@@ -65,6 +68,14 @@ export default {
         email:this.email,
       })
       console.log(resp)
+      if(resp){
+        if(resp.data.successmsg){
+          swal(resp.data.successmsg,{icon:'success'})
+        }
+        if(resp.data.errmsg){
+          swal('Error',resp.data.errmsg,{icon:'error'})
+        }
+      }
     }
   }
 
