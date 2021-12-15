@@ -32,7 +32,7 @@
           </div>
           <div class="w-28 mx-auto mt-1">
             <button
-              class="w-full mt-4 bg-gray-800 py-2 text-gray-300 rounded" type="submit" >
+              class="w-full mt-4 bg-gray-800 py-2 text-gray-300 rounded transition duration-200 hover:bg-gray-600" type="submit" >
               Submit
             </button>
           </div>
@@ -93,6 +93,10 @@ export default {
         this.message = "hanya menerima dokumen dengan ekstensi .pdf"
       }
     },
+    openPDF(pdf){
+      window.open(pdf);
+      return false;
+    },
     async onSubmit() {
       let formData = new FormData()
       formData.append('file', this.file)
@@ -106,10 +110,6 @@ export default {
       } catch (err) {
         console.error(err)
       }
-    },
-    openpdf(filename){
-      window.open(filename);
-      return false;
     },
     downloadFile(filename) {
           this.$axios.get(`/document/list/${filename}`)

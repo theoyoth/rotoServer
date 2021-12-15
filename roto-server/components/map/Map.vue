@@ -11,8 +11,10 @@ import {
 } from 'three/examples/jsm/renderers/CSS2DRenderer.cjs';
 import texturewall from '~/assets/textures/Marble_White_007_basecolor.jpg';
 import texturefloor from '~/assets/textures/Wood_Floor_011_height.png'
-import {GLTFLoader} from 'three/examples/jsm/loaders/GLTFLoader.cjs'
-// import tokyo from '~/assets/model/LittlestTokyo.glb'
+import THREEx from '~/assets/threex.domevents.js';
+// import { EventDispatcher } from 'three/src/core/EventDispatcher.js'
+// import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.cjs';
+// import rakserver from '~/assets/model/rakServer.glb'
 
 export default {
     data() {
@@ -38,6 +40,7 @@ export default {
         labelDiv:null,
         labelRenderer: null,
         ackanan: null,
+        meshackanan: null,
         ackiri: null,
         cctv:null,
         baterai: null,
@@ -50,6 +53,7 @@ export default {
         valocity: null,
         direction: null,
         vertex: null,
+        loader: null,
       }
     },
     methods: {
@@ -164,11 +168,11 @@ export default {
         // AC kanan
         this.ackanan = new THREE.BoxGeometry(0.2, 0.2, 0.6);
         let materialackanan = new THREE.MeshBasicMaterial({color: 0xdddddd});
-        this.ackanan = new THREE.Mesh(this.ackanan, materialackanan);
-        this.ackanan.position.x = 1.14;
-        this.ackanan.position.y = 0.7;
-        this.ackanan.position.z = 0.7;
-        this.scene.add(this.ackanan);
+        this.meshackanan = new THREE.Mesh(this.ackanan, materialackanan);
+        this.meshackanan.position.x = 1.14;
+        this.meshackanan.position.y = 0.7;
+        this.meshackanan.position.z = 0.7;
+        this.scene.add(this.meshackanan);
 
         // AC kiri
         this.ackiri = new THREE.BoxGeometry(0.2, 0.2, 0.6);
@@ -185,7 +189,7 @@ export default {
         earthDiv.textContent = 'AC kanan';
         const earthLabel = new CSS2DObject( earthDiv );
         earthLabel.position.set( 0, 0.5, 0 );
-        this.ackanan.add( earthLabel );
+        this.meshackanan.add( earthLabel );
 
         const labelAckiri = document.createElement( 'div' );
         labelAckiri.className = 'label';
@@ -278,13 +282,25 @@ export default {
 				this.cubeGeo = new THREE.BoxGeometry( 50, 50, 50 );
 				this.cubeMaterial = new THREE.MeshLambertMaterial( { color: 0xfeb74c})
 
-        this.raycaster = new THREE.Raycaster(new THREE.Vector3(), new THREE.Vector3( 0, - 1, 0 ), 0, 10);
+        // this.loader = new GLTFLoader();
+        // this.loader.load(rakserver,function(gltf){
+        //   this.scene.add(gltf.scene);
+        // },undefined,function(error){
+        //   console.error(error);
+        // })
+
+        this.raycaster = new THREE.Raycaster();
 				this.mouse = new THREE.Vector2();
 
         this.renderer = new THREE.WebGLRenderer({antialias: true});
         this.renderer.setSize(container.clientWidth, container.clientHeight);
         // this.controls = new OrbitControls( this.camera, this.renderer.domElement);
-        
+        // var domEvents	= new THREEx.DomEvents(this.camera, this.renderer.domElement)
+        // domEvents.addEventListener(this.meshackanan,'click',()=>{
+        //   console.log('clicked');
+        // })
+
+      
         container.appendChild(this.renderer.domElement);
 
         this.labelRenderer = new CSS2DRenderer();
@@ -298,7 +314,6 @@ export default {
         this.controls2.minDistance = 0;
         this.controls2.maxDistance = 50;
         
-
         container.addEventListener('mousemove', ({ clientX, clientY }) => {
           const { innerWidth, innerHeight } = window;
 
@@ -373,7 +388,7 @@ export default {
   mounted() {
     this.init();
     this.animate();
-  }
+  },
 
 }
 </script>

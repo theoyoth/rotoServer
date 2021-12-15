@@ -262,7 +262,7 @@ export default {
                     let indexOfArrayItem = this.barangs.findIndex(i => i.id_ambil_barang === id)
 
                     const lokasi = this.$auth.user.lokasi
-                    this.$axios.delete(`/inout/ambilbarang/delete/${id}/${lokasi}`)
+                this.$axios.delete(`/inout/ambilbarang/delete/${id}/${lokasi}`)
                     .then(resp=>{
                         if(resp){
                             this.barangs.splice(indexOfArrayItem, 1);

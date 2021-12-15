@@ -226,7 +226,6 @@ export default {
     middleware:"isAuthenticated",
     data(){
         return{
-            cari:"",
             caribarang:"",
             barangs:[],
             caridatabarang:[],

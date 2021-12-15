@@ -2,7 +2,7 @@ const fs = require('fs')
 const https = require('https')
 const path = require('path')
 const multer = require('multer')
-const baseUrl = '~/uploads/'
+const baseUrl = './uploads/'
 
 module.exports.uploadFiledoc = async (req, res) => {
   try {

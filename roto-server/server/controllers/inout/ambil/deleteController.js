@@ -13,8 +13,7 @@ module.exports.deleteBarang = async (req, res) => {
       )
 
       if (data.affectedRows > 0) {
-        res.redirect('/inout/ambilbarang')
-        // res.json({ msg: 'sudah di hapus' })
+        res.json({ msg: 'sudah di hapus' })
       } else {
         res.json({ errmsg: 'data tidak terhapus' })
       }
@@ -24,7 +23,7 @@ module.exports.deleteBarang = async (req, res) => {
       )
 
       if (data.affectedRows > 0) {
-        res.redirect('/inout/ambilbarang')
+        res.json({ msg: 'sudah di hapus' })
       } else {
         res.json({ errmsg: 'data tidak terhapus' })
       }
@@ -34,7 +33,7 @@ module.exports.deleteBarang = async (req, res) => {
       )
 
       if (data.affectedRows > 0) {
-        res.redirect('/inout/ambilbarang')
+        res.json({ msg: 'sudah di hapus' })
       } else {
         res.json({ errmsg: 'data tidak terhapus' })
       }
@@ -44,7 +43,7 @@ module.exports.deleteBarang = async (req, res) => {
       )
 
       if (data.affectedRows > 0) {
-        res.redirect('/inout/ambilbarang')
+        res.json({ msg: 'sudah di hapus' })
       } else {
         res.json({ errmsg: 'data tidak terhapus' })
       }
