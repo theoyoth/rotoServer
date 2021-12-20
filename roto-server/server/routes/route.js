@@ -340,7 +340,7 @@ router.get(
 // upload dokumen
 const multerStorage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, './uploads/')
+    cb(null, './static/uploads')
   },
   filename: (req, file, cb) => {
     cb(
@@ -370,7 +370,7 @@ router.post('/document', upload.single('file'), fileController.uploadFiledoc)
 
 router.get('/document/list', fileController.getAllFiles)
 
-router.get('/document/list/:name', fileController.downloadFile)
+// router.get('/document/list/:name', fileController.downloadFile)
 router.delete('/document/list/:name', fileController.deleteFile)
 
 module.exports = router

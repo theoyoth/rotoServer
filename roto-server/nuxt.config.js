@@ -125,12 +125,20 @@ export default {
   },
 
   build: {
-    extend(config, {}) {
-      config.node = {
+    extend(config, ctx) {
+      ;(config.node = {
         fs: 'empty',
-      }
+      }),
+        config.module.rules.push({
+          test: /\.(obj|glb|gltf)$/,
+          use: [
+            {
+              loader: 'file-loader',
+            },
+          ],
+        })
     },
-    transpile: ['vee-validate/dist/rules'],
+    transpile: ['vee-validate/dist/rules', 'three'],
   },
   serverMiddleware: [
     // {path: '/server',handler:'~/server'},

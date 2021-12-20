@@ -10,7 +10,6 @@
 <script>
 export default {
     middleware:"isAuthenticated",
-
 }
 </script>
 

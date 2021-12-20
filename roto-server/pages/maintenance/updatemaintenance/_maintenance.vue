@@ -28,7 +28,10 @@
                         <div class="flex flex-col w-72">
                             <ValidationProvider rules="required|numeric" v-slot={errors}>
                             <div class="flex items-center w-full">
-                                <input type="text" v-model="updateMaintenance.suhu" name="suhu" id="suhu" class="p-2 w-full rounded-lg bg-gray-300 outline-none" >
+                                <div class="flex">
+                                    <input type="text" v-model="updateMaintenance.suhu" name="suhu" id="suhu" class="p-2 w-full rounded-l-lg bg-gray-300 outline-none" >
+                                    <input type="text" readonly class="rounded-r-lg py-2 w-16 bg-gray-200 cursor-default text-center text-gray-700 outline-none" value="℃">
+                                </div>
                                 <font-awesome-icon :icon="['fas', 'check-circle']" class="transition-all duration-200 text-green-500 ml-2 opacity-10" :class="{checktrue : updateMaintenance.suhu!=='' && !errors[0]}"/>
                             </div>
                             <p class="text-xs mt-1 text-right text-red-500">{{ errors[0] }}</p>
@@ -44,7 +47,10 @@
                         <div class="flex flex-col w-72">
                             <ValidationProvider rules="required|numeric" v-slot={errors}>
                             <div class="flex items-center">
-                                <input type="text" v-model="updateMaintenance.kelembapan" name="kelembapan" id="kelembapan" class="p-2 w-full rounded-lg outline-none bg-gray-300" >
+                                <div class="flex">
+                                    <input type="text" v-model="updateMaintenance.kelembapan" name="kelembapan" id="kelembapan" class="p-2 w-full rounded-l-lg outline-none bg-gray-300">
+                                    <input type="text" readonly class="rounded-r-lg py-2 w-16 bg-gray-200 cursor-default text-center text-gray-700 outline-none" value="%">
+                                </div>
                                 <font-awesome-icon :icon="['fas', 'check-circle']" class="transition-all duration-200 text-green-500 ml-2 opacity-10" :class="{checktrue : updateMaintenance.kelembapan !=='' && !errors[0]}"/>
                             </div>
                             <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>

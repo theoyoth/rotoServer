@@ -82,7 +82,7 @@
                 </div>
             </div>
         </div>
-        <button class="mt-10 opacity-10 bg-gray-700 text-gray-200 w-28 py-2 rounded-lg cursor-default" type="submit" :class="{activesubmit : valid}" :disabled="invalid">simpan</button>
+        <button class="mt-10 opacity-10 bg-gray-700 text-gray-200 w-28 py-2 rounded-lg cursor-default transition duration-200 hover:bg-gray-600" type="submit" :class="{activesubmit : valid}" :disabled="invalid">simpan</button>
     </form>
     </ValidationObserver>
 </section>

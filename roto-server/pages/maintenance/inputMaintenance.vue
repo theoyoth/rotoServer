@@ -146,7 +146,7 @@
                 </div>
             </div>
         </div>
-        <button class="opacity-10 px-6 bg-gray-700 text-gray-200 py-2 rounded cursor-default mt-4" :class="{activesubmit : valid}" type="submit" :disabled="invalid">simpan</button>
+        <button class="opacity-10 px-6 bg-gray-700 text-gray-200 py-2 rounded cursor-default mt-4 text-center transition duration-200 hover:bg-gray-600" :class="{activesubmit : valid}" type="submit" :disabled="invalid">simpan</button>
     </form>
     </ValidationObserver>
 </section>
@@ -226,7 +226,7 @@ export default {
         async sendNotifyMaintenance(){
             if(this.inputMaintenance.suhu > 50 && this.$auth.user.role === 'Security' || this.inputMaintenance.suhu > 50 && this.$auth.user.role === 'Admin teknisi' || this.inputMaintenance.suhu > 50 && this.$auth.user.role === 'Teknisi listrik' || this.inputMaintenance.suhu > 50 && this.$auth.user.role === 'Teknisi AC'){
                 const flashMessage = `suhu ruangan server : ${this.inputMaintenance.suhu}℃. suhu terlalu tinggi. harap melakukan pemeriksaan`
-                const resp = await this.$axios.post(`https://api.telegram.org/bot${this.tokentelegram}/sendMessage?chat_id=${this.chatId}&text=${flashMessage}`)
+                const resp = await this.$axios.post(`https://api.telegram.org/bot${this.tokentelegram}/sendMessage?chat_id=${this.chatId}&parse_mode=Markdown&text=${flashMessage}`)
                 if(resp){
                     swal('pesan di kirim ke EDP dan PA',{icon:'success'})
                     this.$router.push('/maintenance')
@@ -237,7 +237,7 @@ export default {
             }
             if(this.inputMaintenance.kelembapan > 80 && this.$auth.user.role === 'Security' || this.inputMaintenance.kelembapan > 80 && this.$auth.user.role === 'Admin teknisi' || this.inputMaintenance.kelembapan > 80 && this.$auth.user.role === 'Teknisi listrik' || this.inputMaintenance.kelembapan > 80 && this.$auth.user.role === 'Teknisi AC'){
                 const flashMessage = `kelembapan ruangan server : ${this.inputMaintenance.kelembapan}%. kelembapan terlalu tinggi. harap melakukan pemeriksaan`
-                const resp = await this.$axios.post(`https://api.telegram.org/bot${this.tokentelegram}/sendMessage?chat_id=${this.chatId}&text=${flashMessage}`)
+                const resp = await this.$axios.post(`https://api.telegram.org/bot${this.tokentelegram}/sendMessage?chat_id=${this.chatId}&parse_mode=Markdown&text=${flashMessage}`)
                 if(resp){
                     swal('pesan di kirim ke EDP dan PA',{icon:'success'})
                     this.$router.push('/maintenance')
@@ -248,7 +248,7 @@ export default {
             }
             if(this.inputMaintenance.ac === 'tidak baik' && this.$auth.user.role === "Security" || this.inputMaintenance.ac === 'tidak baik' && this.$auth.user.role === "Admin teknisi" || this.inputMaintenance.ac === 'tidak baik' && this.$auth.user.role === "Admin teknisi" || this.inputMaintenance.ac === 'tidak baik' && this.$auth.user.role === "Teknisi listrik" || this.inputMaintenance.ac === 'tidak baik' && this.$auth.user.role === "Teknisi AC"){
                 const flashMessage = `AC sedang bermasalah, harap melakukan pemeriksaan. note : ${this.inputMaintenance.keteranganAc}`
-                const resp = await this.$axios.post(`https://api.telegram.org/bot${this.tokentelegram}/sendMessage?chat_id=${this.chatId}&text=${flashMessage}`)
+                const resp = await this.$axios.post(`https://api.telegram.org/bot${this.tokentelegram}/sendMessage?chat_id=${this.chatId}&parse_mode=Markdown&text=${flashMessage}`)
                 if(resp){
                     swal('pesan di kirim ke EDP dan PA',{icon:'success'})
                     this.$router.push('/maintenance')
@@ -259,7 +259,7 @@ export default {
             }
             if(this.inputMaintenance.ups === 'tidak baik' && this.$auth.user.role === "Security" || this.inputMaintenance.ups === 'tidak baik' && this.$auth.user.role === "Admin teknisi" || this.inputMaintenance.ups === 'tidak baik' && this.$auth.user.role === "Teknisi listrik" || this.inputMaintenance.ups === 'tidak baik' && this.$auth.user.role === "Teknisi AC"){
                 const flashMessage = `UPS sedang bermasalah, harap melakukan pemeriksaan. note : ${this.inputMaintenance.keteranganUps}`
-                const resp = await this.$axios.post(`https://api.telegram.org/bot${this.tokentelegram}/sendMessage?chat_id=${this.chatId}&text=${flashMessage}`)
+                const resp = await this.$axios.post(`https://api.telegram.org/bot${this.tokentelegram}/sendMessage?chat_id=${this.chatId}&parse_mode=Markdown&text=${flashMessage}`)
                 if(resp){
                     swal('pesan di kirim ke EDP dan PA',{icon:'success'})
                     this.$router.push('/maintenance')
@@ -270,7 +270,7 @@ export default {
             }
             if(this.inputMaintenance.baterai === 'tidak baik' && this.$auth.user.role === "Security" || this.inputMaintenance.baterai === 'tidak baik' && this.$auth.user.role === "Admin teknisi" || this.inputMaintenance.baterai === 'tidak baik' && this.$auth.user.role === "Teknisi listrik" || this.inputMaintenance.baterai === 'tidak baik' && this.$auth.user.role === "Teknisi AC"){
                 const flashMessage = `Baterai sedang bermasalah, harap melakukan pemeriksaan. note : ${this.inputMaintenance.keteranganBaterai}`
-                const resp = await this.$axios.post(`https://api.telegram.org/bot${this.tokentelegram}/sendMessage?chat_id=${this.chatId}&text=${flashMessage}`)
+                const resp = await this.$axios.post(`https://api.telegram.org/bot${this.tokentelegram}/sendMessage?chat_id=${this.chatId}&parse_mode=Markdown&text=${flashMessage}`)
                 if(resp){
                     swal('pesan di kirim ke EDP dan PA',{icon:'success'})
                     this.$router.push('/maintenance')
@@ -281,7 +281,7 @@ export default {
             }
             if(this.inputMaintenance.server === 'tidak baik' && this.$auth.user.role === "Security" || this.inputMaintenance.server === 'tidak baik' && this.$auth.user.role === "Admin teknisi" || this.inputMaintenance.server === 'tidak baik' && this.$auth.user.role === "Teknisi listrik" || this.inputMaintenance.server === 'tidak baik' && this.$auth.user.role === "Teknisi AC"){
                 const flashMessage = `Server sedang bermasalah, harap melakukan pemeriksaan. note : ${this.inputMaintenance.keteranganServer}`
-                const resp = await this.$axios.post(`https://api.telegram.org/bot${this.tokentelegram}/sendMessage?chat_id=${this.chatId}&text=${flashMessage}`)
+                const resp = await this.$axios.post(`https://api.telegram.org/bot${this.tokentelegram}/sendMessage?chat_id=${this.chatId}&parse_mode=Markdown&text=${flashMessage}`)
                 if(resp){
                     swal('pesan di kirim ke EDP dan PA',{icon:'success'})
                     this.$router.push('/maintenance')
@@ -302,27 +302,29 @@ export default {
 .checktrue{
     opacity:1;
 }
-    .activesubmit {
-        background-color: rgb(55, 65, 81);
-        color:whitesmoke;
-        cursor:pointer;
-        width:100px;
-        opacity:1;
-        padding-top: .5rem;
-        padding-bottom: .5rem;
-        transition: all 0.5s;
-        transform:translateY(4px);
-    }
-    .redring:focus {
-        outline: 1px solid rgb(238, 56, 56);
-    }
-    .bluering {
-        outline: 1px solid rgb(56, 135, 238);
-    }
-    .incop{
-        opacity:1,
-    }
-    .decop{
-        opacity: 0.1;
-    }
+.activesubmit {
+    background-color: rgb(55, 65, 81);
+    color:whitesmoke;
+    cursor:pointer;
+    opacity:1;
+    padding-top: .5rem;
+    padding-bottom: .5rem;
+    transition: all 0.5s;
+    transform:translateY(4px);
+    text-align:center;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+}
+.redring:focus {
+    outline: 1px solid rgb(238, 56, 56);
+}
+.bluering {
+    outline: 1px solid rgb(56, 135, 238);
+}
+.incop{
+    opacity:1,
+}
+.decop{
+    opacity: 0.1;
+}
 </style>

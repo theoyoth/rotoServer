@@ -1,7 +1,6 @@
 <template>
   <div class="min-h-screen w-widthContent ml-auto overflow-x-hidden" id="pdffile">
-    <section class="bg-gray-100 min-h-screen w-widthContentField m-auto mt-7 p-4">
-    </section>
+    <embed :src="linkfile" type="application/pdf" width="100%" height="1000px">
   </div>
 </template>
 
@@ -16,7 +15,7 @@ export default {
   },
   mounted() {
     this.viewpdf = this.$route.params.id
-    this.linkfile = `/assets/uploads/${this.viewpdf}`
+    this.linkfile = `../../../uploads/${this.viewpdf}`
   },
 };
 </script>

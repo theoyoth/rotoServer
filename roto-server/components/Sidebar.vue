@@ -130,7 +130,7 @@
                       class="text-gray-500 text-xs group-hover:text-white"
                     />
                   </div>
-                  <div class="">
+                  <div>
                     <p
                       class="
                         text-sm text-gray-300

@@ -6,7 +6,7 @@
     <section
       class="bg-gray-100 min-h-screen w-widthContentField m-auto mt-7 p-4"
     >
-      <div class="bg-gray-400 p-4" v-show="this.$auth.user.role === 'PA' || this.$auth.user.role === 'EDP'">
+      <div class="bg-gray-400 p-4" v-show="user.role === 'PA' || user.role === 'EDP'">
         <h1 class="text-center text-xl font-semibold mb-2">Upload file</h1>
         <form @submit.prevent="onSubmit" enctype="multipart/form-data">
           <div class="w-full mt-6">
@@ -50,11 +50,7 @@
               <NuxtLink :to="{name: 'document-viewpdf-viewpdf',params:{id:fil.name}}" class="cursor-pointer w-6">
                 <font-awesome-icon :icon="['fas','eye']" class="text-gray-700"/>
               </NuxtLink>
-
-              <div class="cursor-pointer w-6" @click="downloadFile(fil.name)">
-                <font-awesome-icon :icon="['fas','download']" class="text-gray-700"/>
-              </div>
-              <div class="cursor-pointer w-6" @click="deleteFile(fil.name)">
+              <div class="cursor-pointer w-6" @click="deleteFile(fil.name)" v-show="user.role === 'PA' || user.role === 'EDP'" >
                 <font-awesome-icon :icon="['fas','trash']" class="text-gray-700"/>
               </div>
             </div>
@@ -81,6 +77,11 @@ export default {
       allfiles: "",
     }
   },
+  computed:{
+    user(){
+      return this.$auth.user
+    }
+  },
   methods: {
     onSelect() {
       const file = this.$refs.file.files[0]
@@ -92,10 +93,6 @@ export default {
       else{
         this.message = "hanya menerima dokumen dengan ekstensi .pdf"
       }
-    },
-    openPDF(pdf){
-      window.open(pdf);
-      return false;
     },
     async onSubmit() {
       let formData = new FormData()
@@ -110,14 +107,6 @@ export default {
       } catch (err) {
         console.error(err)
       }
-    },
-    downloadFile(filename) {
-          this.$axios.get(`/document/list/${filename}`)
-          .then((response) => {
-            swal(response.data.msg,{icon:'success'})
-          }).catch(err=>{
-            swal(err.data.errmsg,{icon:'error'})
-          })
     },
     deleteFile(filename){
       swal({
@@ -167,7 +156,7 @@ export default {
     //   /^.*\.pdf$/
     // )
 
-    // require.context('~/uploads/', false, /\.pdf$/)
+    require.context('~/static/uploads', false, /\.pdf$/)
   },
 }
 </script>

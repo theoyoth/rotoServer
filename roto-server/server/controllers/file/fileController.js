@@ -2,7 +2,7 @@ const fs = require('fs')
 const https = require('https')
 const path = require('path')
 const multer = require('multer')
-const baseUrl = './uploads/'
+const baseUrl = './static/uploads'
 
 module.exports.uploadFiledoc = async (req, res) => {
   try {
@@ -13,7 +13,7 @@ module.exports.uploadFiledoc = async (req, res) => {
 }
 
 module.exports.getAllFiles = async (req, res) => {
-  const directoryPath = './uploads/'
+  const directoryPath = './static/uploads'
   await fs.readdir(directoryPath, function (err, files) {
     if (err) {
       res.status(500).send({
@@ -34,21 +34,21 @@ module.exports.getAllFiles = async (req, res) => {
   })
 }
 
-module.exports.downloadFile = async (req, res) => {
-  const filename = req.params.name
-  const directoryPath = './uploads/'
-  res.download(directoryPath + filename, filename, (err) => {
-    if (err) {
-      res.status(404).send({
-        errmsg: 'tidak bisa menemukan file' + err,
-      })
-    }
-  })
-}
+// module.exports.downloadFile = async (req, res) => {
+//   const filename = req.params.name
+//   const directoryPath = './static/uploads'
+//   res.download(directoryPath + filename, filename, (err) => {
+//     if (err) {
+//       res.status(404).send({
+//         errmsg: 'tidak bisa menemukan file' + err,
+//       })
+//     }
+//   })
+// }
 
 module.exports.deleteFile = async (req, res) => {
   const filename = req.params.name
-  const directoryPath = './uploads/'
+  const directoryPath = './static/uploads/'
 
   fs.unlink(directoryPath + filename, (err) => {
     if (err) {
