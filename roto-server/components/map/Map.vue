@@ -1,8 +1,10 @@
 <template>
+<div class="home">
   <div id="container">
-    <button id="startmouse">click this to navigate</button>
     <div id="child"></div>
+    <button id="startmouse">click this to navigate</button>
   </div>
+</div>
 </template>
 
 <script type="module">
@@ -11,13 +13,11 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { PointerLockControls } from 'three/examples/jsm/controls/PointerLockControls.js';
 import {
   CSS2DRenderer,
-  CSS2DObject,
 } from 'three/examples/jsm/renderers/CSS2DRenderer.js';
-import texturewall from '~/assets/textures/Marble_White_007_basecolor.jpg';
+import texturewall from '/static/texture/wall.jpg';
 import texturefloor from '~/assets/textures/Wood_Floor_011_height.png'
-// import { EventDispatcher } from 'three/src/core/EventDispatcher.js'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
-import {OBJLoader} from 'three/examples/jsm/loaders/OBJLoader';
+
 
 export default {
     data() {
@@ -55,6 +55,9 @@ export default {
         meshbaterai: null,
         meshlistrik: null,
         selected:null,
+        loader:null,
+        light:null,
+        spotLight: null,
       }
     },
     methods: {
@@ -64,11 +67,23 @@ export default {
         this.camera = new THREE.PerspectiveCamera(80, container.clientWidth/container.clientHeight, 0.01, 100);
         
         this.camera.position.z = 2;
-        this.camera.position.y = 0.5;
+        this.camera.position.y = 0.4;
         this.camera.lookAt(0,0,0);
 
         this.scene = new THREE.Scene();
         this.scene.background = new THREE.Color(0x222222);
+
+        // this.light = new THREE.AmbientLight(0xdddddd, 1)
+        // this.scene.add(this.light)
+        // this.light = new THREE.PointLight( 0xFFFFFF );
+        // this.light.position.set( -15, 5, 15 );
+        // this.scene.add( this.light );
+        this.light = new THREE.HemisphereLight(0xffffee,0x101010,5);
+        this.scene.add(this.light);
+
+        // this.spotLight = new THREE.SpotLight(0xffa95c,4);
+        // this.spotLight.castShadow = true;
+        // this.scene.add(this.spotLight);
 
         // texture wall
         const textureLoader = new THREE.TextureLoader();
@@ -77,57 +92,14 @@ export default {
         wallcolor.repeat.set(5,5);
         const floorcolor = textureLoader.load(texturefloor);
         // rak 1
-        let box_rak_1 = new THREE.BoxGeometry(1.2, 0.5, 0.5);
-        let material_rak_1 = new THREE.MeshBasicMaterial({color: 0x333333});
-        this.meshrak1 = new THREE.Mesh(box_rak_1, material_rak_1);
-        this.meshrak1.position.y = 0.27;
-        this.meshrak1.position.x = -0.2;
-        this.meshrak1.name = 'rak 1'
-        this.scene.add(this.meshrak1);
-
-        // set labels
-        // this.labelRenderer = new CSS2DRenderer();
-        // this.labelRenderer.setSize(container.innerWidth, container.innerHeight);
-        // this.labelRenderer.domElement.style.position = 'absolute';
-        // this.labelRenderer.domElement.style.top = '20px';
-        // this.labelRenderer.domElement.style.pointerEvents = 'none';
-        // document.body.appendChild(this.labelRenderer.domElement);
-
-        // this.labelDiv = document.createElement('div');
-        // this.labelDiv.className = 'label';
-        // this.labelDiv.style.marginTop = '10px';
-        // this.label = new CSS2DObject(this.labelDiv);
-        // this.label.visible = false;
-        // this.scene.add(this.label);
-
+        this.loadRak1();
         // rak 2
-        let box_rak_2 = new THREE.BoxGeometry(1.2, 0.5, 0.5);
-        let material_rak_2 = new THREE.MeshBasicMaterial({color: 0x333333});
-        this.meshrak2 = new THREE.Mesh(box_rak_2, material_rak_2);
-        this.meshrak2.position.x = -0.2;
-        this.meshrak2.position.y = 0.27;
-        this.meshrak2.position.z = 0.7;
-        this.meshrak2.name = 'rak 2';
-        this.scene.add(this.meshrak2);
+        this.loadRak2();
         
         // UPS
-        let geometryups = new THREE.BoxGeometry(0.5, 0.3, 0.24);
-        let materialups = new THREE.MeshBasicMaterial({color: 0x2442aa});
-        this.meshups = new THREE.Mesh(geometryups, materialups);
-        this.meshups.position.x = -0.3;
-        this.meshups.position.y = 0.151;
-        this.meshups.position.z = -0.42;
-        this.meshups.name = 'UPS';
-        this.scene.add(this.meshups);
+        this.loadUps();
         // rak jaringan
-        let rak_jaringan = new THREE.BoxGeometry(0.7, 0.7, 0.4);
-        let material_rak_jaringan = new THREE.MeshBasicMaterial({color: 0x444477});
-        this.meshrakjaringan = new THREE.Mesh(rak_jaringan, material_rak_jaringan);
-        this.meshrakjaringan.position.x = -0.3;
-        this.meshrakjaringan.position.y = 0.36;
-        this.meshrakjaringan.position.z = -0.8;
-        this.meshrakjaringan.name = "Rak jaringan";
-        this.scene.add(this.meshrakjaringan);
+        this.loadRakjaringan();
         // door 1
         let geometrypintu1 = new THREE.BoxGeometry(0.04, 0.6, 0.3);
         let materialpintu1 = new THREE.MeshBasicMaterial({color: 0x666666});
@@ -146,24 +118,9 @@ export default {
         this.scene.add(this.meshpintu2);
         
         // AC kanan
-        let ackanan = new THREE.BoxGeometry(0.2, 0.2, 0.6);
-        let materialackanan = new THREE.MeshBasicMaterial({color: 0xdddddd});
-        this.meshackanan = new THREE.Mesh(ackanan, materialackanan);
-        this.meshackanan.position.x = 1.14;
-        this.meshackanan.position.y = 0.7;
-        this.meshackanan.position.z = 0.7;
-        this.meshackanan.name = "AC kanan";
-        this.scene.add(this.meshackanan);
-
+        this.loadModelACkanan();
         // AC kiri
-        let ackiri = new THREE.BoxGeometry(0.2, 0.2, 0.6);
-        let materialackiri = new THREE.MeshBasicMaterial({color: 0xdddddd});
-        this.meshackiri = new THREE.Mesh(ackiri, materialackiri);
-        this.meshackiri.position.x = 1.14;
-        this.meshackiri.position.y = 0.7;
-        this.meshackiri.position.z = -0.2;
-        this.meshackiri.name = "AC kiri";
-        this.scene.add(this.meshackiri);
+        this.loadModelACkiri();
 
         // label
         // const labelAckiri = document.createElement( 'div' );
@@ -174,36 +131,13 @@ export default {
         // this.ackiri.add( AckiriLabel );
 
         // CCTV
-        this.cctv = new THREE.BoxGeometry(0.1, 0.1, 0.1);
-        let materialcctv = new THREE.MeshBasicMaterial({color: 0xdddddd});
-        this.cctv = new THREE.Mesh(this.cctv, materialcctv);
-        this.cctv.position.x = 1.18;
-        this.cctv.position.y = 0.93;
-        this.cctv.position.z = -1.42;
-        this.scene.add(this.cctv);
         
         // daya listrik
-        let geometrylistrik = new THREE.BoxGeometry(0.2, 0.25, 0.1);
-        let materiallistrik = new THREE.MeshBasicMaterial({color: 0xdddddd});
-        this.meshlistrik = new THREE.Mesh(geometrylistrik, materiallistrik);
-        this.meshlistrik.position.x = 0.9;
-        this.meshlistrik.position.y = 0.6;
-        this.meshlistrik.position.z = -1.76;
-        this.meshlistrik.name = "Listrik";
-        this.scene.add(this.meshlistrik);
         
         // baterai
-        let geometrybaterai = new THREE.BoxGeometry(0.8, 0.4, 0.5);
-        let materialbaterai = new THREE.MeshBasicMaterial({color: 0x323232});
-        this.meshbaterai = new THREE.Mesh(geometrybaterai, materialbaterai);
-        this.meshbaterai.position.x = -0.18;
-        this.meshbaterai.position.y = 0.21;
-        this.meshbaterai.position.z = -1.5;
-        this.meshbaterai.name = "Baterai";
-        this.scene.add(this.meshbaterai);
-        
+        this.loadRakbaterai();
         // floor
-        const floorGometry = new THREE.PlaneGeometry( 2.6,3.35 );
+        const floorGometry = new THREE.BoxGeometry( 2.6,5,0.04 );
 				const floorMaterial = new THREE.MeshBasicMaterial( {
           map:floorcolor,
           color:0xdddddd,
@@ -211,68 +145,72 @@ export default {
         } );
 				const floor = new THREE.Mesh( floorGometry, floorMaterial );
 				floor.rotation.x = - Math.PI / 2;
-				floor.position.z = -0.19;
+				floor.position.z = -0.1;
+				floor.position.y = -0.02;
 				this.scene.add( floor );
+        // roof
+        const roofGometry = new THREE.BoxGeometry( 2.6,5,0.04 );
+				const roofMaterial = new THREE.MeshBasicMaterial( {
+          map:floorcolor,
+          color:0xdddddd,
+          side: THREE.DoubleSide
+        } );
+				const roof = new THREE.Mesh( roofGometry, roofMaterial );
+				roof.rotation.x = - Math.PI / 2;
+				roof.position.z = -0.1;
+				roof.position.y = 1.2;
+				this.scene.add( roof );
 
-        // wall 1
-        const wallGometry = new THREE.BoxGeometry( 2.5,1,0.1 );
+        // wall belakang
+        const wallGometry = new THREE.BoxGeometry( 2.5,1.4,0.1 );
 				const wallMaterial = new THREE.MeshBasicMaterial( {
-          map:wallcolor,
-          color: 0xcccccc, 
+          map:wallcolor, 
           side: THREE.DoubleSide
         } );
 				const wall = new THREE.Mesh( wallGometry, wallMaterial );
         wall.position.z = -1.89;
         wall.position.y = 0.5;
 				this.scene.add( wall );
+        // wall depan
+        const wallGometrydepan = new THREE.BoxGeometry( 2.5,1.4,0.1 );
+				const wallMaterialdepan = new THREE.MeshBasicMaterial( {
+          map:wallcolor, 
+          side: THREE.DoubleSide
+        } );
+				const walldepan = new THREE.Mesh( wallGometrydepan, wallMaterialdepan );
+        walldepan.position.z = 2.2;
+        walldepan.position.y = 0.5;
+				this.scene.add( walldepan );
         // wall 2
-        const wall2Gometry = new THREE.BoxGeometry( 0.05,1,3.42 );
+        const wall2Gometry = new THREE.BoxGeometry( 0.05,1.4,5 );
 				const wall2Material = new THREE.MeshBasicMaterial( {
           map:wallcolor, 
-          color:0xdddddd,
           side: THREE.DoubleSide
         } );
 				const wall2 = new THREE.Mesh( wall2Gometry, wall2Material );
         wall2.position.x = -1.27;
         wall2.position.y = 0.5;
-        wall2.position.z = -0.22;
+        wall2.position.z = -0.1;
 				this.scene.add( wall2 );
 
         // wall 
-        const wall3Gometry = new THREE.BoxGeometry( 0.05,1,3.42 );
+        const wall3Gometry = new THREE.BoxGeometry( 0.05,1.4,5 );
 				const wall3Material = new THREE.MeshBasicMaterial( {
           map:wallcolor,
-          color:0xdddddd,
           side:THREE.DoubleSide
         } );
 				const wall3 = new THREE.Mesh( wall3Gometry, wall3Material );
         wall3.position.x = 1.27;
         wall3.position.y = 0.5;
-        wall3.position.z = -0.22;
+        wall3.position.z = -0.1;
 				this.scene.add( wall3 );
-        
-        this.rollOverGeo = new THREE.BoxGeometry( 50, 50, 50 );
-				this.rollOverMaterial = new THREE.MeshBasicMaterial( { color: 0xff0000, opacity: 0.5, transparent: true } );
-				this.rollOverMesh = new THREE.Mesh( this.rollOverGeo, this.rollOverMaterial );
-				this.scene.add( this.rollOverMesh );
-
-				this.cubeGeo = new THREE.BoxGeometry( 50, 50, 50 );
-				this.cubeMaterial = new THREE.MeshLambertMaterial( { color: 0xfeb74c})
-
-        // var loader = new GLTFLoader();
-        // var model = "ac.glb";
-        // loader.load(model, function ( data ) {
-        //     this.scene.add( data.scene );
-        // });
 
         this.renderer = new THREE.WebGLRenderer({antialias: true});
         this.renderer.setSize(container.clientWidth, container.clientHeight);
-        // this.controls = new OrbitControls( this.camera, this.renderer.domElement);
-        // var domEvents	= new THREEx.DomEvents(this.camera, this.renderer.domElement)
-        // domEvents.addEventListener(this.meshackanan,'click',()=>{
-        //   console.log('clicked');
-        // })
-    
+        this.renderer.toneMapping = THREE.ReinhardToneMapping;
+        this.renderer.toneMappingExposure = 2.3;
+        this.renderer.shadowMap.enabled = true;
+
         container.appendChild(this.renderer.domElement);
 
         this.labelRenderer = new CSS2DRenderer();
@@ -298,6 +236,7 @@ export default {
         this.mouse = {}
 
         addEventListener("mousedown",(e)=>{
+          e.preventDefault();
           this.mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
           this.mouse.y = (e.clientY / window.innerHeight) * -2 + 1;
 
@@ -305,33 +244,33 @@ export default {
           let items = this.raycaster.intersectObjects(this.scene.children);
 
           const child = document.getElementById('child');
-          items.forEach(i => {
+          // items.forEach(i => {
             
-            if(i.object.name != ''){
-              this.selected = i.object;
-              child.innerHTML = `<p>${i.object.name}</p>
-                                <p>isi : </br>server</p>`;
-              if(i.object.name === 'UPS'){
-                child.innerHTML = `<p>${i.object.name}</p>`;
-              }
-              if(i.object.name === 'Rak jaringan'){
-                child.innerHTML = `<p>${i.object.name}</p>
-                                  <p>isi : </br>kabel</p>`;
-              }
-              if(i.object.name === 'AC kanan'){
-                child.innerHTML = `<p>${i.object.name}</p>
-                                  <p>dingin</p>`;
-              }
-              if(i.object.name === 'AC kiri'){
-                child.innerHTML = `<p>${i.object.name}</p>
-                                  <p>dingin</p>`;
-              }
-              if(i.object.name === 'Baterai'){
-                child.innerHTML = `<p>${i.object.name}</p>
-                                  <p>500 watt</p>`;
-              }
-            }
-          })
+          //   if(i.object.name != ''){
+          //     // this.selected = i.object;
+          //     child.innerHTML = `<p>${i.object.name}</p>
+          //                       <p>isi : </br>server</p>`;
+          //   }
+          //     if(i.object.name === 'UPS'){
+          //       child.innerHTML = `<p>${i.object.name}</p>`;
+          //     }
+          //     if(i.object.name === 'Rak jaringan'){
+          //       child.innerHTML = `<p>${i.object.name}</p>
+          //                         <p>isi : </br>kabel</p>`;
+          //     }
+          //     if(i.object.name === 'AC kanan'){
+          //       child.innerHTML = `<p>${i.object.name}</p>
+          //                         <p>dingin</p>`;
+          //     }
+          //     if(i.object.name === 'AC kiri'){
+          //       child.innerHTML = `<p>${i.object.name}</p>
+          //                         <p>dingin</p>`;
+          //     }
+          //     if(i.object.name === 'Baterai'){
+          //       child.innerHTML = `<p>${i.object.name}</p>
+          //                         <p>500 watt</p>`;
+          //     }
+          // })
         })
         // keyboard controls AWSD
         addEventListener('keydown',(event)=>{
@@ -370,9 +309,126 @@ export default {
           this.control.moveRight(-actualSpeed);
         }
       },
+      loadModelACkanan(callback) {
+        this.loader = new GLTFLoader();
+
+        this.loader.load('model/ac.glb', (ackanan) => {
+            if (typeof callback === 'function') {
+                callback(ackanan.scene);
+            }
+
+            ackanan.scene.scale.set(0.1,0.08,0.1);
+            ackanan.scene.position.set(1.2,0.8,0.6);
+            ackanan.scene.name = "AC kanan";
+            ackanan.scene.rotation.y = - Math.PI / 2;
+            ackanan.scene.traverse(n => {
+              if(n.isMesh){
+                n.castShadow = true;
+                n.receiveShadow = true;
+              }
+            })
+            this.scene.add(ackanan.scene);
+        });
+      },  
+      loadModelACkiri(callback) {
+        this.loader = new GLTFLoader();
+
+        this.loader.load('model/ac.glb', (ackiri) => {
+            if (typeof callback === 'function') {
+                callback(ackiri.scene);
+            }
+
+            ackiri.scene.scale.set(0.1,0.08,0.1);
+            ackiri.scene.position.set(1.2,0.8,-0.2);
+            ackiri.scene.name = "AC kiri";
+            ackiri.scene.rotation.y = - Math.PI / 2;
+            this.scene.add(ackiri.scene);
+            console.log(ackiri.scene);
+        });
+      },  
+      loadRak1(callback) {
+        this.loader = new GLTFLoader();
+
+        this.loader.load('model/Rakserver.glb', (rakserver1) => {
+            if (typeof callback === 'function') {
+                callback(rakserver1.scene);
+            }
+
+            this.scene.add(rakserver1.scene);
+            rakserver1.scene.scale.set(0.4,0.4,0.4);
+            rakserver1.scene.position.set(-0.2,0.13,0.8);
+            // gltf.scene.rotation.y = -Math.PI / 2;
+        });
+      },  
+      loadRak2(callback) {
+        this.loader = new GLTFLoader();
+
+        this.loader.load('model/Rakserver.glb', (rakserver2) => {
+            if (typeof callback === 'function') {
+                callback(rakserver2.scene);
+            }
+
+            this.scene.add(rakserver2.scene);
+            rakserver2.scene.scale.set(0.4,0.4,0.4);
+            rakserver2.scene.position.set(-0.2,0.13,0.2);
+            rakserver2.scene.name = "Rak server";
+            // gltf.scene.rotation.y = -Math.PI / 2;
+        });
+      },  
+      loadRakjaringan(callback) {
+        this.loader = new GLTFLoader();
+
+        this.loader.load('model/rakjaringan.glb', (rakjaringan) => {
+            if (typeof callback === 'function') {
+                callback(rakjaringan.scene);
+            }
+
+            this.scene.add(rakjaringan.scene);
+            rakjaringan.scene.scale.set(0.14,0.12,0.2);
+            rakjaringan.scene.position.set(-0.2,0.42,-0.7);
+            rakjaringan.scene.name = "Rak jaringan";
+            rakjaringan.scene.rotation.y = Math.PI / 2;
+        });
+      },  
+      loadUps(callback) {
+        this.loader = new GLTFLoader();
+
+        this.loader.load('model/ups.glb', (ups) => {
+            if (typeof callback === 'function') {
+                callback(ups.scene);
+            }
+
+            this.scene.add(ups.scene);
+            ups.scene.scale.set(0.2,0.2,0.2);
+            ups.scene.position.set(-0.2,0.13,-0.2);
+            ups.scene.name="UPS"
+            ups.scene.rotation.y = Math.PI;
+        });
+      },  
+      loadRakbaterai(callback) {
+        this.loader = new GLTFLoader();
+
+        this.loader.load('model/rakbaterai.glb', (rakbaterai) => {
+            if (typeof callback === 'function') {
+                callback(rakbaterai.scene);
+            }
+
+            this.scene.add(rakbaterai.scene);
+            rakbaterai.scene.scale.set(0.26,0.3,0.28);
+            rakbaterai.scene.position.set(-0.2,0.22,-1.5);
+            rakbaterai.scene.name = "Rak baterai";
+            rakbaterai.scene.rotation.y = -Math.PI/2;
+        });
+      },  
 
       animate(){
         // this.controls2.update();
+        // this.spotLight.position.set(
+        //   this.camera.position.x + 10,
+        //   this.camera.position.y + 10,
+        //   this.camera.position.z + 10
+        // )
+
         let delta = this.clock.getDelta();
         this.processKeyboard(delta);
         requestAnimationFrame(this.animate);

@@ -6,6 +6,9 @@
     <section
       class="bg-gray-100 min-h-screen w-widthContentField m-auto mt-7 p-4"
     >
+    <!-- <div v-show="user.role === 'PA' || user.role === 'EDP'" class="bg-gray-700 w-12 py-2 rounded-lg text-center ml-auto mb-4">
+      <font-awesome-icon :icon="['fas','folder-plus']" class="text-gray-200 text-lg"/>
+    </div> -->
       <div class="bg-gray-400 p-4" v-show="user.role === 'PA' || user.role === 'EDP'">
         <h1 class="text-center text-xl font-semibold mb-2">Upload file</h1>
         <form @submit.prevent="onSubmit" enctype="multipart/form-data">

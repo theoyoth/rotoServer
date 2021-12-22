@@ -1,7 +1,10 @@
 <template>
 <div class="bg-gray-300 w-widthContent ml-auto">
-    <div v-show="this.$auth.user.lokasi === 'rotogravure 1' || this.$auth.user.lokasi === 'rotogravure 3'">
+    <div  v-if="user.lokasi === 'rotogravure 1' || user.lokasi === 'rotogravure 3'">
         <Map/>
+    </div>
+    <div v-else>
+        <Map2/>
     </div>
 </div>
   
@@ -10,6 +13,11 @@
 <script>
 export default {
     middleware:"isAuthenticated",
+    computed:{
+        user(){
+            return this.$auth.user
+        }
+    }
 }
 </script>
 

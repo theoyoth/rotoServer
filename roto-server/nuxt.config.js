@@ -130,7 +130,7 @@ export default {
         fs: 'empty',
       }),
         config.module.rules.push({
-          test: /\.(obj|glb|gltf)$/,
+          test: /\.(obj|glb|gltf|pdf)$/,
           use: [
             {
               loader: 'file-loader',
