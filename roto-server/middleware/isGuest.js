@@ -1,6 +1,6 @@
-export default function ({ store, route }) {
+export default function ({ store, redirect }) {
   // If the user is not authenticated
   if (store.state.auth.loggedIn) {
-    return route.path('/homepage')
+    return redirect('/homepage')
   }
 }

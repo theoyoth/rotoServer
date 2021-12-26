@@ -85,7 +85,6 @@
 <script>
 
 export default {
-    auth:"guest",
     data(){
         return{
           passwordFieldType:"password",
@@ -107,17 +106,15 @@ export default {
         async userLogin() {
             try{
                 const resp = await this.$auth.loginWith("local", { data: this.login})
-                // const token = resp.data.token
-                // this.$cookies.set('token',token,{expires:3600000})
-                
-                // this.$auth.$storage.setLocalStorage("authtoken", token)
-                window.addEventListener('storage', function(event){
-                  if (event.key == "app-logout") {
-                    window.location.assign("http://localhost:3000")
-                  }
-                }, false);
-                this.$router.push('/homepage')
-                if(resp.data.errmsg){
+                if(resp.data.token){
+                  window.addEventListener('storage', function(event){
+                    if (event.key == "app-logout") {
+                      window.location.assign("http://localhost:3000")
+                    }
+                  }, false);
+                  this.$router.push('/homepage')
+                }
+                else if(resp.data.errmsg){
                     this.err = resp.data.errmsg
                 }
             }
@@ -131,11 +128,6 @@ export default {
         changeicon () {
           this.ruleIcon = this.ruleIcon === 'asc' ? 'desc' : 'asc';
         }        
-    },
-    mounted(){ 
-        if(this.$auth.loggedIn){
-            return this.$router.go(-1)
-        }
     }
 }
 </script>

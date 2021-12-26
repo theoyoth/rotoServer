@@ -7,7 +7,7 @@ export default {
     ChatId: process.env.CHAT_ID,
   },
   head: {
-    title: 'roto-server',
+    title: 'rotogravure server',
     htmlAttrs: {
       lang: 'en',
     },
@@ -77,9 +77,6 @@ export default {
     '@nuxtjs/auth-next',
     'cookie-universal-nuxt',
   ],
-  // router: {
-  //   middleware: ['isAuthenticated'],
-  // },
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
@@ -92,21 +89,18 @@ export default {
         token: {
           property: 'token',
         },
-        // user: {
-        //   autoFetch: true,
-        //   property: 'user',
-        // },
         endpoints: {
           login: {
             url: '/login',
             method: 'post',
             propertyName: false,
           },
-          logout: {
-            url: '/logout',
-            method: 'post',
-            propertyName: false,
-          },
+          logout:
+            // url: '/logout',
+            // method: 'post',
+            // propertyName: false,
+            false,
+
           user: {
             url: '/homepage',
             method: 'get',
@@ -120,7 +114,7 @@ export default {
     redirect: {
       login: '/',
       logout: '/',
-      user: '/homepage',
+      home: '/homepage',
     },
   },
 

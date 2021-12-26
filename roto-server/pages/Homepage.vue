@@ -1,7 +1,6 @@
 <template>
-  <div class="bg-gray-300 min-h-screen w-widthContent ml-auto">
-    <Navbar/>
-    <section class="bg-gray-100 min-h-screen w-widthContentField m-auto mt-7 p-4 ">
+  <div class="bg-gray-300 min-h-screen w-widthContent ml-auto overflow-x-hidden">
+    <section class="bg-gray-100 min-h-screen w-widthContentField m-auto p-4 mt-7">
       <div class="container mx-auto h-full py-5">
         <div class="flex">
           <h1 class="text-3xl text-gray-700 font-semibold">Welcome, <span>{{user.nama}}</span></h1>
@@ -171,7 +170,8 @@
 import moment from 'moment'
 
 export default {
-  middleware: 'isAuthenticated',
+  middleware: ['isAuthenticated','auth'],
+  name:"Homepage",
   data() {
     return {
       message: '',
@@ -227,11 +227,6 @@ export default {
     // }
   },
   methods: {
-    async logout() {
-      await this.$auth.logout()
-      localStorage.setItem("app-logout", 'logout' + Math.random())
-      return true
-    },
     async fillDataSuhu(){
       const lokasi = this.$auth.user.lokasi
       try {
@@ -302,7 +297,7 @@ export default {
         console.log(err)
       }
     },
-     async fillDataKelembapan(){
+    async fillDataKelembapan(){
       const lokasi = this.$auth.user.lokasi
       try {
         const resp = await this.$axios.get(
@@ -364,6 +359,7 @@ export default {
     }
     this.$store.dispatch('maintenanceSecurity/getSecurity',data)
     this.$store.dispatch('maintenanceSecurity/getAllMaintenanceSecurity',data)
+
   },
 }
 </script>

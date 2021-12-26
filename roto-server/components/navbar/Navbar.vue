@@ -9,7 +9,7 @@
         />
         {{user.lokasi.charAt(0).toUpperCase()+user.lokasi.slice(1)}}
         </div>
-      <button @click.prevent="logout"
+      <button @click="logout"
             class="
               logout-btn
               px-2
@@ -29,6 +29,7 @@
 
 <script>
 export default {
+  middleware:['isAuthenticated','auth'],
   computed:{
     loggedIn() {
       return this.$auth.loggedIn
@@ -40,12 +41,10 @@ export default {
   methods:{
     async logout() {
       await this.$auth.logout()
-      localStorage.setItem("app-logout", 'logout' + Math.random())
+      await this.$axios.get('/logout')
+
+      localStorage.setItem("app-logout", Math.random())
       return true
-      // this.$auth.$storage.removeCookie("authtoken")
-      // this.$cookies.remove('aksestoken')
-      // this.$cookies.remove('aksestoken')
-      // this.$router.push('/')
     },
   }
 }

@@ -33,14 +33,12 @@ module.exports.login = async (req, res) => {
               lokasiid: lokasi.id_lokasi,
               lokasi: lokasi.nama_lokasi,
             },
-            process.env.TOKEN_KEY,
-            { expiresIn: '2h' }
+            process.env.TOKEN_KEY
           )
           res.cookie('aksestoken', token, {
             httpOnly: true,
             sameSite: 'strict',
             secure: true,
-            maxAge: 72000,
           })
           res.json({ token })
         } else {

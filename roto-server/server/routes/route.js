@@ -193,7 +193,7 @@ router.post('/login', authController.login)
 // homepage when login success
 router.get('/homepage', isAuthent, authController.homepage)
 // logout
-router.post('/logout', authController.logout)
+router.get('/logout', authController.logout)
 // forgot password
 router.post('/forgotpassword', authController.forgotPassword)
 router.post('/resetpassword', authController.resetPassword)
