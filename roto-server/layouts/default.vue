@@ -22,9 +22,7 @@ export default {
   },
   mounted(){
     window.onbeforeunload = () => {
-      if (localStorage.getItem('token-user') === 'true') {
-        localStorage.removeItem('token-user');
-      }
+      localStorage.clear()
     };
   }
   
