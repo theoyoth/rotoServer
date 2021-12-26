@@ -1,7 +1,5 @@
 <template>
-<div class="bg-gray-300 w-widthContent ml-auto">
-    <!-- <HeaderListItem maintenance="maintenance" /> -->
-    <Navbar/>
+<div class="bg-gray-300 w-widthContent ml-auto overflow-x-hidden">
     <section class="bg-gray-100 min-h-screen w-widthContentField m-auto mt-7 p-4">
         <p class="text-center text-lg text-gray-700 font-semibold">Halaman maintenance</p>
         <div class="flex justify-between mt-8 ">
@@ -13,10 +11,10 @@
             </div>
             <NuxtLink to="/maintenance/inputmaintenance"
             class="flex items-center justify-between rounded-md px-3 w-20 bg-gray-700 hover:bg-gray-600 transition duration-200">
-            <p class="font-medium text-sm text-gray-200">input</p>
-            <div>
-                <font-awesome-icon :icon="['fas', 'plus']" class="text-gray-200" />
-            </div>
+                <p class="font-medium text-sm text-gray-200">input</p>
+                <div>
+                    <font-awesome-icon :icon="['fas', 'plus']" class="text-gray-200" />
+                </div>
             </NuxtLink>
         </div>
 
@@ -29,8 +27,8 @@
                     <th class="font-semibold w-32">suhu</th>
                     <th class="font-semibold w-32">kelembapan</th>
                     <th class="font-semibold w-32">AC</th>
-                    <th class="font-semibold" >UPS</th>
-                    <th class="font-semibold w-28" >aksi</th>
+                    <th class="font-semibold w-32">UPS</th>
+                    <th class="font-semibold w-28">aksi</th>
                 </tr>
             </thead>
             <tbody v-if="carimaintenance !== ''" class="text-center bg-white bg-opacity-40 divide-y divide-gray-300">

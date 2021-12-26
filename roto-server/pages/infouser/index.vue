@@ -1,6 +1,5 @@
 <template>
-  <div class="bg-gray-300 w-widthContent ml-auto">
-    <Navbar/>
+  <div class="bg-gray-300 w-widthContent ml-auto overflow-x-hidden">
     <section class="bg-gray-100 min-h-screen w-widthContentField m-auto mt-7 p-4">
       <div class="flex justify-between mt-8">
             <div class="flex">

@@ -1,8 +1,13 @@
 <template>
-  <div class="flex">
-    <Sidebar v-if="loggedIn" />
-    <Nuxt class="relative"/>
-  </div>
+  <div id="wrapper">
+		<Sidebar v-if="loggedIn"/>
+		<div id="content-wrapper" class="flex flex-col relative ">
+			<div id="content">
+				<Navbar v-if="loggedIn" class="w-widthContent ml-auto"/>
+				<nuxt/>
+			</div>
+		</div>
+	</div>
 </template>
 <script>
 
@@ -14,6 +19,14 @@ export default {
     user() {
       return this.$auth.user
     },
+  },
+  mounted(){
+    window.onbeforeunload = () => {
+      if (localStorage.getItem('token-user') === 'true') {
+        localStorage.removeItem('token-user');
+      }
+    };
   }
+  
 }
 </script>

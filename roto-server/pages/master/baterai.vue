@@ -1,7 +1,5 @@
 <template>
-<div class="min-h-screen bg-gray-300 w-widthContent ml-auto">
-    <!-- <ListItem :baterai="master" /> -->
-    <Navbar/>
+<div class="min-h-screen bg-gray-300 w-widthContent ml-auto overflow-x-hidden">
     <section class="bg-gray-100 min-h-screen w-widthContentField m-auto mt-7 p-4">
         <p class="text-center text-lg text-gray-700 font-semibold">Halaman master UPS</p>
         <div class="flex justify-between mt-8">

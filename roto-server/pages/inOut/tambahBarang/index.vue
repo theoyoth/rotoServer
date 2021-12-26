@@ -1,7 +1,5 @@
 <template>
 <div class="bg-gray-300 min-h-screen w-widthContent ml-auto overflow-x-hidden">
-    <!-- <HeaderListItem tambahbarang="tambahbarang"/> -->
-    <Navbar/>
     <section class="bg-gray-100 min-h-screen w-widthContentField m-auto mt-7 p-4">
         <p class="text-center text-lg text-gray-700 font-semibold">Halaman tambah barang</p>
         <div class="flex justify-between mt-8">

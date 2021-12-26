@@ -1,6 +1,6 @@
 <template>
-  <div class="bg-gray-300 min-h-screen w-widthContent ml-auto">
-    <Navbar/>
+  <div class="bg-gray-300 min-h-screen w-widthContent ml-auto overflow-x-hidden">
+    
     <section class="bg-gray-100 min-h-screen w-widthContentField m-auto mt-7 py-4 px-6 relative">
         <NuxtLink to="/master/ups"
           class="flex items-center justify-between rounded-md w-28 px-4 py-2 bg-gray-700 hover:bg-gray-600 transition duration-200">
