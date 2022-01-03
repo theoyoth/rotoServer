@@ -107,11 +107,6 @@ export default {
             try{
                 const resp = await this.$auth.loginWith("local", { data: this.login})
                 if(resp.data.token){
-                  window.addEventListener('storage', function(event){
-                    if (event.key == "app-logout") {
-                      window.location.assign("http://localhost:3000")
-                    }
-                  }, false);
                   this.$router.push('/homepage')
                 }
                 else if(resp.data.errmsg){

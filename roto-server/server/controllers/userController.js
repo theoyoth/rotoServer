@@ -4,11 +4,14 @@ const salt = bcrypt.genSaltSync(10)
 
 module.exports.getAllUsers = async (req, res) => {
   let conn
+  const lokasiServer = req.params.lokasi
 
   try {
     conn = await pool.getConnection()
 
-    const rows = await conn.query('SELECT id_user,nama,role FROM users')
+    const rows = await conn.query(
+      `SELECT id_user,nama,role FROM users WHERE lokasi = '${lokasiServer}'`
+    )
     res.send(rows)
     conn.release()
   } catch (err) {
@@ -16,31 +19,10 @@ module.exports.getAllUsers = async (req, res) => {
   }
 }
 
-module.exports.cariuser = async (req, res) => {
-  let conn
-
-  try {
-    const value = req.query.cari
-    conn = await pool.getConnection()
-
-    const rows = await conn.query(
-      `SELECT nama,role FROM users WHERE nama LIKE '${value}%' OR role LIKE '${value}%'`
-    )
-    if (rows) {
-      res.send(rows)
-    } else {
-      res.json({ msgerr: 'tidak ada data' })
-    }
-
-    conn.release()
-  } catch (err) {
-    console.log(err)
-  }
-}
 module.exports.addUser = async (req, res) => {
   let conn
   try {
-    const { namauser, roleuser, sandi } = req.body
+    const { namauser, roleuser, sandi, lokasi } = req.body
     const hasSandi = bcrypt.hashSync(sandi, salt)
 
     conn = await pool.getConnection()
@@ -50,7 +32,7 @@ module.exports.addUser = async (req, res) => {
     } else {
       if (roleuser == 'EDP') {
         const resp = await conn.query(
-          `INSERT INTO users VALUES ('','${namauser}','${hasSandi}','','${roleuser}','1')`
+          `INSERT INTO users VALUES ('','${namauser}','${hasSandi}','','${roleuser}','1','${lokasi}')`
         )
         if (resp.affectedRows > 0) {
           res.send('/infouser')
@@ -59,7 +41,7 @@ module.exports.addUser = async (req, res) => {
         }
       } else if (roleuser == 'PA') {
         const resp = await conn.query(
-          `INSERT INTO users VALUES ('','${namauser}','${hasSandi}','','${roleuser}','2')`
+          `INSERT INTO users VALUES ('','${namauser}','${hasSandi}','','${roleuser}','2','${lokasi}')`
         )
         if (resp.affectedRows > 0) {
           res.send('/infouser')
@@ -68,7 +50,7 @@ module.exports.addUser = async (req, res) => {
         }
       } else if (roleuser == 'Admin teknisi') {
         const resp = await conn.query(
-          `INSERT INTO users VALUES ('','${namauser}','${hasSandi}','','${roleuser}','3')`
+          `INSERT INTO users VALUES ('','${namauser}','${hasSandi}','','${roleuser}','3','${lokasi}')`
         )
         if (resp.affectedRows > 0) {
           res.send('/infouser')
@@ -77,7 +59,7 @@ module.exports.addUser = async (req, res) => {
         }
       } else if (roleuser == 'Teknisi listrik') {
         const resp = await conn.query(
-          `INSERT INTO users VALUES ('','${namauser}','${hasSandi}','','${roleuser}','4')`
+          `INSERT INTO users VALUES ('','${namauser}','${hasSandi}','','${roleuser}','4','${lokasi}')`
         )
         if (resp.affectedRows > 0) {
           res.send('/infouser')
@@ -86,7 +68,7 @@ module.exports.addUser = async (req, res) => {
         }
       } else if (roleuser == 'Teknisi ac') {
         const resp = await conn.query(
-          `INSERT INTO users VALUES ('','${namauser}','${hasSandi}','','${roleuser}','5')`
+          `INSERT INTO users VALUES ('','${namauser}','${hasSandi}','','${roleuser}','5','${lokasi}')`
         )
         if (resp.affectedRows > 0) {
           res.send('/infouser')
@@ -95,7 +77,7 @@ module.exports.addUser = async (req, res) => {
         }
       } else if (roleuser == 'Security') {
         const resp = await conn.query(
-          `INSERT INTO users VALUES ('','${namauser}','${hasSandi}','','${roleuser}','6')`
+          `INSERT INTO users VALUES ('','${namauser}','${hasSandi}','','${roleuser}','6','${lokasi}')`
         )
         if (resp.affectedRows > 0) {
           res.send('/infouser')
@@ -114,10 +96,12 @@ module.exports.addUser = async (req, res) => {
 module.exports.deleteUser = async (req, res) => {
   let conn
   try {
-    const id = req.params.id
+    const { id, lokasi } = req.params
     conn = await pool.getConnection()
 
-    const resp = await conn.query(`DELETE FROM users WHERE id_user=${id}`)
+    const resp = await conn.query(
+      `DELETE FROM users WHERE id_user=${id} AND lokasi='${lokasi}'`
+    )
     if (resp.affectedRows > 0) {
       res.send('/infouser')
     } else {
@@ -145,12 +129,12 @@ module.exports.getUser = async (req, res) => {
 module.exports.updateUser = async (req, res) => {
   let conn
   try {
-    const { iduser, nama, role, sandi } = req.body
+    const { iduser, nama, role } = req.body
 
     conn = await pool.getConnection()
     if (role == 'EDP') {
       const resp = await conn.query(
-        `UPDATE users SET nama='${nama}',sandi='${sandi}',role='${role}',id_role='1' WHERE id_user='${iduser}'`
+        `UPDATE users SET nama='${nama}',role='${role}',id_role='1' WHERE id_user='${iduser}'`
       )
       if (resp.affectedRows > 0) {
         res.redirect('/infouser')
@@ -159,7 +143,7 @@ module.exports.updateUser = async (req, res) => {
       }
     } else if (role == 'PA') {
       const resp = await conn.query(
-        `UPDATE users SET nama='${nama}',sandi='${sandi}',role='${role}',id_role='2' WHERE id_user='${iduser}'`
+        `UPDATE users SET nama='${nama}',role='${role}',id_role='2' WHERE id_user='${iduser}'`
       )
       if (resp.affectedRows > 0) {
         res.redirect('/infouser')
@@ -168,7 +152,7 @@ module.exports.updateUser = async (req, res) => {
       }
     } else if (role == 'Admin teknisi') {
       const resp = await conn.query(
-        `UPDATE users SET nama='${nama}',sandi='${sandi}',role='${role}',id_role='3' WHERE id_user='${iduser}'`
+        `UPDATE users SET nama='${nama}',role='${role}',id_role='3' WHERE id_user='${iduser}'`
       )
       if (resp.affectedRows > 0) {
         res.redirect('/infouser')
@@ -177,7 +161,7 @@ module.exports.updateUser = async (req, res) => {
       }
     } else if (role == 'Teknisi listrik') {
       const resp = await conn.query(
-        `UPDATE users SET nama='${nama}',sandi='${sandi}',role='${role}',id_role='4' WHERE id_user='${iduser}'`
+        `UPDATE users SET nama='${nama}',role='${role}',id_role='4' WHERE id_user='${iduser}'`
       )
       if (resp.affectedRows > 0) {
         res.redirect('/infouser')
@@ -186,7 +170,7 @@ module.exports.updateUser = async (req, res) => {
       }
     } else if (role == 'Teknisi ac') {
       const resp = await conn.query(
-        `UPDATE users SET nama='${nama}',sandi='${sandi}',role='${role}',id_role='5' WHERE id_user='${iduser}'`
+        `UPDATE users SET nama='${nama}',role='${role}',id_role='5' WHERE id_user='${iduser}'`
       )
       if (resp.affectedRows > 0) {
         res.redirect('/infouser')
@@ -195,7 +179,7 @@ module.exports.updateUser = async (req, res) => {
       }
     } else if (role == 'Security') {
       const resp = await conn.query(
-        `UPDATE users SET nama='${nama}',sandi='${sandi}',role='${role}',id_role='6' WHERE id_user='${iduser}'`
+        `UPDATE users SET nama='${nama}',role='${role}',id_role='6' WHERE id_user='${iduser}'`
       )
       if (resp.affectedRows > 0) {
         res.redirect('/infouser')

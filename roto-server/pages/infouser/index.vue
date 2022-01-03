@@ -87,7 +87,7 @@
                   <td class="py-3">{{us.nama}}</td>
                   <td>{{us.role}}</td>
                   <td class="py-3 flex justify-evenly w-full ">
-                        <!-- <div class="has-tooltip">
+                        <div class="has-tooltip">
                             <span
                             class="
                                 tooltip
@@ -106,7 +106,7 @@
                                     <font-awesome-icon :icon="['fas','pencil-alt']" class="text-yellow-500"/>
                                 </NuxtLink>
                             </div>
-                        </div> -->
+                        </div>
                         <div class="has-tooltip">
                             <span
                             class="
@@ -167,8 +167,8 @@ export default {
             }).then(suc=>{
               if(suc){
                 let indexOfArrayItem = this.users.findIndex(i => i.id_user === id)
-                
-                this.$axios.delete(`/user/delete/${id}`)
+                const lokasiServer = this.$auth.user.lokasi
+                this.$axios.delete(`/user/delete/${id}/${lokasiServer}`)
                 .then(resp=>{
                   if(resp) {
                     this.users.splice(indexOfArrayItem, 1);
@@ -191,8 +191,9 @@ export default {
    
   },
   async mounted(){
+    const lokasiUser = this.$auth.user.lokasi
     try {
-      const resp = await this.$axios.get('/users')
+      const resp = await this.$axios.get(`/users/${lokasiUser}`)
       if (resp.data){
         resp.data.reverse()
         this.users = resp.data

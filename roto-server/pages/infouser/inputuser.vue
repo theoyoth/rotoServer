@@ -130,6 +130,7 @@ export default {
             namauser:this.inputUser.nama,
             roleuser:this.inputUser.role,
             sandi:this.inputUser.sandi,
+            lokasi:this.$auth.user.lokasi
           })
           if(resp){
             this.$router.push('/infouser')

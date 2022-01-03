@@ -33,7 +33,9 @@ const { isAuthent } = require('../middleware/userAuthorization.js')
 const { body, check, validationResult } = require('express-validator')
 const express = require('express')
 const router = express.Router()
-// const app = express()
+
+// MAP
+const mapController = require('../controllers/mapController.js')
 
 // get master ==========================
 router.get('/masterserver/:lokasi/:id', readController.masterserver)
@@ -242,14 +244,13 @@ router.get(
 router.get('/lokasi', lokasiServer.lokasiserver)
 
 // USER
-router.get('/users', userController.getAllUsers)
-router.get('/cariuser', userController.cariuser)
+router.get('/users/:lokasi', userController.getAllUsers)
 
 // mengatur user oleh PA
 // tambah user
 router.post('/user/tambah', userController.addUser)
 // hapus user
-router.delete('/user/delete/:id', userController.deleteUser)
+router.delete('/user/delete/:id/:lokasi', userController.deleteUser)
 // ambil data user tertentu
 router.get('/user/:id', userController.getUser)
 // update data user
@@ -372,5 +373,20 @@ router.get('/document/list', fileController.getAllFiles)
 
 // router.get('/document/list/:name', fileController.downloadFile)
 router.delete('/document/list/:name', fileController.deleteFile)
+
+// MAP
+router.get('/masterserver/:lokasi', mapController.getListServer)
+router.get('/masterups/:lokasi', mapController.getListUps)
+router.get('/masterrak/:lokasi', mapController.getListRak)
+router.get('/masterbaterai/:lokasi', mapController.getListBaterai)
+router.get('/masterac/:lokasi', mapController.getListAc)
+router.get('/mastercctv/:lokasi', mapController.getListCctv)
+router.get('/masterapar/:lokasi', mapController.getListApar)
+router.get('/masternetwork/:lokasi', mapController.getListNetwork)
+router.get('/mastermouse/:lokasi', mapController.getListMouse)
+router.get('/mastermonitor/:lokasi', mapController.getListMonitor)
+router.get('/masterkeyboard/:lokasi', mapController.getListKeyboard)
+router.get('/masternas/:lokasi', mapController.getListNas)
+router.get('/mastergenset/:lokasi', mapController.getListGenset)
 
 module.exports = router
