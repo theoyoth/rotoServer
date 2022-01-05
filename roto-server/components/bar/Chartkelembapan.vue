@@ -1,6 +1,4 @@
 <script>
-import Chart from 'chart.js'
-import moment from 'moment'
 import {Bar,Line, mixins} from 'vue-chartjs';
 const {reactiveProp} = mixins
 
@@ -20,7 +18,18 @@ export default {
   },
   mounted() {
    this.renderChart(this.chartData, this.options);
-
-  }
+  },
+  watch: {
+    'chartData'(to, from) {
+        this.renderChart(this.chartData, this.options)
+    },
+    'options': {
+        handler(newOption, oldOption) {
+          // this._chart.destroy()
+          this.renderChart(this.chartData, this.options)
+        },
+        deep: true
+    }
+  },
 }
 </script>

@@ -19,7 +19,18 @@ export default {
   },
   mounted() {
    this.renderChart(this.chartData, this.options);
-
-  }
+  },
+  watch: {
+    'chartData'(to, from) {
+        this.renderChart(this.chartData, this.options)
+    },
+    'options': {
+        handler(newOption, oldOption) {
+          // this._chart.destroy()
+          this.renderChart(this.chartData, this.options)
+        },
+        deep: true
+    }
+  },
 }
 </script>

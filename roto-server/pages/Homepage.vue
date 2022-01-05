@@ -150,11 +150,15 @@
           <hr class="mt-8">
           <h1 class="text-3xl mt-4 text-gray-700 font-semibold">Graphic</h1>
           <div class="w-full mt-10">
-            <div>
+            <div class="relative">
               <BarChartsuhu :chartData="chartData" :options="options"/>
+              <button @click="prevData(-9,9)" class="bg-gray-700 text-gray-100 px-2 rounded mt-4 mr-2">Previous</button>
+              <button @click="nextData(9,9)" class="bg-gray-700 text-gray-100 px-2 rounded">Next</button>
             </div>
             <div class="mt-10">
               <BarChartkelembapan :chart-data="kelembapans" :options="optionKelem"/>
+              <button @click="prevDataKelembapan(-9,9)" class="bg-gray-700 text-gray-100 px-2 rounded mt-4 mr-2">Previous</button>
+              <button @click="nextDataKelembapan(9,9)" class="bg-gray-700 text-gray-100 px-2 rounded">Next</button>
             </div>
             <!-- <div>
               <BarChartdata :labels="Labelsuhuline" :chartData="Datasuhuline"/>
@@ -182,10 +186,10 @@ export default {
       chartData:{},
       options:{},
       optionKelem:{},
-      barcharlabel: "",
-      barchardata: "",
-      Datasuhuline:null,
-      Labelsuhuline:null,
+      barcharlabel: null,
+      barchardata: null,
+      kelembapalabel: null,
+      kelembapandata: null,
     }
   },
   computed: {
@@ -195,12 +199,6 @@ export default {
     user() {
       return this.$auth.user
     },
-    // isAuthenticated(){
-    //     return this.$auth.getters.isAuthenticated
-    // },
-    // getUserInfo(){
-    //     return this.$auth.getters.getUserInfo
-    // }
     isEdp() {
       return this.$store.getters.isEdp
     },
@@ -234,10 +232,11 @@ export default {
           `/maintenance/security/alldata/${lokasi}`
         )
         if (resp.data) {
-          const daftarLabel = resp.data.map(list => moment(list.tanggal).format('DD-MM-YYYY'))
+          const daftarLabel = resp.data.map(list => moment(list.tanggal).format('YYYY-MM-DD'))
           const daftarSuhu = resp.data.map(list => list.suhu)
           this.barcharlabel = daftarLabel
           this.barchardata = daftarSuhu
+          
           // this.Datasuhuline = daftarSuhu
           // this.Optionsuhuline = daftarLabel
 
@@ -259,7 +258,6 @@ export default {
             maintainAspectRatio: false,
             scales: {
               yAxes: [{
-                beginAtZero: true,
                 display: true,
                 title: {
                   display: true,
@@ -267,6 +265,7 @@ export default {
                   color: '#911',
                 },
                 ticks: {
+                  beginAtZero: true,
                   max:50,
                   color: "#E8EAF6",
                 },
@@ -275,19 +274,13 @@ export default {
                 },
               }],
               xAxes:[{
-                display: true,
-                title: {
-                  display: true,
-                  text: 'Day',
-                  color: '#333',
-                },
                 ticks: {
                   color: "#E8EAF6",
-                  min:0,
-                  max:10,
+                  min:this.barcharlabel[this.barcharlabel.length-9],
+                  max:this.barcharlabel[this.barcharlabel.length-1],
                 },
                 grid: {
-                  color: "rgb(232, 234, 246)"
+                  color: "rgb(232, 234, 246)",
                 },
               }],
             },
@@ -304,17 +297,20 @@ export default {
           `/maintenance/security/alldata/${lokasi}`
         )
         if (resp.data) {
-          const daftarLabel = resp.data.map(list => moment(list.tanggal).format('DD-MM-YYYY'))
+          const daftarLabel = resp.data.map(list => moment(list.tanggal).format('YYYY-MM-DD'))
           const daftarKelembapan = resp.data.map(list => list.kelembapan)
+          this.kelembapanlabel = daftarLabel
+          this.kelembapandata = daftarKelembapan
+
           this.kelembapans = {
-            labels: daftarLabel,
+            labels: this.kelembapanlabel,
             datasets: [
               {
                 label: "kelembapan",
                 backgroundColor: 'rgb(252, 165, 165)',
                 borderColor: "rgb(225,150,140)",
                 pointBackgroundColor:"rgb(100,100,100)",
-                data: daftarKelembapan,
+                data: this.kelembapandata,
                 fill: true
               }
             ]
@@ -324,9 +320,15 @@ export default {
             maintainAspectRatio: false,
             scales: {
               yAxes: [{
-                // stacked: true,
-                // beginAtZero: true,
+                beginAtZero: true,
+                display: true,
+                title: {
+                  display: true,
+                  text: 'Day',
+                  color: '#333',
+                },
                 ticks: {
+                  min:0,
                   max:80,
                   color: "#E8EAF6",
                 },
@@ -335,8 +337,15 @@ export default {
                 },
               }],
               xAxes: [{
+                title: {
+                  display: true,
+                  text: 'Day',
+                  color: '#333',
+                },
                 ticks: {
                   color: "#E8EAF6",
+                  min:this.kelembapanlabel[this.kelembapanlabel.length-9],
+                  max:this.kelembapanlabel[this.kelembapanlabel.length-1],
                 },
                 grid: {
                   color: "rgb(232, 234, 246)"
@@ -348,7 +357,116 @@ export default {
       } catch (err) {
         console.log(err)
       }
+    },
+
+    nextData(start,end){
+      const d = new Date(this.options.scales.xAxes[0].ticks.min)
+      d.setDate(d.getDate()+start)
+      var nd = new Date(d)
+      var nd2 = this.$moment(nd).format('YYYY-MM-DD')
+      console.log(nd2)
+
+      const a = new Date(this.options.scales.xAxes[0].ticks.max)
+      a.setDate(a.getDate()+end)
+      var dn = new Date(a)
+      var dn2 = this.$moment(dn).format('YYYY-MM-DD')
+      console.log(dn2)
+
+      const startScale = nd2
+      const endScale = dn2
+      const s = this.barcharlabel.indexOf(startScale)
+      const t = this.barcharlabel.indexOf(endScale)
+
+      this.options.scales.xAxes[0].ticks.min = this.barcharlabel[s]
+      this.options.scales.xAxes[0].ticks.max = this.barcharlabel[t]
+      
+      if(endScale > this.barcharlabel[this.barcharlabel.length-1]){
+        this.options.scales.xAxes[0].ticks.min = this.barcharlabel[this.barcharlabel.length-9];
+        this.options.scales.xAxes[0].ticks.max = this.barcharlabel[this.barcharlabel.length-1];
+      }
+    },
+    prevData(start,end){
+      const d = new Date(this.options.scales.xAxes[0].ticks.min)
+      d.setDate(d.getDate()+start)
+      var nd = new Date(d)
+      var nd2 = this.$moment(nd).format('YYYY-MM-DD')
+      console.log(nd2)
+
+      const a = new Date(this.options.scales.xAxes[0].ticks.max)
+      a.setDate(a.getDate()-end)
+      var dn = new Date(a)
+      var dn2 = this.$moment(dn).format('YYYY-MM-DD')
+      console.log(dn2)
+
+      const startScale = nd2
+      const endScale = dn2
+      const s = this.barcharlabel.indexOf(startScale)
+      const t = this.barcharlabel.indexOf(endScale)
+
+      this.options.scales.xAxes[0].ticks.min = this.barcharlabel[s]
+      this.options.scales.xAxes[0].ticks.max = this.barcharlabel[t]
+
+      if(startScale < this.barcharlabel[0]){
+        this.options.scales.xAxes[0].ticks.min = this.barcharlabel[0];
+        this.options.scales.xAxes[0].ticks.max = this.barcharlabel[9];
+      }
+    },
+
+    nextDataKelembapan(start,end){
+      // menambah tanggal di optionKelem, ditambah dengan 9 hari
+      const d = new Date(this.optionKelem.scales.xAxes[0].ticks.min)
+      d.setDate(d.getDate()+start)
+      var nd = new Date(d)
+      var nd2 = this.$moment(nd).format('YYYY-MM-DD')
+      console.log(nd2)
+
+      const a = new Date(this.optionKelem.scales.xAxes[0].ticks.max)
+      a.setDate(a.getDate()+end)
+      var dn = new Date(a)
+      var dn2 = this.$moment(dn).format('YYYY-MM-DD')
+      console.log(dn2)
+
+      const startScale = nd2
+      const endScale = dn2
+      const s = this.kelembapanlabel.indexOf(startScale)
+      const t = this.kelembapanlabel.indexOf(endScale)
+
+      this.optionKelem.scales.xAxes[0].ticks.min = this.kelembapanlabel[s]
+      this.optionKelem.scales.xAxes[0].ticks.max = this.kelembapanlabel[t]
+      
+      // jika next sudah di tanggal terakhir, maka tetap di data terakhir
+      if(endScale > this.kelembapanlabel[this.kelembapanlabel.length-1]){
+        this.optionKelem.scales.xAxes[0].ticks.min = this.kelembapanlabel[this.kelembapanlabel.length-9];
+        this.optionKelem.scales.xAxes[0].ticks.max = this.kelembapanlabel[this.kelembapanlabel.length-1];
+      }
+    },
+    prevDataKelembapan(start,end){
+      const d = new Date(this.optionKelem.scales.xAxes[0].ticks.min)
+      d.setDate(d.getDate()+start)
+      var nd = new Date(d)
+      var nd2 = this.$moment(nd).format('YYYY-MM-DD')
+      console.log(nd2)
+
+      const a = new Date(this.optionKelem.scales.xAxes[0].ticks.max)
+      a.setDate(a.getDate()-end)
+      var dn = new Date(a)
+      var dn2 = this.$moment(dn).format('YYYY-MM-DD')
+      console.log(dn2)
+
+      const startScale = nd2
+      const endScale = dn2
+      const s = this.kelembapanlabel.indexOf(startScale)
+      const t = this.kelembapanlabel.indexOf(endScale)
+
+      this.optionKelem.scales.xAxes[0].ticks.min = this.kelembapanlabel[s]
+      this.optionKelem.scales.xAxes[0].ticks.max = this.kelembapanlabel[t]
+
+      if(startScale < this.kelembapanlabel[0]){
+        this.optionKelem.scales.xAxes[0].ticks.min = this.kelembapanlabel[0];
+        this.optionKelem.scales.xAxes[0].ticks.max = this.kelembapanlabel[9];
+      }
     }
+
   },
   mounted(){
     this.fillDataSuhu(),
@@ -359,7 +477,6 @@ export default {
     }
     this.$store.dispatch('maintenanceSecurity/getSecurity',data)
     this.$store.dispatch('maintenanceSecurity/getAllMaintenanceSecurity',data)
-
   },
 }
 </script>
