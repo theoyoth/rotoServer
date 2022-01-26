@@ -145,7 +145,7 @@
               </NuxtLink>
             </div>
           </li>
-          <li class="items-center" v-if="!isSecurity">
+          <li class="items-center" v-show="!isSecurity && !isTeknisilistrik">
             <div
               class="
                 flex
@@ -183,43 +183,43 @@
               class="relative px-16 py-2 text-xs bg-gray-700"
               :class="[isActive ? 'active' : 'notActive']"
             >
-              <li class="py-1 hover:text-gray-400">
+              <li class="py-1 hover:text-gray-400" v-show="!isTeknisiac">
                 <NuxtLink to="/master/server">server</NuxtLink>
               </li>
-              <li class="py-1 hover:text-gray-400">
+              <li class="py-1 hover:text-gray-400" v-show="!isTeknisiac">
                 <NuxtLink to="/master/rak">rak</NuxtLink>
               </li>
-              <li class="py-1 hover:text-gray-400">
+              <li class="py-1 hover:text-gray-400" v-show="!isTeknisiac">
                 <NuxtLink to="/master/ups">ups</NuxtLink>
               </li>
-              <li class="py-1 hover:text-gray-400">
+              <li class="py-1 hover:text-gray-400" v-show="!isTeknisiac">
                 <NuxtLink to="/master/baterai">baterai</NuxtLink>
               </li>
               <li class="py-1 hover:text-gray-400">
                 <NuxtLink to="/master/ac">ac</NuxtLink>
               </li>
-              <li class="py-1 hover:text-gray-400">
+              <li class="py-1 hover:text-gray-400" v-show="!isTeknisiac">
                 <NuxtLink to="/master/cctv">cctv</NuxtLink>
               </li>
-              <li class="py-1 hover:text-gray-400">
+              <li class="py-1 hover:text-gray-400" v-show="!isTeknisiac">
                 <NuxtLink to="/master/network">network</NuxtLink>
               </li>
-              <li class="py-1 hover:text-gray-400">
+              <li class="py-1 hover:text-gray-400" v-show="!isTeknisiac">
                 <NuxtLink to="/master/apar">apar</NuxtLink>
               </li>
-              <li class="py-1 hover:text-gray-400">
+              <li class="py-1 hover:text-gray-400" v-show="!isTeknisiac">
                 <NuxtLink to="/master/monitor">monitor</NuxtLink>
               </li>
-              <li class="py-1 hover:text-gray-400">
+              <li class="py-1 hover:text-gray-400" v-show="!isTeknisiac">
                 <NuxtLink to="/master/keyboard">keyboard</NuxtLink>
               </li>
-              <li class="py-1 hover:text-gray-400">
+              <li class="py-1 hover:text-gray-400" v-show="!isTeknisiac">
                 <NuxtLink to="/master/mouse">mouse</NuxtLink>
               </li>
-              <li class="py-1 hover:text-gray-400">
+              <li class="py-1 hover:text-gray-400" v-show="!isTeknisiac">
                 <NuxtLink to="/master/nas">nas</NuxtLink>
               </li>
-              <li class="py-1 hover:text-gray-400">
+              <li class="py-1 hover:text-gray-400" v-show="!isTeknisiac">
                 <NuxtLink to="/master/genset">genset</NuxtLink>
               </li>
             </ul>
@@ -426,7 +426,7 @@
                   />
                   </div>
                   <div>
-                  <p class="text-sm font-bold group-hover:text-white">
+                  <p class="text-sm text-gray-300 font-bold group-hover:text-white">
                     Info User
                   </p>
                   </div>

@@ -99,7 +99,7 @@ export default {
     },
     computed:{
         userpa() {
-            return this.$store.state.getUserPa.alluserpa
+            return this.$store.state.getUser.alluserpa
         }
     },
     async mounted(){
@@ -117,7 +117,7 @@ export default {
                 this.updateAmbilBarang.penanggungJawab = barang.penanggung_jawab
             })
         }
-        this.$store.dispatch('getUserPa/getallUserPa')
+        this.$store.dispatch('getUser/getallUserPa',lokasi)
     },
     methods:{
         async updateDataAmbilBarang(){
@@ -137,7 +137,7 @@ export default {
                 swal('data di update',{icon:'success'})
             }
             else{
-                swal('Error',resp.data.errmsg,{icon:'error'})
+                swal('Error','data gagal di update',{icon:'error'})
                 this.$router.push('/inout/ambilbarang')
             }
         }

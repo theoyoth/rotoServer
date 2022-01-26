@@ -111,7 +111,7 @@ export default {
     },
     computed:{
         userpa(){
-            return this.$store.state.getUserPa.alluserpa
+            return this.$store.state.getUser.alluserpa
         }
     },
     methods:{
@@ -129,16 +129,16 @@ export default {
             if(resp){
                 this.$router.push('/inout/tambahbarang')
                 swal('data berhasil disimpan',{icon:'success'})
-                console.log(this.inputTambahBarang.penanggungJawab)
             }
             else{
                 this.$router.push('/inout/tambahbarang')
-                swal('Error',resp.data.errmsg,{icon:'error'})
+                swal('Error','data gagal di input',{icon:'error'})
             }
         }
     },
     mounted(){
-        this.$store.dispatch('getUserPa/getallUserPa')
+        const lokasi = this.$auth.user.lokasi
+        this.$store.dispatch('getUser/getallUserPa',lokasi)
     }
 }
 </script>

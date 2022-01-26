@@ -8,11 +8,6 @@
                     <font-awesome-icon :icon="['fas','search']" class="text-yellow-500"/>
                 </button>
             </div>
-            <!-- <select id="date" ref="date" class="rounded-lg p-2 outline-none ml-8 cursor-pointer">
-                <option value="hari">hari</option>
-                <option value="bulan">bulan</option>
-                <option value="tahun">tahun</option>
-            </select> -->
             <NuxtLink to="/infouser/inputuser"
             class="flex items-center justify-between rounded-md px-3 w-28 bg-gray-700 hover:bg-gray-600">
             <p class="font-medium text-sm text-gray-200">tambah</p>
@@ -37,7 +32,7 @@
                   <td class="py-3">{{hasilcari.nama}}</td>
                   <td>{{hasilcari.role}}</td>
                   <td class="py-3 flex justify-evenly w-full ">
-                        <!-- <div class="has-tooltip">
+                        <div class="has-tooltip">
                             <span
                             class="
                                 tooltip
@@ -56,7 +51,7 @@
                                     <font-awesome-icon :icon="['fas','pencil-alt']" class="text-yellow-500"/>
                                 </NuxtLink>
                             </div>
-                        </div> -->
+                        </div>
                         <div class="has-tooltip">
                             <span
                             class="
@@ -193,9 +188,12 @@ export default {
   async mounted(){
     const lokasiUser = this.$auth.user.lokasi
     try {
+      // get all users from database
       const resp = await this.$axios.get(`/users/${lokasiUser}`)
       if (resp.data){
+        // reverse the users, so the new user will be on the top
         resp.data.reverse()
+        // save it to users state and will show to frontend
         this.users = resp.data
       }
       

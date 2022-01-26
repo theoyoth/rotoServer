@@ -64,12 +64,11 @@ export default {
     methods:{
         async updateDataUser(){
             const resp = await this.$axios.post('/user/update',{
-            iduser:this.$route.params.id,
-            nama:this.updateUser.nama,
-            role:this.updateUser.role,
-
-          })
-          if(resp){
+                iduser:this.$route.params.id,
+                nama:this.updateUser.nama,
+                role:this.updateUser.role,
+            })
+            if(resp){
                 this.$router.push('/infouser')
                 swal('data di update',{icon:'success'})
             }

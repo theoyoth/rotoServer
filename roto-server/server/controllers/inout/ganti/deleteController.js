@@ -13,10 +13,9 @@ module.exports.deleteBarang = async (req, res) => {
       )
 
       if (data.affectedRows > 0) {
-        // res.redirect('/inout/gantibarang')
-        res.json({ msg: 'sudah di hapus' })
+        res.status(200).send('success')
       } else {
-        res.json({ errmsg: 'data tidak terhapus' })
+        res.status(500).send('error')
       }
     } else if (lokasiServer == 'rotogravure 2') {
       const data = await conn.query(
@@ -24,9 +23,9 @@ module.exports.deleteBarang = async (req, res) => {
       )
 
       if (data.affectedRows > 0) {
-        res.json({ msg: 'sudah di hapus' })
+        res.status(200).send('success')
       } else {
-        res.json({ errmsg: 'data tidak terhapus' })
+        res.status(500).send('error')
       }
     } else if (lokasiServer == 'rotogravure 3') {
       const data = await conn.query(
@@ -34,9 +33,9 @@ module.exports.deleteBarang = async (req, res) => {
       )
 
       if (data.affectedRows > 0) {
-        res.json({ msg: 'sudah di hapus' })
+        res.status(200).send('success')
       } else {
-        res.json({ errmsg: 'data tidak terhapus' })
+        res.status(500).send('error')
       }
     } else if (lokasiServer == 'rotogravure tinta') {
       const data = await conn.query(
@@ -44,14 +43,14 @@ module.exports.deleteBarang = async (req, res) => {
       )
 
       if (data.affectedRows > 0) {
-        res.json({ msg: 'sudah di hapus' })
+        res.status(200).send('success')
       } else {
-        res.json({ errmsg: 'data tidak terhapus' })
+        res.status(500).send('error')
       }
     }
     conn.release()
   } catch (err) {
-    console.log(err)
+    res.status(500).send(err)
   } finally {
     if (conn) return conn.end()
   }

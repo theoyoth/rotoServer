@@ -144,25 +144,29 @@
                 </div>
               </div>
           </div>
-          <!-- <div v-for="(ma,index) in allDataMaintenance" :key="index">
-            <p>{{ma.tanggal}}</p>
-          </div> -->
+        
           <hr class="mt-8">
-          <h1 class="text-3xl mt-4 text-gray-700 font-semibold">Graphic</h1>
+          <h1 class="text-3xl mt-4 text-gray-700 font-semibold">Grafik<font-awesome-icon
+                        :icon="['far', 'chart-bar']"
+                        class="text-gray-700 text-lg ml-2"
+                    /></h1>
           <div class="w-full mt-10">
             <div class="relative">
+              <h2 class="text-gray-700 text-center">Grafik suhu</h2>
               <BarChartsuhu :chartData="chartData" :options="options"/>
-              <button @click="prevData(-9,9)" class="bg-gray-700 text-gray-100 px-2 rounded mt-4 mr-2">Previous</button>
-              <button @click="nextData(9,9)" class="bg-gray-700 text-gray-100 px-2 rounded">Next</button>
+              <div class="m-auto w-20 flex justify-evenly items-end">
+                <button @click="prevData(-9,9)" class="bg-blue-400 px-2 rounded mt-4 mr-2"><font-awesome-icon :icon="['fas', 'chevron-left']" class="text-gray-200" /></button>
+                <button @click="nextData(9,9)" class="bg-blue-400 px-2 rounded"><font-awesome-icon :icon="['fas', 'chevron-right']" class="text-gray-200" /></button>
+              </div>
             </div>
             <div class="mt-10">
+              <h2 class="text-gray-700 text-center">Grafik kelembapan</h2>
               <BarChartkelembapan :chart-data="kelembapans" :options="optionKelem"/>
-              <button @click="prevDataKelembapan(-9,9)" class="bg-gray-700 text-gray-100 px-2 rounded mt-4 mr-2">Previous</button>
-              <button @click="nextDataKelembapan(9,9)" class="bg-gray-700 text-gray-100 px-2 rounded">Next</button>
+              <div class="m-auto w-20 flex justify-evenly items-end">
+                <button @click="prevDataKelembapan(-9,9)" class="bg-red-400 px-2 rounded mt-4 mr-2"><font-awesome-icon :icon="['fas', 'chevron-left']" class="text-gray-200" /></button>
+                <button @click="nextDataKelembapan(9,9)" class="bg-red-400 px-2 rounded"><font-awesome-icon :icon="['fas', 'chevron-right']" class="text-gray-200" /></button>
+              </div>
             </div>
-            <!-- <div>
-              <BarChartdata :labels="Labelsuhuline" :chartData="Datasuhuline"/>
-            </div> -->
           </div>
         </div>       
       </div>
@@ -220,20 +224,17 @@ export default {
     hasilMaintenanceSecurity() {
       return this.$store.state.maintenanceSecurity.hasilMaintenanceSecurity
     },
-    // allDataMaintenance() {
-    //   return this.$store.state.maintenanceSecurity.allDataMaintenance
-    // }
+    allDataMaintenance() {
+      return this.$store.state.maintenanceSecurity.allDataMaintenance
+    }
   },
   methods: {
     async fillDataSuhu(){
       const lokasi = this.$auth.user.lokasi
       try {
-        const resp = await this.$axios.get(
-          `/maintenance/security/alldata/${lokasi}`
-        )
-        if (resp.data) {
-          const daftarLabel = resp.data.map(list => moment(list.tanggal).format('YYYY-MM-DD'))
-          const daftarSuhu = resp.data.map(list => list.suhu)
+        if (this.allDataMaintenance) {
+          const daftarLabel = this.allDataMaintenance.map(list => moment(list.tanggal).format('YYYY-MM-DD'))
+          const daftarSuhu = this.allDataMaintenance.map(list => list.suhu)
           this.barcharlabel = daftarLabel
           this.barchardata = daftarSuhu
           
@@ -293,12 +294,9 @@ export default {
     async fillDataKelembapan(){
       const lokasi = this.$auth.user.lokasi
       try {
-        const resp = await this.$axios.get(
-          `/maintenance/security/alldata/${lokasi}`
-        )
-        if (resp.data) {
-          const daftarLabel = resp.data.map(list => moment(list.tanggal).format('YYYY-MM-DD'))
-          const daftarKelembapan = resp.data.map(list => list.kelembapan)
+        if (this.allDataMaintenance) {
+          const daftarLabel = this.allDataMaintenance.map(list => moment(list.tanggal).format('YYYY-MM-DD'))
+          const daftarKelembapan = this.allDataMaintenance.map(list => list.kelembapan)
           this.kelembapanlabel = daftarLabel
           this.kelembapandata = daftarKelembapan
 
@@ -364,13 +362,11 @@ export default {
       d.setDate(d.getDate()+start)
       var nd = new Date(d)
       var nd2 = this.$moment(nd).format('YYYY-MM-DD')
-      console.log(nd2)
 
       const a = new Date(this.options.scales.xAxes[0].ticks.max)
       a.setDate(a.getDate()+end)
       var dn = new Date(a)
       var dn2 = this.$moment(dn).format('YYYY-MM-DD')
-      console.log(dn2)
 
       const startScale = nd2
       const endScale = dn2
@@ -390,13 +386,11 @@ export default {
       d.setDate(d.getDate()+start)
       var nd = new Date(d)
       var nd2 = this.$moment(nd).format('YYYY-MM-DD')
-      console.log(nd2)
 
       const a = new Date(this.options.scales.xAxes[0].ticks.max)
       a.setDate(a.getDate()-end)
       var dn = new Date(a)
       var dn2 = this.$moment(dn).format('YYYY-MM-DD')
-      console.log(dn2)
 
       const startScale = nd2
       const endScale = dn2
@@ -418,13 +412,11 @@ export default {
       d.setDate(d.getDate()+start)
       var nd = new Date(d)
       var nd2 = this.$moment(nd).format('YYYY-MM-DD')
-      console.log(nd2)
 
       const a = new Date(this.optionKelem.scales.xAxes[0].ticks.max)
       a.setDate(a.getDate()+end)
       var dn = new Date(a)
       var dn2 = this.$moment(dn).format('YYYY-MM-DD')
-      console.log(dn2)
 
       const startScale = nd2
       const endScale = dn2
@@ -445,13 +437,11 @@ export default {
       d.setDate(d.getDate()+start)
       var nd = new Date(d)
       var nd2 = this.$moment(nd).format('YYYY-MM-DD')
-      console.log(nd2)
 
       const a = new Date(this.optionKelem.scales.xAxes[0].ticks.max)
       a.setDate(a.getDate()-end)
       var dn = new Date(a)
       var dn2 = this.$moment(dn).format('YYYY-MM-DD')
-      console.log(dn2)
 
       const startScale = nd2
       const endScale = dn2

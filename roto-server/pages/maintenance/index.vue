@@ -235,21 +235,19 @@ export default {
                     .then(resp=>{
                         if(resp){
                             this.hasilMaintenance.splice(indexOfArrayItem, 1);
-                            this.$router.push('/maintenance')
                             swal('data dihapus',{icon:'success'})
+                            this.$router.push('/maintenance')
                         }
                     }).catch(err=>{
-                        if(err.data.errmsg){
-                            this.$router.push('/maintenance')
-                            swal('Error', err.data.errmsg,{icon:'error'})
-                        }
+                        swal('Error','data tidak terhapus',{icon:'error'})
+                        this.$router.push('/maintenance')
                     })
                 }
                 else{
                     swal('Error','gagal menghapus',{icon:'error'})
                 }
             }).catch(err=>{
-                swal('Error','ada yang salah',{icon:'error'})
+                swal('Error','gagal menghapus',{icon:'error'})
             })
         },
     },

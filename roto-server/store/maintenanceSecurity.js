@@ -1,5 +1,3 @@
-import axios from 'axios'
-
 export const state = () => ({
   hasilMaintenanceSecurity: [],
   allDataMaintenance: '',
@@ -15,9 +13,7 @@ export const mutations = {
 export const actions = {
   async getSecurity({ commit }, { lokasi }) {
     try {
-      const resp = await axios.get(
-        `http://localhost:3000/server/maintenance/security/${lokasi}`
-      )
+      const resp = await this.$axios.get(`/maintenance/security/${lokasi}`)
       if (resp.data) {
         resp.data.forEach((d) => {
           commit('getSecurityMaintenance', d)
@@ -31,8 +27,8 @@ export const actions = {
   },
   async getAllMaintenanceSecurity({ commit }, { lokasi }) {
     try {
-      const resp = await axios.get(
-        `http://localhost:3000/server/maintenance/security/alldata/${lokasi}`
+      const resp = await this.$axios.get(
+        `/maintenance/security/alldata/${lokasi}`
       )
       if (resp.data) {
         commit('getAllData', resp.data)

@@ -11,46 +11,42 @@ module.exports.deleteBarang = async (req, res) => {
       const data = await conn.query(
         `DELETE FROM ambil_barang WHERE id_ambil_barang=${id}`
       )
-
       if (data.affectedRows > 0) {
-        res.json({ msg: 'sudah di hapus' })
+        res.status(200).send('success')
       } else {
-        res.json({ errmsg: 'data tidak terhapus' })
+        res.status(500).send('error')
       }
     } else if (lokasiServer == 'rotogravure 2') {
       const data = await conn.query(
         `DELETE FROM ambil_barang_roto_2 WHERE id_ambil_barang=${id}`
       )
-
       if (data.affectedRows > 0) {
-        res.json({ msg: 'sudah di hapus' })
+        res.status(200).send('success')
       } else {
-        res.json({ errmsg: 'data tidak terhapus' })
+        res.status(500).send('error')
       }
     } else if (lokasiServer == 'rotogravure 3') {
       const data = await conn.query(
         `DELETE FROM ambil_barang_roto_3 WHERE id_ambil_barang=${id}`
       )
-
       if (data.affectedRows > 0) {
-        res.json({ msg: 'sudah di hapus' })
+        res.status(200).send('success')
       } else {
-        res.json({ errmsg: 'data tidak terhapus' })
+        res.status(500).send('error')
       }
     } else if (lokasiServer == 'rotogravure tinta') {
       const data = await conn.query(
         `DELETE FROM ambil_barang_tinta WHERE id_ambil_barang=${id}`
       )
-
       if (data.affectedRows > 0) {
-        res.json({ msg: 'sudah di hapus' })
+        res.status(200).send('success')
       } else {
-        res.json({ errmsg: 'data tidak terhapus' })
+        res.status(500).send('error')
       }
     }
     conn.release()
   } catch (err) {
-    console.log(err)
+    res.status(500).send(err)
   } finally {
     if (conn) return conn.end()
   }

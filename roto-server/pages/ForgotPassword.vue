@@ -67,7 +67,6 @@ export default {
         nama:this.nama,
         email:this.email,
       })
-      console.log(resp)
       if(resp){
         if(resp.data.successmsg){
           swal(resp.data.successmsg,{icon:'success'})

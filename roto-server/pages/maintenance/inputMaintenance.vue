@@ -26,12 +26,13 @@
                                     <input type="text" v-model="inputMaintenance.suhu" name="suhu" id="suhu" class="p-2 w-full rounded-l-lg bg-gray-300 outline-none">
                                     <input type="text" readonly class="rounded-r-lg py-2 w-16 bg-gray-200 cursor-default text-center text-gray-700 outline-none" value="℃">
                                 </div>
-                                <font-awesome-icon :icon="['fas', 'check-circle']" class="transition-all duration-200 text-green-500 ml-2 opacity-10" :class="{checktrue : inputMaintenance.suhu!=='' && !errors[0]}"/>
+                                <font-awesome-icon :icon="['fas', 'times-circle']" class="transition-all duration-200 text-red-500 ml-2 opacity-10" :class="{checktrue : inputMaintenance.suhu!=='' && !errors[0]}" v-if="inputMaintenance.suhu > 50"/>
+                                <font-awesome-icon :icon="['fas', 'check-circle']" class="transition-all duration-200 text-green-500 ml-2 opacity-10" :class="{checktrue : inputMaintenance.suhu!=='' && !errors[0]}" v-else/>
                             </div>
                             <p class="text-xs mt-1 text-right text-red-500">{{ errors[0] }}</p>
                             </ValidationProvider>
                         </div>
-                        <small v-if="inputMaintenance.suhu > 50" class="text-green-500">suhu ruangan tinggi</small>
+                        <small v-if="inputMaintenance.suhu > 50" class="text-red-500">suhu ruangan tinggi</small>
                     </div>
                 </div>
                 <div class="mb-2" :class="[inputMaintenance.suhu !== '' ? 'incop' : 'decop']">
@@ -45,12 +46,13 @@
                                     <input type="text" v-model="inputMaintenance.kelembapan" name="kelembapan" id="kelembapan" class="p-2 w-full rounded-l-lg outline-none bg-gray-300" :disabled="inputMaintenance.suhu === ''">
                                     <input type="text" readonly class="rounded-r-lg py-2 w-16 bg-gray-200 cursor-default text-center text-gray-700 outline-none" value="%">
                                 </div>
-                                <font-awesome-icon :icon="['fas', 'check-circle']" class="transition-all duration-200 text-green-500 ml-2 opacity-10" :class="{checktrue : inputMaintenance.kelembapan !=='' && !errors[0]}"/>
+                                <font-awesome-icon :icon="['fas', 'times-circle']" class="transition-all duration-200 text-red-500 ml-2 opacity-10" :class="{checktrue : inputMaintenance.kelembapan !=='' && !errors[0]}" v-if="inputMaintenance.kelembapan > 80"/>
+                                <font-awesome-icon :icon="['fas', 'check-circle']" class="transition-all duration-200 text-green-500 ml-2 opacity-10" :class="{checktrue : inputMaintenance.kelembapan !=='' && !errors[0]}" v-else/>
                             </div>
                             <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
                             </ValidationProvider>
                         </div>
-                        <small v-if="inputMaintenance.kelembapan > 80" class="text-green-500">kelembapan ruangan tinggi</small>
+                        <small v-if="inputMaintenance.kelembapan > 80" class="text-red-500">kelembapan ruangan tinggi</small>
                     </div>
                 </div>
                 <div class="mb-2" :class="[inputMaintenance.kelembapan !== '' ? 'incop' : 'decop']">
@@ -65,7 +67,8 @@
                                     <option value="baik">baik</option>
                                     <option value="tidak baik">tidak baik</option>
                                 </select>
-                                <font-awesome-icon :icon="['fas', 'check-circle']" class="transition-all duration-200 text-green-500 ml-2 opacity-10" :class="{checktrue : inputMaintenance.ac !=='' && !errors[0]}"/>
+                                <font-awesome-icon :icon="['fas', 'times-circle']" class="transition-all duration-200 text-red-500 ml-2 opacity-10" :class="{checktrue : inputMaintenance.ac !=='' && !errors[0]}" v-if="inputMaintenance.ac === 'tidak baik'"/>
+                                <font-awesome-icon :icon="['fas', 'check-circle']" class="transition-all duration-200 text-green-500 ml-2 opacity-10" :class="{checktrue : inputMaintenance.ac !=='' && !errors[0]}" v-else/>
                             </div>
                             <textarea v-if="inputMaintenance.ac === 'tidak baik'" v-model="inputMaintenance.keteranganAc" name="acexplain" id="acexplain" cols="15" rows="3" class="bg-gray-300 mt-1 p-2 outline-none rounded-lg" placeholder="note..."></textarea>
                             <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
@@ -85,7 +88,8 @@
                                     <option value="baik">baik</option>
                                     <option value="tidak baik">tidak baik</option>
                                 </select>
-                                <font-awesome-icon :icon="['fas', 'check-circle']" class="transition-all duration-200 text-green-500 ml-2 opacity-10" :class="{checktrue : inputMaintenance.ups !=='' && !errors[0]}"/>
+                                <font-awesome-icon :icon="['fas', 'times-circle']" class="transition-all duration-200 text-red-500 ml-2 opacity-10" :class="{checktrue : inputMaintenance.ups !=='' && !errors[0]}" v-if="inputMaintenance.ups === 'tidak baik'"/>
+                                <font-awesome-icon :icon="['fas', 'check-circle']" class="transition-all duration-200 text-green-500 ml-2 opacity-10" :class="{checktrue : inputMaintenance.ups !=='' && !errors[0]}" v-else/>
                             </div>
                             <textarea v-if="inputMaintenance.ups === 'tidak baik'" v-model="inputMaintenance.keteranganUps" name="acexplain" id="acexplain" cols="15" rows="3" class="bg-gray-300 mt-1 p-2 outline-none rounded-lg" placeholder="note..."></textarea>
                             <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
@@ -105,7 +109,8 @@
                                     <option value="baik">baik</option>
                                     <option value="tidak baik">tidak baik</option>
                                 </select>
-                                <font-awesome-icon :icon="['fas', 'check-circle']" class="transition-all duration-200 text-green-500 ml-2 opacity-10" :class="{checktrue : inputMaintenance.baterai !== '' && !errors[0]}"/>
+                                <font-awesome-icon :icon="['fas', 'times-circle']" class="transition-all duration-200 text-red-500 ml-2 opacity-10" :class="{checktrue : inputMaintenance.baterai !=='' && !errors[0]}" v-if="inputMaintenance.baterai === 'tidak baik'"/>
+                                <font-awesome-icon :icon="['fas', 'check-circle']" class="transition-all duration-200 text-green-500 ml-2 opacity-10" :class="{checktrue : inputMaintenance.baterai !== '' && !errors[0]}" v-else/>
                             </div>
                             <textarea v-if="inputMaintenance.baterai === 'tidak baik'" v-model="inputMaintenance.keteranganBaterai" name="acexplain" id="acexplain" cols="15" rows="3" class="bg-gray-300 mt-1 p-2 outline-none rounded-lg" placeholder="note..."></textarea>
                             <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
@@ -125,7 +130,8 @@
                                     <option value="baik">baik</option>
                                     <option value="tidak baik">tidak baik</option>
                                 </select>
-                                <font-awesome-icon :icon="['fas', 'check-circle']" class="transition-all duration-200 text-green-500 ml-2 opacity-10" :class="{checktrue : inputMaintenance.server !== '' && !errors[0]}"/>
+                                <font-awesome-icon :icon="['fas', 'times-circle']" class="transition-all duration-200 text-red-500 ml-2 opacity-10" :class="{checktrue : inputMaintenance.server !=='' && !errors[0]}" v-if="inputMaintenance.server === 'tidak baik'"/>
+                                <font-awesome-icon :icon="['fas', 'check-circle']" class="transition-all duration-200 text-green-500 ml-2 opacity-10" :class="{checktrue : inputMaintenance.server !== '' && !errors[0]}" v-else/>
                             </div>
                             <textarea v-if="inputMaintenance.server === 'tidak baik'" v-model="inputMaintenance.keteranganServer" name="acexplain" id="acexplain" cols="15" rows="3" class="bg-gray-300 mt-1 p-2 outline-none rounded-lg" placeholder="note..."></textarea>
                             <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
@@ -219,6 +225,8 @@ export default {
                 if(resp){
                     swal('data berhasil ditambahkan',{icon:'success'})
                     this.$router.push('/maintenance')
+                } else {
+                    swal('Error','data gagal di input',{icon:'error'})
                 }
         },
         async sendNotifyMaintenance(){

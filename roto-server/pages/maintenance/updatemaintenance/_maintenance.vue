@@ -213,32 +213,32 @@ export default {
                 swal('data di update',{icon:'success'})
             }
             else{
-                swal('Error',resp.data.errmsg,{icon:'error'})
                 this.$router.push('/maintenance/updatemaintenance')
+                swal('Error','data gagal di update',{icon:'error'})
             }
       }
   },
   async mounted(){
-    try{
-    const lokasi = this.$auth.user.lokasi
-    const id = this.$route.params.id
-    const resp = await this.$axios.get(`/maintenance/getdatamaintenanceupdate/${id}/${lokasi}`)
-    if(resp){
-        resp.data.forEach(dmain=>{
-            this.updateMaintenance.tanggal = moment(dmain.tanggal).format('YYYY-MM-DD')
-            this.updateMaintenance.nama = dmain.nama_pemeriksa
-            this.updateMaintenance.suhu = dmain.suhu
-            this.updateMaintenance.kelembapan = dmain.kelembapan
-            this.updateMaintenance.ac = dmain.ac
-            this.updateMaintenance.ups = dmain.ups
-            this.updateMaintenance.baterai = dmain.baterai
-            this.updateMaintenance.server = dmain.server
-            this.updateMaintenance.keterangan = dmain.keterangan
-            this.updateMaintenance.keteranganAc = dmain.keterangan_ac
-            this.updateMaintenance.keteranganUps = dmain.keterangan_ups
-            this.updateMaintenance.keteranganBaterai = dmain.keterangan_baterai
-            this.updateMaintenance.keteranganServer = dmain.keterangan_server
-        })
+    try {
+        const lokasi = this.$auth.user.lokasi
+        const id = this.$route.params.id
+        const resp = await this.$axios.get(`/maintenance/getdatamaintenanceupdate/${id}/${lokasi}`)
+        if(resp){
+            resp.data.forEach(dmain=>{
+                this.updateMaintenance.tanggal = moment(dmain.tanggal).format('YYYY-MM-DD')
+                this.updateMaintenance.nama = dmain.nama_pemeriksa
+                this.updateMaintenance.suhu = dmain.suhu
+                this.updateMaintenance.kelembapan = dmain.kelembapan
+                this.updateMaintenance.ac = dmain.ac
+                this.updateMaintenance.ups = dmain.ups
+                this.updateMaintenance.baterai = dmain.baterai
+                this.updateMaintenance.server = dmain.server
+                this.updateMaintenance.keterangan = dmain.keterangan
+                this.updateMaintenance.keteranganAc = dmain.keterangan_ac
+                this.updateMaintenance.keteranganUps = dmain.keterangan_ups
+                this.updateMaintenance.keteranganBaterai = dmain.keterangan_baterai
+                this.updateMaintenance.keteranganServer = dmain.keterangan_server
+            })
         }
     } catch(err) {
         console.log(err)

@@ -8,11 +8,27 @@ module.exports.getAllUsers = async (req, res) => {
 
   try {
     conn = await pool.getConnection()
-
-    const rows = await conn.query(
-      `SELECT id_user,nama,role FROM users WHERE lokasi = '${lokasiServer}'`
-    )
-    res.send(rows)
+    if (lokasiServer === 'rotogravure 1') {
+      const rows = await conn.query(
+        `SELECT id_user,nama,role FROM users WHERE lokasi='${lokasiServer}'`
+      )
+      res.send(rows)
+    } else if (lokasiServer === 'rotogravure 2') {
+      const rows = await conn.query(
+        `SELECT id_user,nama,role FROM users WHERE lokasi='${lokasiServer}'`
+      )
+      res.send(rows)
+    } else if (lokasiServer === 'rotogravure 3') {
+      const rows = await conn.query(
+        `SELECT id_user,nama,role FROM users WHERE lokasi='${lokasiServer}'`
+      )
+      res.send(rows)
+    } else if (lokasiServer === 'rotogravure tinta') {
+      const rows = await conn.query(
+        `SELECT id_user,nama,role FROM users WHERE lokasi='${lokasiServer}'`
+      )
+      res.send(rows)
+    }
     conn.release()
   } catch (err) {
     console.log(err)
@@ -198,17 +214,19 @@ module.exports.getUserPa = async (req, res) => {
   try {
     conn = await pool.getConnection()
     // id PA adalah 2
-    const resp = await conn.query('SELECT nama FROM users WHERE id_role=2')
+    const lokasi = req.params.lokasi
+    const resp = await conn.query(
+      `SELECT nama FROM users WHERE id_role=2 AND lokasi='${lokasi}'`
+    )
     if (resp) {
       res.send(resp)
-      console.log('resp')
     } else {
       res.end()
     }
 
     conn.release()
   } catch (err) {
-    console.log('tidak bisa mengambil user PA', err)
+    res.status(500).send(err)
   } finally {
     if (conn) {
       return conn.end()

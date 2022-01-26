@@ -28,42 +28,42 @@ module.exports.inputmaintenance = async (req, res) => {
         `INSERT INTO maintenance VALUES ('','${nama}','${tanggal}','${suhu}','${kelembapan}','${ac}','${keteranganAc}','${ups}','${keteranganUps}','${baterai}','${keteranganBaterai}','${server}','${keteranganServer}','${keterangan}','${iduser}')`
       )
       if (data.affectedRows > 0) {
-        res.redirect('/maintenance')
+        res.status(200).send('success')
       } else {
-        return res.json({ msg: 'gagal di input' }).redirect('/inputmaintenance')
+        res.status(500).send('error')
       }
     } else if (lokasiServer == 'rotogravure 2') {
       const data = await conn.query(
         `INSERT INTO maintenance_roto_2 VALUES ('','${nama}','${tanggal}','${suhu}','${kelembapan}','${ac}','${keteranganAc}','${ups}','${keteranganUps}','${baterai}','${keteranganBaterai}','${server}','${keteranganServer}','${keterangan}','${iduser}')`
       )
       if (data.affectedRows > 0) {
-        res.redirect('/maintenance')
+        res.status(200).send('success')
       } else {
-        return res.json({ msg: 'gagal di input' }).redirect('/inputmaintenance')
+        res.status(500).send('error')
       }
     } else if (lokasiServer == 'rotogravure 3') {
       const data = await conn.query(
         `INSERT INTO maintenance_roto_3 VALUES ('','${nama}','${tanggal}','${suhu}','${kelembapan}','${ac}','${keteranganAc}','${ups}','${keteranganUps}','${baterai}','${keteranganBaterai}','${server}','${keteranganServer}','${keterangan}','${iduser}')`
       )
       if (data.affectedRows > 0) {
-        res.redirect('/maintenance')
+        res.status(200).send('success')
       } else {
-        return res.json({ msg: 'gagal di input' }).redirect('/inputmaintenance')
+        res.status(500).send('error')
       }
     } else if (lokasiServer == 'rotogravure tinta') {
       const data = await conn.query(
         `INSERT INTO maintenance_tinta VALUES ('','${nama}','${tanggal}','${suhu}','${kelembapan}','${ac}','${keteranganAc}','${ups}','${keteranganUps}','${baterai}','${keteranganBaterai}','${server}','${keteranganServer}','${keterangan}','${iduser}')`
       )
       if (data.affectedRows > 0) {
-        res.redirect('/maintenance')
+        res.status(200).send('success')
       } else {
-        return res.json({ msg: 'gagal di input' }).redirect('/inputmaintenance')
+        res.status(500).send('error')
       }
     }
 
     conn.release()
   } catch (err) {
-    console.log(err)
+    res.status(500).send(err)
   } finally {
     if (conn) return conn.end()
   }
@@ -78,29 +78,29 @@ module.exports.getAllMaintenance = async (req, res) => {
 
     if (lokasiServer == 'rotogravure 1') {
       const rows = await conn.query(
-        `SELECT * FROM maintenance INNER JOIN users ON maintenance.id_users=users.id_user WHERE users.id_user=${idlogin}`
+        `SELECT id_maintenance,nama_pemeriksa,tanggal,suhu,kelembapan,ac,keterangan_ac,ups,keterangan_ups,baterai,keterangan_baterai,server,keterangan_server,keterangan,id_users,id_user FROM maintenance INNER JOIN users ON maintenance.id_users=users.id_user WHERE users.id_user=${idlogin}`
       )
-      res.send(rows)
+      res.status(200).send(rows)
     } else if (lokasiServer == 'rotogravure 2') {
       const rows = await conn.query(
-        `SELECT * FROM maintenance_roto_2 INNER JOIN users ON maintenance_roto_2.id_users=users.id_user WHERE users.id_user=${idlogin}`
+        `SELECT id_maintenance,nama_pemeriksa,tanggal,suhu,kelembapan,ac,keterangan_ac,ups,keterangan_ups,baterai,keterangan_baterai,server,keterangan_server,keterangan,id_users,id_user FROM maintenance_roto_2 INNER JOIN users ON maintenance_roto_2.id_users=users.id_user WHERE users.id_user=${idlogin}`
       )
-      res.send(rows)
+      res.status(200).send(rows)
     } else if (lokasiServer == 'rotogravure 3') {
       const rows = await conn.query(
-        `SELECT * FROM maintenance_roto_3 INNER JOIN users ON maintenance_roto_3.id_users=users.id_user WHERE users.id_user=${idlogin}`
+        `SELECT id_maintenance,nama_pemeriksa,tanggal,suhu,kelembapan,ac,keterangan_ac,ups,keterangan_ups,baterai,keterangan_baterai,server,keterangan_server,keterangan,id_users,id_user FROM maintenance_roto_3 INNER JOIN users ON maintenance_roto_3.id_users=users.id_user WHERE users.id_user=${idlogin}`
       )
-      res.send(rows)
+      res.status(200).send(rows)
     } else if (lokasiServer == 'rotogravure tinta') {
       const rows = await conn.query(
-        `SELECT * FROM maintenance_tinta INNER JOIN users ON maintenance_tinta.id_users=users.id_user WHERE users.id_user=${idlogin}`
+        `SELECT id_maintenance,nama_pemeriksa,tanggal,suhu,kelembapan,ac,keterangan_ac,ups,keterangan_ups,baterai,keterangan_baterai,server,keterangan_server,keterangan,id_users,id_user FROM maintenance_tinta INNER JOIN users ON maintenance_tinta.id_users=users.id_user WHERE users.id_user=${idlogin}`
       )
-      res.send(rows)
+      res.status(200).send(rows)
     }
 
     conn.release()
   } catch (err) {
-    console.log(err)
+    res.status(500).send(err)
   } finally {
     if (conn) return conn.end()
   }
@@ -117,42 +117,42 @@ module.exports.deleteMaintenance = async (req, res) => {
         `DELETE FROM maintenance WHERE id_maintenance=${id}`
       )
       if (data.affectedRows > 0) {
-        res.json({ msg: 'data dihapus' })
+        res.status(200).send('success')
       } else {
-        res.json({ errmsg: 'data tidak terhapus' })
+        res.status(500).send('error')
       }
     } else if (lokasiServer == 'rotogravure 2') {
       const data = await conn.query(
         `DELETE FROM maintenance_roto_2 WHERE id_maintenance=${id}`
       )
       if (data.affectedRows > 0) {
-        res.json({ msg: 'data dihapus' })
+        res.status(200).send('success')
       } else {
-        res.json({ errmsg: 'data tidak terhapus' })
+        res.status(500).send('error')
       }
     } else if (lokasiServer == 'rotogravure 3') {
       const data = await conn.query(
         `DELETE FROM maintenance_roto_3 WHERE id_maintenance=${id}`
       )
       if (data.affectedRows > 0) {
-        res.json({ msg: 'data dihapus' })
+        res.status(200).send('success')
       } else {
-        res.json({ errmsg: 'data tidak terhapus' })
+        res.status(500).send('error')
       }
     } else if (lokasiServer == 'rotogravure tinta') {
       const data = await conn.query(
         `DELETE FROM maintenance_tinta WHERE id_maintenance=${id}`
       )
       if (data.affectedRows > 0) {
-        res.json({ msg: 'data dihapus' })
+        res.status(200).send('success')
       } else {
-        res.json({ errmsg: 'data tidak terhapus' })
+        res.status(500).send('error')
       }
     }
 
     conn.release()
   } catch (err) {
-    console.log(err)
+    res.status(500).send(err)
   } finally {
     if (conn) return conn.end()
   }
@@ -187,42 +187,41 @@ module.exports.updateMaintenance = async (req, res) => {
         `UPDATE maintenance SET nama_pemeriksa='${nama}',tanggal='${tanggal}',suhu='${suhu}',kelembapan='${kelembapan}',ac='${ac}',keterangan_ac='${keteranganAc}',ups='${ups}',keterangan_ups='${keteranganUps}',baterai='${baterai}',keterangan_baterai='${keteranganBaterai}',server='${server}',keterangan_server='${keteranganServer}',keterangan='${keterangan}',id_users='${iduser}' WHERE id_maintenance=${idmaintenance}`
       )
       if (resp.affectedRows > 0) {
-        res.redirect('/maintenance')
+        res.status(200).send('success')
       } else {
-        res.json({ errmsg: 'gagal diupdate' })
+        res.status(500).send('error')
       }
     } else if (lokasiServer == 'rotogravure 2') {
       const resp = await conn.query(
         `UPDATE maintenance_roto_2 SET nama_pemeriksa='${nama}',tanggal='${tanggal}',suhu='${suhu}',kelembapan='${kelembapan}',ac='${ac}',keterangan_ac='${keteranganAc}',ups='${ups}',keterangan_ups='${keteranganUps}',baterai='${baterai}',keterangan_baterai='${keteranganBaterai}',server='${server}',keterangan_server='${keteranganServer}',keterangan='${keterangan}',id_users='${iduser}' WHERE id_maintenance=${idmaintenance}`
       )
       if (resp.affectedRows > 0) {
-        res.redirect('/maintenance')
+        res.status(200).send('success')
       } else {
-        res.json({ msg: 'data tidak diupdate' })
+        res.status(500).send('error')
       }
     } else if (lokasiServer == 'rotogravure 3') {
       const resp = await conn.query(
         `UPDATE maintenance_roto_3 SET nama_pemeriksa='${nama}',tanggal='${tanggal}',suhu='${suhu}',kelembapan='${kelembapan}',ac='${ac}',keterangan_ac='${keteranganAc}',ups='${ups}',keterangan_ups='${keteranganUps}',baterai='${baterai}',keterangan_baterai='${keteranganBaterai}',server='${server}',keterangan_server='${keteranganServer}',keterangan='${keterangan}',id_users='${iduser}' WHERE id_maintenance=${idmaintenance}`
       )
       if (resp.affectedRows > 0) {
-        res.redirect('/maintenance')
+        res.status(200).send('success')
       } else {
-        res.json({ msg: 'data tidak diupdate' })
+        res.status(500).send('error')
       }
     } else if (lokasiServer == 'rotogravure tinta') {
       const resp = await conn.query(
         `UPDATE maintenance_tinta SET nama_pemeriksa='${nama}',tanggal='${tanggal}',suhu='${suhu}',kelembapan='${kelembapan}',ac='${ac}',keterangan_ac='${keteranganAc}',ups='${ups}',keterangan_ups='${keteranganUps}',baterai='${baterai}',keterangan_baterai='${keteranganBaterai}',server='${server}',keterangan_server='${keteranganServer}',keterangan='${keterangan}',id_users='${iduser}' WHERE id_maintenance=${idmaintenance}`
       )
       if (resp.affectedRows > 0) {
-        res.redirect('/maintenance')
+        res.status(200).send('success')
       } else {
-        res.json({ msg: 'data tidak diupdate' })
+        res.status(500).send('error')
       }
     }
-
     conn.release()
   } catch (err) {
-    console.log(err)
+    res.status(500).send(err)
   } finally {
     if (conn) return conn.end()
   }
@@ -239,26 +238,26 @@ module.exports.getdatamaintenanceupdate = async (req, res) => {
       const resp = await conn.query(
         `SELECT * FROM maintenance WHERE id_maintenance=${id}`
       )
-      res.send(resp)
+      res.status(200).send(resp)
     } else if (lokasiServer == 'rotogravure 2') {
       const resp = await conn.query(
         `SELECT * FROM maintenance_roto_2 WHERE id_maintenance=${id}`
       )
-      res.send(resp)
+      res.status(200).send(resp)
     } else if (lokasiServer == 'rotogravure 3') {
       const resp = await conn.query(
         `SELECT * FROM maintenance_roto_3 WHERE id_maintenance=${id}`
       )
-      res.send(resp)
+      res.status(200).send(resp)
     } else if (lokasiServer == 'rotogravure tinta') {
       const resp = await conn.query(
         `SELECT * FROM maintenance_tinta WHERE id_maintenance=${id}`
       )
-      res.send(resp)
+      res.status(200).send(resp)
     }
     conn.release()
   } catch (err) {
-    console.log(err)
+    res.status(500).send(err)
   } finally {
     if (conn) return conn.end()
   }
@@ -276,42 +275,42 @@ module.exports.detailMaintenance = async (req, res) => {
         `SELECT * FROM maintenance WHERE id_maintenance=${id}`
       )
       if (resp.length > 0) {
-        res.send(resp)
+        res.status(200).send(resp)
       } else {
-        res.json({ err: 'tidak ada data' })
+        res.status(500).send('error')
       }
     } else if (lokasiServer == 'rotogravure 2') {
       const resp = await conn.query(
         `SELECT * FROM maintenance_roto_2 WHERE id_maintenance=${id}`
       )
       if (resp.length > 0) {
-        res.send(resp)
+        res.status(200).send(resp)
       } else {
-        res.json({ err: 'tidak bisa data' })
+        res.status(500).send('error')
       }
     } else if (lokasiServer == 'rotogravure 3') {
       const resp = await conn.query(
         `SELECT * FROM maintenance_roto_3 WHERE id_maintenance=${id}`
       )
       if (resp.length > 0) {
-        res.send(resp)
+        res.status(200).send(resp)
       } else {
-        res.json({ err: 'tidak bisa data' })
+        res.status(500).send('error')
       }
     } else if (lokasiServer == 'rotogravure tinta') {
       const resp = await conn.query(
         `SELECT * FROM maintenance_tinta WHERE id_maintenance=${id}`
       )
       if (resp.length > 0) {
-        res.send(resp)
+        res.status(200).send(resp)
       } else {
-        res.json({ err: 'tidak bisa data' })
+        res.status(500).send('error')
       }
     }
 
     conn.release()
   } catch (err) {
-    console.log(err)
+    res.status(500).send(err)
   } finally {
     if (conn) return conn.end()
   }
@@ -330,41 +329,41 @@ module.exports.mainteananceuser = async (req, res) => {
         'SELECT suhu,kelembapan,ups FROM maintenance INNER JOIN users ON maintenance.id_users = users.id_user WHERE id_role=6 ORDER BY maintenance.id_maintenance DESC LIMIT 1'
       )
       if (rows) {
-        res.send(rows)
+        res.status(200).send(rows)
       } else {
-        res.json({ msg: 'no data' })
+        res.status(500).send('error')
       }
     } else if (lokasiServer == 'rotogravure 2') {
       const rows = await conn.query(
         'SELECT suhu,kelembapan,ups FROM maintenance_roto_2 INNER JOIN users ON maintenance_roto_2.id_users = users.id_user WHERE id_role=6 ORDER BY maintenance_roto_2.id_maintenance DESC LIMIT 1'
       )
       if (rows) {
-        res.send(rows)
+        res.status(200).send(rows)
       } else {
-        res.json({ msg: 'no data' })
+        res.status(500).send('error')
       }
     } else if (lokasiServer == 'rotogravure 3') {
       const rows = await conn.query(
         'SELECT suhu,kelembapan,ups FROM maintenance_roto_3 INNER JOIN users ON maintenance_roto_3.id_users = users.id_user WHERE id_role=6 ORDER BY maintenance_roto_3.id_maintenance DESC LIMIT 1'
       )
       if (rows) {
-        res.send(rows)
+        res.status(200).send(rows)
       } else {
-        res.json({ msg: 'no data' })
+        res.status(500).send('error')
       }
     } else if (lokasiServer == 'rotogravure tinta') {
       const rows = await conn.query(
         'SELECT suhu,kelembapan,ups FROM maintenance_tinta INNER JOIN users ON maintenance_tinta.id_users = users.id_user WHERE id_role=6 ORDER BY maintenance_tinta.id_maintenance DESC LIMIT 1'
       )
       if (rows) {
-        res.send(rows)
+        res.status(200).send(rows)
       } else {
-        res.json({ msg: 'no data' })
+        res.status(500).send('error')
       }
     }
     conn.release()
   } catch (err) {
-    console.log(err)
+    res.status(500).send(err)
   } finally {
     if (conn) return conn.end()
   }
@@ -381,45 +380,46 @@ module.exports.allMaintenanceResultSecurity = async (req, res) => {
         'SELECT suhu,kelembapan,tanggal FROM maintenance INNER JOIN users ON maintenance.id_users = users.id_user WHERE id_role=6'
       )
       if (rows) {
-        res.send(rows)
+        res.status(200).send(rows)
       } else {
-        res.json({ msg: 'no data' })
+        res.status(500).send('error')
       }
     } else if (lokasiServer == 'rotogravure 2') {
       const rows = await conn.query(
         'SELECT suhu,kelembapan,tanggal FROM maintenance_roto_2 INNER JOIN users ON maintenance_roto_2.id_users = users.id_user WHERE id_role=6'
       )
       if (rows) {
-        res.send(rows)
+        res.status(200).send(rows)
       } else {
-        res.json({ msg: 'no data' })
+        res.status(500).send('error')
       }
     } else if (lokasiServer == 'rotogravure 3') {
       const rows = await conn.query(
         'SELECT suhu,kelembapan,tanggal FROM maintenance_roto_3 INNER JOIN users ON maintenance_roto_3.id_users = users.id_user WHERE id_role=6'
       )
       if (rows) {
-        res.send(rows)
+        res.status(200).send(rows)
       } else {
-        res.json({ msg: 'no data' })
+        res.status(500).send('error')
       }
     } else if (lokasiServer == 'rotogravure tinta') {
       const rows = await conn.query(
         'SELECT suhu,kelembapan,tanggal FROM maintenance_tinta INNER JOIN users ON maintenance_tinta.id_users = users.id_user WHERE id_role=6'
       )
       if (rows) {
-        res.send(rows)
+        res.status(200).send(rows)
       } else {
-        res.json({ msg: 'no data' })
+        res.status(500).send('error')
       }
     }
   } catch (err) {
-    console.log(err)
+    res.status(500).send(err)
   } finally {
     if (conn) return conn.end()
   }
 }
 
+// data maintenance untuk admin teknisi
 module.exports.getDataTeknisilistrik = async (req, res) => {
   let conn
   try {
@@ -431,31 +431,32 @@ module.exports.getDataTeknisilistrik = async (req, res) => {
       const resp = await conn.query(
         `SELECT * FROM maintenance INNER JOIN users ON maintenance.id_users = users.id_user WHERE id_role=4`
       )
-      res.send(resp)
+      res.status(200).send(resp)
     } else if (lokasiServer == 'rotogravure 2') {
       const resp = await conn.query(
         `SELECT * FROM maintenance_roto_2 INNER JOIN users ON maintenance_roto_2.id_users = users.id_user WHERE id_role=4`
       )
-      res.send(resp)
+      res.status(200).send(resp)
     } else if (lokasiServer == 'rotogravure 3') {
       const resp = await conn.query(
         `SELECT * FROM maintenance_roto_3 INNER JOIN users ON maintenance_roto_3.id_users = users.id_user WHERE id_role=4`
       )
-      res.send(resp)
+      res.status(200).send(resp)
     } else if (lokasiServer == 'rotogravure tinta') {
       const resp = await conn.query(
         `SELECT * FROM maintenance_tinta INNER JOIN users ON maintenance_tinta.id_users = users.id_user WHERE id_role=4`
       )
-      res.send(resp)
+      res.status(200).send(resp)
     }
     conn.release()
   } catch (err) {
-    throw err
+    res.status(500).send(err)
   } finally {
     if (conn) return conn.end()
   }
 }
 
+// data maintenance untuk admin teknisi
 module.exports.getDataTeknisiac = async (req, res) => {
   let conn
   try {
@@ -467,26 +468,26 @@ module.exports.getDataTeknisiac = async (req, res) => {
       const resp = await conn.query(
         `SELECT * FROM maintenance INNER JOIN users ON maintenance.id_users = users.id_user WHERE id_role=5`
       )
-      res.send(resp)
+      res.status(200).send(resp)
     } else if (lokasiServer == 'rotogravure 2') {
       const resp = await conn.query(
         `SELECT * FROM maintenance_roto_2 INNER JOIN users ON maintenance_roto_2.id_users = users.id_user WHERE id_role=5`
       )
-      res.send(resp)
+      res.status(200).send(resp)
     } else if (lokasiServer == 'rotogravure 3') {
       const resp = await conn.query(
         `SELECT * FROM maintenance_roto_3 INNER JOIN users ON maintenance_roto_3.id_users = users.id_user WHERE id_role=5`
       )
-      res.send(resp)
+      res.status(200).send(resp)
     } else if (lokasiServer == 'rotogravure tinta') {
       const resp = await conn.query(
         `SELECT * FROM maintenance_tinta INNER JOIN users ON maintenance_tinta.id_users = users.id_user WHERE id_role=5`
       )
-      res.send(resp)
+      res.status(200).send(resp)
     }
     conn.release()
   } catch (err) {
-    throw err
+    res.status(500).send(err)
   } finally {
     if (conn) return conn.end()
   }

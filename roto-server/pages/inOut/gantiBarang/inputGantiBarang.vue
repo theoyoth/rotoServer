@@ -122,7 +122,7 @@ export default {
     },
     computed:{
         userpa(){
-            return this.$store.state.getUserPa.alluserpa
+            return this.$store.state.getUser.alluserpa
         }
     },
     data(){
@@ -158,12 +158,13 @@ export default {
             }
             else{
                 this.$router.push('/inout/gantibarang')
-                swal('Error',resp.data.errmsg,{icon:'error'})
+                swal('Error','data gagal di input',{icon:'error'})
             }
         }
     },
     mounted(){
-        this.$store.dispatch('getUserPa/getallUserPa')
+        const lokasi = this.$auth.user.lokasi
+        this.$store.dispatch('getUser/getallUserPa',lokasi)
     }
 }
 </script>

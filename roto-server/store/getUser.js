@@ -7,9 +7,9 @@ export const mutations = {
   },
 }
 export const actions = {
-  async getallUserPa({ commit }) {
+  async getallUserPa({ commit }, lokasi) {
     try {
-      const resp = await this.$axios.get('/users/pa')
+      const resp = await this.$axios.get(`/users/pa/${lokasi}`)
       if (resp) {
         commit('allpa', resp.data)
       }

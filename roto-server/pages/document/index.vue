@@ -32,6 +32,9 @@
               <p class="text-red-600 text-center">{{ message }}</p>
             </div>
           </div>
+          <p v-if="uploading">
+            <progress max="100" :value:prop="uploadPercentage" class="w-full"></progress>
+          </p>
           <div class="w-28 mx-auto mt-1">
             <button
               class="w-full mt-4 bg-gray-800 py-2 text-gray-300 rounded transition duration-200 hover:bg-gray-600" type="submit" >
@@ -77,6 +80,9 @@ export default {
       file: "",
       message: "",
       allfiles: "",
+      uploadedFiles:[],
+      uploading:false,
+      uploadPercentage: 0,
     }
   },
   computed:{
@@ -100,23 +106,26 @@ export default {
       let formData = new FormData()
       formData.append('file', this.file)
       try {
-        const resp = await this.$axios.post('/document', formData)
-        if (resp) {
-          swal(resp.data.msg, { icon: 'success' })
-        } else {
-          swal(resp.data.errmsg, { icon: 'error' })
-        }
+        this.uploading = true
+        const resp = await this.$axios.post('/document', formData,{
+          onUploadProgress:(e)=>{
+            this.uploadPercentage = parseInt(Math.round(e.loaded*100/e.total))
+          }
+        })
+        swal(resp.data.msg, { icon: 'success' })
+        this.uploading = false
       } catch (err) {
         console.error(err)
+        this.uploading = false
       }
     },
     deleteFile(filename){
       swal({
-                title: 'anda yakin?',
-                text: 'sekali dihapus, file tidak akan bisa kembali',
-                icon: 'warning',
-                buttons: true,
-                dangerMode: true
+              title: 'anda yakin?',
+              text: 'sekali dihapus, file tidak akan bisa kembali',
+              icon: 'warning',
+              buttons: true,
+              dangerMode: true
             }).then(suc=>{
                 if(suc){
                     let indexOfArrayItem = this.allfiles.findIndex(i => i.name === filename)
@@ -157,8 +166,8 @@ export default {
     //   true,
     //   /^.*\.pdf$/
     // )
-
     require.context('~/static/uploads', false, /\.pdf$/)
+
   },
 }
 </script>

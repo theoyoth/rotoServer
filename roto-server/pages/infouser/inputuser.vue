@@ -93,8 +93,6 @@
 </template>
 
 <script>
-import axios from 'axios'
-import moment from 'moment'
 import { ValidationObserver, ValidationProvider } from "vee-validate";
 export default {
    middleware:"isAuthenticated",
@@ -126,7 +124,7 @@ export default {
     methods:{
       async inputUserBaru(){
         try{ 
-          const resp = await axios.post('http://localhost:3000/server/user/tambah',{
+          const resp = await this.$axios.post('/user/tambah',{
             namauser:this.inputUser.nama,
             roleuser:this.inputUser.role,
             sandi:this.inputUser.sandi,

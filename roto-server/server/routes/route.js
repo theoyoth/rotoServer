@@ -256,7 +256,7 @@ router.get('/user/:id', userController.getUser)
 // update data user
 router.post('/user/update', userController.updateUser)
 // ambil nama user dengan role PA
-router.get('/users/pa', userController.getUserPa)
+router.get('/users/pa/:lokasi', userController.getUserPa)
 
 // =====================================
 // ==============IN-OUT BARANG==========

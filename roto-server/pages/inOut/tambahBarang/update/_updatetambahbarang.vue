@@ -108,11 +108,11 @@ export default {
             }
         }
      },
-     computed:{
-         userpa(){
-             return this.$store.state.getUserPa.alluserpa
-         }
-     },
+    computed:{
+        userpa(){
+            return this.$store.state.getUser.alluserpa
+        }
+    },
     async mounted(){
         const lokasi = this.$auth.user.lokasi
         const id = this.$route.params.id
@@ -128,27 +128,27 @@ export default {
                 this.updateTambahBarang.penanggungJawab = barang.penanggung_jawab
             })
         }
-        this.$store.dispatch('getUserPa/getallUserPa')
+        this.$store.dispatch('getUser/getallUserPa',lokasi)
     },
     methods:{
         async updateDataTambahBarang(){
             const resp = await this.$axios.post('/inout/tambahbarang/update',{
-            lokasiServer : this.$auth.user.lokasi,
-            iduser : this.$auth.user.id,
-            idtambahbarang : this.$route.params.id,
-            tanggal:this.updateTambahBarang.tanggal,
-            namaPenambah: this.updateTambahBarang.namaPenambah,
-            namaBarang :this.updateTambahBarang.namaBarang,
-            kuantitas : this.updateTambahBarang.kuantitas,
-            kepentingan : this.updateTambahBarang.kepentingan,
-            penanggungJawab : this.updateTambahBarang.penanggungJawab,
+                lokasiServer : this.$auth.user.lokasi,
+                iduser : this.$auth.user.id,
+                idtambahbarang : this.$route.params.id,
+                tanggal:this.updateTambahBarang.tanggal,
+                namaPenambah: this.updateTambahBarang.namaPenambah,
+                namaBarang :this.updateTambahBarang.namaBarang,
+                kuantitas : this.updateTambahBarang.kuantitas,
+                kepentingan : this.updateTambahBarang.kepentingan,
+                penanggungJawab : this.updateTambahBarang.penanggungJawab,
           })
           if(resp){
                 this.$router.push('/inout/tambahbarang')
                 swal('data di update',{icon:'success'})
             }
             else{
-                swal('Error',resp.data.errmsg,{icon:'error'})
+                swal('Error','data gagal di update',{icon:'error'})
                 this.$router.push('/inout/tambahbarang')
             }
         }

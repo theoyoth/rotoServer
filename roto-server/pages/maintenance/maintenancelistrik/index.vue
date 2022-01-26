@@ -1,7 +1,5 @@
 <template>
-<div class="bg-gray-300 w-widthContent ml-auto">
-    <!-- <HeaderListItem maintenance="maintenance" /> -->
-    <Navbar/>
+<div class="bg-gray-300 w-widthContent ml-auto min-h-screen overflow-x-hidden">
     <section class="bg-gray-100 min-h-screen w-widthContentField m-auto mt-7 p-4">
         <p class="text-center text-lg text-gray-700 font-semibold">Maintenance teknisi listrik</p>
         <div class="flex justify-between mt-8 ">

@@ -54,8 +54,7 @@
                 transform
                 -translate-x-2/4
                 "
-                >semua detail barang</span
-            >
+                >semua detail barang</span>
                 <tr class="text-xs text-gray-200"> 
                     <th class="font-semibold py-3 px-2 w-4">no.</th>
                     <th class="font-semibold py-3 w-32">tanggal</th>
@@ -89,8 +88,7 @@
                             text-white
                             mt-7 -ml-4
                         "
-                        >print</span
-                        >
+                        >print</span>
                             <div class="bg-gray-700 w-7 h-7 rounded-xl flex items-center justify-center">
                                 <NuxtLink :to="{name:'inout-tambahbarang-print-printform',params:{id:hasilcari.id_tambah_barang}}">
                                     <font-awesome-icon :icon="['fas','print']" class="text-yellow-500"/>
@@ -98,25 +96,24 @@
                             </div>
                          </div>
                         <div class="has-tooltip">
-                        <span
-                        class="
-                            tooltip
-                            rounded
-                            text-xs
-                            shadow-lg
-                            p-1
-                            bg-gray-700
-                            text-white
-                            mt-7 -ml-4
-                        "
-                        >edit</span
-                        >
+                            <span
+                            class="
+                                tooltip
+                                rounded
+                                text-xs
+                                shadow-lg
+                                p-1
+                                bg-gray-700
+                                text-white
+                                mt-7 -ml-4
+                            "
+                            >edit</span>
                             <div class="bg-gray-700 w-7 h-7 rounded-xl flex items-center justify-center">
                                 <NuxtLink :to="{name : 'inout-tambahbarang-update-updatetambahbarang', params:{id :hasilcari.id_tambah_barang } }">
                                     <font-awesome-icon :icon="['fas','pencil-alt']" class="text-yellow-500"/>
                                 </NuxtLink>
                             </div>
-                         </div>
+                        </div>
                         <div class="has-tooltip">
                         <span
                             class="
@@ -151,47 +148,7 @@
                     <td>{{barang.penanggung_jawab}}</td>
                     <td class="py-3 flex justify-between w-full lowercase">
                         <div class="has-tooltip">
-                        <span
-                        class="
-                            tooltip
-                            rounded
-                            text-xs
-                            shadow-lg
-                            p-1
-                            bg-gray-700
-                            text-white
-                            mt-7 -ml-4
-                        "
-                        >print</span
-                        >
-                            <div class="bg-gray-700 w-7 h-7 rounded-xl flex items-center justify-center">
-                                <NuxtLink :to="{name:'inout-tambahbarang-print-printform',params:{id:barang.id_tambah_barang}}">
-                                    <font-awesome-icon :icon="['fas','print']" class="text-yellow-500"/>
-                                </NuxtLink>
-                            </div>
-                         </div>
-                        <div class="has-tooltip">
-                        <span
-                        class="
-                            tooltip
-                            rounded
-                            text-xs
-                            shadow-lg
-                            p-1
-                            bg-gray-700
-                            text-white
-                            mt-7 -ml-4
-                        "
-                        >edit</span
-                        >
-                            <div class="bg-gray-700 w-7 h-7 rounded-xl flex items-center justify-center">
-                                <NuxtLink :to="{name : 'inout-tambahbarang-update-updatetambahbarang', params:{id :barang.id_tambah_barang } }">
-                                    <font-awesome-icon :icon="['fas','pencil-alt']" class="text-yellow-500"/>
-                                </NuxtLink>
-                            </div>
-                         </div>
-                        <div class="has-tooltip">
-                        <span
+                            <span
                             class="
                                 tooltip
                                 rounded
@@ -202,8 +159,45 @@
                                 text-white
                                 mt-7 -ml-4
                             "
-                            >hapus</span
-                            >
+                            >print</span>
+                                <div class="bg-gray-700 w-7 h-7 rounded-xl flex items-center justify-center">
+                                    <NuxtLink :to="{name:'inout-tambahbarang-print-printform',params:{id:barang.id_tambah_barang}}">
+                                        <font-awesome-icon :icon="['fas','print']" class="text-yellow-500"/>
+                                    </NuxtLink>
+                                </div>
+                        </div>
+                        <div class="has-tooltip">
+                            <span
+                        class="
+                            tooltip
+                            rounded
+                            text-xs
+                            shadow-lg
+                            p-1
+                            bg-gray-700
+                            text-white
+                            mt-7 -ml-4
+                        "
+                        >edit</span>
+                            <div class="bg-gray-700 w-7 h-7 rounded-xl flex items-center justify-center">
+                                <NuxtLink :to="{name : 'inout-tambahbarang-update-updatetambahbarang', params:{id :barang.id_tambah_barang } }">
+                                    <font-awesome-icon :icon="['fas','pencil-alt']" class="text-yellow-500"/>
+                                </NuxtLink>
+                            </div>
+                        </div>
+                        <div class="has-tooltip">
+                            <span
+                            class="
+                                tooltip
+                                rounded
+                                text-xs
+                                shadow-lg
+                                p-1
+                                bg-gray-700
+                                text-white
+                                mt-7 -ml-4
+                            "
+                            >hapus</span>
                             <div class="bg-gray-700 w-7 h-7 rounded-xl flex items-center justify-center">
                                 <button @click.prevent="deleteData(barang.id_tambah_barang)">
                                     <font-awesome-icon :icon="['fas','trash']" class="text-yellow-500"/>
@@ -272,10 +266,8 @@ export default {
                             swal('data dihapus',{icon:'success'})
                         }
                     }).catch(err=>{
-                        if(err.data.errmsg){
                             this.$router.push('/inout/tambahbarang')
-                            swal('Error', err.data.errmsg,{icon:'error'})
-                        }
+                            swal('Error', 'data gagal di hapus',{icon:'error'})
                     })
                 }
                 else{

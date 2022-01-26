@@ -190,10 +190,6 @@ export default {
                 swal('Error','ada yang salah',{icon:'error'})
             })
         },
-        
-        async msgtoparent(value){
-             console.log(value)
-        },
     },
     async mounted(){
         try{

@@ -322,10 +322,8 @@ export default {
                             swal('data dihapus',{icon:'success'})
                         }
                     }).catch(err=>{
-                        if(err.data.errmsg){
                             this.$router.push('/inout/gantibarang')
-                            swal('Error', err.data.errmsg,{icon:'error'})
-                        }
+                            swal('Error', 'data gagal di hapus',{icon:'error'})
                     })
                 }else{
                     swal('Error','gagal menghapus',{icon:'error'})

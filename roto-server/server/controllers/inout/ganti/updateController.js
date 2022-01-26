@@ -31,7 +31,7 @@ module.exports.getDataBarang = async (req, res) => {
 
     conn.release()
   } catch (err) {
-    console.log(err)
+    res.status(500).send(err)
   } finally {
     if (conn) return conn.end()
   }
@@ -60,42 +60,42 @@ module.exports.updateDataBarang = async (req, res) => {
         `UPDATE ganti_barang SET tanggal='${tanggal}', nama_pengganti='${namaPengganti}', nama_barang_baru='${namaBarangBaru}',nama_barang_lama='${namaBarangLama}', kuantitas='${kuantitas}', kepentingan='${kepentingan}',penanggung_jawab='${penanggungJawab}',id_users='${iduser}' WHERE id_ganti_barang = ${idgantibarang}`
       )
       if (resp.affectedRows > 0) {
-        res.redirect('/inout/gantibarang')
+        res.status(200).send('success')
       } else {
-        res.json({ errmsg: 'data tidak diupdate' })
+        res.status(500).send('error')
       }
     } else if (lokasiServer == 'rotogravure 2') {
       const resp = await conn.query(
         `UPDATE ganti_barang_roto_2 SET tanggal='${tanggal}', nama_pengganti='${namaPengganti}', nama_barang_baru='${namaBarangBaru}',nama_barang_lama='${namaBarangLama}', kuantitas='${kuantitas}', kepentingan='${kepentingan}',penanggung_jawab='${penanggungJawab}',id_users='${iduser}' WHERE id_ganti_barang = ${idgantibarang}`
       )
       if (resp.affectedRows > 0) {
-        res.redirect('/inout/gantibarang')
+        res.status(200).send('success')
       } else {
-        res.json({ errmsg: 'data tidak diupdate' })
+        res.status(500).send('error')
       }
     } else if (lokasiServer == 'rotogravure 3') {
       const resp = await conn.query(
         `UPDATE ganti_barang_roto_3 SET tanggal='${tanggal}', nama_pengganti='${namaPengganti}', nama_barang_baru='${namaBarangBaru}',nama_barang_lama='${namaBarangLama}', kuantitas='${kuantitas}', kepentingan='${kepentingan}',penanggung_jawab='${penanggungJawab}',id_users='${iduser}' WHERE id_ganti_barang = ${idgantibarang}`
       )
       if (resp.affectedRows > 0) {
-        res.redirect('/inout/gantibarang')
+        res.status(200).send('success')
       } else {
-        res.json({ errmsg: 'data tidak diupdate' })
+        res.status(500).send('error')
       }
     } else if (lokasiServer == 'rotogravure tinta') {
       const resp = await conn.query(
         `UPDATE ganti_barang_tinta SET tanggal='${tanggal}', nama_pengganti='${namaPengganti}', nama_barang_baru='${namaBarangBaru}',nama_barang_lama='${namaBarangLama}', kuantitas='${kuantitas}', kepentingan='${kepentingan}',penanggung_jawab='${penanggungJawab}',id_users='${iduser}' WHERE id_ganti_barang = ${idgantibarang}`
       )
       if (resp.affectedRows > 0) {
-        res.redirect('/inout/gantibarang')
+        res.status(200).send('success')
       } else {
-        res.json({ errmsg: 'data tidak diupdate' })
+        res.status(500).send('error')
       }
     }
 
     conn.release()
   } catch (err) {
-    console.log(err)
+    res.status(500).send(err)
   } finally {
     if (conn) return conn.end()
   }

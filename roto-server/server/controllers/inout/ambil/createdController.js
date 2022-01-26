@@ -20,40 +20,40 @@ module.exports.addBarang = async (req, res) => {
         `INSERT INTO ambil_barang VALUES('','${tanggal}','${namauser}','${namaBarang}','${kuantitas}','${kepentingan}','${penanggungJawab}','${iduser}')`
       )
       if (resp.affectedRows > 0) {
-        res.redirect('/inout/ambilbarang')
+        res.status(200).send('success')
       } else {
-        res.json({ errmsg: 'gagal disimpan' })
+        res.status(500).send('error')
       }
     } else if (lokasiServer == 'rotogravure 2') {
       const resp = await conn.query(
         `INSERT INTO ambil_barang_roto_2 VALUES('','${tanggal}','${namauser}','${namaBarang}','${kuantitas}','${kepentingan}','${penanggungJawab}','${iduser}')`
       )
       if (resp.affectedRows > 0) {
-        res.redirect('/inout/ambilbarang')
+        res.status(200).send('success')
       } else {
-        res.json({ errmsg: 'gagal disimpan' })
+        res.status(500).send('error')
       }
     } else if (lokasiServer == 'rotogravure 3') {
       const resp = await conn.query(
         `INSERT INTO ambil_barang_roto_3 VALUES('','${tanggal}','${namauser}','${namaBarang}','${kuantitas}','${kepentingan}','${penanggungJawab}','${iduser}')`
       )
       if (resp.affectedRows > 0) {
-        res.redirect('/inout/ambilbarang')
+        res.status(200).send('success')
       } else {
-        res.json({ errmsg: 'gagal disimpan' })
+        res.status(500).send('error')
       }
     } else if (lokasiServer == 'rotogravure tinta') {
       const resp = await conn.query(
         `INSERT INTO ambil_barang_tinta VALUES('','${tanggal}','${namauser}','${namaBarang}','${kuantitas}','${kepentingan}','${penanggungJawab}','${iduser}')`
       )
       if (resp.affectedRows > 0) {
-        res.redirect('/inout/ambilbarang')
+        res.status(200).send('success')
       } else {
-        res.json({ errmsg: 'gagal disimpan' })
+        res.status(500).send('error')
       }
     }
   } catch (err) {
-    console.log(err)
+    res.status(500).send(err)
   } finally {
     if (conn) return conn.end()
   }
