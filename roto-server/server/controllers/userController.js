@@ -2,7 +2,7 @@ const pool = require('../db.js')
 const bcrypt = require('bcrypt')
 const salt = bcrypt.genSaltSync(10)
 
-module.exports.getAllUsers = async (req, res) => {
+module.exports.getAllUsersByLocation = async (req, res) => {
   let conn
   const lokasiServer = req.params.lokasi
 
@@ -32,6 +32,19 @@ module.exports.getAllUsers = async (req, res) => {
     conn.release()
   } catch (err) {
     console.log(err)
+  }
+}
+module.exports.getAllUsers = async (req, res) => {
+  let conn
+
+  try {
+    conn = await pool.getConnection()
+    const data = await conn.query('SELECT id_user,nama,lokasi FROM users')
+    res.status(200).send(data)
+
+    conn.release()
+  } catch (err) {
+    res.status(500).send(err)
   }
 }
 

@@ -27,7 +27,7 @@
                 <input
                   type="text"
                   class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                  placeholder="nama" v-model="login.nama" autofocus
+                  placeholder="nama" v-model="login.nama" autofocus @change="watchName"
                 />
               </div>
 
@@ -56,16 +56,18 @@
                 >
                   lokasi
                 </label>
-                <select v-model="login.lokasi" name="lokasi" id="lokasi" class="border-0 px-3 py-3 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150">
-                    <option disabled value="">pilih lokasi</option>
-                    <option value="rotogravure 1">rotogravure 1</option>
+                <!-- <select v-model="login.lokasi" name="lokasi" id="lokasi" class="border-0 px-3 py-3 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150">
+                    <option disabled value="">pilih lokasi</option> -->
+                    <!-- <option v-if="this.listLokasi" :value="this.listLokasi[0]">{{this.listLokasi[0]}}</option> -->
+                    <!-- <option value="rotogravure 1">rotogravure 1</option>
                     <option value="rotogravure 2">rotogravure 2</option>
                     <option value="rotogravure 3">rotogravure 3</option>
                     <option value="rotogravure tinta">rotogravure tinta</option>
-                </select>
+                </select> -->
+                <input type="text" v-model="login.lokasi" id="lokasi" placeholder="lokasi" class="border-0 px-3 py-3 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" disabled>
               </div>
               <nuxt-link to="/ForgotPassword">
-                  <p class="text-xs text-gray-700 text-center mt-5">lupa kata sandi?</p>
+                  <p class="text-xs text-gray-700 text-center mt-5 underline">lupa kata sandi?</p>
               </nuxt-link>
               <div class="text-center mt-6">
                 <button
@@ -94,12 +96,18 @@ export default {
                 sandi: '',
                 lokasi:'',
             },
-            err : ""
+            err : "",
+            // ipAddress:null,
+            // listLokasi:[],
         }
     },
     computed:{
         eyeIcon () {
           return this.ruleIcon === 'asc' ? ['fas', 'eye'] : ['fas', 'eye-slash'];
+        },
+        // get all users in vuex state after called in mounted lifecycle
+        allUsers(){
+          return this.$store.state.getUser.allUsers
         }
     },
     methods:{
@@ -122,7 +130,21 @@ export default {
         },
         changeicon () {
           this.ruleIcon = this.ruleIcon === 'asc' ? 'desc' : 'asc';
-        }        
+        },
+        // watch login.name input // if login.name available in allUsers computed, then print the match location based on name that user input
+        watchName() {
+          if(this.login.nama !== ''){
+            this.allUsers.forEach(item => {
+              if(item.nama === this.login.nama){
+                this.login.lokasi = item.lokasi
+              }
+            })
+          }
+        }
+    },
+    mounted(){
+      // call action from vuex that return all registered users
+      this.$store.dispatch('getUser/getallUsers')
     }
 }
 </script>

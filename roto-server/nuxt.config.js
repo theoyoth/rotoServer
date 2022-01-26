@@ -76,6 +76,7 @@ export default {
     // '@nuxtjs/auth',
     '@nuxtjs/auth-next',
     'cookie-universal-nuxt',
+    '@nuxt/image',
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
@@ -95,11 +96,7 @@ export default {
             method: 'post',
             propertyName: false,
           },
-          logout:
-            // url: '/logout',
-            // method: 'post',
-            // propertyName: false,
-            false,
+          logout: false,
 
           user: {
             url: '/homepage',
@@ -107,8 +104,6 @@ export default {
             propertyName: false,
           },
         },
-        // tokenRequired: true,
-        // tokenType: false,
       },
     },
     redirect: {
@@ -134,9 +129,5 @@ export default {
     },
     transpile: ['vee-validate/dist/rules', 'three'],
   },
-  serverMiddleware: [
-    // {path: '/server',handler:'~/server'},
-    '~/server/index.js',
-    // {path: '/server/home', handler:'~/server'},
-  ],
+  serverMiddleware: ['~/server/index.js'],
 }

@@ -244,7 +244,8 @@ router.get(
 router.get('/lokasi', lokasiServer.lokasiserver)
 
 // USER
-router.get('/users/:lokasi', userController.getAllUsers)
+router.get('/users/:lokasi', userController.getAllUsersByLocation)
+router.get('/users', userController.getAllUsers)
 
 // mengatur user oleh PA
 // tambah user

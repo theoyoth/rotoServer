@@ -129,12 +129,9 @@ module.exports.forgotPassword = async (req, res) => {
           `UPDATE users SET reset_sandi_token = '${token}' WHERE id_user='${userdata.id_user}'`
         )
         let transporter = nodemailer.createTransport({
-          host: 'smtp.gmail.com',
-          port: 587,
-          secure: false,
-          requireTLS: true,
+          service: 'gmail',
           auth: {
-            user: 'yofakeakun@gmail.com',
+            user: process.env.MY_EMAIL,
             pass: process.env.MY_EMAIL_PASSWORD,
           },
         })
@@ -144,11 +141,13 @@ module.exports.forgotPassword = async (req, res) => {
           subject: 'Link reset password',
           html: `<p>silahkan klink link di bawah untuk reset sandi anda</p></br><a href="http://localhost:3000/server/resetpassword/${token}">RESET PASSWORD</a>`,
         }
-        transporter
-          .sendMail(templateEmail)
-          .then((info) => console.log('Email terkirim'))
-          .catch((err) => console.log('Terjadi kesalahan:' + err))
-
+        transporter.sendMail(templateEmail, function (err, info) {
+          if (err) {
+            console.log(err)
+          } else {
+            console.log('email terkirim')
+          }
+        })
         res.json({ successmsg: 'silahkan cek email anda' })
       } else {
         return res.json({ errmsg: 'nama tidak ada, masukan nama yang benar' })
