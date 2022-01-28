@@ -1,6 +1,6 @@
 export const state = () => ({
   hasilMaintenanceSecurity: [],
-  allDataMaintenance: '',
+  allDataMaintenance: [],
 })
 export const mutations = {
   getSecurityMaintenance(state, data) {
@@ -11,7 +11,7 @@ export const mutations = {
   },
 }
 export const actions = {
-  async getSecurity({ commit }, { lokasi }) {
+  async getSecurity({ commit }, lokasi) {
     try {
       const resp = await this.$axios.get(`/maintenance/security/${lokasi}`)
       if (resp.data) {
@@ -25,7 +25,7 @@ export const actions = {
       console.log(err)
     }
   },
-  async getAllMaintenanceSecurity({ commit }, { lokasi }) {
+  async getAllMaintenanceSecurity({ commit }, lokasi) {
     try {
       const resp = await this.$axios.get(
         `/maintenance/security/alldata/${lokasi}`

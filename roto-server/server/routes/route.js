@@ -223,10 +223,10 @@ router.get(
   '/maintenance/detail/:lokasi/:id',
   maintenanceController.detailMaintenance
 )
-router.get(
-  '/maintenance/security/:lokasi',
-  maintenanceController.mainteananceuser
-)
+// router.get(
+//   '/maintenance/security/:lokasi',
+//   maintenanceController.mainteananceuser
+// )
 router.get(
   '/maintenance/security/alldata/:lokasi',
   maintenanceController.allMaintenanceResultSecurity

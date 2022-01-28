@@ -39,7 +39,7 @@
                       p-1
                       bg-gray-700
                       text-white
-                      absolute -top-7 left-12
+                      absolute -top-7 left-7
                     "
                     >hasil maintenance suhu</span
                   >
@@ -49,7 +49,7 @@
                         class="text-gray-200 text-lg z-10"
                     />
                   </div>
-                  <h1 class="text-xl font-semibold">{{hasilMaintenanceSecurity.suhu}}°c</h1>
+                  <h1 class="text-xl font-semibold">{{this.newestDataSecurity.suhu}}°c</h1>
                   <p class="text-xs">Suhu</p>
                 </div>
               </div>
@@ -94,7 +94,7 @@
                         class="text-gray-200 text-lg z-10"
                     />
                   </div>
-                  <h1 class="text-xl font-semibold">{{hasilMaintenanceSecurity.kelembapan}}%</h1>
+                  <h1 class="text-xl font-semibold">{{this.newestDataSecurity.kelembapan}}%</h1>
                   <p class="text-xs">Kelembapan</p>
                 </div>
               </div>
@@ -129,7 +129,7 @@
                       bg-gray-700
                       w-40
                       text-white
-                      absolute -top-7 left-10
+                      absolute -top-7 left-6
                     "
                     >hasil maintenance UPS</span
                   >
@@ -139,7 +139,7 @@
                         class="text-gray-200 text-lg z-10"
                     />
                   </div>
-                  <h1 class="text-xl font-semibold">{{hasilMaintenanceSecurity.ups}}</h1>
+                  <h1 class="text-xl font-semibold">{{this.newestDataSecurity.ups}}</h1>
                   <p class="text-xs">UPS</p>
                 </div>
               </div>
@@ -194,6 +194,8 @@ export default {
       barchardata: null,
       kelembapalabel: null,
       kelembapandata: null,
+      response:[],
+      newestDataSecurity: [],
     }
   },
   computed: {
@@ -220,26 +222,16 @@ export default {
     },
     isTeknisiac() {
       return this.$store.getters.isTeknisiac
-    },
-    hasilMaintenanceSecurity() {
-      return this.$store.state.maintenanceSecurity.hasilMaintenanceSecurity
-    },
-    allDataMaintenance() {
-      return this.$store.state.maintenanceSecurity.allDataMaintenance
     }
   },
   methods: {
     async fillDataSuhu(){
-      const lokasi = this.$auth.user.lokasi
       try {
-        if (this.allDataMaintenance) {
-          const daftarLabel = this.allDataMaintenance.map(list => moment(list.tanggal).format('YYYY-MM-DD'))
-          const daftarSuhu = this.allDataMaintenance.map(list => list.suhu)
+        if (this.response) {
+          const daftarLabel = this.response.map(list => moment(list.tanggal).format('YYYY-MM-DD'))
+          const daftarSuhu = this.response.map(list => list.suhu)
           this.barcharlabel = daftarLabel
           this.barchardata = daftarSuhu
-          
-          // this.Datasuhuline = daftarSuhu
-          // this.Optionsuhuline = daftarLabel
 
           this.chartData = {
             labels: this.barcharlabel,
@@ -292,11 +284,10 @@ export default {
       }
     },
     async fillDataKelembapan(){
-      const lokasi = this.$auth.user.lokasi
       try {
-        if (this.allDataMaintenance) {
-          const daftarLabel = this.allDataMaintenance.map(list => moment(list.tanggal).format('YYYY-MM-DD'))
-          const daftarKelembapan = this.allDataMaintenance.map(list => list.kelembapan)
+        if (this.response) {
+          const daftarLabel = this.response.map(list => moment(list.tanggal).format('YYYY-MM-DD'))
+          const daftarKelembapan = this.response.map(list => list.kelembapan)
           this.kelembapanlabel = daftarLabel
           this.kelembapandata = daftarKelembapan
 
@@ -455,18 +446,27 @@ export default {
         this.optionKelem.scales.xAxes[0].ticks.min = this.kelembapanlabel[0];
         this.optionKelem.scales.xAxes[0].ticks.max = this.kelembapanlabel[9];
       }
+    },
+
+    async getMaintenance(){
+      const lokasi = this.$auth.user.lokasi
+      const resp = await this.$axios.get(`/maintenance/security/alldata/${lokasi}`)
+      resp.data.forEach(res => {
+        this.response.push(res)
+      })
+
+      // mendapatkan satu maintenance security paling baru
+      resp.data.reverse()
+      this.newestDataSecurity = resp.data[0]
+
+      // memanggil fungsi
+      this.fillDataSuhu()
+      this.fillDataKelembapan()
     }
 
   },
   mounted(){
-    this.fillDataSuhu(),
-    this.fillDataKelembapan()
-    
-    const data = {
-      lokasi : this.$auth.user.lokasi
-    }
-    this.$store.dispatch('maintenanceSecurity/getSecurity',data)
-    this.$store.dispatch('maintenanceSecurity/getAllMaintenanceSecurity',data)
+    this.getMaintenance()
   },
 }
 </script>
