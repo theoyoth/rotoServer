@@ -15,7 +15,16 @@ export default {
   },
   mounted() {
     this.viewpdf = this.$route.params.id
-    this.linkfile = `../../../uploads/${this.viewpdf}`
+    const lokasi = this.$auth.user.lokasi
+    if(lokasi === 'rotogravure 1'){
+      this.linkfile = `../../../uploads/roto1/${this.viewpdf}`
+    } else if(lokasi === 'rotogravure 2'){
+      this.linkfile = `../../../uploads/roto2/${this.viewpdf}`
+    } else if(lokasi === 'rotogravure 3'){
+      this.linkfile = `../../../uploads/roto3/${this.viewpdf}`
+    } else if(lokasi === 'rotogravure tinta'){
+      this.linkfile = `../../../uploads/rototinta/${this.viewpdf}`
+    }
   },
 };
 </script>

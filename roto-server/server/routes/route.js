@@ -1,6 +1,3 @@
-const multer = require('multer')
-const path = require('path')
-
 const maintenanceController = require('../controllers/maintenanceController.js')
 const authController = require('../controllers/authController.js')
 const userController = require('../controllers/userController.js')
@@ -338,42 +335,12 @@ router.get(
   readgantiController.detailGantiBarang
 )
 
-// FORM UPLOAD DOKUMEN
-// upload dokumen
-const multerStorage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, './static/uploads')
-  },
-  filename: (req, file, cb) => {
-    cb(
-      null,
-      file.originalname.split('.')[0] +
-        '_' +
-        Date.now() +
-        path.extname(file.originalname)
-    )
-  },
-})
-const multerFilter = (req, file, cb) => {
-  // file.mimetype.slice('/')[1] = 'pdf'
+router.post('/document/:lokasi', fileController.uploadFiledoc)
 
-  if (!file.originalname.match(/.pdf$/)) {
-    cb(new Error('bukan file yang diminta'), false)
-  } else {
-    cb(null, true)
-  }
-}
-const upload = multer({
-  storage: multerStorage,
-  fileFilter: multerFilter,
-})
-
-router.post('/document', upload.single('file'), fileController.uploadFiledoc)
-
-router.get('/document/list', fileController.getAllFiles)
+router.get('/document/list/:lokasi', fileController.getAllFiles)
 
 // router.get('/document/list/:name', fileController.downloadFile)
-router.delete('/document/list/:name', fileController.deleteFile)
+router.delete('/document/list/:name/:lokasi', fileController.deleteFile)
 
 // MAP
 router.get('/masterserver/:lokasi', mapController.getListServer)

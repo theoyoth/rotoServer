@@ -17,6 +17,7 @@
                   type="file"
                   ref="file"
                   id="file"
+                  name="filetoupload"
                   required
                   accept=".pdf"
                   class="input-file border border-black"
@@ -83,6 +84,8 @@ export default {
       uploadedFiles:[],
       uploading:false,
       uploadPercentage: 0,
+      directory:"",
+      lokasi:this.$auth.user.lokasi,
     }
   },
   computed:{
@@ -103,19 +106,19 @@ export default {
       }
     },
     async onSubmit() {
+      const lokasi = this.$auth.user.lokasi
       let formData = new FormData()
       formData.append('file', this.file)
       try {
         this.uploading = true
-        const resp = await this.$axios.post('/document', formData,{
+        const resp = await this.$axios.post(`/document/${lokasi}`, formData,{
           onUploadProgress:(e)=>{
             this.uploadPercentage = parseInt(Math.round(e.loaded*100/e.total))
           }
         })
-        swal(resp.data.msg, { icon: 'success' })
+        swal('berhasil di upload', { icon: 'success' })
         this.uploading = false
       } catch (err) {
-        console.error(err)
         this.uploading = false
       }
     },
@@ -130,7 +133,7 @@ export default {
                 if(suc){
                     let indexOfArrayItem = this.allfiles.findIndex(i => i.name === filename)
 
-                    this.$axios.delete(`/document/list/${filename}`)
+                    this.$axios.delete(`/document/list/${filename}/${this.lokasi}`)
                     .then(resp=>{
                         if(resp){
                             this.allfiles.splice(indexOfArrayItem, 1);
@@ -138,10 +141,8 @@ export default {
                             swal('data dihapus',{icon:'success'})
                         }
                     }).catch(err=>{
-                        if(err.data.errmsg){
-                            this.$router.push('/document')
-                            swal('Error', err.data.errmsg,{icon:'error'})
-                        }
+                          this.$router.push('/document')
+                          swal('Error', 'data tidak terhapus',{icon:'error'})
                     })
                 }
                 else{
@@ -154,7 +155,7 @@ export default {
   },
   async mounted() {
     try {
-      const resp = await this.$axios.get('/document/list')
+      const resp = await this.$axios.get(`/document/list/${this.lokasi}`)
       if (resp.data) {
         this.allfiles = resp.data
       }
@@ -166,7 +167,19 @@ export default {
     //   true,
     //   /^.*\.pdf$/
     // )
-    require.context('~/static/uploads', false, /\.pdf$/)
+    if(this.lokasi === 'rotogravure 1'){
+      require.context('~/static/uploads/roto1', false, /\.pdf$/)
+    }
+    else if(this.lokasi === 'rotogravure 2'){
+      require.context('~/static/uploads/roto2', false, /\.pdf$/)
+    } 
+    else if(this.lokasi === 'rotogravure 3'){
+      require.context('~/static/uploads/roto3', false, /\.pdf$/)
+    } 
+    else if(this.lokasi === 'rotogravure tinta'){
+      require.context('~/static/uploads/rototinta', false, /\.pdf$/)
+    }
+
 
   },
 }

@@ -1,19 +1,51 @@
 const fs = require('fs')
 const https = require('https')
 const path = require('path')
-const multer = require('multer')
-const baseUrl = './static/uploads'
+const formidable = require('formidable')
+const mv = require('mv')
 
 module.exports.uploadFiledoc = async (req, res) => {
-  try {
-    return res.json({ status: 200, msg: 'data berhasil di upload' })
-  } catch (err) {
-    return res.json({ errmsg: 'data tidak ter-upload' })
-  }
+  const lokasiServer = req.params.lokasi
+  var form = new formidable.IncomingForm()
+
+  form.parse(req, function (err, fields, files) {
+    var oldpath = files.file._writeStream.path
+    // console.log(oldpath)
+    if (lokasiServer === 'rotogravure 1') {
+      var newpath = './static/uploads/roto1/' + files.file.originalFilename
+    } else if (lokasiServer === 'rotogravure 2') {
+      var newpath = './static/uploads/roto2/' + files.file.originalFilename
+    } else if (lokasiServer === 'rotogravure 3') {
+      var newpath = './static/uploads/roto3/' + files.file.originalFilename
+    } else if (lokasiServer === 'rotogravure tinta') {
+      var newpath = './static/uploads/rototinta/' + files.file.originalFilename
+    }
+
+    mv(oldpath, newpath, function (err) {
+      if (err) {
+        throw err
+      }
+      return res.status(200).send('success')
+    })
+  })
 }
 
 module.exports.getAllFiles = async (req, res) => {
-  const directoryPath = './static/uploads'
+  const lokasiServer = req.params.lokasi
+  let directoryPath = ''
+
+  if (lokasiServer === 'rotogravure 1') {
+    directoryPath = './static/uploads/roto1'
+  } else if (lokasiServer === 'rotogravure 2') {
+    directoryPath = './static/uploads/roto2'
+  } else if (lokasiServer === 'rotogravure 3') {
+    directoryPath = './static/uploads/roto3'
+  } else if (lokasiServer === 'rotogravure tinta') {
+    directoryPath = './static/uploads/rototinta'
+  } else {
+    res.send('no directory is founded')
+  }
+
   await fs.readdir(directoryPath, function (err, files) {
     if (err) {
       res.status(500).send({
@@ -26,11 +58,11 @@ module.exports.getAllFiles = async (req, res) => {
     files.forEach((file) => {
       fileInfos.push({
         name: file,
-        url: baseUrl + file,
+        url: directoryPath + file,
       })
     })
 
-    res.send(fileInfos)
+    res.status(200).send(fileInfos)
   })
 }
 
@@ -48,15 +80,26 @@ module.exports.getAllFiles = async (req, res) => {
 
 module.exports.deleteFile = async (req, res) => {
   const filename = req.params.name
-  const directoryPath = './static/uploads/'
+  const lokasiServer = req.params.lokasi
+  let directoryPath = ''
+
+  if (lokasiServer === 'rotogravure 1') {
+    directoryPath = './static/uploads/roto1/'
+  } else if (lokasiServer === 'rotogravure 2') {
+    directoryPath = './static/uploads/roto2/'
+  } else if (lokasiServer === 'rotogravure 3') {
+    directoryPath = './static/uploads/roto3/'
+  } else if (lokasiServer === 'rotogravure tinta') {
+    directoryPath = './static/uploads/rototinta/'
+  } else {
+    res.send('no directory is founded')
+  }
 
   fs.unlink(directoryPath + filename, (err) => {
     if (err) {
-      res.status(404).send({
-        errmsg: 'gagal menghapus, data tidak ditemukan',
-      })
+      res.status(404).send('error')
     } else {
-      return res.send({ status: 200 })
+      return res.status(200).send('success')
     }
   })
 }
