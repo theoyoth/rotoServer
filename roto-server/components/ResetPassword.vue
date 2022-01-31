@@ -92,11 +92,11 @@ export default {
         token:this.tokenuser,
       })
       if(resp.data){
-        swal(resp.data.msg,{ icon: 'success'})
+        swal('sandi berhasil di ubah',{ icon: 'success'})
         this.$router.push('/')
       }
       else{ 
-        swal('Error',resp.data.errmsg,{ icon: 'error'})
+        swal('Error','sandi gagal di ubah',{ icon: 'error'})
       }
     },
     showpassword(){

@@ -34,7 +34,7 @@ extend('alpha_dash', {
 })
 extend('confirmed', {
   ...confirmed,
-  message: 'password tidak cocok',
+  message: 'password salah',
 })
 extend('email', {
   ...email,

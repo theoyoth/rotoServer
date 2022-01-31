@@ -49,7 +49,7 @@ module.exports.login = async (req, res) => {
       }
       conn.release()
     } else {
-      return res.json({ errmsg: 'masukan nama, sandi, dan lokasi' })
+      return res.json({ errmsg: 'masukan nama, sandi yang sesuai' })
     }
   } catch (err) {
     console.log(err)
@@ -80,7 +80,7 @@ module.exports.homepage = async (req, res) => {
       res.json({ msg: 'not match' })
     } else {
       const data = await conn.query(
-        `SELECT * FROM users WHERE id_user = ${verified.id}`
+        `SELECT id_user,nama,role FROM users WHERE id_user = ${verified.id}`
       )
       const lok = await conn.query(
         `SELECT * FROM lokasi_server WHERE id_lokasi = ${verified.lokasiid}`
@@ -114,13 +114,16 @@ module.exports.forgotPassword = async (req, res) => {
   try {
     if (nama && email) {
       conn = await pool.getConnection()
-      const resp = await conn.query(`SELECT * FROM users WHERE nama='${nama}'`)
+      const resp = await conn.query(
+        `SELECT id_user,nama,role FROM users WHERE nama='${nama}'`
+      )
       if (resp.length > 0) {
         const userdata = resp[0]
         const token = jwt.sign(
           {
             id: userdata.id_user,
             nama: userdata.nama,
+            date: Date.now(),
           },
           process.env.TOKEN_KEY,
           { expiresIn: '10m' }
@@ -130,13 +133,15 @@ module.exports.forgotPassword = async (req, res) => {
         )
         let transporter = nodemailer.createTransport({
           service: 'gmail',
+          port: 465,
+          secure: true,
           auth: {
             user: process.env.MY_EMAIL,
             pass: process.env.MY_EMAIL_PASSWORD,
           },
         })
         const templateEmail = {
-          from: 'yofakeakun@gmail.com',
+          from: process.env.MY_EMAIL,
           to: email,
           subject: 'Link reset password',
           html: `<p>silahkan klink link di bawah untuk reset sandi anda</p></br><a href="http://localhost:3000/server/resetpassword/${token}">RESET PASSWORD</a>`,
@@ -148,13 +153,13 @@ module.exports.forgotPassword = async (req, res) => {
             console.log('email terkirim')
           }
         })
-        res.json({ successmsg: 'silahkan cek email anda' })
+        res.status(200).send('success')
       } else {
-        return res.json({ errmsg: 'nama tidak ada, masukan nama yang benar' })
+        res.json({ errmsg: 'nama tidak terdaftar' })
       }
       conn.release()
     } else {
-      return res.json({ errmsg: 'masukan data' })
+      return res.end()
     }
   } catch (err) {
     throw err
@@ -167,27 +172,23 @@ module.exports.resetPassword = async (req, res) => {
   const hasSandiBaru = bcrypt.hashSync(sandibaru, salt)
   try {
     conn = await pool.getConnection()
+    // ambil data dari database yang sesuai dengan token yang di kirim
     const resp = await conn.query(
-      `SELECT * FROM users WHERE reset_sandi_token = '${token}'`
+      `SELECT id_user,nama FROM users WHERE reset_sandi_token = '${token}'`
     )
     if (resp) {
       const user = resp[0]
+      // mengupdate sandi lama dengan baru
       const data = await conn.query(
         `UPDATE users SET sandi='${hasSandiBaru}' WHERE id_user = '${user.id_user}'`
       )
-      if (data) {
-        return res.json({
-          msg: 'sandi berhasil di ubah',
-        })
+      if (data.affectedRows > 0) {
+        return res.status(200).send('success')
       } else {
-        return res.json({
-          errmsg: 'sandi gagal di ubah',
-        })
+        return res.status(500).send('error')
       }
     } else {
-      return res.json({
-        errmsg: 'sandi gagal di ubah',
-      })
+      return res.status(500).send('error')
     }
   } catch (err) {
     throw err

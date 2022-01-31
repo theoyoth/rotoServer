@@ -68,12 +68,15 @@ export default {
         email:this.email,
       })
       if(resp){
-        if(resp.data.successmsg){
-          swal(resp.data.successmsg,{icon:'success'})
-        }
         if(resp.data.errmsg){
-          swal('Error',resp.data.errmsg,{icon:'error'})
+          swal('Terjadi kesalahan',resp.data.errmsg,{icon:'error'})
         }
+        else{
+          swal('email berhasil di kirim, silahkan cek email anda',{icon:'success'})
+        }
+      }
+      else{
+        swal('Error','nama tidak terdaftar, masukkan nama yang benar',{icon:'error'})
       }
     }
   }
