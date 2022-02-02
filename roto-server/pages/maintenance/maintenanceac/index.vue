@@ -15,12 +15,13 @@
             <thead class="bg-white text-sm bg-gray-700">
                 <tr class="text-xs text-gray-200"> 
                     <th class="font-semibold py-3 px-2 w-4">no.</th>
-                    <th class="font-semibold py-3">nama</th>
+                    <th class="font-semibold py-3 w-52">nama</th>
                     <th class="font-semibold py-3 w-32">tanggal input</th>
                     <th class="font-semibold" >suhu</th>
                     <th class="font-semibold w-32">kelembapan</th>
                     <th class="font-semibold" >AC</th>
                     <th class="font-semibold" >UPS</th>
+                    <th class="font-semibold w-20">aksi</th>
                 </tr>
             </thead>
             <tbody v-if="carimaintenance !== ''" class="text-center bg-white bg-opacity-40 divide-y divide-gray-300">
@@ -43,6 +44,35 @@
                     <td>{{main.kelembapan}}</td>
                     <td>{{main.ac}}</td>
                     <td>{{main.ups}}</td>
+                    <td class="py-2 flex justify-around w-full">
+                        <div class="has-tooltip">
+                        <span
+                        class="
+                            tooltip
+                            rounded
+                            text-xs
+                            shadow-lg
+                            p-1
+                            bg-gray-700
+                            text-white
+                            mt-7 -ml-5
+                        "
+                        >detail</span>
+                            <div class="bg-gray-700 w-7 h-7 rounded-xl flex items-center justify-center">
+                                <NuxtLink
+                                    :to="{
+                                    name: 'maintenance-maintenanceac-detail-detail',
+                                    params: { id: main.id_maintenance },
+                                    }"
+                                >
+                                    <font-awesome-icon
+                                    :icon="['fas', 'eye']"
+                                    class="text-yellow-500"
+                                    />
+                                </NuxtLink>
+                            </div>
+                        </div>
+                    </td>
                 </tr>
             </tbody>   
         </table>
