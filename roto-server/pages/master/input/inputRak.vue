@@ -91,7 +91,7 @@
                 </div>
             </div>
         </div>
-        <button class="mt-10 opacity-10 bg-gray-700 text-gray-200 w-28 py-2 rounded cursor-default" type="submit" :class="{activesubmit : valid}" :disabled="invalid">simpan</button>
+        <button class="mt-10 opacity-10 bg-gray-700 text-gray-200 w-24 py-2 rounded cursor-default" type="submit" :class="{activesubmit : valid}" :disabled="invalid">simpan</button>
     </form>
     </ValidationObserver>
 </section>
@@ -161,7 +161,7 @@ export default {
 .activesubmit {
     background-color: rgb(55, 65, 81);
     color:whitesmoke;
-    width:7rem;
+    width:6rem;
     cursor:pointer;
     opacity:1;
     padding-top: .5rem;

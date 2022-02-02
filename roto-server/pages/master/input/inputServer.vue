@@ -46,7 +46,7 @@
                     <label for="model" class="block mb-2 text-sm">model</label>
 
                     <div class="flex flex-col w-72">
-                        <ValidationProvider rules="required|passchar" v-slot={errors}>
+                        <ValidationProvider rules="required|inputval" v-slot={errors}>
                             <input type="text" name="model" id="model" class="p-2 w-full outline-none rounded-lg bg-gray-300 uppercase" v-model="inputServer.model" :disabled="inputServer.merek === ''" >
                             <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
                         </ValidationProvider>
@@ -162,7 +162,7 @@
                 </div>
             </div>
         </div>
-        <button class="mt-10 opacity-10 bg-gray-700 text-gray-200 w-28 py-2 rounded cursor-default" type="submit" :class="{activesubmit : valid}" :disabled="invalid">simpan</button>
+        <button class="mt-10 opacity-10 bg-gray-700 text-gray-200 w-24 py-2 rounded cursor-default" type="submit" :class="{activesubmit : valid}" :disabled="invalid">simpan</button>
     </form>
     </ValidationObserver>
 </section>

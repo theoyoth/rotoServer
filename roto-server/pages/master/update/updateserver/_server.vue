@@ -42,7 +42,7 @@
                     <span class="tooltip text-xs rounded shadow-lg p-1 bg-gray-700 text-white ml-32">masukan nama modelnya</span>
                     <label for="model" class="block mb-2 text-sm">model</label>
                     <div class="flex flex-col w-72">
-                        <ValidationProvider rules="required|passchar" v-slot={errors}>
+                        <ValidationProvider rules="required|inputval" v-slot={errors}>
                             <input type="text"  name="model" v-model="updateServer.model" id="model" class="p-2 w-full rounded-lg outline-none bg-gray-300 uppercase" >
                             <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
                         </ValidationProvider>

@@ -31,7 +31,7 @@
 
                     <label for="model" class="block mb-2 text-sm">model</label>
                     <div class="flex flex-col w-72">
-                        <ValidationProvider rules="required|passchar" v-slot={errors}>
+                        <ValidationProvider rules="required|inputval" v-slot={errors}>
                             <input type="text" v-model="inputNetwork.model" name="model" id="model" class="p-2 w-full rounded-lg outline-none bg-gray-200 uppercase" :disabled="inputNetwork.merek === ''">
                             <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
                         </ValidationProvider>
@@ -42,7 +42,7 @@
 
                     <label for="tipe" class="block mb-2 text-sm">tipe</label>
                     <div class="flex flex-col w-72">
-                        <ValidationProvider rules="required|passchar" v-slot={errors}>
+                        <ValidationProvider rules="required|inputval" v-slot={errors}>
                             <input type="text" v-model="inputNetwork.tipe" name="tipe" id="tipe" class="p-2 w-full rounded-lg outline-none bg-gray-200 uppercase" :disabled="inputNetwork.model === ''">
                             <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
                         </ValidationProvider>
@@ -164,7 +164,7 @@ export default {
 .activesubmit {
     background-color: rgb(55, 65, 81);
     color:whitesmoke;
-    width:7rem;
+    width:6rem;
     cursor:pointer;
     opacity:1;
     padding-top: .5rem;

@@ -7,6 +7,7 @@ import {
   confirmed,
   min,
   email,
+  double,
 } from 'vee-validate/dist/rules'
 
 // Object.keys(rules).forEach((rule) => {
@@ -20,6 +21,11 @@ extend('required', {
 
 extend('numeric', {
   ...numeric,
+  message: 'isian harus berupa angka',
+})
+
+extend('double', {
+  ...double,
   message: 'isian harus berupa angka',
 })
 
@@ -53,6 +59,18 @@ extend('passchar', {
       return true
     } else {
       return false
+    }
+  },
+})
+extend('inputval', {
+  message: 'tidak menerima simbol selain -,/',
+  validate: (value) => {
+    const input = /^[A-Za-z-,\d\s\/]*$/
+    const anyChar = input.test(value)
+    if (anyChar) {
+      return true
+    } else {
+      false
     }
   },
 })

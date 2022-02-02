@@ -29,7 +29,7 @@
 
                     <label for="model" class="block mb-2 text-sm">model</label>
                     <div class="flex flex-col w-72">
-                        <ValidationProvider rules="required|passchar" v-slot={errors}>
+                        <ValidationProvider rules="required|inputval" v-slot={errors}>
                             <input type="text" v-model="updateCctv.model" name="model" id="model" class="p-2 w-72 rounded-lg outline-none bg-gray-300 uppercase">
                             <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
                         </ValidationProvider>

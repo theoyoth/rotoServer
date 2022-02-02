@@ -20,7 +20,7 @@
                     <label for="merek" class="block mb-2 text-sm">merek</label>
                     <div class="flex flex-col w-72">
                         <ValidationProvider rules="required|passchar" v-slot={errors}>
-                            <input type="text" v-model="inputAc.merek" name="merek" id="merek" class="p-2 w-full rounded-lg focus:ring-blue-500 bg-gray-200 uppercase">
+                            <input type="text" v-model="inputAc.merek" name="merek" id="merek" class="p-2 w-full rounded-lg bg-gray-200 uppercase outline-none">
                             <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
                         </ValidationProvider>
                     </div>
@@ -30,8 +30,8 @@
 
                     <label for="model" class="block mb-2 text-sm">model</label>
                     <div class="flex flex-col w-72">
-                        <ValidationProvider rules="required|passchar" v-slot={errors}>
-                            <input type="text" v-model="inputAc.model" name="model" id="model" class="p-2 w-72 rounded-lg focus:ring-blue-500 bg-gray-200 uppercase" :disabled="inputAc.merek === ''">
+                        <ValidationProvider rules="required|inputval" v-slot={errors}>
+                            <input type="text" v-model="inputAc.model" name="model" id="model" class="p-2 w-72 rounded-lg outline-none bg-gray-200 uppercase" :disabled="inputAc.merek === ''">
                         <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
                         </ValidationProvider>
                     </div>
@@ -42,7 +42,7 @@
                     <label for="sumberDayaListrik" class="block mb-2 text-sm">sumber daya listrik</label>
                     <div class="flex flex-col w-72">
                         <ValidationProvider rules="required|numeric" v-slot={errors}>
-                            <input type="text" v-model="inputAc.sumberDayaListrik" name="sumberDayaListrik" id="sumberDayaListrik" class="p-2 w-full rounded-lg focus:ring-blue-500 bg-gray-200 uppercase" :disabled="inputAc.model === ''">
+                            <input type="text" v-model="inputAc.sumberDayaListrik" name="sumberDayaListrik" id="sumberDayaListrik" class="p-2 w-full rounded-lg outline-none bg-gray-200 uppercase" :disabled="inputAc.model === ''">
                             <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
                         </ValidationProvider>
                     </div>
@@ -53,7 +53,7 @@
                     <label for="dimensi" class="block mb-2 text-sm">dimensi</label>
                     <div class="flex flex-col w-72">
                         <ValidationProvider rules="required|passchar" v-slot={errors}>
-                            <input type="text" v-model="inputAc.dimensi" name="dimensi" id="dimensi" class="p-2 w-full rounded-lg focus:ring-blue-500 bg-gray-200 uppercase" :disabled="inputAc.sumberDayaListrik === ''">
+                            <input type="text" v-model="inputAc.dimensi" name="dimensi" id="dimensi" class="p-2 w-full rounded-lg outline-none bg-gray-200 uppercase" :disabled="inputAc.sumberDayaListrik === ''">
                             <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
                         </ValidationProvider>
                     </div>
@@ -64,7 +64,10 @@
                     <label for="konsumsiDaya" class="block mb-2 text-sm">konsumsi daya</label>
                     <div class="flex flex-col w-72">
                         <ValidationProvider rules="required|numeric" v-slot={errors}>
-                            <input type="text" v-model="inputAc.konsumsiDaya" name="konsumsiDaya" id="konsumsiDaya" class="p-2 w-full rounded-lg focus:ring-blue-500 bg-gray-200 uppercase" :disabled="inputAc.dimensi === ''">
+                            <div class="flex">
+                                <input type="text" v-model="inputAc.konsumsiDaya" name="konsumsiDaya" id="konsumsiDaya" class="p-2 w-full rounded-l-lg outline-none bg-gray-200 uppercase" :disabled="inputAc.dimensi === ''">
+                                <input type="text" value="watt" readonly="readonly" class="w-16 p-1 rounded-r-lg bg-gray-200 outline-none text-center cursor-default">
+                             </div>
                             <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
                         </ValidationProvider>
                     </div>
@@ -74,8 +77,8 @@
 
                     <label for="kapasitasPendingin" class="block mb-2 text-sm">kapasitas pendingin</label>
                     <div class="flex flex-col w-72">
-                        <ValidationProvider rules="required|numeric" v-slot={errors}>
-                            <input type="text" v-model="inputAc.kapasitasPendingin" name="kapasitasPendingin" id="kapasitasPendingin" class="p-2 w-full rounded-lg focus:ring-blue-500 bg-gray-200 uppercase" :disabled="inputAc.konsumsiDaya === ''">
+                        <ValidationProvider rules="required|double" v-slot={errors}>
+                            <input type="text" v-model="inputAc.kapasitasPendingin" name="kapasitasPendingin" id="kapasitasPendingin" class="p-2 w-full rounded-lg outline-none bg-gray-200 uppercase" :disabled="inputAc.konsumsiDaya === ''">
                             <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
                         </ValidationProvider>
                     </div>
@@ -86,7 +89,7 @@
                     <label for="tahun" class="block mb-2 text-sm">tahun</label>
                     <div class="flex flex-col w-72">
                         <ValidationProvider rules="required" v-slot={errors}>
-                            <input type="date" v-model="inputAc.tahun" name="tahun" id="tahun" class="p-2 w-full rounded-lg focus:ring-blue-500 bg-gray-200 uppercase" :disabled="inputAc.kapasitasPendingin === ''">
+                            <input type="date" v-model="inputAc.tahun" name="tahun" id="tahun" class="p-2 w-full rounded-lg outline-none bg-gray-200 uppercase" :disabled="inputAc.kapasitasPendingin === ''">
                             <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
                         </ValidationProvider>
                     </div>
@@ -97,7 +100,7 @@
                     <label for="garansi" class="block mb-2 text-sm">garansi</label>
                     <div class="flex flex-col w-72">
                         <ValidationProvider rules="required" v-slot={errors}>
-                            <input type="date" v-model="inputAc.garansi" name="garansi" id="garansi" class="p-2 w-full rounded-lg focus:ring-blue-500 bg-gray-200 uppercase" :disabled="inputAc.kapasitasPendingin === ''">
+                            <input type="date" v-model="inputAc.garansi" name="garansi" id="garansi" class="p-2 w-full rounded-lg outline-none bg-gray-200 uppercase" :disabled="inputAc.kapasitasPendingin === ''">
                             <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
                         </ValidationProvider>
                     </div>

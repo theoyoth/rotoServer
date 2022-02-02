@@ -12,8 +12,8 @@
 
     <ValidationObserver v-slot={invalid,valid}>
     <form class="mt-8 min-w-min" @submit.prevent="postInputBaterai">
-        <div >
-            <div class="grid grid-cols-2 grid-rows-4">
+        <div>
+            <div class="grid grid-cols-2">
                 <div class="mb-4 has-tooltip">
                      <span class="tooltip text-xs rounded shadow-lg p-1 bg-gray-700 text-white ml-32">masukan accu baterai</span>
 
@@ -42,7 +42,10 @@
                     <label for="tegangan" class="block mb-2 text-sm">tegangan</label>
                     <div class="flex flex-col w-72">
                         <ValidationProvider rules="required|numeric" v-slot={errors}>
-                            <input type="text" v-model="inputBaterai.tegangan" name="tegangan" id="tegangan" class="p-2 w-full rounded-lg outline-none bg-gray-200 uppercase" :disabled="inputBaterai.kuantitas === ''">
+                            <div class="flex">
+                                <input type="text" v-model="inputBaterai.tegangan" name="tegangan" id="tegangan" class="p-2 w-full rounded-l-lg outline-none bg-gray-200 uppercase" :disabled="inputBaterai.kuantitas === ''">
+                                <input type="text" value="volt" readonly="readonly" class="w-16 p-1 rounded-r-lg bg-gray-200 outline-none text-center cursor-default">
+                            </div>
                             <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
                         </ValidationProvider>
                     </div>
@@ -73,7 +76,7 @@
                 
             </div>
         </div>
-        <button class="opacity-10 bg-gray-700 text-gray-200 w-24 py-2 rounded cursor-default" type="submit" :class="{activesubmit : valid}" :disabled="invalid">simpan</button>
+        <button class="opacity-10 mt-10 bg-gray-700 text-gray-200 w-24 py-2 rounded cursor-default" type="submit" :class="{activesubmit : valid}" :disabled="invalid">simpan</button>
     </form>
     </ValidationObserver>
 </section>
@@ -141,7 +144,7 @@ export default {
     opacity: 0.1;
 }
 .activesubmit {
-    background-color: rgb(39, 39, 39);
+    background-color: rgb(37, 45, 56);
     color:whitesmoke;
     width:6rem;
     cursor:pointer;
