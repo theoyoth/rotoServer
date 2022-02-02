@@ -17,7 +17,6 @@
                   type="file"
                   ref="file"
                   id="file"
-                  name="filetoupload"
                   required
                   accept=".pdf"
                   class="input-file border border-black"
@@ -96,7 +95,7 @@ export default {
   methods: {
     onSelect() {
       const file = this.$refs.file.files[0]
-        this.file = file
+      this.file = file
       const allowedTypes = ["pdf"]
       if(allowedTypes.includes(file.type.split('/')[1])){
         this.message = ""
@@ -107,25 +106,31 @@ export default {
     },
     async onSubmit() {
       const lokasi = this.$auth.user.lokasi
-      let formData = new FormData()
-      formData.append('file', this.file)
-      try {
-        this.uploading = true
-        const resp = await this.$axios.post(`/document/${lokasi}`, formData,{
-          onUploadProgress:(e)=>{
-            this.uploadPercentage = parseInt(Math.round(e.loaded*100/e.total))
-          }
-        })
-        swal('berhasil di upload', { icon: 'success' })
-        this.uploading = false
-      } catch (err) {
-        this.uploading = false
+      const allowedTypes = ["pdf"]
+      if(!allowedTypes.includes(this.file.type.split('/')[1])){
+        swal('tidak bisa mengupload file', { icon: 'error' })
+      }
+      else{
+        let formData = new FormData()
+        formData.append('file', this.file)
+        try {
+          this.uploading = true
+          const resp = await this.$axios.post(`/document/${lokasi}`, formData,{
+            onUploadProgress:(e)=>{
+              this.uploadPercentage = parseInt(Math.round(e.loaded*100/e.total))
+            }
+          })
+          swal('berhasil di upload', { icon: 'success' })
+          this.uploading = false
+        } catch (err) {
+          this.uploading = false
+        }
       }
     },
     deleteFile(filename){
       swal({
               title: 'anda yakin?',
-              text: 'sekali dihapus, file tidak akan bisa kembali',
+              text: 'setelah dihapus, file tidak akan bisa kembali',
               icon: 'warning',
               buttons: true,
               dangerMode: true

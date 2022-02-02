@@ -9,11 +9,6 @@
                     <font-awesome-icon :icon="['fas','search']" class="text-yellow-500"/>
                 </button>
             </div>
-            <!-- <select id="date" class="rounded-lg p-2 outline-none ml-8 cursor-pointer">
-                <option value="hari">hari</option>
-                <option value="bulan">bulan</option>
-                <option value="tahun">tahun</option>
-            </select> -->
             <NuxtLink to="/master/input/inputapar"
             class="flex items-center justify-between rounded-md px-3 w-20 bg-gray-700 hover:bg-gray-600 transition duration-200">
             <p class="font-medium text-sm text-gray-200">input</p>
@@ -25,7 +20,7 @@
 
         <table class="table space-y-6 container mx-auto table-auto border-collapse mt-7 divide-y divide-gray-300">
             <thead class="bg-gray-700 text-sm has-tooltip">
-                <span class="tooltip rounded shadow-lg p-1 bg-gray-700 text-white -mt-10 absolute left-2/4 transform -translate-x-2/4">semua detail barang</span>
+                <span class="tooltip rounded shadow-lg p-1 bg-gray-700 text-white -mt-10 absolute left-1/2 ">semua detail barang</span>
                 <tr class="text-xs text-gray-200"> 
                     <th class="font-semibold py-3 px-2 w-4">no.</th>
                     <th class="font-semibold py-3 w-56">Merek</th>
@@ -171,7 +166,7 @@ export default {
         deleteData(id){
             swal({
                 title: 'anda yakin?',
-                text: 'sekali dihapus, data tidak akan bisa kembali',
+                text: 'setelah dihapus, data tidak akan bisa kembali',
                 icon: 'warning',
                 buttons: true,
                 dangerMode: true

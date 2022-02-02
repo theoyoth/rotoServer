@@ -305,7 +305,7 @@ export default {
         deleteData(id){
             swal({
                 title: 'anda yakin?',
-                text: 'sekali dihapus, data tidak akan bisa kembali',
+                text: 'setelah dihapus, data tidak akan bisa kembali',
                 icon: 'warning',
                 buttons: true,
                 dangerMode: true
