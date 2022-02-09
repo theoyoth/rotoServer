@@ -101,25 +101,6 @@ export default {
             }
         }
     },
-    async mounted(){
-        try{
-            const lokasi = this.$auth.user.lokasi
-            const id = this.$route.params.id
-            const resp = await this.$axios.get(`/master/keyboard/update/${id}/${lokasi}`)
-            if(resp){
-            resp.data.forEach(keyboard=>{
-                this.updateKeyboard.merek = keyboard.merek
-                this.updateKeyboard.model = keyboard.model
-                this.updateKeyboard.tipe = keyboard.tipe
-                this.updateKeyboard.tahun = moment(keyboard.tahun).format('YYYY-MM-DD')
-                this.updateKeyboard.garansi = moment(keyboard.garansi).format('YYYY-MM-DD')
-            })
-        }
-        }
-        catch(err){
-            console.log(err)
-        }   
-    },
     methods: {
         async updateDataKeyboard(){
             const resp = await this.$axios.post('/master/keyboard/update',{
@@ -140,7 +121,29 @@ export default {
                 swal('Error',resp.data.errmsg,{icon:'error'})
                 this.$router.push('/master/keyboard/updatekeyboard')
             }
+        },
+        async getAllDataKeyboards(){
+            try{
+                const lokasi = this.$auth.user.lokasi
+                const id = this.$route.params.id
+                const resp = await this.$axios.get(`/master/keyboard/update/${id}/${lokasi}`)
+                if(resp){
+                resp.data.forEach(keyboard=>{
+                    this.updateKeyboard.merek = keyboard.merek
+                    this.updateKeyboard.model = keyboard.model
+                    this.updateKeyboard.tipe = keyboard.tipe
+                    this.updateKeyboard.tahun = moment(keyboard.tahun).format('YYYY-MM-DD')
+                    this.updateKeyboard.garansi = moment(keyboard.garansi).format('YYYY-MM-DD')
+                })
+            }
+            }
+            catch(err){
+                console.log(err)
+            }   
         }
+    },
+    mounted(){
+        this.getAllDataKeyboards()
     }
 }
 </script>

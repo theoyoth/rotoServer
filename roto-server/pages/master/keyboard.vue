@@ -196,20 +196,23 @@ export default {
                 swal('Error','ada yang salah',{icon:'error'})
             })
         },
-    },
-    async mounted(){
-        try{
-            const lokasi = this.$auth.user.lokasi
-            const idlogin = this.$auth.user.id
-            const resp = await this.$axios.get(`/masterkeyboard/${lokasi}/${idlogin}`)
-            resp.data.reverse()
-            resp.data.forEach(keyboard => {
-                this.keyboards.push(keyboard)
-            })
+        async getAllDataKeyboards(){
+            try{
+                const lokasi = this.$auth.user.lokasi
+                const idlogin = this.$auth.user.id
+                const resp = await this.$axios.get(`/masterkeyboard/${lokasi}/${idlogin}`)
+                resp.data.reverse()
+                resp.data.forEach(keyboard => {
+                    this.keyboards.push(keyboard)
+                })
+            }
+            catch(err){
+                console.error(err);
+            };
         }
-        catch(err){
-            console.error(err);
-        };
+    },
+    mounted(){
+        this.getAllDataKeyboards()
     }
 
 }

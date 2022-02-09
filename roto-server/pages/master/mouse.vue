@@ -197,20 +197,23 @@ export default {
             })
 
         },
-    },
-    async mounted(){
-        try{
-            const lokasi = this.$auth.user.lokasi
-            const idlogin = this.$auth.user.id
-            const resp = await this.$axios.get(`/mastermouse/${lokasi}/${idlogin}`)
-            resp.data.reverse()
-            resp.data.forEach(mouse => {
-            this.mouses.push(mouse)
-        })
+        async getAllDataMouses(){
+            try{
+                const lokasi = this.$auth.user.lokasi
+                const idlogin = this.$auth.user.id
+                const resp = await this.$axios.get(`/mastermouse/${lokasi}/${idlogin}`)
+                resp.data.reverse()
+                resp.data.forEach(mouse => {
+                this.mouses.push(mouse)
+            })
+            }
+            catch(err){
+                console.error(err);
+            };
         }
-        catch(err){
-            console.error(err);
-        };
+    },
+    mounted(){
+        this.getAllDataMouses()
     }
 
 }

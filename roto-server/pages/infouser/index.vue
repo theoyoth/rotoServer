@@ -153,53 +153,56 @@ export default {
   },
   methods:{
     deleteData(id){
-            swal({
-                title: 'anda yakin?',
-                text: 'data tidak akan bisa kembali',
-                icon: 'warning',
-                buttons: true,
-                dangerMode: true
-            }).then(suc=>{
-              if(suc){
-                let indexOfArrayItem = this.users.findIndex(i => i.id_user === id)
-                const lokasiServer = this.$auth.user.lokasi
-                this.$axios.delete(`/user/delete/${id}/${lokasiServer}`)
-                .then(resp=>{
-                  if(resp) {
-                    this.users.splice(indexOfArrayItem, 1);
-                    this.$router.push('/infouser')
-                    swal('data dihapus',{icon:'success'})
-                  }
-                }).catch(err=>{
-                  if(err.data.errmsg){
-                      this.$router.push('/infouser')
-                      swal('Error',err.data.errmsg,{icon:'error'})
-                  }
-                })
-              } else{
-                    swal('Error','gagal menghapus',{icon:'error'})
-                }
+        swal({
+            title: 'anda yakin?',
+            text: 'data tidak akan bisa kembali',
+            icon: 'warning',
+            buttons: true,
+            dangerMode: true
+        }).then(suc=>{
+          if(suc){
+            let indexOfArrayItem = this.users.findIndex(i => i.id_user === id)
+            const lokasiServer = this.$auth.user.lokasi
+            this.$axios.delete(`/user/delete/${id}/${lokasiServer}`)
+            .then(resp=>{
+              if(resp) {
+                this.users.splice(indexOfArrayItem, 1);
+                this.$router.push('/infouser')
+                swal('data dihapus',{icon:'success'})
+              }
             }).catch(err=>{
-                swal('Error','ada yang salah',{icon:'error'})
+              if(err.data.errmsg){
+                  this.$router.push('/infouser')
+                  swal('Error',err.data.errmsg,{icon:'error'})
+              }
             })
-        },
+          } else{
+                swal('Error','gagal menghapus',{icon:'error'})
+            }
+        }).catch(err=>{
+            swal('Error','ada yang salah',{icon:'error'})
+        })
+    },
+    async getAllUsers(){
+      const lokasiUser = this.$auth.user.lokasi
+      try {
+        // get all users from database
+        const resp = await this.$axios.get(`/users/${lokasiUser}`)
+        if (resp.data){
+          // reverse the users, so the new user will be on the top
+          resp.data.reverse()
+          // save it to users state and will show it to frontend
+          this.users = resp.data
+        }
+        
+      } catch(err) {
+        console.log(err)
+      }
+    }
    
   },
-  async mounted(){
-    const lokasiUser = this.$auth.user.lokasi
-    try {
-      // get all users from database
-      const resp = await this.$axios.get(`/users/${lokasiUser}`)
-      if (resp.data){
-        // reverse the users, so the new user will be on the top
-        resp.data.reverse()
-        // save it to users state and will show to frontend
-        this.users = resp.data
-      }
-      
-    } catch(err) {
-      console.log(err)
-    }
+  mounted(){
+    this.getAllUsers()
   }
 }
 </script>

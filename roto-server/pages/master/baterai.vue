@@ -190,20 +190,23 @@ export default {
                 swal('Error','ada yang salah',{icon:'error'})
             })
         },
-    },
-    async mounted(){
-        try{
-            const lokasi = this.$auth.user.lokasi
-            const idlogin = this.$auth.user.id
-            const resp = await this.$axios.get(`/masterbaterai/${lokasi}/${idlogin}`)
-            resp.data.reverse()
-            resp.data.forEach(baterai => {
-                this.baterais.push(baterai)
-            })
+        async getAllDataBaterai(){
+            try{
+                const lokasi = this.$auth.user.lokasi
+                const idlogin = this.$auth.user.id
+                const resp = await this.$axios.get(`/masterbaterai/${lokasi}/${idlogin}`)
+                resp.data.reverse()
+                resp.data.forEach(baterai => {
+                    this.baterais.push(baterai)
+                })
+            }
+            catch(err){
+                console.error(err);
+            };
         }
-        catch(err){
-            console.error(err);
-        };
+    },
+    mounted(){
+        this.getAllDataBaterai()
     },
 
 }

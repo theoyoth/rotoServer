@@ -102,25 +102,6 @@ export default {
             }
         }
     },
-    async mounted(){
-        try{
-            const lokasi = this.$auth.user.lokasi
-            const id = this.$route.params.id
-            const resp = await this.$axios.get(`/master/apar/update/${id}/${lokasi}`)
-            if(resp){
-                resp.data.forEach(apar=>{
-                    this.updateApar.merek = apar.merek
-                    this.updateApar.model = apar.model
-                    this.updateApar.tipe = apar.tipe
-                    this.updateApar.tahun = moment(apar.tahun).format('YYYY-MM-DD')
-                    this.updateApar.garansi = moment(apar.garansi).format('YYYY-MM-DD')
-                })
-            }
-        }
-        catch(err){
-            console.log(err)
-        }
-    },
     methods: {
         async updateDataApar(){
             const resp = await this.$axios.post('/master/apar/update',{
@@ -141,7 +122,29 @@ export default {
                 swal('Error',resp.data.errmsg,{icon:'error'})
                 this.$router.push('/master/apar/updateapar')
             }
+        },
+        async getAllDataApars(){
+            try{
+                const lokasi = this.$auth.user.lokasi
+                const id = this.$route.params.id
+                const resp = await this.$axios.get(`/master/apar/update/${id}/${lokasi}`)
+                if(resp){
+                    resp.data.forEach(apar=>{
+                        this.updateApar.merek = apar.merek
+                        this.updateApar.model = apar.model
+                        this.updateApar.tipe = apar.tipe
+                        this.updateApar.tahun = moment(apar.tahun).format('YYYY-MM-DD')
+                        this.updateApar.garansi = moment(apar.garansi).format('YYYY-MM-DD')
+                    })
+                }
+            }
+            catch(err){
+                console.log(err)
+            }
         }
+    },
+    mounted(){
+        this.getAllDataApars()
     }
 }
 </script>

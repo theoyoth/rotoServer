@@ -173,37 +173,6 @@ export default {
             }
         }
     },
-    
-    async mounted(){
-        try{
-            const lokasi = this.$auth.user.lokasi
-            const idserver = this.$route.params.id
-            const resp = await this.$axios.get(`/master/update/updateserver/${idserver}/${lokasi}`)
-            if(resp){
-                resp.data.forEach(servers=>{
-                    this.updateServer.produk = servers.produk
-                    this.updateServer.tanggal = moment(servers.tanggal).format('YYYY-MM-DD'),
-                    this.updateServer.merek = servers.merek
-                    this.updateServer.model = servers.model
-                    this.updateServer.processor = servers.processor
-                    this.updateServer.memori = servers.memori
-                    this.updateServer.satuanMemori = servers.satuan_memori
-                    this.updateServer.internalStorage = servers.internal_storage
-                    this.updateServer.satuanInternalStorage = servers.satuan_internal_storage
-                    this.updateServer.networkController = servers.network_controller
-                    this.updateServer.sumberDayaListrik = servers.sumber_daya_listrik
-                    this.updateServer.tahun = moment(servers.tahun).format('YYYY-MM-DD')
-                    this.updateServer.garansi = moment(servers.garansi).format('YYYY-MM-DD')
-                    this.updateServer.idserver = servers.id_server
-                })
-            } else{
-                swal('Error','data tidak ada',{icon:'error'})
-            }
-        }
-        catch(err){
-            console.log(err)
-        }
-    },
     methods:{
         async updateData(){
             const resp = await this.$axios.post(`/master/server/update`,{
@@ -233,8 +202,41 @@ export default {
                 this.$router.push('/master/server/updateServer')
             }
                 
+        },
+        async getAllDataServers(){
+            try{
+                const lokasi = this.$auth.user.lokasi
+                const idserver = this.$route.params.id
+                const resp = await this.$axios.get(`/master/update/updateserver/${idserver}/${lokasi}`)
+                if(resp){
+                    resp.data.forEach(servers=>{
+                        this.updateServer.produk = servers.produk
+                        this.updateServer.tanggal = moment(servers.tanggal).format('YYYY-MM-DD'),
+                        this.updateServer.merek = servers.merek
+                        this.updateServer.model = servers.model
+                        this.updateServer.processor = servers.processor
+                        this.updateServer.memori = servers.memori
+                        this.updateServer.satuanMemori = servers.satuan_memori
+                        this.updateServer.internalStorage = servers.internal_storage
+                        this.updateServer.satuanInternalStorage = servers.satuan_internal_storage
+                        this.updateServer.networkController = servers.network_controller
+                        this.updateServer.sumberDayaListrik = servers.sumber_daya_listrik
+                        this.updateServer.tahun = moment(servers.tahun).format('YYYY-MM-DD')
+                        this.updateServer.garansi = moment(servers.garansi).format('YYYY-MM-DD')
+                        this.updateServer.idserver = servers.id_server
+                    })
+                } else{
+                    swal('Error','data tidak ada',{icon:'error'})
+                }
+            }
+            catch(err){
+                console.log(err)
+            }
         }
-    }
+    },
+    mounted(){
+        this.getAllDataServers()
+    },
     
 }
 </script>

@@ -102,25 +102,7 @@ export default {
             }
         }
     },
-    async mounted(){
-        try{
-            const lokasi = this.$auth.user.lokasi
-            const id = this.$route.params.id
-            const resp = await this.$axios.get(`/master/monitor/update/${id}/${lokasi}`)
-            if(resp){
-                resp.data.forEach(monitor=>{
-                    this.updateMonitor.merek = monitor.merek
-                    this.updateMonitor.model = monitor.model
-                    this.updateMonitor.tipe = monitor.tipe
-                    this.updateMonitor.tahun = moment(monitor.tahun).format('YYYY-MM-DD')
-                    this.updateMonitor.garansi = moment(monitor.garansi).format('YYYY-MM-DD')
-                })
-            }
-        }
-        catch (err) {
-            console.log(err)
-        }   
-    },
+    
     methods: {
         async updateDataMonitor(){
             const resp = await this.$axios.post('/master/monitor/update',{
@@ -141,7 +123,29 @@ export default {
                 swal('Error',resp.data.errmsg,{icon:'error'})
                 this.$router.push('/master/monitor/updatemonitor')
             }
+        },
+        async getAllDataMonitors(){
+            try{
+                const lokasi = this.$auth.user.lokasi
+                const id = this.$route.params.id
+                const resp = await this.$axios.get(`/master/monitor/update/${id}/${lokasi}`)
+                if(resp){
+                    resp.data.forEach(monitor=>{
+                        this.updateMonitor.merek = monitor.merek
+                        this.updateMonitor.model = monitor.model
+                        this.updateMonitor.tipe = monitor.tipe
+                        this.updateMonitor.tahun = moment(monitor.tahun).format('YYYY-MM-DD')
+                        this.updateMonitor.garansi = moment(monitor.garansi).format('YYYY-MM-DD')
+                    })
+                }
+            }
+            catch (err) {
+                console.log(err)
+            }   
         }
+    },
+    mounted(){
+        this.getAllDataMonitors()
     }
 }
 </script>

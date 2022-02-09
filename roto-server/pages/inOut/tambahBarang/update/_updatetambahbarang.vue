@@ -105,30 +105,14 @@ export default {
                 kuantitas: "",
                 kepentingan : "",
                 penanggungJawab : "",
-            }
+            },
+            lokasi : this.$auth.user.lokasi
         }
      },
     computed:{
         userpa(){
             return this.$store.state.getUser.alluserpa
         }
-    },
-    async mounted(){
-        const lokasi = this.$auth.user.lokasi
-        const id = this.$route.params.id
-
-        const resp = await this.$axios.get(`/inout/tambahbarang/update/${id}/${lokasi}`)
-        if(resp){
-            resp.data.forEach(barang=>{
-                this.updateTambahBarang.tanggal = moment(barang.tanggal).format('YYYY-MM-DD')
-                this.updateTambahBarang.namaPenambah = barang.nama_penambah
-                this.updateTambahBarang.namaBarang = barang.nama_barang
-                this.updateTambahBarang.kuantitas = barang.kuantitas
-                this.updateTambahBarang.kepentingan = barang.kepentingan
-                this.updateTambahBarang.penanggungJawab = barang.penanggung_jawab
-            })
-        }
-        this.$store.dispatch('getUser/getallUserPa',lokasi)
     },
     methods:{
         async updateDataTambahBarang(){
@@ -151,7 +135,26 @@ export default {
                 swal('Error','data gagal di update',{icon:'error'})
                 this.$router.push('/inout/tambahbarang')
             }
+        },
+        async getAllDataTambahBarang(){
+            const id = this.$route.params.id
+
+            const resp = await this.$axios.get(`/inout/tambahbarang/update/${id}/${this.lokasi}`)
+            if(resp){
+                resp.data.forEach(barang=>{
+                    this.updateTambahBarang.tanggal = moment(barang.tanggal).format('YYYY-MM-DD')
+                    this.updateTambahBarang.namaPenambah = barang.nama_penambah
+                    this.updateTambahBarang.namaBarang = barang.nama_barang
+                    this.updateTambahBarang.kuantitas = barang.kuantitas
+                    this.updateTambahBarang.kepentingan = barang.kepentingan
+                    this.updateTambahBarang.penanggungJawab = barang.penanggung_jawab
+                })
+            }
         }
+    },
+    mounted(){
+        this.getAllDataTambahBarang()
+        this.$store.dispatch('getUser/getallUserPa',this.lokasi)
     }
 }
 </script>

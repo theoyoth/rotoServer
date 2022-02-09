@@ -140,24 +140,6 @@ export default {
             }
         }
     },
-    async mounted(){
-        const lokasi = this.$auth.user.lokasi
-        const id = this.$route.params.id
-
-        const resp = await this.$axios.get(`/master/ac/update/${id}/${lokasi}`)
-        if(resp){
-            resp.data.forEach(ac=>{
-                this.updateAc.merek = ac.merek
-                this.updateAc.model = ac.model
-                this.updateAc.sumberDayaListrik = ac.sumber_daya_listrik
-                this.updateAc.dimensi = ac.dimensi
-                this.updateAc.konsumsiDayaListrik = ac.konsumsi_daya_listrik
-                this.updateAc.kapasitasPendingin = ac.kapasitas_pendingin
-                this.updateAc.tahun = moment(ac.tahun).format('YYYY-MM-DD')
-                this.updateAc.garansi = moment(ac.garansi).format('YYYY-MM-DD')
-            })
-        }
-    },
     methods:{
         async updateDataAc(){
             const resp = await this.$axios.post('/master/ac/update',{
@@ -180,8 +162,29 @@ export default {
                 swal('Error',resp.data.errmsg,{icon:'error'})
                 this.$router.push('/master/update/updateac')
             }
+        },
+        async getAllDataAc(){
+            const lokasi = this.$auth.user.lokasi
+            const id = this.$route.params.id
+
+            const resp = await this.$axios.get(`/master/ac/update/${id}/${lokasi}`)
+            if(resp){
+                resp.data.forEach(ac=>{
+                    this.updateAc.merek = ac.merek
+                    this.updateAc.model = ac.model
+                    this.updateAc.sumberDayaListrik = ac.sumber_daya_listrik
+                    this.updateAc.dimensi = ac.dimensi
+                    this.updateAc.konsumsiDayaListrik = ac.konsumsi_daya_listrik
+                    this.updateAc.kapasitasPendingin = ac.kapasitas_pendingin
+                    this.updateAc.tahun = moment(ac.tahun).format('YYYY-MM-DD')
+                    this.updateAc.garansi = moment(ac.garansi).format('YYYY-MM-DD')
+                })
+            }
         }
-    }
+    },
+    mounted(){
+        this.getAllDataAc()    
+    },
 }
 </script>
 

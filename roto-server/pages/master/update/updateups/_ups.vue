@@ -184,27 +184,6 @@ export default {
             }
         }
     },
-    async mounted(){
-        const lokasi = this.$auth.user.lokasi
-        const id = this.$route.params.id
-        const resp = await this.$axios.get(`/master/ups/update/${id}/${lokasi}`)
-        if(resp){
-            resp.data.forEach(ups=>{
-                this.updateUps.model = ups.model
-                this.updateUps.upsCriticalLoad = ups.ups_critical_load
-                this.updateUps.upsCriticalTemperature = ups.ups_critical_temperature
-                this.updateUps.upsCriticalCapacity = ups.ups_critical_capacity
-                this.updateUps.nomorSerial = ups.nomor_serial
-                this.updateUps.namaSistem = ups.nama_sistem
-                this.updateUps.manufaktur = ups.manufaktur
-                this.updateUps.peringkatTegangan = ups.peringkat_tegangan
-                this.updateUps.peringkatFrekuensi = ups.peringkat_frekuensi
-                this.updateUps.peringkatTeganganBaterai = ups.peringkat_tegangan_baterai
-                this.updateUps.tahun = moment(ups.tahun).format('YYYY-MM-DD')
-                this.updateUps.garansi = moment(ups.garansi).format('YYYY-MM-DD')
-            })
-        }
-    },
     methods:{
         async updateDataUps(){
             const resp = await this.$axios.post('/master/ups/update',{
@@ -232,7 +211,31 @@ export default {
                 swal('Error',resp.data.errmsg,{icon:'error'})
                 this.$router.push('/master/updateups')
             }
+        },
+        async getAllDataUps(){
+            const lokasi = this.$auth.user.lokasi
+            const id = this.$route.params.id
+            const resp = await this.$axios.get(`/master/ups/update/${id}/${lokasi}`)
+            if(resp){
+                resp.data.forEach(ups=>{
+                    this.updateUps.model = ups.model
+                    this.updateUps.upsCriticalLoad = ups.ups_critical_load
+                    this.updateUps.upsCriticalTemperature = ups.ups_critical_temperature
+                    this.updateUps.upsCriticalCapacity = ups.ups_critical_capacity
+                    this.updateUps.nomorSerial = ups.nomor_serial
+                    this.updateUps.namaSistem = ups.nama_sistem
+                    this.updateUps.manufaktur = ups.manufaktur
+                    this.updateUps.peringkatTegangan = ups.peringkat_tegangan
+                    this.updateUps.peringkatFrekuensi = ups.peringkat_frekuensi
+                    this.updateUps.peringkatTeganganBaterai = ups.peringkat_tegangan_baterai
+                    this.updateUps.tahun = moment(ups.tahun).format('YYYY-MM-DD')
+                    this.updateUps.garansi = moment(ups.garansi).format('YYYY-MM-DD')
+                })
+            }
         }
+    },
+    mounted(){
+        this.getAllDataUps()   
     }
 }
 </script>

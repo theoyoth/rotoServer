@@ -248,20 +248,23 @@ export default {
                 swal('Error','ada yang salah',{icon:'error'})
             })
         },
-    },
-    async mounted(){
-        try{
-            const lokasi = this.$auth.user.lokasi
-            const idlogin = this.$auth.user.id
-            const resp = await this.$axios.get(`/masternas/${lokasi}/${idlogin}`)
-            resp.data.reverse()
-            resp.data.forEach(nas => {
-                this.nass.push(nas)
-            })
+        async getAllDataNas(){
+            try{
+                const lokasi = this.$auth.user.lokasi
+                const idlogin = this.$auth.user.id
+                const resp = await this.$axios.get(`/masternas/${lokasi}/${idlogin}`)
+                resp.data.reverse()
+                resp.data.forEach(nas => {
+                    this.nass.push(nas)
+                })
+            }
+            catch(err){
+                console.error(err);
+            };
         }
-        catch(err){
-            console.error(err);
-        };
+    },
+    mounted(){
+        this.getAllDataNas()
     }
 
 }

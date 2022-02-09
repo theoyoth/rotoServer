@@ -147,13 +147,18 @@ export default {
       detail: '',
     }
   },
-  async mounted(){
-    const lokasi = this.$auth.user.lokasi
-    const iddetail = this.$route.params.id
-    const resp = await this.$axios.get(
-      `/master/ups/detail/${lokasi}/${iddetail}`
-    )
-    this.detail = resp.data
+  methods:{
+    async getDetailData(){
+      const lokasi = this.$auth.user.lokasi
+      const iddetail = this.$route.params.id
+      const resp = await this.$axios.get(
+        `/master/ups/detail/${lokasi}/${iddetail}`
+      )
+      this.detail = resp.data
+    }
+  },
+  mounted(){
+    this.getDetailData()
   }
 }
 </script>

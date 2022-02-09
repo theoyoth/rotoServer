@@ -200,20 +200,23 @@ export default {
                 swal('Error','ada yang salah',{icon:'error'})
             })
         },
+        async getAllDataGensets(){
+            try{
+                const lokasi = this.$auth.user.lokasi
+                const idlogin = this.$auth.user.id
+                const resp = await this.$axios.get(`/mastergenset/${lokasi}/${idlogin}`)
+                resp.data.reverse()
+                resp.data.forEach(genset => {
+                    this.gensets.push(genset)
+                })
+            }
+            catch(err){
+                console.error(err);
+            }
+        }
     },
-    async mounted(){
-        try{
-            const lokasi = this.$auth.user.lokasi
-            const idlogin = this.$auth.user.id
-            const resp = await this.$axios.get(`/mastergenset/${lokasi}/${idlogin}`)
-            resp.data.reverse()
-            resp.data.forEach(genset => {
-                this.gensets.push(genset)
-            })
-        }
-        catch(err){
-            console.error(err);
-        }
+    mounted(){
+        this.getAllDataGensets()
     }
 
 }

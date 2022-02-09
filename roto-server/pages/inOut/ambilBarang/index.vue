@@ -235,19 +235,6 @@ export default {
             })
         }
     },
-    async mounted(){
-        try{
-            const lokasi = this.$auth.user.lokasi
-            const idlogin = this.$auth.user.id
-            const resp = await this.$axios.get(`/inout/ambilbarang/${lokasi}/${idlogin}`)
-            resp.data.forEach(barang => {
-            this.barangs.push(barang)
-            })
-        }
-        catch(err){
-            console.error(err);
-        }
-    },
     methods:{
         deleteData(id){
             swal({
@@ -269,17 +256,32 @@ export default {
                             swal('data dihapus',{icon:'success'})
                         }
                     }).catch(err=>{
-                        if(err.data.errmsg){
                             this.$router.push('/inout/ambilbarang')
                             swal('Error', 'data gagal di hapus',{icon:'error'})
-                        }
                     })
+                }else{
+                    swal('Error','gagal menghapus',{icon:'error'})
                 }
             }).catch(err=>{
                 swal('Error', 'gagal menghapus',{icon:'error'})
             })
         },
-       
+        async getAllDataAmbilBarang(){
+            try{
+                const lokasi = this.$auth.user.lokasi
+                const idlogin = this.$auth.user.id
+                const resp = await this.$axios.get(`/inout/ambilbarang/${lokasi}/${idlogin}`)
+                resp.data.forEach(barang => {
+                this.barangs.push(barang)
+                })
+            }
+            catch(err){
+                console.error(err);
+            }
+        }
+    },
+    mounted(){
+        this.getAllDataAmbilBarang()
     }
 }
 </script>

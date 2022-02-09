@@ -330,20 +330,23 @@ export default {
                 swal('Error','ada yang salah',{icon:'error'})
             })
         },
-    },
-    async mounted(){
-        const lokasiserver = this.$auth.user.lokasi
-        const idlogin = this.$auth.user.id
-        try{
-            const resp = await this.$axios.get(`/masterserver/${lokasiserver}/${idlogin}`)
-            resp.data.reverse()
-            resp.data.forEach(server => {
-                this.servers.push(server)
-            })
+        async getAllDataServers(){
+          const lokasiserver = this.$auth.user.lokasi
+          const idlogin = this.$auth.user.id
+          try{
+              const resp = await this.$axios.get(`/masterserver/${lokasiserver}/${idlogin}`)
+              resp.data.reverse()
+              resp.data.forEach(server => {
+                  this.servers.push(server)
+              })
+          }
+          catch(err){
+              console.error(err);
+          };
         }
-        catch(err){
-            console.error(err);
-        };
+    },
+    mounted(){
+      this.getAllDataServers()
     },
 
 }

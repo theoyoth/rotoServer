@@ -137,26 +137,29 @@ export default {
                 swal('Error',resp.data.msg,{icon:'error'})
                 this.$router.push('/master/updaterak')
             }
+        },
+        async getAllDataRak(){
+             try{
+                const lokasi = this.$auth.user.lokasi
+                const id = this.$route.params.id
+                const resp = await this.$axios.get(`/master/rak/update/${id}/${lokasi}`)
+                if(resp){
+                    resp.data.forEach(rak=>{
+                        this.updateRak.tipeRak = rak.tipe_rak
+                        this.updateRak.tipePintu = rak.tipe_pintu
+                        this.updateRak.namaProduk = rak.nama_produk
+                        this.updateRak.dimensi = rak.dimensi
+                        this.updateRak.berat = rak.berat
+                        this.updateRak.tahun = moment(rak.tahun).format('YYYY-MM-DD')
+                    })
+                }
+            }catch(err) {
+                console.log(err)
+            }
         }
     },
-    async mounted(){
-        try{
-            const lokasi = this.$auth.user.lokasi
-            const id = this.$route.params.id
-            const resp = await this.$axios.get(`/master/rak/update/${id}/${lokasi}`)
-            if(resp){
-                resp.data.forEach(rak=>{
-                    this.updateRak.tipeRak = rak.tipe_rak
-                    this.updateRak.tipePintu = rak.tipe_pintu
-                    this.updateRak.namaProduk = rak.nama_produk
-                    this.updateRak.dimensi = rak.dimensi
-                    this.updateRak.berat = rak.berat
-                    this.updateRak.tahun = moment(rak.tahun).format('YYYY-MM-DD')
-                })
-            }
-        }catch(err) {
-            console.log(err)
-        }
+    mounted(){
+        this.getAllDataRak()
     }
 }
 </script>

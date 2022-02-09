@@ -155,31 +155,6 @@ export default {
             }
         }
     },
-    async mounted(){
-        try{
-            const lokasi = this.$auth.user.lokasi
-            const id = this.$route.params.id
-            const resp = await this.$axios.get(`/master/nas/update/${id}/${lokasi}`)
-            if(resp){
-                resp.data.forEach(nas=>{
-                    this.updateNas.merek = nas.merek
-                    this.updateNas.model = nas.model
-                    this.updateNas.tipe = nas.tipe
-                    this.updateNas.processor = nas.processor
-                    this.updateNas.storage = nas.storage
-                    this.updateNas.satuanStorage = nas.satuan_storage
-                    this.updateNas.tipe = nas.tipe
-                    this.updateNas.cpu = nas.cpu
-                    this.updateNas.raid = nas.raid
-                    this.updateNas.tahun = moment(nas.tahun).format('YYYY-MM-DD')
-                    this.updateNas.garansi = moment(nas.garansi).format('YYYY-MM-DD')
-                })
-            }
-        }
-        catch(err){
-            console.log(err)
-        } 
-    },
     methods: {
         async updateDataNas(){
             const resp = await this.$axios.post('/master/nas/update',{
@@ -205,7 +180,35 @@ export default {
                 swal('Error',resp.data.errmsg,{icon:'error'})
                 this.$router.push('/master/nas/updatenas')
             }
+        },
+        async getAllDataNas(){
+            try{
+                const lokasi = this.$auth.user.lokasi
+                const id = this.$route.params.id
+                const resp = await this.$axios.get(`/master/nas/update/${id}/${lokasi}`)
+                if(resp){
+                    resp.data.forEach(nas=>{
+                        this.updateNas.merek = nas.merek
+                        this.updateNas.model = nas.model
+                        this.updateNas.tipe = nas.tipe
+                        this.updateNas.processor = nas.processor
+                        this.updateNas.storage = nas.storage
+                        this.updateNas.satuanStorage = nas.satuan_storage
+                        this.updateNas.tipe = nas.tipe
+                        this.updateNas.cpu = nas.cpu
+                        this.updateNas.raid = nas.raid
+                        this.updateNas.tahun = moment(nas.tahun).format('YYYY-MM-DD')
+                        this.updateNas.garansi = moment(nas.garansi).format('YYYY-MM-DD')
+                    })
+                }
+            }
+            catch(err){
+                console.log(err)
+            } 
         }
+    },
+    mounted(){
+        this.getAllDataNas()
     }
 }
 </script>

@@ -192,21 +192,24 @@ export default {
                 swal('Error','ada yang salah',{icon:'error'})
             })
         },
-    },
-    async mounted(){
-        try{
-            const lokasi = this.$auth.user.lokasi
-            const idlogin = this.$auth.user.id
+        async getAllDataCctv(){
+            try{
+                const lokasi = this.$auth.user.lokasi
+                const idlogin = this.$auth.user.id
 
-            const resp = await this.$axios.get(`/mastercctv/${lokasi}/${idlogin}`)
-            resp.data.reverse()
-            resp.data.forEach(cctv => {
-                this.cctvs.push(cctv)
-            })
+                const resp = await this.$axios.get(`/mastercctv/${lokasi}/${idlogin}`)
+                resp.data.reverse()
+                resp.data.forEach(cctv => {
+                    this.cctvs.push(cctv)
+                })
+            }
+            catch(err){
+                console.log(err);
+            };
         }
-        catch(err){
-            console.log(err);
-        };
+    },
+    mounted(){
+        this.getAllDataCctv()
     }
 
 }

@@ -94,30 +94,14 @@ export default {
                 kuantitas: "",
                 kepentingan : "",
                 penanggungJawab : "",
-            }
+            },
+            lokasi : this.$auth.user.lokasi
         }
     },
     computed:{
         userpa() {
             return this.$store.state.getUser.alluserpa
         }
-    },
-    async mounted(){
-        const lokasi = this.$auth.user.lokasi
-        const id = this.$route.params.id
-
-        const resp = await this.$axios.get(`/inout/ambilbarang/update/${id}/${lokasi}`)
-        if(resp){
-            resp.data.forEach(barang=>{
-                this.updateAmbilBarang.tanggal = moment(barang.tanggal).format('YYYY-MM-DD')
-                this.updateAmbilBarang.namaPengambil = barang.nama_pengambil
-                this.updateAmbilBarang.namaBarang = barang.nama_barang
-                this.updateAmbilBarang.kuantitas = barang.kuantitas
-                this.updateAmbilBarang.kepentingan = barang.kepentingan
-                this.updateAmbilBarang.penanggungJawab = barang.penanggung_jawab
-            })
-        }
-        this.$store.dispatch('getUser/getallUserPa',lokasi)
     },
     methods:{
         async updateDataAmbilBarang(){
@@ -140,8 +124,27 @@ export default {
                 swal('Error','data gagal di update',{icon:'error'})
                 this.$router.push('/inout/ambilbarang')
             }
+        },
+        async getAllDataAmbilBarang(){
+            const id = this.$route.params.id
+
+            const resp = await this.$axios.get(`/inout/ambilbarang/update/${id}/${this.lokasi}`)
+            if(resp){
+                resp.data.forEach(barang=>{
+                    this.updateAmbilBarang.tanggal = moment(barang.tanggal).format('YYYY-MM-DD')
+                    this.updateAmbilBarang.namaPengambil = barang.nama_pengambil
+                    this.updateAmbilBarang.namaBarang = barang.nama_barang
+                    this.updateAmbilBarang.kuantitas = barang.kuantitas
+                    this.updateAmbilBarang.kepentingan = barang.kepentingan
+                    this.updateAmbilBarang.penanggungJawab = barang.penanggung_jawab
+                })
+            }
         }
-    }
+    },
+    mounted(){
+        this.getAllDataAmbilBarang()
+        this.$store.dispatch('getUser/getallUserPa',this.lokasi)
+    },
 }
 </script>
 

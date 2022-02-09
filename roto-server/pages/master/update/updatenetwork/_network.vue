@@ -125,29 +125,6 @@ export default {
             }
         }
     },
-    async mounted(){
-        try{
-            const lokasi = this.$auth.user.lokasi
-            const id = this.$route.params.id
-
-            const resp = await this.$axios.get(`/master/network/update/${id}/${lokasi}`)
-            if(resp){
-                resp.data.forEach(network=>{
-                    this.updateNetwork.merek = network.merek
-                    this.updateNetwork.model = network.model
-                    this.updateNetwork.tipe = network.tipe
-                    this.updateNetwork.kuantitas = network.kuantitas
-                    this.updateNetwork.kanal = network.kanal
-                    this.updateNetwork.tahun = moment(network.tahun).format('YYYY-MM-DD')
-                    this.updateNetwork.garansi = moment(network.garansi).format('YYYY-MM-DD')
-                })
-            }
-            
-        }
-        catch(err){
-            console.log(err)
-        }   
-    },
     methods:{
         async updateDataNetwork(){
             const resp = await this.$axios.post('/master/network/update',{
@@ -170,7 +147,33 @@ export default {
                 swal('Error',resp.data.errmsg,{icon:'error'})
                 this.$router.push('/master/network/updatenetwork')
             }
+        },
+        async getAllDataNetwork(){
+            try{
+                const lokasi = this.$auth.user.lokasi
+                const id = this.$route.params.id
+
+                const resp = await this.$axios.get(`/master/network/update/${id}/${lokasi}`)
+                if(resp){
+                    resp.data.forEach(network=>{
+                        this.updateNetwork.merek = network.merek
+                        this.updateNetwork.model = network.model
+                        this.updateNetwork.tipe = network.tipe
+                        this.updateNetwork.kuantitas = network.kuantitas
+                        this.updateNetwork.kanal = network.kanal
+                        this.updateNetwork.tahun = moment(network.tahun).format('YYYY-MM-DD')
+                        this.updateNetwork.garansi = moment(network.garansi).format('YYYY-MM-DD')
+                    })
+                }
+                
+            }
+            catch(err){
+                console.log(err)
+            }   
         }
+    },
+    mounted(){
+        this.getAllDataNetwork()
     }
 }
 </script>

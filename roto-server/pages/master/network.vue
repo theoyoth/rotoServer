@@ -201,21 +201,24 @@ export default {
                 swal('Error','ada yang salah',{icon:'error'})
             })
         },
-    },
-    async mounted(){
-        try{
-            const lokasi = this.$auth.user.lokasi
-            const idlogin = this.$auth.user.id
+        async getAllDataNetwork(){
+            try{
+                const lokasi = this.$auth.user.lokasi
+                const idlogin = this.$auth.user.id
 
-            const resp = await this.$axios.get(`/masternetwork/${lokasi}/${idlogin}`)
-            resp.data.reverse()
-            resp.data.forEach(network => {
-                this.networks.push(network)   
-            })
+                const resp = await this.$axios.get(`/masternetwork/${lokasi}/${idlogin}`)
+                resp.data.reverse()
+                resp.data.forEach(network => {
+                    this.networks.push(network)   
+                })
+            }
+            catch(err) {
+                console.error(err);
+            };
         }
-        catch(err) {
-            console.error(err);
-        };
+    },
+    mounted(){
+        this.getAllDataNetwork()
     }
 
 }

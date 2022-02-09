@@ -74,7 +74,7 @@
                     <label for="penanggungJawab" class="block mb-2 text-sm">penanggung jawab</label>
                     <div class="flex flex-col w-72">
                         <ValidationProvider rules="required" v-slot={errors}>
-                            <select name="penanggungJawab" id="penanggungJawab" class="p-2 w-full rounded-lg" v-model="updateGantiBarang.penanggungJawab">
+                            <select name="penanggungJawab" id="penanggungJawab" class="p-2 w-full rounded-lg bg-gray-300" v-model="updateGantiBarang.penanggungJawab">
                             <option disabled value="">penanggung jawab</option>
                             <option v-for="(pa,index) in userpa" :key="index">
                                 <option :value="pa.nama">{{pa.nama}}</option>
@@ -124,32 +124,14 @@ export default {
                 kepentingan : "",
                 penanggungJawab : "",
                 keterangan: "",
-            }
+            },
+            lokasi : this.$auth.user.lokasi
         }
     },
     computed:{
         userpa(){
             return this.$store.state.getUser.alluserpa
         }
-    },
-    async mounted(){
-        const lokasi = this.$auth.user.lokasi
-        const id = this.$route.params.id
-
-        const resp = await this.$axios.get(`/inout/gantibarang/update/${id}/${lokasi}`)
-        if(resp){
-            resp.data.forEach(barang=>{
-                this.updateGantiBarang.tanggal = moment(barang.tanggal).format('YYYY-MM-DD')
-                this.updateGantiBarang.namaPengganti = barang.nama_pengganti
-                this.updateGantiBarang.namaBarangBaru = barang.nama_barang_baru
-                this.updateGantiBarang.namaBarangLama = barang.nama_barang_lama
-                this.updateGantiBarang.kuantitas = barang.kuantitas
-                this.updateGantiBarang.kepentingan = barang.kepentingan
-                this.updateGantiBarang.penanggungJawab = barang.penanggung_jawab
-                this.updateGantiBarang.keterangan = barang.keterangan
-            })
-        }
-        this.$store.dispatch('getUser/getallUserPa',lokasi)
     },
     methods:{
         async updateDataGantiBarang(){
@@ -174,8 +156,29 @@ export default {
                 swal('Error','data gagal di update',{icon:'error'})
                 this.$router.push('/inout/gantibarang')
             }
+        },
+        async getAllDataGantiBarang(){
+            const id = this.$route.params.id
+
+            const resp = await this.$axios.get(`/inout/gantibarang/update/${id}/${this.lokasi}`)
+            if(resp){
+                resp.data.forEach(barang=>{
+                    this.updateGantiBarang.tanggal = moment(barang.tanggal).format('YYYY-MM-DD')
+                    this.updateGantiBarang.namaPengganti = barang.nama_pengganti
+                    this.updateGantiBarang.namaBarangBaru = barang.nama_barang_baru
+                    this.updateGantiBarang.namaBarangLama = barang.nama_barang_lama
+                    this.updateGantiBarang.kuantitas = barang.kuantitas
+                    this.updateGantiBarang.kepentingan = barang.kepentingan
+                    this.updateGantiBarang.penanggungJawab = barang.penanggung_jawab
+                    this.updateGantiBarang.keterangan = barang.keterangan
+                })
+            }
         }
-    }
+    },
+    mounted(){
+        this.getAllDataGantiBarang()
+        this.$store.dispatch('getUser/getallUserPa',this.lokasi)
+    },
 }
 </script>
 

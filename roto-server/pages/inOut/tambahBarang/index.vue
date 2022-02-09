@@ -227,19 +227,6 @@ export default {
             })
         }
     },
-    async mounted(){
-        try{
-            const lokasi = this.$auth.user.lokasi
-            const idlogin = this.$auth.user.id
-            const resp = await this.$axios.get(`/inout/tambahbarang/${lokasi}/${idlogin}`)
-            resp.data.forEach(barang => {
-            this.barangs.push(barang)
-            })
-        }
-        catch(err){
-            console.error(err);
-        }
-    },
     methods:{
         deleteData(id){
              swal({
@@ -272,6 +259,22 @@ export default {
                 swal('Error', 'gagal menghapus',{icon:'error'})
             })
         },
+        async getAllDataTambahBarang(){
+            try{
+                const lokasi = this.$auth.user.lokasi
+                const idlogin = this.$auth.user.id
+                const resp = await this.$axios.get(`/inout/tambahbarang/${lokasi}/${idlogin}`)
+                resp.data.forEach(barang => {
+                this.barangs.push(barang)
+                })
+            }
+            catch(err){
+                console.error(err);
+            }
+        }
+    },
+    mounted(){
+        this.getAllDataTambahBarang()   
     }
 }
 </script>

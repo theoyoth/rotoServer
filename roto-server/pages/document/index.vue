@@ -108,7 +108,7 @@ export default {
       const lokasi = this.$auth.user.lokasi
       const allowedTypes = ["pdf"]
       if(!allowedTypes.includes(this.file.type.split('/')[1])){
-        swal('tidak bisa mengupload file', { icon: 'error' })
+        swal('tidak bisa mengupload file, pastikan dalam format pdf', { icon: 'error' })
       }
       else{
         let formData = new FormData()
@@ -156,37 +156,40 @@ export default {
             }).catch(err=>{
                 swal('Error','ada yang salah',{icon:'error'})
             })
-    }
-  },
-  async mounted() {
-    try {
-      const resp = await this.$axios.get(`/document/list/${this.lokasi}`)
-      if (resp.data) {
-        this.allfiles = resp.data
+    },
+    async getAllDocuments(){
+      try {
+        const resp = await this.$axios.get(`/document/list/${this.lokasi}`)
+        if (resp.data) {
+          this.allfiles = resp.data
+        }
+      } catch (err) {
+        console.log(err)
       }
-    } catch (err) {
-      console.log(err)
-    }
-    // require.context(
-    //   '~/uploads/',
-    //   true,
-    //   /^.*\.pdf$/
-    // )
-    if(this.lokasi === 'rotogravure 1'){
-      require.context('~/static/uploads/roto1', false, /\.pdf$/)
-    }
-    else if(this.lokasi === 'rotogravure 2'){
-      require.context('~/static/uploads/roto2', false, /\.pdf$/)
-    } 
-    else if(this.lokasi === 'rotogravure 3'){
-      require.context('~/static/uploads/roto3', false, /\.pdf$/)
-    } 
-    else if(this.lokasi === 'rotogravure tinta'){
-      require.context('~/static/uploads/rototinta', false, /\.pdf$/)
-    }
+      // require.context(
+      //   '~/uploads/',
+      //   true,
+      //   /^.*\.pdf$/
+      // )
+      if(this.lokasi === 'rotogravure 1'){
+        require.context('~/static/uploads/roto1', false, /\.pdf$/)
+      }
+      else if(this.lokasi === 'rotogravure 2'){
+        require.context('~/static/uploads/roto2', false, /\.pdf$/)
+      } 
+      else if(this.lokasi === 'rotogravure 3'){
+        require.context('~/static/uploads/roto3', false, /\.pdf$/)
+      } 
+      else if(this.lokasi === 'rotogravure tinta'){
+        require.context('~/static/uploads/rototinta', false, /\.pdf$/)
+      }
 
-
+    }
   },
+  mounted() {
+    this.getAllDocuments()
+  }
+    
 }
 </script>
 

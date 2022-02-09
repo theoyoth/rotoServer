@@ -250,23 +250,26 @@ export default {
                 swal('Error','gagal menghapus',{icon:'error'})
             })
         },
+        async getAllDataMaintenances(){
+            const lokasi = this.$auth.user.lokasi
+            const idlogin = this.$auth.user.id
+            try{
+                const resp = await this.$axios.get(`/inputmaintenance/${lokasi}/${idlogin}`)
+                if(resp){
+                    resp.data.reverse()
+                    resp.data.forEach(maintenance => {
+                        this.hasilMaintenance.push(maintenance)
+                    })
+                } else{
+                    console.log('error')
+                }
+            }catch(err){
+                console.log(err)
+            }
+        }
     },
     async mounted(){
-          const lokasi = this.$auth.user.lokasi
-          const idlogin = this.$auth.user.id
-        try{
-            const resp = await this.$axios.get(`/inputmaintenance/${lokasi}/${idlogin}`)
-            if(resp){
-                resp.data.reverse()
-                resp.data.forEach(maintenance => {
-                    this.hasilMaintenance.push(maintenance)
-                })
-            } else{
-                console.log('error')
-            }
-        }catch(err){
-            console.log(err)
-        }
+        this.getAllDataMaintenances()
     },
 }
 </script>

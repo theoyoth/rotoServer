@@ -99,26 +99,6 @@ export default {
             }
         }
     },
-    async mounted(){
-        try{
-            const id = this.$route.params.id
-            const lokasi = this.$auth.user.lokasi
-
-            const resp = await this.$axios.get(`/master/mouse/update/${id}/${lokasi}`)
-            if(resp){
-                resp.data.forEach(mouse=>{
-                    this.updateMouse.merek = mouse.merek
-                    this.updateMouse.model = mouse.model
-                    this.updateMouse.tipe = mouse.tipe
-                    this.updateMouse.tahun = moment(mouse.tahun).format('YYYY-MM-DD')
-                    this.updateMouse.garansi = moment(mouse.garansi).format('YYYY-MM-DD')
-                })
-            }
-        }
-        catch (err) {
-            console.log(err)
-        }  
-    },
     methods: {
         async updateDataMouse(){
             const resp = await this.$axios.post('/master/mouse/update',{
@@ -139,7 +119,30 @@ export default {
                 swal('Error',resp.data.errmsg,{icon:'error'})
                 this.$router.push('/master/mouse/updatemouse')
             }
+        },
+        async getAllDataMouses(){
+            try{
+                const id = this.$route.params.id
+                const lokasi = this.$auth.user.lokasi
+
+                const resp = await this.$axios.get(`/master/mouse/update/${id}/${lokasi}`)
+                if(resp){
+                    resp.data.forEach(mouse=>{
+                        this.updateMouse.merek = mouse.merek
+                        this.updateMouse.model = mouse.model
+                        this.updateMouse.tipe = mouse.tipe
+                        this.updateMouse.tahun = moment(mouse.tahun).format('YYYY-MM-DD')
+                        this.updateMouse.garansi = moment(mouse.garansi).format('YYYY-MM-DD')
+                    })
+                }
+            }
+            catch (err) {
+                console.log(err)
+            }  
         }
+    },
+    mounted(){
+        this.getAllDataMouses()
     }
 }
 </script>

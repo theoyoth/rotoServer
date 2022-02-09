@@ -100,25 +100,6 @@ export default {
             }
         }
     },
-    async mounted(){
-        try{
-            const lokasi = this.$auth.user.lokasi
-            const id = this.$route.params.id
-            const resp = await this.$axios.get(`/master/genset/update/${id}/${lokasi}`) 
-            if(resp){
-                resp.data.forEach(genset=>{
-                    this.updateGenset.merek = genset.merek
-                    this.updateGenset.model = genset.model
-                    this.updateGenset.tipe = genset.tipe
-                    this.updateGenset.tahun = moment(genset.tahun).format('YYYY-MM-DD')
-                    this.updateGenset.garansi = moment(genset.garansi).format('YYYY-MM-DD')
-                })
-            }
-        }
-        catch(err){
-            console.log(err)
-        }
-    },
      methods: {
         async updateDataGenset(){
             const resp = await this.$axios.post('/master/genset/update',{
@@ -139,7 +120,29 @@ export default {
                 swal('Error',resp.data.errmsg,{icon:'error'})
                 this.$router.push('/master/genset/updategenset')
             }
+        },
+        async getAllDataGensets(){
+            try{
+                const lokasi = this.$auth.user.lokasi
+                const id = this.$route.params.id
+                const resp = await this.$axios.get(`/master/genset/update/${id}/${lokasi}`) 
+                if(resp){
+                    resp.data.forEach(genset=>{
+                        this.updateGenset.merek = genset.merek
+                        this.updateGenset.model = genset.model
+                        this.updateGenset.tipe = genset.tipe
+                        this.updateGenset.tahun = moment(genset.tahun).format('YYYY-MM-DD')
+                        this.updateGenset.garansi = moment(genset.garansi).format('YYYY-MM-DD')
+                    })
+                }
+            }
+            catch(err){
+                console.log(err)
+            }
         }
+    },
+    mounted(){
+        this.getAllDataGensets()
     }
 }
 </script>

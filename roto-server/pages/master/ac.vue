@@ -255,20 +255,23 @@ export default {
                     swal('Error','ada yang salah',{icon:'error'})
             })
         },
-    },
-    async mounted(){
-        try{
-            const lokasi = this.$auth.user.lokasi
-            const idlogin = this.$auth.user.id
-            const resp = await this.$axios.get(`/masterac/${lokasi}/${idlogin}`)
-            resp.data.reverse()
-            resp.data.forEach(ac => {
-                this.acs.push(ac)
-            })
+        async getAllDataAc(){
+            try{
+                const lokasi = this.$auth.user.lokasi
+                const idlogin = this.$auth.user.id
+                const resp = await this.$axios.get(`/masterac/${lokasi}/${idlogin}`)
+                resp.data.reverse()
+                resp.data.forEach(ac => {
+                    this.acs.push(ac)
+                })
+            }
+            catch(err) {
+                console.error(err);
+            };
         }
-        catch(err) {
-            console.error(err);
-        };
+    },
+    mounted(){
+        this.getAllDataAc()
     }
 
 }

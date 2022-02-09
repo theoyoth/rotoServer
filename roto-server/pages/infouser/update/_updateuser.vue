@@ -32,7 +32,7 @@
                 </div>
                 
             </div>
-        <button class="bg-gray-700 text-gray-200 mt-5 rounded-lg w-full h-10" type="submit">ubah</button>
+        <button class="bg-gray-700 hover:bg-gray-600 text-gray-200 mt-5 rounded-lg w-full h-10" type="submit">ubah</button>
         </div>
     </form>
 </section>
@@ -50,17 +50,6 @@ export default {
             }
         }
     },
-    async mounted(){
-        const id = this.$route.params.id
-
-        const resp = await this.$axios.get(`/user/${id}`)
-        if(resp){
-            resp.data.forEach(user=>{
-                this.updateUser.nama = user.nama
-                this.updateUser.role = user.role
-            })
-        }
-    },
     methods:{
         async updateDataUser(){
             const resp = await this.$axios.post('/user/update',{
@@ -76,7 +65,21 @@ export default {
                 swal('Error',resp.data.errmsg,{icon:'error'})
                 this.$router.push('/infouser')
             }
+        },
+        async getAllUsers(){
+            const id = this.$route.params.id
+
+            const resp = await this.$axios.get(`/user/${id}`)
+            if(resp){
+                resp.data.forEach(user=>{
+                    this.updateUser.nama = user.nama
+                    this.updateUser.role = user.role
+                })
+            }
         }
+    },
+    mounted(){
+        this.getAllUsers()
     }
 }
 </script>

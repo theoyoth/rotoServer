@@ -123,25 +123,28 @@ export default {
                 swal('Error',resp.data.errmsg,{icon:'error'})
                 this.$router.push('/master/updatebaterai')
             }
+        },
+        async getAllDataBaterai(){
+            const lokasi = this.$auth.user.lokasi
+            const id = this.$route.params.id
+
+            const resp = await this.$axios.get(`/master/baterai/update/${id}/${lokasi}`)
+            if(resp){
+                resp.data.forEach(baterai=>{
+                    this.updateBaterai.accu = baterai.accu
+                    this.updateBaterai.kuantitas = baterai.kuantitas
+                    this.updateBaterai.voltage = baterai.voltage
+                    this.updateBaterai.tahun = moment(baterai.tahun).format('YYYY-MM-DD')
+                    this.updateBaterai.garansi = moment(baterai.garansi).format('YYYY-MM-DD')
+                })
+            }
+            else{
+                console.log("error")
+            }
         }
     },
-    async mounted(){
-        const lokasi = this.$auth.user.lokasi
-        const id = this.$route.params.id
-
-        const resp = await this.$axios.get(`/master/baterai/update/${id}/${lokasi}`)
-        if(resp){
-            resp.data.forEach(baterai=>{
-                this.updateBaterai.accu = baterai.accu
-                this.updateBaterai.kuantitas = baterai.kuantitas
-                this.updateBaterai.voltage = baterai.voltage
-                this.updateBaterai.tahun = moment(baterai.tahun).format('YYYY-MM-DD')
-                this.updateBaterai.garansi = moment(baterai.garansi).format('YYYY-MM-DD')
-            })
-        }
-        else{
-            console.log("error")
-        }
+    mounted(){
+        this.getAllDataBaterai()
     }
 }
 </script>

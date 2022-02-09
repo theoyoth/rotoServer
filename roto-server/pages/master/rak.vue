@@ -212,20 +212,24 @@ export default {
             })
             
         },
-    },
-    async mounted(){
-        try{
-            const lokasi = this.$auth.user.lokasi
-            const idlogin = this.$auth.user.id
-            const resp = await this.$axios.get(`/masterrak/${lokasi}/${idlogin}`)
-            resp.data.reverse()
-            resp.data.forEach(rak =>{
-                this.raks.push(rak)
-            })
+        async getAllDataRak(){
+            try{
+                const lokasi = this.$auth.user.lokasi
+                const idlogin = this.$auth.user.id
+                const resp = await this.$axios.get(`/masterrak/${lokasi}/${idlogin}`)
+                resp.data.reverse()
+                resp.data.forEach(rak =>{
+                    this.raks.push(rak)
+                })
+            }
+            catch(err) {
+                console.error(err);
+            };
+
         }
-        catch(err) {
-            console.error(err);
-        };
+    },
+    mounted(){
+        this.getAllDataRak()
     }
 
 }

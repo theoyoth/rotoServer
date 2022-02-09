@@ -75,26 +75,7 @@ export default {
             }
         }
     },
-    async mounted(){
-        try{
-            const lokasi = this.$auth.user.lokasi
-            const id = this.$route.params.id
-
-            const resp = await this.$axios.get(`/master/cctv/update/${id}/${lokasi}`)
-            if(resp){
-                resp.data.forEach(cctv=>{
-                    this.updateCctv.merek = cctv.merek
-                    this.updateCctv.model = cctv.model
-                    this.updateCctv.garansi = moment(cctv.garansi).format('YYYY-MM-DD')
-                })
-            }
-            
-        }
-        catch(err){
-            console.log(err)
-        }
-        
-    },
+   
     methods:{
         async updateDataCctv(){
             const resp = await this.$axios.post('/master/cctv/update',{
@@ -113,7 +94,29 @@ export default {
                 swal('Error',resp.data.errmsg,{icon:'error'})
                 this.$router.push('/master/cctv/updatecctv')
             }
+        },
+        async getAllDataCctv(){
+            try{
+                const lokasi = this.$auth.user.lokasi
+                const id = this.$route.params.id
+
+                const resp = await this.$axios.get(`/master/cctv/update/${id}/${lokasi}`)
+                if(resp){
+                    resp.data.forEach(cctv=>{
+                        this.updateCctv.merek = cctv.merek
+                        this.updateCctv.model = cctv.model
+                        this.updateCctv.garansi = moment(cctv.garansi).format('YYYY-MM-DD')
+                    })
+                }
+                
+            }
+            catch(err){
+                console.log(err)
+            }
         }
+    },
+    mounted(){
+        this.getAllDataCctv()      
     }
 
 }
