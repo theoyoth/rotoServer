@@ -13,6 +13,9 @@
             <div v-if="err" class="bg-red-500 text-gray-100 py-1 px-2 rounded mb-8 text-center font-semibold">
               <p>{{err}}</p>
             </div>
+            <div v-if="errinput">
+              <p>{{errinput}}</p>
+            </div>
             <div class="text-blueGray-400 text-center mb-5 font-bold">
               <h1 class="text-3xl">Login</h1>
             </div>
@@ -27,7 +30,7 @@
                 <input
                   type="text"
                   class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                  placeholder="nama" v-model="login.nama" autofocus @change="watchName"
+                  placeholder="nama" v-model="login.nama" autofocus @change="watchName" :class="inputDisabled ? 'inputopacity' : ''" :disabled="inputDisabled"
                 />
               </div>
 
@@ -42,9 +45,9 @@
                   <input
                     :type="passwordFieldType"
                     class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded-l-sm text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                    placeholder="sandi" v-model="login.sandi"
+                    placeholder="sandi" v-model="login.sandi" :class="inputDisabled ? 'inputopacity' : ''" :disabled="inputDisabled" 
                   >
-                  <div type="password" class="flex items-center p-2 bg-white rounded-r-sm w-10 absolute right-0 top-1/2 transform -translate-y-1/2" @click="showpassword();changeicon()">
+                  <div type="password" class="flex items-center p-2 bg-white rounded-r-sm w-10 absolute right-0 top-1/2 transform -translate-y-1/2" @click="showpassword();changeicon()" :class="inputDisabled ? 'inputopacity' : ''">
                     <font-awesome-icon :icon="eyeIcon" class="text-gray-700"/>
                   </div>
                 </div>
@@ -57,14 +60,13 @@
                   lokasi
                 </label>
                 <!-- <select v-model="login.lokasi" name="lokasi" id="lokasi" class="border-0 px-3 py-3 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150">
-                    <option disabled value="">pilih lokasi</option> -->
-                    <!-- <option v-if="this.listLokasi" :value="this.listLokasi[0]">{{this.listLokasi[0]}}</option> -->
-                    <!-- <option value="rotogravure 1">rotogravure 1</option>
+                    <option disabled value="">pilih lokasi</option>
+                    <option value="rotogravure 1">rotogravure 1</option>
                     <option value="rotogravure 2">rotogravure 2</option>
                     <option value="rotogravure 3">rotogravure 3</option>
                     <option value="rotogravure tinta">rotogravure tinta</option>
                 </select> -->
-                <input type="text" v-model="login.lokasi" id="lokasi" placeholder="lokasi" class="border-0 px-3 py-3 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" disabled>
+                <input type="text" v-model="login.lokasi" id="lokasi" placeholder="lokasi" class="border-0 px-3 py-3 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" disabled :class="inputDisabled ? 'inputopacity' : ''">
               </div>
               <nuxt-link to="/ForgotPassword">
                   <p class="text-xs text-gray-700 text-center mt-5 underline">lupa kata sandi?</p>
@@ -96,7 +98,12 @@ export default {
                 sandi: '',
                 lokasi:'',
             },
-            err : "",
+            err : null,
+            errinput:"",
+            allDatas:[],
+            allUsersname: [],
+            attemps:3,
+            inputDisabled:false,
             // ipAddress:null,
             // listLokasi:[],
         }
@@ -119,6 +126,11 @@ export default {
                 }
                 else if(resp.data.errmsg){
                     this.err = resp.data.errmsg
+                    this.attemps--
+                    if(this.attemps == 0){
+                      this.err = "ubah kata sandi anda"
+                      this.inputDisabled = true
+                    }
                 }
             }
             catch(err){ 
@@ -132,17 +144,19 @@ export default {
           this.ruleIcon = this.ruleIcon === 'asc' ? 'desc' : 'asc';
         },
         // watch login.name input // if login.name available in allUsers computed, then print the match location based on name that user input
-        watchName() {
-          if(this.login.nama !== ''){
+        async watchName() {
+          if(this.login.nama){
             this.allUsers.forEach(item => {
-              if(item.nama === this.login.nama){
+              if(this.login.nama === item.nama){
                 this.login.lokasi = item.lokasi
-              }
+              } 
             })
+          } else{
+            this.login.lokasi = ''
           }
         }
     },
-    mounted(){
+    async mounted(){
       // call action from vuex that return all registered users
       this.$store.dispatch('getUser/getallUsers')
     }
@@ -152,6 +166,9 @@ export default {
   .background{
     background-image: url('~assets/img/auth.png');
     background-size: cover;
+  }
+  .inputopacity{
+    opacity:0.4;
   }
 
 </style>
