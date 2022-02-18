@@ -280,11 +280,7 @@ router.post(
   '/inout/tambahbarang/update',
   updatetambahController.updateDataBarang
 )
-// cari ==================
-router.get(
-  '/inout/tambahbarang/caribarang/:cari/:lokasi/:id',
-  readtambahController.caridataTambahBarang
-)
+
 // ===========================================
 // AMBIL BARANG
 // ambil barang
@@ -302,11 +298,7 @@ router.get(
   updateambilController.getDataBarang
 )
 router.post('/inout/ambilbarang/update', updateambilController.updateDataBarang)
-// cari ==================
-router.get(
-  '/inout/ambilbarang/caribarang/:cari/:lokasi/:id',
-  readambilController.caridataAmbilBarang
-)
+
 // ===========================================
 // GANTI BARANG
 // ambil barang
@@ -324,11 +316,7 @@ router.get(
   updategantiController.getDataBarang
 )
 router.post('/inout/gantibarang/update', updategantiController.updateDataBarang)
-// cari ==================
-router.get(
-  '/inout/gantibarang/caribarang/:cari/:lokasi/:id',
-  readgantiController.caridataGantiBarang
-)
+
 // detail ganti barang ==========
 router.get(
   '/inout/gantibarang/detail/:lokasi/:id',
