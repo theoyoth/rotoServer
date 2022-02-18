@@ -405,7 +405,7 @@ module.exports.allMaintenanceResultSecurity = async (req, res) => {
 
     if (lokasiServer == 'rotogravure 1' || lokasiServer == 'rotogravure 3') {
       const rows = await conn.query(
-        'SELECT suhu,kelembapan,tanggal,ups FROM maintenance INNER JOIN users ON maintenance.id_users = users.id_user WHERE id_role=6'
+        'SELECT suhu,kelembapan,tanggal,ups FROM maintenance INNER JOIN users ON maintenance.id_users = users.id_user WHERE id_role=6 ORDER BY tanggal ASC'
       )
       if (rows) {
         res.status(200).send(rows)
@@ -417,7 +417,7 @@ module.exports.allMaintenanceResultSecurity = async (req, res) => {
       lokasiServer == 'rotogravure tinta'
     ) {
       const rows = await conn.query(
-        'SELECT suhu,kelembapan,tanggal,ups FROM maintenance_roto_2 INNER JOIN users ON maintenance_roto_2.id_users = users.id_user WHERE id_role=6'
+        'SELECT suhu,kelembapan,tanggal,ups FROM maintenance_roto_2 INNER JOIN users ON maintenance_roto_2.id_users = users.id_user WHERE id_role=6 ORDER BY tanggal ASC'
       )
       if (rows) {
         res.status(200).send(rows)

@@ -4,7 +4,6 @@
       <div class="container mx-auto h-full py-5">
         <div class="flex">
           <h1 class="text-3xl text-gray-700 font-semibold">Welcome, <span>{{user.nama}}</span></h1>
-          <!-- <p class="text-2xl">{{user.nama}}</p> -->
         </div>
         <hr class="mt-4">
         <div class="mt-6">
@@ -182,6 +181,7 @@ export default {
   name:"Homepage",
   data() {
     return {
+      logoutsign:'',
       message: '',
       errors: null,
       labels:[],
@@ -456,8 +456,7 @@ export default {
       })
 
       // mendapatkan satu maintenance security paling baru
-      resp.data.reverse()
-      this.newestDataSecurity = resp.data[0]
+      this.newestDataSecurity = resp.data[resp.data.length-1]
 
       // memanggil fungsi
       this.fillDataSuhu()
@@ -468,6 +467,7 @@ export default {
   mounted(){
     this.getMaintenance()
   },
+  
 }
 </script>
 
