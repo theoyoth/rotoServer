@@ -35,157 +35,306 @@ const router = express.Router()
 const mapController = require('../controllers/mapController.js')
 
 // get master ==========================
-router.get('/masterserver/:lokasi/:id', readController.masterserver)
-router.get('/masterrak/:lokasi/:id', readController.masterrak)
-router.get('/masterups/:lokasi/:id', readController.masterups)
-router.get('/masterbaterai/:lokasi/:id', readController.masterbaterai)
-router.get('/masterac/:lokasi/:id', readController.masterac)
-router.get('/mastercctv/:lokasi/:id', readController.mastercctv)
-router.get('/masternetwork/:lokasi/:id', readController.masternetwork)
-router.get('/masterapar/:lokasi/:id', readController.masterapar)
-router.get('/mastermonitor/:lokasi/:id', readController.mastermonitor)
-router.get('/masterkeyboard/:lokasi/:id', readController.masterkeyboard)
-router.get('/mastermouse/:lokasi/:id', readController.mastermouse)
-router.get('/masternas/:lokasi/:id', readController.masternas)
-router.get('/mastergenset/:lokasi/:id', readController.mastergenset)
+router.get('/masterserver/:lokasi/:id', isAuthent, readController.masterserver)
+router.get('/masterrak/:lokasi/:id', isAuthent, readController.masterrak)
+router.get('/masterups/:lokasi/:id', isAuthent, readController.masterups)
+router.get(
+  '/masterbaterai/:lokasi/:id',
+  isAuthent,
+  readController.masterbaterai
+)
+router.get('/masterac/:lokasi/:id', isAuthent, readController.masterac)
+router.get('/mastercctv/:lokasi/:id', isAuthent, readController.mastercctv)
+router.get(
+  '/masternetwork/:lokasi/:id',
+  isAuthent,
+  readController.masternetwork
+)
+router.get('/masterapar/:lokasi/:id', isAuthent, readController.masterapar)
+router.get(
+  '/mastermonitor/:lokasi/:id',
+  isAuthent,
+  readController.mastermonitor
+)
+router.get(
+  '/masterkeyboard/:lokasi/:id',
+  isAuthent,
+  readController.masterkeyboard
+)
+router.get('/mastermouse/:lokasi/:id', isAuthent, readController.mastermouse)
+router.get('/masternas/:lokasi/:id', isAuthent, readController.masternas)
+router.get('/mastergenset/:lokasi/:id', isAuthent, readController.mastergenset)
 
 // ==========================
 // input master
-router.post('/master/inputserver', createdController.inputmasterserver)
-router.post('/master/inputrak', createdController.inputmasterrak)
-router.post('/master/inputups', createdController.inputmasterups)
-router.post('/master/inputbaterai', createdController.inputmasterbaterai)
-router.post('/master/inputac', createdController.inputmasterac)
-router.post('/master/inputcctv', createdController.inputmastercctv)
-router.post('/master/inputnetwork', createdController.inputmasternetwork)
-router.post('/master/inputapar', createdController.inputmasterapar)
-router.post('/master/inputmonitor', createdController.inputmastermonitor)
-router.post('/master/inputkeyboard', createdController.inputmasterkeyboard)
-router.post('/master/inputmouse', createdController.inputmastermouse)
-router.post('/master/inputnas', createdController.inputmasternas)
-router.post('/master/inputgenset', createdController.inputmastergenset)
+router.post(
+  '/master/inputserver',
+  isAuthent,
+  createdController.inputmasterserver
+)
+router.post('/master/inputrak', isAuthent, createdController.inputmasterrak)
+router.post('/master/inputups', isAuthent, createdController.inputmasterups)
+router.post(
+  '/master/inputbaterai',
+  isAuthent,
+  createdController.inputmasterbaterai
+)
+router.post('/master/inputac', isAuthent, createdController.inputmasterac)
+router.post('/master/inputcctv', isAuthent, createdController.inputmastercctv)
+router.post(
+  '/master/inputnetwork',
+  isAuthent,
+  createdController.inputmasternetwork
+)
+router.post('/master/inputapar', isAuthent, createdController.inputmasterapar)
+router.post(
+  '/master/inputmonitor',
+  isAuthent,
+  createdController.inputmastermonitor
+)
+router.post(
+  '/master/inputkeyboard',
+  isAuthent,
+  createdController.inputmasterkeyboard
+)
+router.post('/master/inputmouse', isAuthent, createdController.inputmastermouse)
+router.post('/master/inputnas', isAuthent, createdController.inputmasternas)
+router.post(
+  '/master/inputgenset',
+  isAuthent,
+  createdController.inputmastergenset
+)
 // detail master server =======================
 router.get(
   '/master/server/detail/:lokasi/:id',
+  isAuthent,
   readController.detailmasterserver
 )
-router.get('/master/ups/detail/:lokasi/:id', readController.detailmasterups)
-router.get('/master/nas/detail/:lokasi/:id', readController.detailmasternas)
-router.get('/master/ac/detail/:lokasi/:id', readController.detailmasterac)
+router.get(
+  '/master/ups/detail/:lokasi/:id',
+  isAuthent,
+  readController.detailmasterups
+)
+router.get(
+  '/master/nas/detail/:lokasi/:id',
+  isAuthent,
+  readController.detailmasternas
+)
+router.get(
+  '/master/ac/detail/:lokasi/:id',
+  isAuthent,
+  readController.detailmasterac
+)
 
 // delete master ========================================
 router.delete(
   '/master/server/delete/:id/:lokasi',
+  isAuthent,
   deleteController.deletemasterserver
 )
-router.delete('/master/deleterak/:id/:lokasi', deleteController.deletemasterrak)
-router.delete('/master/deleteups/:id/:lokasi', deleteController.deletemasterups)
+router.delete(
+  '/master/deleterak/:id/:lokasi',
+  isAuthent,
+  deleteController.deletemasterrak
+)
+router.delete(
+  '/master/deleteups/:id/:lokasi',
+  isAuthent,
+  deleteController.deletemasterups
+)
 router.delete(
   '/master/deletebaterai/:id/:lokasi',
+  isAuthent,
   deleteController.deletemasterbaterai
 )
-router.delete('/master/deleteac/:id/:lokasi', deleteController.deletemasterac)
+router.delete(
+  '/master/deleteac/:id/:lokasi',
+  isAuthent,
+  deleteController.deletemasterac
+)
 router.delete(
   '/master/deletecctv/:id/:lokasi',
+  isAuthent,
   deleteController.deletemastercctv
 )
 router.delete(
   '/master/deletenetwork/:id/:lokasi',
+  isAuthent,
   deleteController.deletemasternetwork
 )
 router.delete(
   '/master/deleteapar/:id/:lokasi',
+  isAuthent,
   deleteController.deletemasterapar
 )
 router.delete(
   '/master/deletemonitor/:id/:lokasi',
+  isAuthent,
   deleteController.deletemastermonitor
 )
 router.delete(
   '/master/deletekeyboard/:id/:lokasi',
+  isAuthent,
   deleteController.deletemasterkeyboard
 )
 router.delete(
   '/master/deletemouse/:id/:lokasi',
+  isAuthent,
   deleteController.deletemastermouse
 )
 router.delete(
   '/master/nas/delete/:id/:lokasi',
+  isAuthent,
   deleteController.deletemasternas
 )
 router.delete(
   '/master/genset/delete/:id/:lokasi',
+  isAuthent,
   deleteController.deletemastergenset
 )
 
 // update master ========================================
 router.get(
   '/master/update/updateserver/:id/:lokasi',
+  isAuthent,
   updateController.masterservergetdata
 )
-router.post('/master/server/update', updateController.inputmasterserverupdate)
-router.get('/master/rak/update/:id/:lokasi', updateController.masterrakgetdata)
-router.post('/master/rak/update/', updateController.inputmasterrakupdate)
+router.post(
+  '/master/server/update',
+  isAuthent,
+  updateController.inputmasterserverupdate
+)
+router.get(
+  '/master/rak/update/:id/:lokasi',
+  isAuthent,
+  updateController.masterrakgetdata
+)
+router.post(
+  '/master/rak/update/',
+  isAuthent,
+  updateController.inputmasterrakupdate
+)
 
-router.get('/master/ups/update/:id/:lokasi', updateController.masterupsgetdata)
-router.post('/master/ups/update', updateController.inputmasterupsupdate)
+router.get(
+  '/master/ups/update/:id/:lokasi',
+  isAuthent,
+  updateController.masterupsgetdata
+)
+router.post(
+  '/master/ups/update',
+  isAuthent,
+  updateController.inputmasterupsupdate
+)
 
 router.get(
   '/master/baterai/update/:id/:lokasi',
+  isAuthent,
   updateController.masterbateraigetdata
 )
-router.post('/master/baterai/update', updateController.inputmasterbateraiupdate)
+router.post(
+  '/master/baterai/update',
+  isAuthent,
+  updateController.inputmasterbateraiupdate
+)
 
-router.get('/master/ac/update/:id/:lokasi', updateController.masteracgetdata)
-router.post('/master/ac/update', updateController.inputmasteracupdate)
+router.get(
+  '/master/ac/update/:id/:lokasi',
+  isAuthent,
+  updateController.masteracgetdata
+)
+router.post(
+  '/master/ac/update',
+  isAuthent,
+  updateController.inputmasteracupdate
+)
 
 router.get(
   '/master/cctv/update/:id/:lokasi',
+  isAuthent,
   updateController.mastercctvgetdata
 )
-router.post('/master/cctv/update', updateController.inputmastercctvupdate)
+router.post(
+  '/master/cctv/update',
+  isAuthent,
+  updateController.inputmastercctvupdate
+)
 
 router.get(
   '/master/network/update/:id/:lokasi',
+  isAuthent,
   updateController.masternetworkgetdata
 )
-router.post('/master/network/update', updateController.inputmasternetworkupdate)
+router.post(
+  '/master/network/update',
+  isAuthent,
+  updateController.inputmasternetworkupdate
+)
 
 router.get(
   '/master/apar/update/:id/:lokasi',
+  isAuthent,
   updateController.masterapargetdata
 )
-router.post('/master/apar/update', updateController.inputmasteraparupdate)
+router.post(
+  '/master/apar/update',
+  isAuthent,
+  updateController.inputmasteraparupdate
+)
 
 router.get(
   '/master/monitor/update/:id/:lokasi',
+  isAuthent,
   updateController.mastermonitorgetdata
 )
-router.post('/master/monitor/update', updateController.inputmastermonitorupdate)
+router.post(
+  '/master/monitor/update',
+  isAuthent,
+  updateController.inputmastermonitorupdate
+)
 
 router.get(
   '/master/keyboard/update/:id/:lokasi',
+  isAuthent,
   updateController.masterkeyboardgetdata
 )
 router.post(
   '/master/keyboard/update',
+  isAuthent,
   updateController.inputmasterkeyboardupdate
 )
 
 router.get(
   '/master/mouse/update/:id/:lokasi',
+  isAuthent,
   updateController.mastermousegetdata
 )
-router.post('/master/mouse/update', updateController.inputmastermouseupdate)
+router.post(
+  '/master/mouse/update',
+  isAuthent,
+  updateController.inputmastermouseupdate
+)
 
-router.get('/master/nas/update/:id/:lokasi', updateController.masternasgetdata)
-router.post('/master/nas/update', updateController.inputmasternasupdate)
+router.get(
+  '/master/nas/update/:id/:lokasi',
+  isAuthent,
+  updateController.masternasgetdata
+)
+router.post(
+  '/master/nas/update',
+  isAuthent,
+  updateController.inputmasternasupdate
+)
 
 router.get(
   '/master/genset/update/:id/:lokasi',
+  isAuthent,
   updateController.mastergensetgetdata
 )
-router.post('/master/genset/update', updateController.inputmastergensetupdate)
+router.post(
+  '/master/genset/update',
+  isAuthent,
+  updateController.inputmastergensetupdate
+)
 // ===============================================================
 // login
 router.post('/login', authController.login)
@@ -199,46 +348,54 @@ router.post('/resetpassword', authController.resetPassword)
 
 // ===============================================
 // MAINTENANCE SERVER
-router.post('/inputmaintenance', maintenanceController.inputmaintenance)
+router.post(
+  '/inputmaintenance',
+  isAuthent,
+  maintenanceController.inputmaintenance
+)
 router.get(
   '/inputmaintenance/:lokasi/:id',
+  isAuthent,
   maintenanceController.getAllMaintenance
 )
 router.delete(
   '/maintenance/delete/:id/:lokasi',
+  isAuthent,
   maintenanceController.deleteMaintenance
 )
 router.get(
   '/maintenance/getdatamaintenanceupdate/:id/:lokasi',
+  isAuthent,
   maintenanceController.getdatamaintenanceupdate
 )
 router.post(
   '/maintenance/update/updatemaintenance',
+  isAuthent,
   maintenanceController.updateMaintenance
 )
 router.get(
   '/maintenance/detail/:lokasi/:id',
+  isAuthent,
   maintenanceController.detailMaintenance
 )
-// router.get(
-//   '/maintenance/security/:lokasi',
-//   maintenanceController.mainteananceuser
-// )
 router.get(
   '/maintenance/security/alldata/:lokasi',
+  isAuthent,
   maintenanceController.allMaintenanceResultSecurity
 )
 // hasil maintenance teknisi listrik dan ac untuk admin teknisi
 router.get(
   '/maintenance/teknisilistrik/:lokasi',
+  isAuthent,
   maintenanceController.getDataTeknisilistrik
 )
 router.get(
   '/maintenance/teknisiac/:lokasi',
+  isAuthent,
   maintenanceController.getDataTeknisiac
 )
 
-router.get('/lokasi', lokasiServer.lokasiserver)
+router.get('/lokasi', isAuthent, lokasiServer.lokasiserver)
 
 // USER
 router.get('/users/:lokasi', userController.getAllUsersByLocation)
@@ -246,15 +403,15 @@ router.get('/users', userController.getAllUsers)
 
 // mengatur user oleh PA
 // tambah user
-router.post('/user/tambah', userController.addUser)
+router.post('/user/tambah', isAuthent, userController.addUser)
 // hapus user
-router.delete('/user/delete/:id/:lokasi', userController.deleteUser)
+router.delete('/user/delete/:id/:lokasi', isAuthent, userController.deleteUser)
 // ambil data user tertentu
-router.get('/user/:id', userController.getUser)
+router.get('/user/:id', isAuthent, userController.getUser)
 // update data user
-router.post('/user/update', userController.updateUser)
+router.post('/user/update', isAuthent, userController.updateUser)
 // ambil nama user dengan role PA
-router.get('/users/pa/:lokasi', userController.getUserPa)
+router.get('/users/pa/:lokasi', isAuthent, userController.getUserPa)
 
 // =====================================
 // ==============IN-OUT BARANG==========
@@ -262,87 +419,124 @@ router.get('/users/pa/:lokasi', userController.getUserPa)
 // ambil barang
 router.get(
   '/inout/tambahbarang/:lokasi/:id',
+  isAuthent,
   readtambahController.getTambahBarang
 )
 // input barang
-router.post('/tambahbarang/input', createdtambahController.addBarang)
+router.post('/tambahbarang/input', isAuthent, createdtambahController.addBarang)
 // delete
 router.delete(
   '/inout/tambahbarang/delete/:id/:lokasi',
+  isAuthent,
   deletetambahController.deleteBarang
 )
 // update
 router.get(
   '/inout/tambahbarang/update/:id/:lokasi',
+  isAuthent,
   updatetambahController.getDataBarang
 )
 router.post(
   '/inout/tambahbarang/update',
+  isAuthent,
   updatetambahController.updateDataBarang
 )
 
 // ===========================================
 // AMBIL BARANG
 // ambil barang
-router.get('/inout/ambilbarang/:lokasi/:id', readambilController.getAmbilBarang)
+router.get(
+  '/inout/ambilbarang/:lokasi/:id',
+  isAuthent,
+  readambilController.getAmbilBarang
+)
 // input barang
-router.post('/inout/ambilbarang/input', createdambilController.addBarang)
+router.post(
+  '/inout/ambilbarang/input',
+  isAuthent,
+  createdambilController.addBarang
+)
 // delete
 router.delete(
   '/inout/ambilbarang/delete/:id/:lokasi',
+  isAuthent,
   deleteambilController.deleteBarang
 )
 // update
 router.get(
   '/inout/ambilbarang/update/:id/:lokasi',
+  isAuthent,
   updateambilController.getDataBarang
 )
-router.post('/inout/ambilbarang/update', updateambilController.updateDataBarang)
+router.post(
+  '/inout/ambilbarang/update',
+  isAuthent,
+  updateambilController.updateDataBarang
+)
 
 // ===========================================
 // GANTI BARANG
 // ambil barang
-router.get('/inout/gantibarang/:lokasi/:id', readgantiController.getGantiBarang)
+router.get(
+  '/inout/gantibarang/:lokasi/:id',
+  isAuthent,
+  readgantiController.getGantiBarang
+)
 // input barang
-router.post('/inout/gantibarang/input', createdgantiController.addBarang)
+router.post(
+  '/inout/gantibarang/input',
+  isAuthent,
+  createdgantiController.addBarang
+)
 // delete
 router.delete(
   '/inout/gantibarang/delete/:id/:lokasi',
+  isAuthent,
   deletegantiController.deleteBarang
 )
 // update
 router.get(
   '/inout/gantibarang/update/:id/:lokasi',
+  isAuthent,
   updategantiController.getDataBarang
 )
-router.post('/inout/gantibarang/update', updategantiController.updateDataBarang)
+router.post(
+  '/inout/gantibarang/update',
+  isAuthent,
+  updategantiController.updateDataBarang
+)
 
 // detail ganti barang ==========
 router.get(
   '/inout/gantibarang/detail/:lokasi/:id',
+  isAuthent,
   readgantiController.detailGantiBarang
 )
 
-router.post('/document/:lokasi', fileController.uploadFiledoc)
+router.post('/document/:lokasi', isAuthent, fileController.uploadFiledoc)
 
-router.get('/document/list/:lokasi', fileController.getAllFiles)
+router.get('/document/list/:lokasi', isAuthent, fileController.getAllFiles)
 
 // router.get('/document/list/:name', fileController.downloadFile)
-router.delete('/document/list/:name/:lokasi', fileController.deleteFile)
+router.delete(
+  '/document/list/:name/:lokasi',
+  isAuthent,
+  fileController.deleteFile
+)
 
 // MAP
-router.get('/masterserver/:lokasi', mapController.getListServer)
-router.get('/masterups/:lokasi', mapController.getListUps)
-router.get('/masterrak/:lokasi', mapController.getListRak)
-router.get('/masterbaterai/:lokasi', mapController.getListBaterai)
-router.get('/masterac/:lokasi', mapController.getListAc)
-router.get('/mastercctv/:lokasi', mapController.getListCctv)
-router.get('/masterapar/:lokasi', mapController.getListApar)
-router.get('/masternetwork/:lokasi', mapController.getListNetwork)
-router.get('/mastermouse/:lokasi', mapController.getListMouse)
-router.get('/mastermonitor/:lokasi', mapController.getListMonitor)
-router.get('/masterkeyboard/:lokasi', mapController.getListKeyboard)
-router.get('/masternas/:lokasi', mapController.getListNas)
-router.get('/mastergenset/:lokasi', mapController.getListGenset)
+router.get('/masterserver/:lokasi', isAuthent, mapController.getListServer)
+router.get('/masterups/:lokasi', isAuthent, mapController.getListUps)
+router.get('/masterrak/:lokasi', isAuthent, mapController.getListRak)
+router.get('/masterbaterai/:lokasi', isAuthent, mapController.getListBaterai)
+router.get('/masterac/:lokasi', isAuthent, mapController.getListAc)
+router.get('/mastercctv/:lokasi', isAuthent, mapController.getListCctv)
+router.get('/masterapar/:lokasi', isAuthent, mapController.getListApar)
+router.get('/masternetwork/:lokasi', isAuthent, mapController.getListNetwork)
+router.get('/mastermouse/:lokasi', isAuthent, mapController.getListMouse)
+router.get('/mastermonitor/:lokasi', isAuthent, mapController.getListMonitor)
+router.get('/masterkeyboard/:lokasi', isAuthent, mapController.getListKeyboard)
+router.get('/masternas/:lokasi', isAuthent, mapController.getListNas)
+router.get('/mastergenset/:lokasi', isAuthent, mapController.getListGenset)
 
 module.exports = router
