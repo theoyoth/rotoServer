@@ -7,27 +7,19 @@ module.exports.getDataBarang = async (req, res) => {
     const lokasiServer = req.params.lokasi
     conn = await pool.getConnection()
 
-    if (lokasiServer == 'rotogravure 1') {
-      const rows = await conn.query(
-        `SELECT * FROM ganti_barang WHERE id_ganti_barang=${id}`
-      )
-      res.send(rows)
-    } else if (lokasiServer == 'rotogravure 2') {
-      const rows = await conn.query(
-        `SELECT * FROM ganti_barang_roto_2 WHERE id_ganti_barang=${id}`
-      )
-      res.send(rows)
-    } else if (lokasiServer == 'rotogravure 3') {
-      const rows = await conn.query(
-        `SELECT * FROM ganti_barang_roto_3 WHERE id_ganti_barang=${id}`
-      )
-      res.send(rows)
-    } else if (lokasiServer == 'rotogravure tinta') {
-      const rows = await conn.query(
-        `SELECT * FROM ganti_barang_tinta WHERE id_ganti_barang=${id}`
-      )
-      res.send(rows)
+    let tableName = 'ganti_barang'
+    if (lokasiServer === 'rotogravure 2') {
+      tableName = 'ganti_barang_roto_2'
+    } else if (lokasiServer === 'rotogravure 3') {
+      tableName = 'ganti_barang_roto_3'
+    } else if (lokasiServer === 'rotogravure tinta') {
+      tableName = 'ganti_barang_tinta'
     }
+
+    const rows = await conn.query(
+      `SELECT * FROM ${tableName} WHERE id_ganti_barang=${id}`
+    )
+    res.send(rows)
 
     conn.release()
   } catch (err) {
@@ -55,42 +47,23 @@ module.exports.updateDataBarang = async (req, res) => {
     } = req.body
 
     conn = await pool.getConnection()
-    if (lokasiServer == 'rotogravure 1') {
-      const resp = await conn.query(
-        `UPDATE ganti_barang SET tanggal='${tanggal}', nama_pengganti='${namaPengganti}', nama_barang_baru='${namaBarangBaru}',nama_barang_lama='${namaBarangLama}', kuantitas='${kuantitas}', kepentingan='${kepentingan}',penanggung_jawab='${penanggungJawab}',id_users='${iduser}' WHERE id_ganti_barang = ${idgantibarang}`
-      )
-      if (resp.affectedRows > 0) {
-        res.status(200).send('success')
-      } else {
-        res.status(500).send('error')
-      }
-    } else if (lokasiServer == 'rotogravure 2') {
-      const resp = await conn.query(
-        `UPDATE ganti_barang_roto_2 SET tanggal='${tanggal}', nama_pengganti='${namaPengganti}', nama_barang_baru='${namaBarangBaru}',nama_barang_lama='${namaBarangLama}', kuantitas='${kuantitas}', kepentingan='${kepentingan}',penanggung_jawab='${penanggungJawab}',id_users='${iduser}' WHERE id_ganti_barang = ${idgantibarang}`
-      )
-      if (resp.affectedRows > 0) {
-        res.status(200).send('success')
-      } else {
-        res.status(500).send('error')
-      }
-    } else if (lokasiServer == 'rotogravure 3') {
-      const resp = await conn.query(
-        `UPDATE ganti_barang_roto_3 SET tanggal='${tanggal}', nama_pengganti='${namaPengganti}', nama_barang_baru='${namaBarangBaru}',nama_barang_lama='${namaBarangLama}', kuantitas='${kuantitas}', kepentingan='${kepentingan}',penanggung_jawab='${penanggungJawab}',id_users='${iduser}' WHERE id_ganti_barang = ${idgantibarang}`
-      )
-      if (resp.affectedRows > 0) {
-        res.status(200).send('success')
-      } else {
-        res.status(500).send('error')
-      }
-    } else if (lokasiServer == 'rotogravure tinta') {
-      const resp = await conn.query(
-        `UPDATE ganti_barang_tinta SET tanggal='${tanggal}', nama_pengganti='${namaPengganti}', nama_barang_baru='${namaBarangBaru}',nama_barang_lama='${namaBarangLama}', kuantitas='${kuantitas}', kepentingan='${kepentingan}',penanggung_jawab='${penanggungJawab}',id_users='${iduser}' WHERE id_ganti_barang = ${idgantibarang}`
-      )
-      if (resp.affectedRows > 0) {
-        res.status(200).send('success')
-      } else {
-        res.status(500).send('error')
-      }
+
+    let tableName = 'ganti_barang'
+    if (lokasiServer === 'rotogravure 2') {
+      tableName = 'ganti_barang_roto_2'
+    } else if (lokasiServer === 'rotogravure 3') {
+      tableName = 'ganti_barang_roto_3'
+    } else if (lokasiServer === 'rotogravure tinta') {
+      tableName = 'ganti_barang_tinta'
+    }
+
+    const resp = await conn.query(
+      `UPDATE ${tableName} SET tanggal='${tanggal}', nama_pengganti='${namaPengganti}', nama_barang_baru='${namaBarangBaru}',nama_barang_lama='${namaBarangLama}', kuantitas='${kuantitas}', kepentingan='${kepentingan}',penanggung_jawab='${penanggungJawab}',id_users='${iduser}' WHERE id_ganti_barang = ${idgantibarang}`
+    )
+    if (resp.affectedRows > 0) {
+      res.status(200).send('success')
+    } else {
+      res.status(500).send('error')
     }
 
     conn.release()

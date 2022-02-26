@@ -7,48 +7,25 @@ module.exports.deletemasterserver = async (req, res) => {
     const lokasiServer = req.params.lokasi
     conn = await pool.getConnection()
 
-    if (lokasiServer == 'rotogravure 1') {
-      const data = await conn.query(
-        `DELETE FROM master_server WHERE id_server=${id}`
-      )
-
-      if (data.affectedRows > 0) {
-        // res.redirect('/master/server')
-        res.json({ msg: 'sudah di hapus' })
-      } else {
-        res.json({ errmsg: 'data tidak terhapus' })
-      }
-    } else if (lokasiServer == 'rotogravure 2') {
-      const data = await conn.query(
-        `DELETE FROM master_server_roto_2 WHERE id_server=${id}`
-      )
-
-      if (data.affectedRows > 0) {
-        res.redirect('/master/server')
-      } else {
-        res.json({ errmsg: 'data tidak terhapus' })
-      }
-    } else if (lokasiServer == 'rotogravure 3') {
-      const data = await conn.query(
-        `DELETE FROM master_server_roto_3 WHERE id_server=${id}`
-      )
-
-      if (data.affectedRows > 0) {
-        res.redirect('/master/server')
-      } else {
-        res.json({ errmsg: 'data tidak terhapus' })
-      }
-    } else if (lokasiServer == 'rotogravure tinta') {
-      const data = await conn.query(
-        `DELETE FROM master_server_tinta WHERE id_server=${id}`
-      )
-
-      if (data.affectedRows > 0) {
-        res.redirect('/master/server')
-      } else {
-        res.json({ errmsg: 'data tidak terhapus' })
-      }
+    let tableName = 'master_server'
+    if (lokasiServer === 'rotogravure 2') {
+      tableName = 'master_server_roto_2'
+    } else if (lokasiServer === 'rotogravure 3') {
+      tableName = 'master_server_roto_3'
+    } else if (lokasiServer === 'rotogravure tinta') {
+      tableName = 'master_server_tinta'
     }
+
+    const data = await conn.query(
+      `DELETE FROM ${tableName} WHERE id_server=${id}`
+    )
+
+    if (data.affectedRows > 0) {
+      res.json({ msg: 'sudah di hapus' })
+    } else {
+      res.json({ errmsg: 'data tidak terhapus' })
+    }
+
     conn.release()
   } catch (err) {
     console.log(err)
@@ -63,40 +40,20 @@ module.exports.deletemasterrak = async (req, res) => {
     const lokasiServer = req.params.lokasi
     conn = await pool.getConnection()
 
-    if (lokasiServer == 'rotogravure 1') {
-      const data = await conn.query(`DELETE FROM master_rak WHERE id_rak=${id}`)
-      if (data.affectedRows > 0) {
-        res.json({ msg: 'data dihapus' })
-      } else {
-        res.json({ errmsg: 'data tidak terhapus' })
-      }
-    } else if (lokasiServer == 'rotogravure 2') {
-      const data = await conn.query(
-        `DELETE FROM master_rak_roto_2 WHERE id_rak=${id}`
-      )
-      if (data.affectedRows > 0) {
-        res.json({ msg: 'data dihapus' })
-      } else {
-        res.json({ errmsg: 'data tidak terhapus' })
-      }
-    } else if (lokasiServer == 'rotogravure 3') {
-      const data = await conn.query(
-        `DELETE FROM master_rak_roto_3 WHERE id_rak=${id}`
-      )
-      if (data.affectedRows > 0) {
-        res.json({ msg: 'data dihapus' })
-      } else {
-        res.json({ errmsg: 'data tidak terhapus' })
-      }
-    } else if (lokasiServer == 'rotogravure tinta') {
-      const data = await conn.query(
-        `DELETE FROM master_rak_tinta WHERE id_rak=${id}`
-      )
-      if (data.affectedRows > 0) {
-        res.json({ msg: 'data dihapus' })
-      } else {
-        res.json({ errmsg: 'data tidak terhapus' })
-      }
+    let tableName = 'master_rak'
+    if (lokasiServer === 'rotogravure 2') {
+      tableName = 'master_rak_roto_2'
+    } else if (lokasiServer === 'rotogravure 3') {
+      tableName = 'master_rak_roto_3'
+    } else if (lokasiServer === 'rotogravure tinta') {
+      tableName = 'master_rak_tinta'
+    }
+
+    const data = await conn.query(`DELETE FROM ${tableName} WHERE id_rak=${id}`)
+    if (data.affectedRows > 0) {
+      res.json({ msg: 'data dihapus' })
+    } else {
+      res.json({ errmsg: 'data tidak terhapus' })
     }
 
     conn.release()
@@ -113,41 +70,22 @@ module.exports.deletemasterups = async (req, res) => {
     const lokasiServer = req.params.lokasi
     conn = await pool.getConnection()
 
-    if (lokasiServer == 'rotogravure 1') {
-      const data = await conn.query(`DELETE FROM master_ups WHERE id_ups=${id}`)
-      if (data.affectedRows > 0) {
-        res.json({ msg: 'data dihapus' })
-      } else {
-        res.json({ errmsg: 'data tidak terhapus' })
-      }
-    } else if (lokasiServer == 'rotogravure 2') {
-      const data = await conn.query(
-        `DELETE FROM master_ups_roto_2 WHERE id_ups=${id}`
-      )
-      if (data.affectedRows > 0) {
-        res.json({ msg: 'data dihapus' })
-      } else {
-        res.json({ errmsg: 'data tidak terhapus' })
-      }
-    } else if (lokasiServer == 'rotogravure 3') {
-      const data = await conn.query(
-        `DELETE FROM master_ups_roto_3 WHERE id_ups=${id}`
-      )
-      if (data.affectedRows > 0) {
-        res.json({ msg: 'data dihapus' })
-      } else {
-        res.json({ errmsg: 'data tidak terhapus' })
-      }
-    } else if (lokasiServer == 'rotogravure tinta') {
-      const data = await conn.query(
-        `DELETE FROM master_ups_tinta WHERE id_ups=${id}`
-      )
-      if (data.affectedRows > 0) {
-        res.json({ msg: 'data dihapus' })
-      } else {
-        res.json({ errmsg: 'data tidak terhapus' })
-      }
+    let tableName = 'master_ups'
+    if (lokasiServer === 'rotogravure 2') {
+      tableName = 'master_ups_roto_2'
+    } else if (lokasiServer === 'rotogravure 3') {
+      tableName = 'master_ups_roto_3'
+    } else if (lokasiServer === 'rotogravure tinta') {
+      tableName = 'master_ups_tinta'
     }
+
+    const data = await conn.query(`DELETE FROM ${tableName} WHERE id_ups=${id}`)
+    if (data.affectedRows > 0) {
+      res.json({ msg: 'data dihapus' })
+    } else {
+      res.json({ errmsg: 'data tidak terhapus' })
+    }
+
     conn.release()
   } catch (err) {
     console.log(err)
@@ -162,43 +100,24 @@ module.exports.deletemasterbaterai = async (req, res) => {
     const lokasiServer = req.params.lokasi
     conn = await pool.getConnection()
 
-    if (lokasiServer == 'rotogravure 1') {
-      const data = await conn.query(
-        `DELETE FROM master_baterai WHERE id_baterai=${id}`
-      )
-      if (data.affectedRows > 0) {
-        res.json({ msg: 'data dihapus' })
-      } else {
-        res.json({ errmsg: 'data tidak terhapus' })
-      }
-    } else if (lokasiServer == 'rotogravure 2') {
-      const data = await conn.query(
-        `DELETE FROM master_baterai_roto_2 WHERE id_baterai=${id}`
-      )
-      if (data.affectedRows > 0) {
-        res.json({ msg: 'data dihapus' })
-      } else {
-        res.json({ errmsg: 'data tidak terhapus' })
-      }
-    } else if (lokasiServer == 'rotogravure 3') {
-      const data = await conn.query(
-        `DELETE FROM master_baterai_roto_3 WHERE id_baterai=${id}`
-      )
-      if (data.affectedRows > 0) {
-        res.json({ msg: 'data dihapus' })
-      } else {
-        res.json({ errmsg: 'data tidak terhapus' })
-      }
-    } else if (lokasiServer == 'rotogravure tinta') {
-      const data = await conn.query(
-        `DELETE FROM master_baterai_tinta WHERE id_baterai=${id}`
-      )
-      if (data.affectedRows > 0) {
-        res.json({ msg: 'data dihapus' })
-      } else {
-        res.json({ errmsg: 'data tidak terhapus' })
-      }
+    let tableName = 'master_baterai'
+    if (lokasiServer === 'rotogravure 2') {
+      tableName = 'master_baterai_roto_2'
+    } else if (lokasiServer === 'rotogravure 3') {
+      tableName = 'master_baterai_roto_3'
+    } else if (lokasiServer === 'rotogravure tinta') {
+      tableName = 'master_baterai_tinta'
     }
+
+    const data = await conn.query(
+      `DELETE FROM ${tableName} WHERE id_baterai=${id}`
+    )
+    if (data.affectedRows > 0) {
+      res.json({ msg: 'data dihapus' })
+    } else {
+      res.json({ errmsg: 'data tidak terhapus' })
+    }
+
     conn.release()
   } catch (err) {
     console.log(err)
@@ -213,41 +132,22 @@ module.exports.deletemasterac = async (req, res) => {
     const lokasiServer = req.params.lokasi
     conn = await pool.getConnection()
 
-    if (lokasiServer == 'rotogravure 1') {
-      const data = await conn.query(`DELETE FROM master_ac WHERE id_ac=${id}`)
-      if (data.affectedRows > 0) {
-        res.json({ msg: 'data dihapus' })
-      } else {
-        res.json({ errmsg: 'data tidak terhapus' })
-      }
-    } else if (lokasiServer == 'rotogravure 2') {
-      const data = await conn.query(
-        `DELETE FROM master_ac_roto_2 WHERE id_ac=${id}`
-      )
-      if (data.affectedRows > 0) {
-        res.json({ msg: 'data dihapus' })
-      } else {
-        res.json({ errmsg: 'data tidak terhapus' })
-      }
-    } else if (lokasiServer == 'rotogravure 3') {
-      const data = await conn.query(
-        `DELETE FROM master_ac_roto_3 WHERE id_ac=${id}`
-      )
-      if (data.affectedRows > 0) {
-        res.json({ msg: 'data dihapus' })
-      } else {
-        res.json({ errmsg: 'data tidak terhapus' })
-      }
-    } else if (lokasiServer == 'rotogravure tinta') {
-      const data = await conn.query(
-        `DELETE FROM master_ac_tinta WHERE id_ac=${id}`
-      )
-      if (data.affectedRows > 0) {
-        res.json({ msg: 'data dihapus' })
-      } else {
-        res.json({ errmsg: 'data tidak terhapus' })
-      }
+    let tableName = 'master_ac'
+    if (lokasiServer === 'rotogravure 2') {
+      tableName = 'master_ac_roto_2'
+    } else if (lokasiServer === 'rotogravure 3') {
+      tableName = 'master_ac_roto_3'
+    } else if (lokasiServer === 'rotogravure tinta') {
+      tableName = 'master_ac_tinta'
     }
+
+    const data = await conn.query(`DELETE FROM ${tableName} WHERE id_ac=${id}`)
+    if (data.affectedRows > 0) {
+      res.json({ msg: 'data dihapus' })
+    } else {
+      res.json({ errmsg: 'data tidak terhapus' })
+    }
+
     conn.release()
   } catch (err) {
     console.log(err)
@@ -262,43 +162,24 @@ module.exports.deletemastercctv = async (req, res) => {
     const lokasiServer = req.params.lokasi
     conn = await pool.getConnection()
 
-    if (lokasiServer == 'rotogravure 1') {
-      const data = await conn.query(
-        `DELETE FROM master_cctv WHERE id_cctv=${id}`
-      )
-      if (data.affectedRows > 0) {
-        res.json({ msg: 'data dihapus' })
-      } else {
-        res.json({ errmsg: 'data tidak terhapus' })
-      }
-    } else if (lokasiServer == 'rotogravure 2') {
-      const data = await conn.query(
-        `DELETE FROM master_cctv_roto_2 WHERE id_cctv=${id}`
-      )
-      if (data.affectedRows > 0) {
-        res.json({ msg: 'data dihapus' })
-      } else {
-        res.json({ errmsg: 'data tidak terhapus' })
-      }
-    } else if (lokasiServer == 'rotogravure 3') {
-      const data = await conn.query(
-        `DELETE FROM master_cctv_roto_3 WHERE id_cctv=${id}`
-      )
-      if (data.affectedRows > 0) {
-        res.json({ msg: 'data dihapus' })
-      } else {
-        res.json({ errmsg: 'data tidak terhapus' })
-      }
-    } else if (lokasiServer == 'rotogravure tinta') {
-      const data = await conn.query(
-        `DELETE FROM master_cctv_tinta WHERE id_cctv=${id}`
-      )
-      if (data.affectedRows > 0) {
-        res.json({ msg: 'data dihapus' })
-      } else {
-        res.json({ errmsg: 'data tidak terhapus' })
-      }
+    let tableName = 'master_cctv'
+    if (lokasiServer === 'rotogravure 2') {
+      tableName = 'master_cctv_roto_2'
+    } else if (lokasiServer === 'rotogravure 3') {
+      tableName = 'master_cctv_roto_3'
+    } else if (lokasiServer === 'rotogravure tinta') {
+      tableName = 'master_cctv_tinta'
     }
+
+    const data = await conn.query(
+      `DELETE FROM ${tableName} WHERE id_cctv=${id}`
+    )
+    if (data.affectedRows > 0) {
+      res.json({ msg: 'data dihapus' })
+    } else {
+      res.json({ errmsg: 'data tidak terhapus' })
+    }
+
     conn.release()
   } catch (err) {
     console.log(err)
@@ -313,43 +194,24 @@ module.exports.deletemasternetwork = async (req, res) => {
     const lokasiServer = req.params.lokasi
     conn = await pool.getConnection()
 
-    if (lokasiServer == 'rotogravure 1') {
-      const data = await conn.query(
-        `DELETE FROM master_network WHERE id_network=${id}`
-      )
-      if (data.affectedRows > 0) {
-        res.json({ msg: 'data dihapus' })
-      } else {
-        res.json({ errmsg: 'data tidak terhapus' })
-      }
-    } else if (lokasiServer == 'rotogravure 2') {
-      const data = await conn.query(
-        `DELETE FROM master_network_roto_2 WHERE id_network=${id}`
-      )
-      if (data.affectedRows > 0) {
-        res.json({ msg: 'data dihapus' })
-      } else {
-        res.json({ errmsg: 'data tidak terhapus' })
-      }
-    } else if (lokasiServer == 'rotogravure 3') {
-      const data = await conn.query(
-        `DELETE FROM master_network_roto_3 WHERE id_network=${id}`
-      )
-      if (data.affectedRows > 0) {
-        res.json({ msg: 'data dihapus' })
-      } else {
-        res.json({ errmsg: 'data tidak terhapus' })
-      }
-    } else if (lokasiServer == 'rotogravure tinta') {
-      const data = await conn.query(
-        `DELETE FROM master_network_tinta WHERE id_network=${id}`
-      )
-      if (data.affectedRows > 0) {
-        res.json({ msg: 'data dihapus' })
-      } else {
-        res.json({ errmsg: 'data tidak terhapus' })
-      }
+    let tableName = 'master_network'
+    if (lokasiServer === 'rotogravure 2') {
+      tableName = 'master_network_roto_2'
+    } else if (lokasiServer === 'rotogravure 3') {
+      tableName = 'master_network_roto_3'
+    } else if (lokasiServer === 'rotogravure tinta') {
+      tableName = 'master_network_tinta'
     }
+
+    const data = await conn.query(
+      `DELETE FROM ${tableName} WHERE id_network=${id}`
+    )
+    if (data.affectedRows > 0) {
+      res.json({ msg: 'data dihapus' })
+    } else {
+      res.json({ errmsg: 'data tidak terhapus' })
+    }
+
     conn.release()
   } catch (err) {
     console.log(err)
@@ -364,43 +226,24 @@ module.exports.deletemasterapar = async (req, res) => {
     const lokasiServer = req.params.lokasi
     conn = await pool.getConnection()
 
-    if (lokasiServer == 'rotogravure 1') {
-      const data = await conn.query(
-        `DELETE FROM master_apar WHERE id_apar=${id}`
-      )
-      if (data.affectedRows > 0) {
-        res.json({ msg: 'data dihapus' })
-      } else {
-        res.json({ errmsg: 'data tidak terhapus' })
-      }
-    } else if (lokasiServer == 'rotogravure 2') {
-      const data = await conn.query(
-        `DELETE FROM master_apar_roto_2 WHERE id_apar=${id}`
-      )
-      if (data.affectedRows > 0) {
-        res.json({ msg: 'data dihapus' })
-      } else {
-        res.json({ errmsg: 'data tidak terhapus' })
-      }
-    } else if (lokasiServer == 'rotogravure 3') {
-      const data = await conn.query(
-        `DELETE FROM master_apar_roto_3 WHERE id_apar=${id}`
-      )
-      if (data.affectedRows > 0) {
-        res.json({ msg: 'data dihapus' })
-      } else {
-        res.json({ errmsg: 'data tidak terhapus' })
-      }
-    } else if (lokasiServer == 'rotogravure tinta') {
-      const data = await conn.query(
-        `DELETE FROM master_apar_tinta WHERE id_apar=${id}`
-      )
-      if (data.affectedRows > 0) {
-        res.json({ msg: 'data dihapus' })
-      } else {
-        res.json({ errmsg: 'data tidak terhapus' })
-      }
+    let tableName = 'master_apar'
+    if (lokasiServer === 'rotogravure 2') {
+      tableName = 'master_apar_roto_2'
+    } else if (lokasiServer === 'rotogravure 3') {
+      tableName = 'master_apar_roto_3'
+    } else if (lokasiServer === 'rotogravure tinta') {
+      tableName = 'master_apar_tinta'
     }
+
+    const data = await conn.query(
+      `DELETE FROM ${tableName} WHERE id_apar=${id}`
+    )
+    if (data.affectedRows > 0) {
+      res.json({ msg: 'data dihapus' })
+    } else {
+      res.json({ errmsg: 'data tidak terhapus' })
+    }
+
     conn.release()
   } catch (err) {
     console.log(err)
@@ -415,43 +258,25 @@ module.exports.deletemastermonitor = async (req, res) => {
     const lokasiServer = req.params.lokasi
     conn = await pool.getConnection()
 
-    if (lokasiServer == 'rotogravure 1') {
-      const data = await conn.query(
-        `DELETE FROM master_monitor WHERE id_monitor=${id}`
-      )
-      if (data.affectedRows > 0) {
-        res.json({ msg: 'data dihapus' })
-      } else {
-        res.json({ errmsg: 'data tidak terhapus' })
-      }
-    } else if (lokasiServer == 'rotogravure 2') {
-      const data = await conn.query(
-        `DELETE FROM master_monitor_roto_2 WHERE id_monitor=${id}`
-      )
-      if (data.affectedRows > 0) {
-        res.json({ msg: 'data dihapus' })
-      } else {
-        res.json({ errmsg: 'data tidak terhapus' })
-      }
-    } else if (lokasiServer == 'rotogravure 3') {
-      const data = await conn.query(
-        `DELETE FROM master_monitor_roto_3 WHERE id_monitor=${id}`
-      )
-      if (data.affectedRows > 0) {
-        res.json({ msg: 'data dihapus' })
-      } else {
-        res.json({ errmsg: 'data tidak terhapus' })
-      }
-    } else if (lokasiServer == 'rotogravure tinta') {
-      const data = await conn.query(
-        `DELETE FROM master_monitor_tinta WHERE id_monitor=${id}`
-      )
-      if (data.affectedRows > 0) {
-        res.json({ msg: 'data dihapus' })
-      } else {
-        res.json({ errmsg: 'data tidak terhapus' })
-      }
+    let tableName = 'master_monitor'
+
+    if (lokasiServer === 'rotogravure 2') {
+      tableName = 'master_monitor_roto_2'
+    } else if (lokasiServer === 'rotogravure 3') {
+      tableName = 'master_monitor_roto_3'
+    } else if (lokasiServer === 'rotogravure tinta') {
+      tableName = 'master_monitor_tinta'
     }
+
+    const data = await conn.query(
+      `DELETE FROM ${tableName} WHERE id_monitor=${id}`
+    )
+    if (data.affectedRows > 0) {
+      res.json({ msg: 'data dihapus' })
+    } else {
+      res.json({ errmsg: 'data tidak terhapus' })
+    }
+
     conn.release()
   } catch (err) {
     console.log(err)
@@ -466,43 +291,25 @@ module.exports.deletemasterkeyboard = async (req, res) => {
     const lokasiServer = req.params.lokasi
     conn = await pool.getConnection()
 
-    if (lokasiServer == 'rotogravure 1') {
-      const data = await conn.query(
-        `DELETE FROM master_keyboard WHERE id_keyboard=${id}`
-      )
-      if (data.affectedRows > 0) {
-        res.json({ msg: 'data dihapus' })
-      } else {
-        res.json({ errmsg: 'data tidak terhapus' })
-      }
-    } else if (lokasiServer == 'rotogravure 2') {
-      const data = await conn.query(
-        `DELETE FROM master_keyboard_roto_2 WHERE id_keyboard=${id}`
-      )
-      if (data.affectedRows > 0) {
-        res.json({ msg: 'data dihapus' })
-      } else {
-        res.json({ errmsg: 'data tidak terhapus' })
-      }
-    } else if (lokasiServer == 'rotogravure 3') {
-      const data = await conn.query(
-        `DELETE FROM master_keyboard_roto_3 WHERE id_keyboard=${id}`
-      )
-      if (data.affectedRows > 0) {
-        res.json({ msg: 'data dihapus' })
-      } else {
-        res.json({ errmsg: 'data tidak terhapus' })
-      }
-    } else if (lokasiServer == 'rotogravure tinta') {
-      const data = await conn.query(
-        `DELETE FROM master_keyboard_tinta WHERE id_keyboard=${id}`
-      )
-      if (data.affectedRows > 0) {
-        res.json({ msg: 'data dihapus' })
-      } else {
-        res.json({ errmsg: 'data tidak terhapus' })
-      }
+    let tableName = 'master_keyboard'
+
+    if (lokasiServer === 'rotogravure 2') {
+      tableName = 'master_keyboard_roto_2'
+    } else if (lokasiServer === 'rotogravure 3') {
+      tableName = 'master_keyboard_roto_3'
+    } else if (lokasiServer === 'rotogravure tinta') {
+      tableName = 'master_keyboard_tinta'
     }
+
+    const data = await conn.query(
+      `DELETE FROM ${tableName} WHERE id_keyboard=${id}`
+    )
+    if (data.affectedRows > 0) {
+      res.json({ msg: 'data dihapus' })
+    } else {
+      res.json({ errmsg: 'data tidak terhapus' })
+    }
+
     conn.release()
   } catch (err) {
     console.log(err)
@@ -517,43 +324,25 @@ module.exports.deletemastermouse = async (req, res) => {
     const lokasiServer = req.params.lokasi
     conn = await pool.getConnection()
 
-    if (lokasiServer == 'rotogravure 1') {
-      const data = await conn.query(
-        `DELETE FROM master_mouse WHERE id_mouse=${id}`
-      )
-      if (data.affectedRows > 0) {
-        res.json({ msg: 'data dihapus' })
-      } else {
-        res.json({ errmsg: 'data tidak terhapus' })
-      }
-    } else if (lokasiServer == 'rotogravure 2') {
-      const data = await conn.query(
-        `DELETE FROM master_mouse_roto_2 WHERE id_mouse=${id}`
-      )
-      if (data.affectedRows > 0) {
-        res.json({ msg: 'data dihapus' })
-      } else {
-        res.json({ errmsg: 'data tidak terhapus' })
-      }
-    } else if (lokasiServer == 'rotogravure 3') {
-      const data = await conn.query(
-        `DELETE FROM master_mouse_roto_3 WHERE id_mouse=${id}`
-      )
-      if (data.affectedRows > 0) {
-        res.json({ msg: 'data dihapus' })
-      } else {
-        res.json({ errmsg: 'data tidak terhapus' })
-      }
-    } else if (lokasiServer == 'rotogravure tinta') {
-      const data = await conn.query(
-        `DELETE FROM master_mouse_tinta WHERE id_mouse=${id}`
-      )
-      if (data.affectedRows > 0) {
-        res.json({ msg: 'data dihapus' })
-      } else {
-        res.json({ errmsg: 'data tidak terhapus' })
-      }
+    let tableName = 'master_mouse'
+
+    if (lokasiServer === 'rotogravure 2') {
+      tableName = 'master_mouse_roto_2'
+    } else if (lokasiServer === 'rotogravure 3') {
+      tableName = 'master_mouse_roto_3'
+    } else if (lokasiServer === 'rotogravure tinta') {
+      tableName = 'master_mouse_tinta'
     }
+
+    const data = await conn.query(
+      `DELETE FROM ${tableName} WHERE id_mouse=${id}`
+    )
+    if (data.affectedRows > 0) {
+      res.json({ msg: 'data dihapus' })
+    } else {
+      res.json({ errmsg: 'data tidak terhapus' })
+    }
+
     conn.release()
   } catch (err) {
     console.log(err)
@@ -568,41 +357,23 @@ module.exports.deletemasternas = async (req, res) => {
     const lokasiServer = req.params.lokasi
     conn = await pool.getConnection()
 
-    if (lokasiServer == 'rotogravure 1') {
-      const data = await conn.query(`DELETE FROM master_nas WHERE id_nas=${id}`)
-      if (data.affectedRows > 0) {
-        res.json({ msg: 'data dihapus' })
-      } else {
-        res.json({ errmsg: 'data tidak terhapus' })
-      }
-    } else if (lokasiServer == 'rotogravure 2') {
-      const data = await conn.query(
-        `DELETE FROM master_nas_roto_2 WHERE id_nas=${id}`
-      )
-      if (data.affectedRows > 0) {
-        res.json({ msg: 'data dihapus' })
-      } else {
-        res.json({ errmsg: 'data tidak terhapus' })
-      }
-    } else if (lokasiServer == 'rotogravure 3') {
-      const data = await conn.query(
-        `DELETE FROM master_nas_roto_3 WHERE id_nas=${id}`
-      )
-      if (data.affectedRows > 0) {
-        res.json({ msg: 'data dihapus' })
-      } else {
-        res.json({ errmsg: 'data tidak terhapus' })
-      }
-    } else if (lokasiServer == 'rotogravure tinta') {
-      const data = await conn.query(
-        `DELETE FROM master_nas_tinta WHERE id_nas=${id}`
-      )
-      if (data.affectedRows > 0) {
-        res.json({ msg: 'data dihapus' })
-      } else {
-        res.json({ errmsg: 'data tidak terhapus' })
-      }
+    let tableName = 'master_nas'
+
+    if (lokasiServer === 'rotogravure 2') {
+      tableName = 'master_nas_roto_2'
+    } else if (lokasiServer === 'rotogravure 3') {
+      tableName = 'master_nas_roto_3'
+    } else if (lokasiServer === 'rotogravure tinta') {
+      tableName = 'master_nas_tinta'
     }
+
+    const data = await conn.query(`DELETE FROM ${tableName} WHERE id_nas=${id}`)
+    if (data.affectedRows > 0) {
+      res.json({ msg: 'data dihapus' })
+    } else {
+      res.json({ errmsg: 'data tidak terhapus' })
+    }
+
     conn.release()
   } catch (err) {
     console.log(err)
@@ -617,45 +388,26 @@ module.exports.deletemastergenset = async (req, res) => {
     const lokasiServer = req.params.lokasi
     conn = await pool.getConnection()
 
-    if (lokasiServer == 'rotogravure 1') {
-      const data = await conn.query(
-        `DELETE FROM master_genset WHERE id_genset=${id}`
-      )
-      if (data.affectedRows > 0) {
-        res.json({ msg: 'data dihapus' })
-      } else {
-        res.json({ errmsg: 'data tidak terhapus' })
-      }
-    } else if (lokasiServer == 'rotogravure 2') {
-      const data = await conn.query(
-        `DELETE FROM master_genset_roto_2 WHERE id_genset=${id}`
-      )
-      if (data.affectedRows > 0) {
-        res.json({ msg: 'data dihapus' })
-      } else {
-        res.json({ errmsg: 'data tidak terhapus' })
-      }
-    } else if (lokasiServer == 'rotogravure 3') {
-      const data = await conn.query(
-        `DELETE FROM master_genset_roto_3 WHERE id_genset=${id}`
-      )
-      if (data.affectedRows > 0) {
-        res.json({ msg: 'data dihapus' })
-      } else {
-        res.json({ errmsg: 'data tidak terhapus' })
-      }
-    } else if (lokasiServer == 'rotogravure tinta') {
-      const data = await conn.query(
-        `DELETE FROM master_genset_tinta WHERE id_genset=${id}`
-      )
-      if (data.affectedRows > 0) {
-        res.json({ msg: 'data dihapus' })
-      } else {
-        res.json({ errmsg: 'data tidak terhapus' })
-      }
+    let tableName = 'master_genset'
 
-      conn.release()
+    if (lokasiServer === 'rotogravure 2') {
+      tableName = 'master_genset_roto_2'
+    } else if (lokasiServer === 'rotogravure 3') {
+      tableName = 'master_genset_roto_3'
+    } else if (lokasiServer === 'rotogravure tinta') {
+      tableName = 'master_genset_tinta'
     }
+
+    const data = await conn.query(
+      `DELETE FROM ${tableName} WHERE id_genset=${id}`
+    )
+    if (data.affectedRows > 0) {
+      res.json({ msg: 'data dihapus' })
+    } else {
+      res.json({ errmsg: 'data tidak terhapus' })
+    }
+
+    conn.release()
   } catch (err) {
     console.log(err)
   } finally {

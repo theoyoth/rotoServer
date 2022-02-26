@@ -32,18 +32,15 @@ module.exports.uploadFiledoc = async (req, res) => {
 
 module.exports.getAllFiles = async (req, res) => {
   const lokasiServer = req.params.lokasi
-  let directoryPath = ''
 
-  if (lokasiServer === 'rotogravure 1') {
-    directoryPath = './static/uploads/roto1'
-  } else if (lokasiServer === 'rotogravure 2') {
+  let directoryPath = './static/uploads/roto1'
+
+  if (lokasiServer === 'rotogravure 2') {
     directoryPath = './static/uploads/roto2'
   } else if (lokasiServer === 'rotogravure 3') {
     directoryPath = './static/uploads/roto3'
   } else if (lokasiServer === 'rotogravure tinta') {
     directoryPath = './static/uploads/rototinta'
-  } else {
-    res.send('no directory is founded')
   }
 
   await fs.readdir(directoryPath, function (err, files) {
@@ -66,33 +63,18 @@ module.exports.getAllFiles = async (req, res) => {
   })
 }
 
-// module.exports.downloadFile = async (req, res) => {
-//   const filename = req.params.name
-//   const directoryPath = './static/uploads'
-//   res.download(directoryPath + filename, filename, (err) => {
-//     if (err) {
-//       res.status(404).send({
-//         errmsg: 'tidak bisa menemukan file' + err,
-//       })
-//     }
-//   })
-// }
-
 module.exports.deleteFile = async (req, res) => {
   const filename = req.params.name
   const lokasiServer = req.params.lokasi
-  let directoryPath = ''
 
-  if (lokasiServer === 'rotogravure 1') {
-    directoryPath = './static/uploads/roto1/'
-  } else if (lokasiServer === 'rotogravure 2') {
+  let directoryPath = './static/uploads/roto1/'
+
+  if (lokasiServer === 'rotogravure 2') {
     directoryPath = './static/uploads/roto2/'
   } else if (lokasiServer === 'rotogravure 3') {
     directoryPath = './static/uploads/roto3/'
   } else if (lokasiServer === 'rotogravure tinta') {
     directoryPath = './static/uploads/rototinta/'
-  } else {
-    res.send('no directory is founded')
   }
 
   fs.unlink(directoryPath + filename, (err) => {

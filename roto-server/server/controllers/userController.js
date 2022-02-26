@@ -40,7 +40,11 @@ module.exports.getAllUsers = async (req, res) => {
   try {
     conn = await pool.getConnection()
     const data = await conn.query('SELECT id_user,nama,lokasi FROM users')
-    res.status(200).send(data)
+    if (data.length > 0) {
+      res.status(200).send(data)
+    } else {
+      res.status(404)
+    }
 
     conn.release()
   } catch (err) {
@@ -55,9 +59,11 @@ module.exports.addUser = async (req, res) => {
     const hasSandi = bcrypt.hashSync(sandi, salt)
 
     conn = await pool.getConnection()
-    const data = await conn.query('SELECT * FROM users')
-    if (namauser === data[0].nama) {
-      res.json({ errmsg: 'data yang dimasukkan sudah terdaftar' })
+    const data = await conn.query(
+      `SELECT id_user,nama FROM users WHERE nama='${namauser}'`
+    )
+    if (data[0]) {
+      return res.json({ errmsg: 'nama yang dimasukkan sudah terdaftar' })
     } else {
       if (roleuser == 'EDP') {
         const resp = await conn.query(
@@ -115,7 +121,6 @@ module.exports.addUser = async (req, res) => {
         }
       }
     }
-
     conn.release()
   } catch (err) {
     console.log(err)
@@ -161,61 +166,29 @@ module.exports.updateUser = async (req, res) => {
     const { iduser, nama, role } = req.body
 
     conn = await pool.getConnection()
-    if (role == 'EDP') {
-      const resp = await conn.query(
-        `UPDATE users SET nama='${nama}',role='${role}',id_role='1' WHERE id_user='${iduser}'`
-      )
-      if (resp.affectedRows > 0) {
-        res.redirect('/infouser')
-      } else {
-        res.json({ errmsg: 'user gagal diupdate' })
-      }
-    } else if (role == 'PA') {
-      const resp = await conn.query(
-        `UPDATE users SET nama='${nama}',role='${role}',id_role='2' WHERE id_user='${iduser}'`
-      )
-      if (resp.affectedRows > 0) {
-        res.redirect('/infouser')
-      } else {
-        res.json({ errmsg: 'user gagal diupdate' })
-      }
-    } else if (role == 'Admin teknisi') {
-      const resp = await conn.query(
-        `UPDATE users SET nama='${nama}',role='${role}',id_role='3' WHERE id_user='${iduser}'`
-      )
-      if (resp.affectedRows > 0) {
-        res.redirect('/infouser')
-      } else {
-        res.json({ errmsg: 'user gagal diupdate' })
-      }
-    } else if (role == 'Teknisi listrik') {
-      const resp = await conn.query(
-        `UPDATE users SET nama='${nama}',role='${role}',id_role='4' WHERE id_user='${iduser}'`
-      )
-      if (resp.affectedRows > 0) {
-        res.redirect('/infouser')
-      } else {
-        res.json({ errmsg: 'user gagal diupdate' })
-      }
-    } else if (role == 'Teknisi ac') {
-      const resp = await conn.query(
-        `UPDATE users SET nama='${nama}',role='${role}',id_role='5' WHERE id_user='${iduser}'`
-      )
-      if (resp.affectedRows > 0) {
-        res.redirect('/infouser')
-      } else {
-        res.json({ errmsg: 'user gagal diupdate' })
-      }
-    } else if (role == 'Security') {
-      const resp = await conn.query(
-        `UPDATE users SET nama='${nama}',role='${role}',id_role='6' WHERE id_user='${iduser}'`
-      )
-      if (resp.affectedRows > 0) {
-        res.redirect('/infouser')
-      } else {
-        res.json({ errmsg: 'user gagal diupdate' })
-      }
+
+    let idrole = '1'
+
+    if (role === 'PA') {
+      idrole = '2'
+    } else if (role === 'Admin teknisi') {
+      idrole = '3'
+    } else if (role === 'Teknisi listrik') {
+      idrole = '4'
+    } else if (role === 'Teknisi ac') {
+      idrole = '5'
+    } else if (role === 'Security') {
+      idrole = '6'
     }
+    const resp = await conn.query(
+      `UPDATE users SET nama='${nama}',role='${role}',id_role='${idrole}' WHERE id_user='${iduser}'`
+    )
+    if (resp.affectedRows > 0) {
+      res.redirect('/infouser')
+    } else {
+      res.json({ errmsg: 'user gagal diupdate' })
+    }
+
     conn.release()
   } catch (err) {
     throw err
