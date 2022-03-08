@@ -59,18 +59,15 @@
           <div
             class="
               rounded rounded-full
-              w-12
-              h-12
+              w-14
+              h-14
               bg-gray-500
               flex
               justify-center
               items-center
             "
           >
-            <font-awesome-icon
-              :icon="['fas', 'user']"
-              class="text-yellow-500 text-lg"
-            />
+            <img src="~/assets/img/logo pura.png" alt="logo pura">
           </div>
           <div class="text-xs mt-2 text-center">
             <div class="font-semibold">
@@ -225,7 +222,7 @@
             </ul>
           </li>
 
-          <li class="items-center">
+          <li class="items-center"  v-show="user.lokasi === 'rotogravure 1' || user.lokasi === 'rotogravure 2'">
             <div
               class="
                 flex
@@ -334,7 +331,7 @@
               </li>
             </ul>
           </li>
-          <li class="items-center">
+          <li class="items-center" v-show="!isTeknisiac">
             <div
               class="
                 flex
@@ -370,7 +367,7 @@
             </div>
           </li>
 
-          <li class="items-center">
+          <li class="items-center" v-show="!isTeknisiac">
             <div
               class="
                 flex
