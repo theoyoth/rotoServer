@@ -1,7 +1,7 @@
 <template>
 <div class="bg-gray-300 min-h-screen w-widthContent ml-auto overflow-x-hidden">
     
-    <section class="bg-white min-h-screen w-widthContentField m-auto mt-7 p-4 ">
+    <section class="bg-gray-100 min-h-screen w-widthContentField m-auto mt-7 p-4 ">
         <NuxtLink to="/master/server"
           class="flex items-center justify-between rounded-md w-28 px-4 py-2 bg-gray-700 hover:bg-gray-600 transition duration-200">
           <div>
@@ -201,12 +201,6 @@ export default {
             errproduk : '',
 
         }
-    },
-    computed: {
-        // errors(){
-        //     return this.$store.state.inputmasterbarang.errors
-        // },
-        
     },
     methods:{
         async postInputServer(){

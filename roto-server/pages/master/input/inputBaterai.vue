@@ -1,6 +1,6 @@
 <template>
 <div class="bg-gray-200 min-h-screen w-widthContent ml-auto overflow-x-hidden">
-    <section class="bg-white min-h-screen w-widthContentField m-auto mt-7 p-4 ">
+    <section class="bg-gray-100 min-h-screen w-widthContentField m-auto mt-7 p-4 ">
         <NuxtLink to="/master/baterai"
           class="flex items-center justify-between rounded-md w-28 px-4 py-2 bg-gray-700 hover:bg-gray-600 transition duration-200">
           <div>
@@ -19,7 +19,7 @@
 
                     <label for="accu" class="block mb-2 text-sm">accu</label>
                     <div class="flex flex-col w-72">
-                        <ValidationProvider rules="required|numeric" v-slot={errors}>
+                        <ValidationProvider rules="required|passchar" v-slot={errors}>
                             <input type="text" v-model="inputBaterai.accu" name="accu" id="accu" class="p-2 w-full rounded-lg outline-none bg-gray-200 uppercase">
                             <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
                         </ValidationProvider>
