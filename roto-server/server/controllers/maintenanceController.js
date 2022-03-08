@@ -1,4 +1,5 @@
 const pool = require('../db.js')
+import moment from 'moment'
 
 module.exports.inputmaintenance = async (req, res) => {
   let conn
@@ -14,11 +15,13 @@ module.exports.inputmaintenance = async (req, res) => {
       ups,
       baterai,
       server,
+      jaringan,
       keterangan,
       keteranganAc,
       keteranganUps,
       keteranganBaterai,
       keteranganServer,
+      keteranganJaringan,
     } = req.body
 
     conn = await pool.getConnection()
@@ -31,7 +34,7 @@ module.exports.inputmaintenance = async (req, res) => {
       tableName = 'maintenance_tinta'
     }
     const data = await conn.query(
-      `INSERT INTO ${tableName} VALUES ('','${nama}','${tanggal}','${suhu}','${kelembapan}','${ac}','${keteranganAc}','${ups}','${keteranganUps}','${baterai}','${keteranganBaterai}','${server}','${keteranganServer}','${keterangan}','${iduser}')`
+      `INSERT INTO ${tableName} VALUES ('','${nama}','${tanggal}','${suhu}','${kelembapan}','${ac}','${keteranganAc}','${ups}','${keteranganUps}','${baterai}','${keteranganBaterai}','${server}','${keteranganServer}','${jaringan}','${keteranganJaringan}','${keterangan}','${iduser}')`
     )
     if (data.affectedRows > 0) {
       res.status(200).send('success')
@@ -62,7 +65,7 @@ module.exports.getAllMaintenance = async (req, res) => {
       tableName = 'maintenance_roto_2'
     }
     const rows = await conn.query(
-      `SELECT id_maintenance,nama_pemeriksa,tanggal,suhu,kelembapan,ac,keterangan_ac,ups,keterangan_ups,baterai,keterangan_baterai,server,keterangan_server,keterangan,id_users,id_user FROM ${tableName} INNER JOIN users ON ${tableName}.id_users=users.id_user WHERE users.id_user=${idlogin}`
+      `SELECT id_maintenance,nama_pemeriksa,tanggal,suhu,kelembapan,ac,keterangan_ac,ups,keterangan_ups,baterai,keterangan_baterai,server,keterangan_server,jaringan,keterangan_jaringan,keterangan,id_users,id_user FROM ${tableName} INNER JOIN users ON ${tableName}.id_users=users.id_user WHERE users.id_user=${idlogin}`
     )
     res.status(200).send(rows)
 
@@ -119,11 +122,13 @@ module.exports.updateMaintenance = async (req, res) => {
       ups,
       baterai,
       server,
+      jaringan,
       keterangan,
       keteranganAc,
       keteranganUps,
       keteranganBaterai,
       keteranganServer,
+      keteranganJaringan,
     } = req.body
 
     conn = await pool.getConnection()
@@ -136,7 +141,7 @@ module.exports.updateMaintenance = async (req, res) => {
       tableName = 'maintenance_roto_2'
     }
     const resp = await conn.query(
-      `UPDATE ${tableName} SET nama_pemeriksa='${nama}',tanggal='${tanggal}',suhu='${suhu}',kelembapan='${kelembapan}',ac='${ac}',keterangan_ac='${keteranganAc}',ups='${ups}',keterangan_ups='${keteranganUps}',baterai='${baterai}',keterangan_baterai='${keteranganBaterai}',server='${server}',keterangan_server='${keteranganServer}',keterangan='${keterangan}',id_users='${iduser}' WHERE id_maintenance=${idmaintenance}`
+      `UPDATE ${tableName} SET nama_pemeriksa='${nama}',tanggal='${tanggal}',suhu='${suhu}',kelembapan='${kelembapan}',ac='${ac}',keterangan_ac='${keteranganAc}',ups='${ups}',keterangan_ups='${keteranganUps}',baterai='${baterai}',keterangan_baterai='${keteranganBaterai}',server='${server}',keterangan_server='${keteranganServer}',jaringan='${jaringan}',keterangan_jaringan='${keteranganJaringan}',keterangan='${keterangan}',id_users='${iduser}' WHERE id_maintenance=${idmaintenance}`
     )
     if (resp.affectedRows > 0) {
       res.status(200).send('success')
@@ -210,7 +215,7 @@ module.exports.detailMaintenance = async (req, res) => {
   }
 }
 
-module.exports.allMaintenanceResultSecurity = async (req, res) => {
+module.exports.allMaintenanceEdpSecurity = async (req, res) => {
   let conn
   try {
     const lokasiServer = req.params.lokasi
@@ -222,9 +227,15 @@ module.exports.allMaintenanceResultSecurity = async (req, res) => {
     ) {
       tableName = 'maintenance_roto_2'
     }
-    const rows = await conn.query(
-      `SELECT suhu,kelembapan,tanggal,ups FROM ${tableName} INNER JOIN users ON ${tableName}.id_users = users.id_user WHERE id_role=6 ORDER BY tanggal ASC`
+    const rowsSecurity = await conn.query(
+      `SELECT suhu,kelembapan,tanggal,ups,nama FROM ${tableName} INNER JOIN users ON ${tableName}.id_users = users.id_user WHERE id_role=6`
     )
+    const rowsEdp = await conn.query(
+      `SELECT suhu,kelembapan,tanggal,ups,nama FROM ${tableName} INNER JOIN users ON ${tableName}.id_users = users.id_user WHERE id_role=1`
+    )
+    let rows = [...rowsSecurity, ...rowsEdp]
+    rows.sort((i, j) => i.tanggal - j.tanggal)
+
     if (rows) {
       res.status(200).send(rows)
     } else {
