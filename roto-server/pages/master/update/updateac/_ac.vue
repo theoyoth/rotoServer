@@ -150,6 +150,7 @@ export default {
             model : this.updateAc.model,
             sumberDayaListrik : this.updateAc.sumberDayaListrik,
             dimensi : this.updateAc.dimensi,
+            konsumsiDayaListrik: this.updateAc.konsumsiDayaListrik,
             kapasitasPendingin : this.updateAc.kapasitasPendingin,
             tahun : this.updateAc.tahun,
             garansi : this.updateAc.garansi,
