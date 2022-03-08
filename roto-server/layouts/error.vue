@@ -11,9 +11,10 @@
               <h1 class="text-2xl text-gray-700 font-semibold text-center">Tidak dapat menemukan halaman yang di cari</h1>
             </div>
             <h1 v-else class="text-3xl text-gray-700 grid place-items-center">masalah terjadi</h1>
-            <div v-show="user">
-              <NuxtLink to="/homepage" class="mt-6 py-2 w-36 rounded-lg text-center bg-gray-700">
-                <p class="text-sm text-yellow-500 font-medium">Homepage</p>
+            <div v-show="user" class="flex items-center justify-between">
+              <p class="text-gray-700 mr-2">Kembali ke</p>
+              <NuxtLink to="/homepage" class="py-2 w-32 rounded-lg text-center bg-gray-700">
+                <p class="text-sm text-yellow-500 font-medium">Homepage?</p>
               </NuxtLink>
             </div>
         </div>
