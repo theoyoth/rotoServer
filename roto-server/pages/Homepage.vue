@@ -48,8 +48,14 @@
                         class="text-gray-200 text-lg z-10"
                     />
                   </div>
-                  <h1 class="text-xl font-semibold">{{this.newestDataSecurity.suhu}}°c</h1>
-                  <p class="text-xs">Suhu</p>
+                  <div v-if="this.newestData == undefined">
+                    <h1 class="text-xl font-semibold">0°c</h1>
+                    <p class="text-xs">Suhu</p>
+                  </div>
+                  <div v-else>
+                    <h1 class="text-xl font-semibold">{{this.newestData.suhu}}°c</h1>
+                    <p class="text-xs">Suhu</p>
+                  </div>
                 </div>
               </div>
               <div class="has-tooltip">
@@ -93,8 +99,14 @@
                         class="text-gray-200 text-lg z-10"
                     />
                   </div>
-                  <h1 class="text-xl font-semibold">{{this.newestDataSecurity.kelembapan}}%</h1>
-                  <p class="text-xs">Kelembapan</p>
+                  <div v-if="this.newestData == undefined">
+                    <h1 class="text-xl font-semibold">0%</h1>
+                    <p class="text-xs">Kelembapan</p>
+                  </div>
+                  <div v-else>
+                    <h1 class="text-xl font-semibold">{{this.newestData.kelembapan}}%</h1>
+                    <p class="text-xs">Kelembapan</p>
+                  </div>
                 </div>
               </div>
               <div class="has-tooltip">
@@ -138,8 +150,14 @@
                         class="text-gray-200 text-lg z-10"
                     />
                   </div>
-                  <h1 class="text-xl font-semibold">{{this.newestDataSecurity.ups}}</h1>
-                  <p class="text-xs">UPS</p>
+                  <div v-if="this.newestData == undefined"> 
+                    <h1 class="text-xl font-semibold">-</h1>
+                    <p class="text-xs">UPS</p>
+                  </div>
+                  <div v-else>
+                    <h1 class="text-xl font-semibold">{{this.newestData.ups}}</h1>
+                    <p class="text-xs">UPS</p>
+                  </div>
                 </div>
               </div>
           </div>
@@ -149,7 +167,8 @@
                         :icon="['far', 'chart-bar']"
                         class="text-gray-700 text-lg ml-2"
                     /></h1>
-          <div class="w-full mt-10">
+          <div v-if="!this.dataGraphic.length"></div>
+          <div class="w-full mt-10" v-else>
             <div class="relative">
               <h2 class="text-gray-700 text-center">Grafik suhu</h2>
               <BarChartsuhu :chartData="chartData" :options="options"/>
@@ -195,7 +214,8 @@ export default {
       kelembapalabel: null,
       kelembapandata: null,
       response:[],
-      newestDataSecurity: [],
+      newestData: [],
+      dataGraphic:[],
     }
   },
   computed: {
@@ -205,33 +225,15 @@ export default {
     user() {
       return this.$auth.user
     },
-    isEdp() {
-      return this.$store.getters.isEdp
-    },
-    isPa() {
-      return this.$store.getters.isPa
-    },
-    isSecurity() {
-      return this.$store.getters.isSecurity
-    },
-    isadminTeknisi() {
-      return this.$store.getters.isadminTeknisi
-    },
-    isTeknisilistrik() {
-      return this.$store.getters.isTeknisilistrik
-    },
-    isTeknisiac() {
-      return this.$store.getters.isTeknisiac
-    }
   },
   methods: {
     async fillDataSuhu(){
       try {
-        if (this.response) {
-          const daftarLabel = this.response.map(list => moment(list.tanggal).format('YYYY-MM-DD'))
-          const daftarSuhu = this.response.map(list => list.suhu)
+        if (this.dataGraphic) {
+          const daftarLabel = this.dataGraphic.map(list => moment(list.tanggal).format('YYYY-MM-DD'))
+          const daftarSuhu = this.dataGraphic.map(list => list.suhu)
           this.barcharlabel = daftarLabel
-          this.barchardata = daftarSuhu
+          this.barchardata = daftarSuhu 
 
           this.chartData = {
             labels: this.barcharlabel,
@@ -259,7 +261,7 @@ export default {
                 },
                 ticks: {
                   beginAtZero: true,
-                  max:50,
+                  max:30,
                   color: "#E8EAF6",
                 },
                 grid: {
@@ -285,9 +287,9 @@ export default {
     },
     async fillDataKelembapan(){
       try {
-        if (this.response) {
-          const daftarLabel = this.response.map(list => moment(list.tanggal).format('YYYY-MM-DD'))
-          const daftarKelembapan = this.response.map(list => list.kelembapan)
+        if (this.dataGraphic) {
+          const daftarLabel = this.dataGraphic.map(list => moment(list.tanggal).format('YYYY-MM-DD'))
+          const daftarKelembapan = this.dataGraphic.map(list => list.kelembapan)
           this.kelembapanlabel = daftarLabel
           this.kelembapandata = daftarKelembapan
 
@@ -318,7 +320,7 @@ export default {
                 },
                 ticks: {
                   min:0,
-                  max:80,
+                  max:60,
                   color: "#E8EAF6",
                 },
                 grid: {
@@ -450,13 +452,22 @@ export default {
 
     async getMaintenance(){
       const lokasi = this.$auth.user.lokasi
-      const resp = await this.$axios.get(`/maintenance/security/alldata/${lokasi}`)
+      const resp = await this.$axios.get(`/maintenance/alldata/${lokasi}`)
       resp.data.forEach(res => {
-        this.response.push(res)
+          this.response.push(res)
+      })
+      let filterDate = this.response.map(item => {
+        return {...item,tanggal:this.$moment(item.tanggal).format('YYYY-MM-DD')}
       })
 
-      // mendapatkan satu maintenance security paling baru
-      this.newestDataSecurity = resp.data[resp.data.length-1]
+      function getDuplicateData(arr, key) {
+        return [...new Map(arr.map((item) => [item[key],item])).values()]
+      }
+      this.dataGraphic = getDuplicateData(filterDate, 'tanggal')
+
+      // mendapatkan satu maintenance paling baru
+      this.newestData = resp.data[resp.data.length-1]
+      console.log(this.newestData.length)
 
       // memanggil fungsi
       this.fillDataSuhu()
