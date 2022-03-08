@@ -25,7 +25,7 @@
                 </tr>
             </thead>
             <tbody v-if="carimaintenance !== ''" class="text-center bg-white bg-opacity-40 divide-y divide-gray-300">
-                <tr class="text-sm" v-for="(hasilcari,index) in filteredList" :key="index">
+                <tr class="text-sm uppercase" v-for="(hasilcari,index) in filteredList" :key="index">
                     <td>{{index+1}}</td>
                     <td class="py-3">{{hasilcari.nama_pemeriksa}}</td>
                     <td>{{$moment(hasilcari.tanggal).format("DD-MM-YYYY")}}</td>
@@ -33,10 +33,40 @@
                     <td>{{hasilcari.kelembapan}}</td>
                     <td>{{hasilcari.ac}}</td>
                     <td>{{hasilcari.ups}}</td>
+                    <td class="py-2 flex justify-around w-full lowercase">
+                        <div class="has-tooltip">
+                        <span
+                        class="
+                            tooltip
+                            rounded
+                            text-xs
+                            shadow-lg
+                            p-1
+                            bg-gray-700
+                            text-white
+                            mt-7 -ml-5
+                        "
+                        >detail</span
+                        >
+                            <div class="bg-gray-700 w-7 h-7 rounded-xl flex items-center justify-center">
+                                <NuxtLink
+                                    :to="{
+                                    name: 'maintenance-maintenancelistrik-detail-detail',
+                                    params: { id: hasilcari.id_maintenance},
+                                    }"
+                                >
+                                    <font-awesome-icon
+                                    :icon="['fas', 'eye']"
+                                    class="text-yellow-500"
+                                    />
+                                </NuxtLink>
+                            </div>
+                        </div>
+                    </td>
                 </tr>
             </tbody> 
             <tbody v-else class="text-center bg-white bg-opacity-40 divide-y divide-gray-300">
-                <tr class="text-sm" v-for="(main,index) in hasilMaintenancelistrik" :key="index">
+                <tr class="text-sm uppercase" v-for="(main,index) in hasilMaintenancelistrik" :key="index">
                     <td>{{index+1}}</td>
                     <td class="py-3">{{main.nama_pemeriksa}}</td>
                     <td>{{$moment(main.tanggal).format("DD-MM-YYYY")}}</td>
@@ -44,7 +74,7 @@
                     <td>{{main.kelembapan}}</td>
                     <td>{{main.ac}}</td>
                     <td>{{main.ups}}</td>
-                    <td class="py-2 flex justify-around w-full">
+                    <td class="py-2 flex justify-around w-full lowercase">
                         <div class="has-tooltip">
                         <span
                         class="
