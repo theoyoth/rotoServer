@@ -29,7 +29,7 @@
             </div>
             <div class="text-center mt-6">
               <button
-                class="opacity-10 px-6 bg-gray-700 text-gray-200 py-2 rounded cursor-default mt-2 w-full"
+                class="opacity-10 px-6 bg-gray-700 text-gray-200 py-2 rounded cursor-default mt-2"
                 type="submit" :class="{activesubmit : valid}" :disabled="invalid"
               >
                 Kirim ke email
@@ -53,8 +53,6 @@ export default {
     return{
       nama:"",
       email:"",
-      errormsg:"",
-      successmsg:"",
     }
   },
   components:{
@@ -94,9 +92,6 @@ export default {
         color:whitesmoke;
         cursor:pointer;
         opacity:1;
-        padding-top: .5rem;
-        padding-bottom: .5rem;
-        transition: all 0.5s;
-        transform:translateY(4px);
+        width:200px;
     }
 </style>
