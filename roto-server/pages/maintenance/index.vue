@@ -9,16 +9,25 @@
                     <font-awesome-icon :icon="['fas','search']" class="text-yellow-500"/>
                 </button>
             </div>
-            <NuxtLink to="/maintenance/inputmaintenance"
-            class="flex items-center justify-between rounded-md px-3 w-20 bg-gray-700 hover:bg-gray-600 transition duration-200">
-                <p class="font-medium text-sm text-gray-200">input</p>
-                <div>
-                    <font-awesome-icon :icon="['fas', 'plus']" class="text-gray-200" />
-                </div>
-            </NuxtLink>
+            <div class="w-64 flex justify-between">
+                <NuxtLink to="/maintenance/print"
+                class="flex items-center justify-between rounded-md px-3 w-20 bg-gray-700 hover:bg-gray-600 transition duration-200">
+                    <p class="font-medium text-sm text-gray-200">print</p>
+                    <div>
+                        <font-awesome-icon :icon="['fas', 'print']" class="text-yellow-500" />
+                    </div>
+                </NuxtLink>
+                <NuxtLink to="/maintenance/inputmaintenance"
+                class="flex items-center justify-between rounded-md px-3 w-20 bg-gray-700 hover:bg-gray-600 transition duration-200">
+                    <p class="font-medium text-sm text-gray-200">input</p>
+                    <div>
+                        <font-awesome-icon :icon="['fas', 'plus']" class="text-gray-200" />
+                    </div>
+                </NuxtLink>
+            </div>
         </div>
 
-        <table class="table space-y-6 container mx-auto table-auto border-collapse mt-7 divide-y divide-gray-300" ref="listitem" id="listitem">
+        <table class="table space-y-6 container mx-auto table-auto border-collapse mt-7 divide-y divide-gray-300 border-collapse" ref="listitem" id="listitem" v-if="user.role === 'EDP' || user.role === 'PA' || user.role === 'Security'">
             <thead class="bg-white text-sm bg-gray-700">
                 <tr class="text-xs text-gray-200"> 
                     <th class="font-semibold py-3 px-2 w-4">no.</th>
@@ -32,7 +41,7 @@
                 </tr>
             </thead>
             <tbody v-if="carimaintenance !== ''" class="text-center bg-white bg-opacity-40 divide-y divide-gray-300">
-                <tr class="text-sm" v-for="(hasilcari,index) in filteredList" :key="index">
+                <tr class="text-sm uppercase" v-for="(hasilcari,index) in filteredList" :key="index" :class="{borderRedError : hasilcari.suhu > 30 || hasilcari.kelembapan >60 || hasilcari.ac === 'tidak baik' || hasilcari.ups === 'tidak baik'}">
                     <td>{{index+1}}</td>
                     <td class="py-3">{{hasilcari.nama_pemeriksa}}</td>
                     <td>{{$moment(hasilcari.tanggal).format("DD-MM-YYYY")}}</td>
@@ -40,7 +49,7 @@
                     <td>{{hasilcari.kelembapan}}</td>
                     <td>{{hasilcari.ac}}</td>
                     <td>{{hasilcari.ups}}</td>
-                    <td class="py-2 flex justify-around w-full">
+                    <td class="py-2 flex justify-around w-full lowercase">
                         <div class="has-tooltip">
                         <span
                         class="
@@ -113,7 +122,7 @@
                 </tr>
             </tbody> 
             <tbody v-else class="text-center bg-white bg-opacity-40 divide-y divide-gray-300">
-                <tr class="text-sm" v-for="(main,index) in hasilMaintenance" :key="index">
+                <tr class="text-sm uppercase" v-for="(main,index) in hasilMaintenance" :key="index" :class="{borderRedError : main.suhu > 30 || main.kelembapan > 60 || main.ac === 'tidak baik' || main.ups === 'tidak baik' || main.baterai === 'tidak baik' || main.server === 'tidak baik'}">
                     <td>{{index+1}}</td>
                     <td class="py-3">{{main.nama_pemeriksa}}</td>
                     <td>{{$moment(main.tanggal).format("DD-MM-YYYY")}}</td>
@@ -121,7 +130,470 @@
                     <td>{{main.kelembapan}}</td>
                     <td>{{main.ac}}</td>
                     <td>{{main.ups}}</td>
-                    <td class="py-2 flex justify-around w-full">
+                    <td class="py-2 flex justify-around w-full lowercase">
+                        <div class="has-tooltip">
+                        <span
+                        class="
+                            tooltip
+                            rounded
+                            text-xs
+                            shadow-lg
+                            p-1
+                            bg-gray-700
+                            text-white
+                            mt-7 -ml-5
+                        "
+                        >detail</span
+                        >
+                            <div class="bg-gray-700 w-7 h-7 rounded-xl flex items-center justify-center">
+                                <NuxtLink
+                                    :to="{
+                                    name: 'maintenance-detailmaintenance-detail',
+                                    params: { id: main.id_maintenance },
+                                    }"
+                                >
+                                    <font-awesome-icon
+                                    :icon="['fas', 'eye']"
+                                    class="text-yellow-500"
+                                    />
+                                </NuxtLink>
+                            </div>
+                        </div>
+                        <div class="has-tooltip">
+                        <span
+                        class="
+                            tooltip
+                            rounded
+                            text-xs
+                            shadow-lg
+                            p-1
+                            bg-gray-700
+                            text-white
+                            mt-7 -ml-4
+                        "
+                        >edit</span
+                        >
+                            <div class="bg-gray-700 w-7 h-7 rounded-xl flex items-center justify-center">
+                                <NuxtLink :to="{name : 'maintenance-updatemaintenance-maintenance', params:{id : main.id_maintenance} }">
+                                    <font-awesome-icon :icon="['fas','pencil-alt']" class="text-yellow-500"/>
+                                </NuxtLink>
+                            </div>
+                         </div>
+                         <div class="has-tooltip">
+                        <span
+                            class="
+                                tooltip
+                                rounded
+                                text-xs
+                                shadow-lg
+                                p-1
+                                bg-gray-700
+                                text-white
+                                mt-7 -ml-4
+                            "
+                            >hapus</span
+                            >
+                            <div class="bg-gray-700 w-7 h-7 rounded-xl flex items-center justify-center">
+                                <button @click.prevent="deleteData(main.id_maintenance)">
+                                    <font-awesome-icon :icon="['fas','trash']" class="text-yellow-500"/>
+                                </button> 
+                            </div>
+                         </div>
+                    </td>
+                </tr>
+            </tbody>   
+        </table>
+        <table class="table space-y-6 container mx-auto table-auto border-collapse mt-7 divide-y divide-gray-300" ref="listitem" id="listitem" v-if="user.role === 'Teknisi ac'">
+            <thead class="bg-white text-sm bg-gray-700">
+                <tr class="text-xs text-gray-200"> 
+                    <th class="font-semibold py-3 px-2 w-4">no.</th>
+                    <th classp="font-semibold py-3 w-28">nama</th>
+                    <th class="font-semibold py-3 w-32">tanggal input</th>
+                    <th class="font-semibold w-32">AC</th>
+                    <th class="font-semibold w-72">keterangan AC</th>
+                    <th class="font-semibold w-20">aksi</th>
+                </tr>
+            </thead>
+            <tbody v-if="carimaintenance !== ''" class="text-center bg-white bg-opacity-40 divide-y divide-gray-300">
+                <tr class="text-sm uppercase" v-for="(hasilcari,index) in filteredList" :key="index">
+                    <td>{{index+1}}</td>
+                    <td class="py-3">{{hasilcari.nama_pemeriksa}}</td>
+                    <td>{{$moment(hasilcari.tanggal).format("DD-MM-YYYY")}}</td>
+                    <td>{{hasilcari.ac}}</td>
+                    <td>{{hasilcari.keterangan_ac}}</td>
+                    <td class="py-2 flex justify-around w-full lowercase">
+                        <div class="has-tooltip">
+                        <span
+                        class="
+                            tooltip
+                            rounded
+                            text-xs
+                            shadow-lg
+                            p-1
+                            bg-gray-700
+                            text-white
+                            mt-7 -ml-4
+                        "
+                        >edit</span
+                        >
+                            <div class="bg-gray-700 w-7 h-7 rounded-xl flex items-center justify-center">
+                                <NuxtLink :to="{name : 'maintenance-updatemaintenance-maintenance', params:{id : hasilcari.id_maintenance} }">
+                                    <font-awesome-icon :icon="['fas','pencil-alt']" class="text-yellow-500"/>
+                                </NuxtLink>
+                            </div>
+                        </div>
+                        <div class="has-tooltip">
+                        <span
+                            class="
+                                tooltip
+                                rounded
+                                text-xs
+                                shadow-lg
+                                p-1
+                                bg-gray-700
+                                text-white
+                                mt-7 -ml-4
+                            "
+                            >hapus</span
+                            >
+                            <div class="bg-gray-700 w-7 h-7 rounded-xl flex items-center justify-center">
+                                <button @click.prevent="deleteData(hasilcari.id_maintenance)">
+                                    <font-awesome-icon :icon="['fas','trash']" class="text-yellow-500"/>
+                                </button> 
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </tbody> 
+            <tbody v-else class="text-center bg-white bg-opacity-40 divide-y divide-gray-300">
+                <tr class="text-sm uppercase" v-for="(main,index) in hasilMaintenance" :key="index">
+                    <td>{{index+1}}</td>
+                    <td class="py-3">{{main.nama_pemeriksa}}</td>
+                    <td>{{$moment(main.tanggal).format("DD-MM-YYYY")}}</td>
+                    <td>{{main.ac}}</td>
+                    <td>{{main.keterangan_ac}}</td>
+                    <td class="py-2 flex justify-around w-full lowercase">
+                        <div class="has-tooltip">
+                        <span
+                        class="
+                            tooltip
+                            rounded
+                            text-xs
+                            shadow-lg
+                            p-1
+                            bg-gray-700
+                            text-white
+                            mt-7 -ml-4
+                        "
+                        >edit</span
+                        >
+                            <div class="bg-gray-700 w-7 h-7 rounded-xl flex items-center justify-center">
+                                <NuxtLink :to="{name : 'maintenance-updatemaintenance-maintenance', params:{id : main.id_maintenance} }">
+                                    <font-awesome-icon :icon="['fas','pencil-alt']" class="text-yellow-500"/>
+                                </NuxtLink>
+                            </div>
+                         </div>
+                         <div class="has-tooltip">
+                        <span
+                            class="
+                                tooltip
+                                rounded
+                                text-xs
+                                shadow-lg
+                                p-1
+                                bg-gray-700
+                                text-white
+                                mt-7 -ml-4
+                            "
+                            >hapus</span
+                            >
+                            <div class="bg-gray-700 w-7 h-7 rounded-xl flex items-center justify-center">
+                                <button @click.prevent="deleteData(main.id_maintenance)">
+                                    <font-awesome-icon :icon="['fas','trash']" class="text-yellow-500"/>
+                                </button> 
+                            </div>
+                         </div>
+                    </td>
+                </tr>
+            </tbody>   
+        </table>
+        <table class="table space-y-6 container mx-auto table-auto border-collapse mt-7 divide-y divide-gray-300" ref="listitem" id="listitem" v-if="user.role === 'Teknisi listrik'">
+                <thead class="bg-white text-sm bg-gray-700">
+                    <tr class="text-xs text-gray-200"> 
+                        <th class="font-semibold py-3 px-2 w-4">no.</th>
+                        <th classp="font-semibold py-3 w-52">nama</th>
+                        <th class="font-semibold py-3 w-32">tanggal input</th>
+                        <th class="font-semibold w-32">UPS</th>
+                        <th class="font-semibold w-32">baterai</th>
+                        <th class="font-semibold w-32">server</th>
+                        <th class="font-semibold w-28">aksi</th>
+                    </tr>
+                </thead>
+                <tbody v-if="carimaintenance !== ''" class="text-center bg-white bg-opacity-40 divide-y divide-gray-300">
+                    <tr class="text-sm uppercase" v-for="(hasilcari,index) in filteredList" :key="index">
+                        <td>{{index+1}}</td>
+                        <td class="py-3">{{hasilcari.nama_pemeriksa}}</td>
+                        <td>{{$moment(hasilcari.tanggal).format("DD-MM-YYYY")}}</td>
+                        <td>{{hasilcari.ups}}</td>
+                        <td>{{hasilcari.baterai}}</td>
+                        <td>{{hasilcari.server}}</td>
+                        <td class="py-2 flex justify-around w-full lowercase">
+                            <div class="has-tooltip">
+                            <span
+                            class="
+                                tooltip
+                                rounded
+                                text-xs
+                                shadow-lg
+                                p-1
+                                bg-gray-700
+                                text-white
+                                mt-7 -ml-5
+                            "
+                            >detail</span
+                            >
+                                <div class="bg-gray-700 w-7 h-7 rounded-xl flex items-center justify-center">
+                                    <NuxtLink
+                                        :to="{
+                                        name: 'maintenance-detailmaintenance-detail',
+                                        params: { id: hasilcari.id_maintenance },
+                                        }"
+                                    >
+                                        <font-awesome-icon
+                                        :icon="['fas', 'eye']"
+                                        class="text-yellow-500"
+                                        />
+                                    </NuxtLink>
+                                </div>
+                            </div>
+                            <div class="has-tooltip">
+                            <span
+                            class="
+                                tooltip
+                                rounded
+                                text-xs
+                                shadow-lg
+                                p-1
+                                bg-gray-700
+                                text-white
+                                mt-7 -ml-4
+                            "
+                            >edit</span
+                            >
+                                <div class="bg-gray-700 w-7 h-7 rounded-xl flex items-center justify-center">
+                                    <NuxtLink :to="{name : 'maintenance-updatemaintenance-maintenance', params:{id : hasilcari.id_maintenance} }">
+                                        <font-awesome-icon :icon="['fas','pencil-alt']" class="text-yellow-500"/>
+                                    </NuxtLink>
+                                </div>
+                            </div>
+                            <div class="has-tooltip">
+                            <span
+                                class="
+                                    tooltip
+                                    rounded
+                                    text-xs
+                                    shadow-lg
+                                    p-1
+                                    bg-gray-700
+                                    text-white
+                                    mt-7 -ml-4
+                                "
+                                >hapus</span
+                                >
+                                <div class="bg-gray-700 w-7 h-7 rounded-xl flex items-center justify-center">
+                                    <button @click.prevent="deleteData(hasilcari.id_maintenance)">
+                                        <font-awesome-icon :icon="['fas','trash']" class="text-yellow-500"/>
+                                    </button> 
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody> 
+                <tbody v-else class="text-center bg-white bg-opacity-40 divide-y divide-gray-300">
+                    <tr class="text-sm uppercase" v-for="(main,index) in hasilMaintenance" :key="index">
+                        <td>{{index+1}}</td>
+                        <td class="py-3">{{main.nama_pemeriksa}}</td>
+                        <td>{{$moment(main.tanggal).format("DD-MM-YYYY")}}</td>
+                        <td>{{main.ups}}</td>
+                        <td>{{main.baterai}}</td>
+                        <td>{{main.server}}</td>
+                        <td class="py-2 flex justify-around w-full lowercase">
+                            <div class="has-tooltip">
+                            <span
+                            class="
+                                tooltip
+                                rounded
+                                text-xs
+                                shadow-lg
+                                p-1
+                                bg-gray-700
+                                text-white
+                                mt-7 -ml-5
+                            "
+                            >detail</span
+                            >
+                                <div class="bg-gray-700 w-7 h-7 rounded-xl flex items-center justify-center">
+                                    <NuxtLink
+                                        :to="{
+                                        name: 'maintenance-detailmaintenance-detail',
+                                        params: { id: main.id_maintenance },
+                                        }"
+                                    >
+                                        <font-awesome-icon
+                                        :icon="['fas', 'eye']"
+                                        class="text-yellow-500"
+                                        />
+                                    </NuxtLink>
+                                </div>
+                            </div>
+                            <div class="has-tooltip">
+                            <span
+                            class="
+                                tooltip
+                                rounded
+                                text-xs
+                                shadow-lg
+                                p-1
+                                bg-gray-700
+                                text-white
+                                mt-7 -ml-4
+                            "
+                            >edit</span
+                            >
+                                <div class="bg-gray-700 w-7 h-7 rounded-xl flex items-center justify-center">
+                                    <NuxtLink :to="{name : 'maintenance-updatemaintenance-maintenance', params:{id : main.id_maintenance} }">
+                                        <font-awesome-icon :icon="['fas','pencil-alt']" class="text-yellow-500"/>
+                                    </NuxtLink>
+                                </div>
+                            </div>
+                            <div class="has-tooltip">
+                            <span
+                                class="
+                                    tooltip
+                                    rounded
+                                    text-xs
+                                    shadow-lg
+                                    p-1
+                                    bg-gray-700
+                                    text-white
+                                    mt-7 -ml-4
+                                "
+                                >hapus</span
+                                >
+                                <div class="bg-gray-700 w-7 h-7 rounded-xl flex items-center justify-center">
+                                    <button @click.prevent="deleteData(main.id_maintenance)">
+                                        <font-awesome-icon :icon="['fas','trash']" class="text-yellow-500"/>
+                                    </button> 
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>   
+        </table>
+        <table class="table space-y-6 container mx-auto table-auto border-collapse mt-7 divide-y divide-gray-300" ref="listitem" id="listitem" v-if="user.role === 'Admin teknisi'">
+            <thead class="bg-white text-sm bg-gray-700">
+                <tr class="text-xs text-gray-200"> 
+                    <th class="font-semibold py-3 px-2 w-4">no.</th>
+                    <th classp="font-semibold py-3 w-52">nama</th>
+                    <th class="font-semibold py-3 w-32">tanggal input</th>
+                    <th class="font-semibold w-32">AC</th>
+                    <th class="font-semibold w-32">UPS</th>
+                    <th class="font-semibold w-32">baterai</th>
+                    <th class="font-semibold w-32">server</th>
+                    <th class="font-semibold w-28">aksi</th>
+                </tr>
+            </thead>
+            <tbody v-if="carimaintenance !== ''" class="text-center bg-white bg-opacity-40 divide-y divide-gray-300">
+                <tr class="text-sm uppercase" v-for="(hasilcari,index) in filteredList" :key="index">
+                    <td>{{index+1}}</td>
+                    <td class="py-3">{{hasilcari.nama_pemeriksa}}</td>
+                    <td>{{$moment(hasilcari.tanggal).format("DD-MM-YYYY")}}</td>
+                    <td>{{hasilcari.ac}}</td>
+                    <td>{{hasilcari.ups}}</td>
+                    <td>{{hasilcari.baterai}}</td>
+                    <td>{{hasilcari.server}}</td>
+                    <td class="py-2 flex justify-around w-full lowercase">
+                        <div class="has-tooltip">
+                        <span
+                        class="
+                            tooltip
+                            rounded
+                            text-xs
+                            shadow-lg
+                            p-1
+                            bg-gray-700
+                            text-white
+                            mt-7 -ml-5
+                        "
+                        >detail</span
+                        >
+                            <div class="bg-gray-700 w-7 h-7 rounded-xl flex items-center justify-center">
+                                <NuxtLink
+                                    :to="{
+                                    name: 'maintenance-detailmaintenance-detail',
+                                    params: { id: hasilcari.id_maintenance },
+                                    }"
+                                >
+                                    <font-awesome-icon
+                                    :icon="['fas', 'eye']"
+                                    class="text-yellow-500"
+                                    />
+                                </NuxtLink>
+                            </div>
+                        </div>
+                        <div class="has-tooltip">
+                        <span
+                        class="
+                            tooltip
+                            rounded
+                            text-xs
+                            shadow-lg
+                            p-1
+                            bg-gray-700
+                            text-white
+                            mt-7 -ml-4
+                        "
+                        >edit</span
+                        >
+                            <div class="bg-gray-700 w-7 h-7 rounded-xl flex items-center justify-center">
+                                <NuxtLink :to="{name : 'maintenance-updatemaintenance-maintenance', params:{id : hasilcari.id_maintenance} }">
+                                    <font-awesome-icon :icon="['fas','pencil-alt']" class="text-yellow-500"/>
+                                </NuxtLink>
+                            </div>
+                        </div>
+                        <div class="has-tooltip">
+                        <span
+                            class="
+                                tooltip
+                                rounded
+                                text-xs
+                                shadow-lg
+                                p-1
+                                bg-gray-700
+                                text-white
+                                mt-7 -ml-4
+                            "
+                            >hapus</span
+                            >
+                            <div class="bg-gray-700 w-7 h-7 rounded-xl flex items-center justify-center">
+                                <button @click.prevent="deleteData(hasilcari.id_maintenance)">
+                                    <font-awesome-icon :icon="['fas','trash']" class="text-yellow-500"/>
+                                </button> 
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </tbody> 
+            <tbody v-else class="text-center bg-white bg-opacity-40 divide-y divide-gray-300">
+                <tr class="text-sm uppercase" v-for="(main,index) in hasilMaintenance" :key="index">
+                    <td>{{index+1}}</td>
+                    <td class="py-3">{{main.nama_pemeriksa}}</td>
+                    <td>{{$moment(main.tanggal).format("DD-MM-YYYY")}}</td>
+                    <td>{{main.ac}}</td>
+                    <td>{{main.ups}}</td>
+                    <td>{{main.baterai}}</td>
+                    <td>{{main.server}}</td>
+                    <td class="py-2 flex justify-around w-full lowercase">
                         <div class="has-tooltip">
                         <span
                         class="
@@ -207,7 +679,6 @@ export default {
             carimaintenance:"",
             hasilMaintenance:[],
             hasilcarimaintenance:[],
-            deletemsg:"",
         }
     },   
     computed:{ 
@@ -217,6 +688,9 @@ export default {
                     return hasil
                 }
             })        
+        },
+        user(){
+            return this.$auth.user
         }
     },
     methods:{
@@ -244,10 +718,10 @@ export default {
                     })
                 }
                 else{
-                    swal('Error','gagal menghapus',{icon:'error'})
+                    this.$router.push('/maintenance')
                 }
             }).catch(err=>{
-                swal('Error','gagal menghapus',{icon:'error'})
+                this.$router.push('/maintenance')
             })
         },
         async getAllDataMaintenances(){
@@ -268,11 +742,14 @@ export default {
             }
         }
     },
-    async mounted(){
+    mounted(){
         this.getAllDataMaintenances()
     },
 }
 </script>
 
 <style>
+.borderRedError{
+    border: 2px solid rgb(255, 40, 79);
+}
 </style>
