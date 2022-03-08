@@ -171,16 +171,13 @@ export default {
                 swal('data dihapus',{icon:'success'})
               }
             }).catch(err=>{
-              if(err.data.errmsg){
-                  this.$router.push('/infouser')
-                  swal('Error',err.data.errmsg,{icon:'error'})
-              }
+                this.$router.push('/infouser')
             })
           } else{
-                swal('Error','gagal menghapus',{icon:'error'})
+                this.$router.push('/infouser')
             }
         }).catch(err=>{
-            swal('Error','ada yang salah',{icon:'error'})
+            swal('ada yang salah',{icon:'error'})
         })
     },
     async getAllUsers(){

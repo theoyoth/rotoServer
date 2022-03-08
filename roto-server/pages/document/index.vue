@@ -151,10 +151,10 @@ export default {
                     })
                 }
                 else{
-                    swal('Error','gagal menghapus',{icon:'error'})
+                    this.$router.push('/document')
                 }
             }).catch(err=>{
-                swal('Error','ada yang salah',{icon:'error'})
+                this.$router.push('/document')
             })
     },
     async getAllDocuments(){
