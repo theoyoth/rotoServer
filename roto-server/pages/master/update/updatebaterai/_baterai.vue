@@ -18,8 +18,8 @@
 
                     <label for="accu" class="block mb-2 text-sm">accu</label>
                     <div class="flex flex-col w-72">
-                        <ValidationProvider rules="required|numeric" v-slot={errors}>
-                            <input type="text" v-model="updateBaterai.accu" name="accu" id="accu" class="p-2 w-72 rounded-lg outline-none bg-gray-300">
+                        <ValidationProvider rules="required|passchar" v-slot={errors}>
+                            <input type="text" v-model="updateBaterai.accu" name="accu" id="accu" class="p-2 w-72 rounded-lg outline-none bg-gray-300 uppercase">
                             <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
                         </ValidationProvider>
                     </div>
@@ -30,7 +30,7 @@
                     <label for="kuantitas" class="block mb-2 text-sm">kuantitas</label>
                     <div class="flex flex-col w-72">
                         <ValidationProvider rules="required|numeric" v-slot={errors}>
-                            <input type="text" v-model="updateBaterai.kuantitas" name="kuantitas" id="kuantitas" class="p-2 w-72 rounded-lg outline-none bg-gray-300">
+                            <input type="text" v-model="updateBaterai.kuantitas" name="kuantitas" id="kuantitas" class="p-2 w-72 rounded-lg outline-none bg-gray-300 uppercase">
                             <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
                         </ValidationProvider>
                     </div>
@@ -42,8 +42,8 @@
                     <div class="flex flex-col w-72">
                         <ValidationProvider rules="required|numeric" v-slot={errors}>
                             <div class="flex">
-                                <input type="text" v-model="updateBaterai.voltage" name="tegangan" id="tegangan" class="p-2 w-full rounded-l-lg outline-none bg-gray-300">
-                                <input type="text" value="volt" readonly="readonly" class="w-16 p-1 rounded-r-lg bg-gray-300 outline-none text-center cursor-default">
+                                <input type="text" v-model="updateBaterai.voltage" name="tegangan" id="tegangan" class="p-2 w-full rounded-l-lg outline-none bg-gray-300 uppercase">
+                                <input type="text" value="volt" readonly="readonly" class="w-16 p-1 rounded-r-lg bg-gray-300 outline-none text-center cursor-default uppercase">
                             </div>
                             <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
                         </ValidationProvider>
