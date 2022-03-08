@@ -15,17 +15,17 @@
     <form class="mt-10 min-w-min" @submit.prevent="postTambahBarang">
         <div>
             <div class="grid grid-cols-2">
-                <div class="mb-4 has-tooltip">
+                <!-- <div class="mb-4 has-tooltip">
                      <span class="tooltip text-xs rounded shadow-lg p-1 bg-gray-700 text-white ml-32">masukan tanggal masuk barang</span>
 
                     <label for="tanggal" class="block mb-2 text-sm">tanggal</label>
                     <div class="flex flex-col w-72">
                         <ValidationProvider rules="required" v-slot={errors}>
-                            <input type="date" v-model="inputTambahBarang.tanggal" name="tanggal" id="tanggal" class="p-2 w-full rounded-lg outline-none bg-gray-200 uppercase">
+                            <input type="datetime-local" v-model="inputTambahBarang.tanggal" name="tanggal" id="tanggal" class="p-2 w-full rounded-lg outline-none bg-gray-200 uppercase">
                             <p class="text-xs mt-1 text-right text-red-500">{{ errors[0] }}</p>
                         </ValidationProvider>
                     </div>
-                </div>
+                </div> -->
                 <div class="mb-4 has-tooltip">
                      <span class="tooltip text-xs rounded shadow-lg p-1 bg-gray-700 text-white ml-32">masukan nama barang</span>
 
@@ -68,7 +68,7 @@
                     <label for="penanggungJawab" class="block mb-2 text-sm">penanggung jawab</label>
                     <div class="flex flex-col w-72">
                     <ValidationProvider rules="required" v-slot={errors}>
-                        <select name="penanggungJawab" id="penanggungJawab" class="p-2 w-full rounded-lg" v-model="inputTambahBarang.penanggungJawab">
+                        <select name="penanggungJawab" id="penanggungJawab" class="p-2 w-full rounded-lg bg-gray-200" v-model="inputTambahBarang.penanggungJawab">
                             <option disabled value="">penanggung jawab</option>
                             <option v-for="(pa,index) in userpa" :key="index">
                                 <option :value="pa.nama">{{pa.nama}}</option>
@@ -80,7 +80,7 @@
                 </div>
             </div>
         </div>
-        <button class="mt-6 opacity-10 bg-gray-700 text-gray-200 w-28 py-2 rounded cursor-default transition duration-200 hover:bg-gray-600" type="submit" :class="{activesubmit : valid}" :disabled="invalid">simpan</button>
+        <button class="mt-6 opacity-10 bg-gray-700 text-gray-200 w-24 py-2 rounded cursor-default transition duration-200 hover:bg-gray-600" type="submit" :class="{activesubmit : valid}" :disabled="invalid">simpan</button>
     </form>
     </ValidationObserver>
     
@@ -101,7 +101,7 @@ export default {
     data(){
         return{
             inputTambahBarang:{
-                tanggal: moment().format('YYYY-MM-DD'),
+                tanggal: moment().format('YYYY-MM-DD HH:mm:ss'),
                 namaBarang: "",
                 kuantitas : "",
                 kepentingan:"",
@@ -120,7 +120,7 @@ export default {
                 iduser:this.$auth.user.id,
                 namauser : this.$auth.user.nama,
                 lokasiServer : this.$auth.user.lokasi,
-                tanggal:this.inputTambahBarang.tanggal,
+                tanggal:this.$moment().format('YYYY-MM-DD HH:mm:ss'),
                 namaBarang: this.inputTambahBarang.namaBarang,
                 kuantitas : this.inputTambahBarang.kuantitas,
                 kepentingan: this.inputTambahBarang.kepentingan,
@@ -153,7 +153,7 @@ export default {
 .activesubmit {
     background-color: rgb(55 65 81);
     color:whitesmoke;
-    width:7rem;
+    width:100px;
     cursor:pointer;
     opacity:1;
     padding-top: .5rem;

@@ -15,17 +15,17 @@
     <form class="mt-10 min-w-min" @submit.prevent="postGantiBarang">
         <div>
             <div class="grid grid-cols-2">
-                <div class="mb-4 has-tooltip">
+                <!-- <div class="mb-4 has-tooltip">
                      <span class="tooltip text-xs rounded shadow-lg p-1 bg-gray-700 text-white ml-32">masukan tanggal masuk barang</span>
 
                     <label for="tanggal" class="block mb-2 text-sm">tanggal</label>
                     <div class="flex flex-col w-72">
                         <ValidationProvider rules="required" v-slot={errors}>
-                            <input type="date" v-model="inputGantiBarang.tanggal" name="tanggal" id="tanggal" class="p-2 w-full rounded-lg outline-none bg-gray-300 uppercase">
+                            <input type="datetime-local" v-model="inputGantiBarang.tanggal" name="tanggal" id="tanggal" class="p-2 w-full rounded-lg outline-none bg-gray-300 uppercase">
                             <p class="text-xs mt-1 text-right text-red-500">{{ errors[0] }}</p>
                         </ValidationProvider>
                     </div>
-                </div>
+                </div> -->
                 <div class="mb-4 has-tooltip">
                      <span class="tooltip text-xs rounded shadow-lg p-1 bg-gray-700 text-white ml-32">masukan nama barang baru</span>
 
@@ -128,14 +128,15 @@ export default {
     data(){
         return{
             inputGantiBarang:{
-                tanggal: moment().format('YYYY-MM-DD'),
+                tanggal: moment().format('YYYY-MM-DD HH:mm:ss'),
                 namaBarangBaru: "",
                 namaBarangLama: "",
                 kuantitas : "",
                 kepentingan:"",
                 penanggungJawab: "",
                 keterangan: "",
-            }
+            },
+            lokasi : this.$auth.user.lokasi,
         }
     },
     methods:{
@@ -163,8 +164,7 @@ export default {
         }
     },
     mounted(){
-        const lokasi = this.$auth.user.lokasi
-        this.$store.dispatch('getUser/getallUserPa',lokasi)
+        this.$store.dispatch('getUser/getallUserPa',this.lokasi)
     }
 }
 </script>

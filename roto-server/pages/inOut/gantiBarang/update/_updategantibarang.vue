@@ -19,7 +19,7 @@
                     <label for="tanggal" class="block mb-2 text-sm">tanggal</label>
                     <div class="flex flex-col w-72">
                         <ValidationProvider rules="required" v-slot={errors}>
-                            <input type="date" v-model="updateGantiBarang.tanggal" name="tanggal" id="tanggal" class="p-2 w-72 rounded-lg outline-none bg-gray-300">
+                            <input type="datetime-local" v-model="updateGantiBarang.tanggal" name="tanggal" id="tanggal" class="p-2 w-72 rounded-lg outline-none bg-gray-300">
                             <p class="text-xs text-right mt-1 text-red-500">{{errors[0]}}</p>
                         </ValidationProvider>
                     </div>
@@ -139,7 +139,7 @@ export default {
             lokasiServer : this.$auth.user.lokasi,
             iduser : this.$auth.user.id,
             idgantibarang : this.$route.params.id,
-            tanggal:this.updateGantiBarang.tanggal,
+            tanggal:this.$moment(this.updateGantiBarang.tanggal).format("YYYY-MM-DD HH:mm:ss"),
             namaPengganti: this.updateGantiBarang.namaPengganti,
             namaBarangBaru :this.updateGantiBarang.namaBarangBaru,
             namaBarangLama :this.updateGantiBarang.namaBarangLama,
@@ -163,7 +163,7 @@ export default {
             const resp = await this.$axios.get(`/inout/gantibarang/update/${id}/${this.lokasi}`)
             if(resp){
                 resp.data.forEach(barang=>{
-                    this.updateGantiBarang.tanggal = moment(barang.tanggal).format('YYYY-MM-DD')
+                    this.updateGantiBarang.tanggal = moment(barang.tanggal).format('YYYY-MM-DD HH:mm:ss')
                     this.updateGantiBarang.namaPengganti = barang.nama_pengganti
                     this.updateGantiBarang.namaBarangBaru = barang.nama_barang_baru
                     this.updateGantiBarang.namaBarangLama = barang.nama_barang_lama

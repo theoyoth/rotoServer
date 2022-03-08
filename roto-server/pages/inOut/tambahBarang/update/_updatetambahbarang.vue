@@ -15,7 +15,7 @@
             <div class="grid grid-cols-3">
                 <div class="mb-4">
                     <label for="tanggal" class="block mb-2 text-sm">tanggal</label>
-                    <input type="date" v-model="updateTambahBarang.tanggal" name="tanggal" id="tanggal" class="p-2 w-72 rounded-lg outline-none bg-gray-300">
+                    <input type="datetime-local" v-model="updateTambahBarang.tanggal" name="tanggal" id="tanggal" class="p-2 w-72 rounded-lg outline-none bg-gray-300">
                 </div>
                 <div class="mb-4 has-tooltip">
                     <span class="tooltip text-xs rounded shadow-lg p-1 bg-gray-700 text-white ml-32">masukan tanggal masuk barang</span>
@@ -120,7 +120,7 @@ export default {
                 lokasiServer : this.$auth.user.lokasi,
                 iduser : this.$auth.user.id,
                 idtambahbarang : this.$route.params.id,
-                tanggal:this.updateTambahBarang.tanggal,
+                tanggal:this.$moment(this.updateTambahBarang.tanggal).format("YYYY-MM-DD HH:mm:ss"),
                 namaPenambah: this.updateTambahBarang.namaPenambah,
                 namaBarang :this.updateTambahBarang.namaBarang,
                 kuantitas : this.updateTambahBarang.kuantitas,
@@ -142,7 +142,7 @@ export default {
             const resp = await this.$axios.get(`/inout/tambahbarang/update/${id}/${this.lokasi}`)
             if(resp){
                 resp.data.forEach(barang=>{
-                    this.updateTambahBarang.tanggal = moment(barang.tanggal).format('YYYY-MM-DD')
+                    this.updateTambahBarang.tanggal = moment(barang.tanggal).format('YYYY-MM-DD HH:mm:ss')
                     this.updateTambahBarang.namaPenambah = barang.nama_penambah
                     this.updateTambahBarang.namaBarang = barang.nama_barang
                     this.updateTambahBarang.kuantitas = barang.kuantitas
