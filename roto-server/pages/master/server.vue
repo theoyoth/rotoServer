@@ -59,10 +59,8 @@
               -mt-10
               absolute
               left-2/4
-              transform
-              -translate-x-2/4
             "
-            >semua detail barang</span
+            >daftar barang</span
           >
           <tr class="text-xs text-gray-200">
             <th class="font-semibold py-3 px-2 w-4">no.</th>
@@ -319,12 +317,11 @@ export default {
                     }
                   }).catch(err=>{
                     if(err.data.errmsg){
-                      swal('Error','gagal dihapus',{icon:'error'})
-                      this.deletemsg = err.data.errmsg
+                      this.$router.push('/master/server')                      
                     }
                   })
               } else{
-                    swal('Error','gagal menghapus',{icon:'error'})
+                    this.$router.push('/master/server')                      
                 }
             }).catch(err=>{
                 swal('Error','ada yang salah',{icon:'error'})

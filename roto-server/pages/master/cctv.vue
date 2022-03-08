@@ -21,7 +21,7 @@
 
         <table class="table space-y-6 container mx-auto table-auto border-collapse mt-7 divide-y divide-gray-300">
             <thead class="bg-gray-700 text-sm has-tooltip">
-                <span class="tooltip rounded shadow-lg p-1 bg-gray-700 text-white -mt-10 absolute left-2/4 transform -translate-x-2/4">semua detail barang</span>
+                <span class="tooltip rounded shadow-lg p-1 bg-gray-700 text-white -mt-10 absolute left-2/4">daftar barang</span>
                 <tr class="text-xs text-gray-200"> 
                     <th class="font-semibold py-3 px-2 w-4">no.</th>
                     <th class="font-semibold py-3 w-60">Merek</th>
@@ -174,22 +174,17 @@ export default {
                     const lokasi = this.$auth.user.lokasi
                     this.$axios.delete(`/master/deletecctv/${id}/${lokasi}`)
                     .then(resp=>{
-                        if(resp){
-                            this.cctvs.splice(indexOfArrayItem, 1);
-                            this.$router.push('/master/cctv')
-                            swal('data dihapus',{icon:'success'})
-                        }
+                        this.cctvs.splice(indexOfArrayItem, 1);
+                        this.$router.push('/master/cctv')
+                        swal('data dihapus',{icon:'success'})
                     }).catch(err=>{
-                        if(err.data.errmsg){
-                            this.$router.push('/master/cctv')
-                            swal('Error', err.data.errmsg,{icon:'error'})
-                        }
+                        this.$router.push('/master/cctv')
                     })
                 } else{
-                    swal('Error','gagal menghapus',{icon:'error'})
+                    this.$router.push('/master/cctv')
                 }
             }).catch(err=>{
-                swal('Error','ada yang salah',{icon:'error'})
+                swal('ada yang salah',{icon:'error'})
             })
         },
         async getAllDataCctv(){
