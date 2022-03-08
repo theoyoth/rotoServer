@@ -379,9 +379,9 @@ router.get(
   maintenanceController.detailMaintenance
 )
 router.get(
-  '/maintenance/security/alldata/:lokasi',
+  '/maintenance/alldata/:lokasi',
   isAuthent,
-  maintenanceController.allMaintenanceResultSecurity
+  maintenanceController.allMaintenanceEdpSecurity
 )
 // hasil maintenance teknisi listrik dan ac untuk admin teknisi
 router.get(
