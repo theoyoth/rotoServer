@@ -58,7 +58,7 @@ module.exports.updateDataBarang = async (req, res) => {
     }
 
     const resp = await conn.query(
-      `UPDATE ${tableName} SET tanggal='${tanggal}', nama_pengganti='${namaPengganti}', nama_barang_baru='${namaBarangBaru}',nama_barang_lama='${namaBarangLama}', kuantitas='${kuantitas}', kepentingan='${kepentingan}',penanggung_jawab='${penanggungJawab}',id_users='${iduser}' WHERE id_ganti_barang = ${idgantibarang}`
+      `UPDATE ${tableName} SET tanggal='${tanggal}', nama_pengganti='${namaPengganti}', nama_barang_baru='${namaBarangBaru}',nama_barang_lama='${namaBarangLama}', kuantitas='${kuantitas}', kepentingan='${kepentingan}',penanggung_jawab='${penanggungJawab}',keterangan='${keterangan}',id_users='${iduser}' WHERE id_ganti_barang = ${idgantibarang}`
     )
     if (resp.affectedRows > 0) {
       res.status(200).send('success')
