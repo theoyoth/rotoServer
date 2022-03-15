@@ -522,9 +522,8 @@ router.get(
   fileController.getAllFiles
 )
 
-// router.get('/document/list/:name', fileController.downloadFile)
 router.delete(
-  '/document/list/:name/:lokasi/:folder',
+  '/document/delete/:name/:lokasi/:folder',
   isAuthent,
   fileController.deleteFile
 )
