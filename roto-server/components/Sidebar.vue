@@ -119,7 +119,7 @@
                 hover:bg-gray-600
               "
             >
-              <NuxtLink to="/homepage">
+              <NuxtLink to="/home">
                 <div class="flex items-center w-full">
                   <div class="w-8 text-center">
                     <font-awesome-icon
@@ -282,7 +282,7 @@
             </ul>
           </li>
 
-          <li class="items-center relative">
+          <li class="items-center relative" v-show="!isSecurity">
             <div
               class="
                 flex
