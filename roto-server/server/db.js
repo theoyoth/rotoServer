@@ -4,7 +4,6 @@ const pool = mariadb.createPool({
   user: 'root',
   password: '',
   database: 'rotoserver',
-  // connectionLimit: 150,
   acquireTimeout: 300000,
 })
 
