@@ -16,12 +16,18 @@ module.exports.inputmaintenance = async (req, res) => {
       baterai,
       server,
       jaringan,
+      panelListrik,
+      pipa,
+      cctv,
       keterangan,
       keteranganAc,
       keteranganUps,
       keteranganBaterai,
       keteranganServer,
       keteranganJaringan,
+      keteranganPanellistrik,
+      keteranganPipa,
+      keteranganCctv,
     } = req.body
 
     conn = await pool.getConnection()
@@ -34,7 +40,7 @@ module.exports.inputmaintenance = async (req, res) => {
       tableName = 'maintenance_tinta'
     }
     const data = await conn.query(
-      `INSERT INTO ${tableName} VALUES ('','${nama}','${tanggal}','${suhu}','${kelembapan}','${ac}','${keteranganAc}','${ups}','${keteranganUps}','${baterai}','${keteranganBaterai}','${server}','${keteranganServer}','${jaringan}','${keteranganJaringan}','${keterangan}','${iduser}')`
+      `INSERT INTO ${tableName} VALUES ('','${nama}','${tanggal}','${suhu}','${kelembapan}','${ac}','${keteranganAc}','${ups}','${keteranganUps}','${baterai}','${keteranganBaterai}','${server}','${keteranganServer}','${jaringan}','${keteranganJaringan}','${panelListrik}','${keteranganPanellistrik}','${pipa}','${keteranganPipa}','${cctv}','${keteranganCctv}','${keterangan}','${iduser}')`
     )
     if (data.affectedRows > 0) {
       res.status(200).send('success')
@@ -64,8 +70,9 @@ module.exports.getAllMaintenance = async (req, res) => {
     ) {
       tableName = 'maintenance_roto_2'
     }
+
     const rows = await conn.query(
-      `SELECT id_maintenance,nama_pemeriksa,tanggal,suhu,kelembapan,ac,keterangan_ac,ups,keterangan_ups,baterai,keterangan_baterai,server,keterangan_server,jaringan,keterangan_jaringan,keterangan,id_users,id_user FROM ${tableName} INNER JOIN users ON ${tableName}.id_users=users.id_user WHERE users.id_user=${idlogin}`
+      `SELECT id_maintenance,nama_pemeriksa,tanggal,suhu,kelembapan,ac,keterangan_ac,ups,keterangan_ups,baterai,keterangan_baterai,server,keterangan_server,jaringan,keterangan_jaringan,panel_listrik,keterangan_panel_listrik,pipa,keterangan_pipa,cctv,keterangan_cctv,keterangan,id_users,id_user FROM ${tableName} INNER JOIN users ON ${tableName}.id_users=users.id_user WHERE users.id_user=${idlogin}`
     )
     res.status(200).send(rows)
 
@@ -123,12 +130,18 @@ module.exports.updateMaintenance = async (req, res) => {
       baterai,
       server,
       jaringan,
+      panelListrik,
+      pipa,
+      cctv,
       keterangan,
       keteranganAc,
       keteranganUps,
       keteranganBaterai,
       keteranganServer,
       keteranganJaringan,
+      keteranganPanellistrik,
+      keteranganPipa,
+      keteranganCctv,
     } = req.body
 
     conn = await pool.getConnection()
@@ -141,7 +154,7 @@ module.exports.updateMaintenance = async (req, res) => {
       tableName = 'maintenance_roto_2'
     }
     const resp = await conn.query(
-      `UPDATE ${tableName} SET nama_pemeriksa='${nama}',tanggal='${tanggal}',suhu='${suhu}',kelembapan='${kelembapan}',ac='${ac}',keterangan_ac='${keteranganAc}',ups='${ups}',keterangan_ups='${keteranganUps}',baterai='${baterai}',keterangan_baterai='${keteranganBaterai}',server='${server}',keterangan_server='${keteranganServer}',jaringan='${jaringan}',keterangan_jaringan='${keteranganJaringan}',keterangan='${keterangan}',id_users='${iduser}' WHERE id_maintenance=${idmaintenance}`
+      `UPDATE ${tableName} SET nama_pemeriksa='${nama}',tanggal='${tanggal}',suhu='${suhu}',kelembapan='${kelembapan}',ac='${ac}',keterangan_ac='${keteranganAc}',ups='${ups}',keterangan_ups='${keteranganUps}',baterai='${baterai}',keterangan_baterai='${keteranganBaterai}',server='${server}',keterangan_server='${keteranganServer}',jaringan='${jaringan}',keterangan_jaringan='${keteranganJaringan}',panel_listrik='${panelListrik}',keterangan_panel_listrik='${keteranganPanellistrik}',pipa='${pipa}',keterangan_pipa='${keteranganPipa}',cctv='${cctv}',keterangan_cctv='${keteranganCctv}',keterangan='${keterangan}',id_users='${iduser}' WHERE id_maintenance=${idmaintenance}`
     )
     if (resp.affectedRows > 0) {
       res.status(200).send('success')
