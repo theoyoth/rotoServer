@@ -35,14 +35,14 @@ module.exports.login = async (req, res) => {
             },
             process.env.TOKEN_KEY
           )
-          res.cookie('aksestoken', token, {
-            httpOnly: true,
-            sameSite: 'strict',
-            secure: true,
-          })
+          // res.cookie('aksestoken', token, {
+          //   httpOnly: true,
+          //   sameSite: 'strict',
+          //   secure: true,
+          // })
           res.json({ token })
         } else {
-          res.json({ errmsg: 'password tidak cocok' })
+          res.json({ errmsg: 'password tidak sesuai' })
         }
       } else {
         return res.json({ errmsg: 'data yang dimasukkan tidak terdaftar' })
@@ -104,7 +104,8 @@ module.exports.homepage = async (req, res) => {
 }
 
 module.exports.logout = async (req, res) => {
-  res.clearCookie('aksestoken')
+  // res.clearCookie('aksestoken')
+  req.session.destroy()
   res.redirect('/')
 }
 
@@ -144,7 +145,7 @@ module.exports.forgotPassword = async (req, res) => {
           from: process.env.MY_EMAIL,
           to: email,
           subject: 'Link reset password',
-          html: `<p>silahkan klink link di bawah untuk reset sandi anda</p></br><a href="http://localhost:3000/server/resetpassword/${token}">RESET PASSWORD</a>`,
+          html: `<p>silahkan klink link di bawah untuk reset sandi anda</p></br><a href="http://localhost:3000/server/resetpassword/${token}">RESET PASSWORD</a><p>Terima kasih.</p>`,
         }
         transporter.sendMail(templateEmail, function (err, info) {
           if (err) {
