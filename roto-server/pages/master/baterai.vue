@@ -22,6 +22,7 @@
             <thead class="bg-gray-700 text-sm has-tooltip">
                 <span class="tooltip rounded shadow-lg p-1 bg-gray-700 text-white -mt-10 absolute left-2/4">daftar barang</span>
                 <tr class="text-xs text-gray-200"> 
+                    <th class="font-semibold py-3">no.</th>
                     <th class="font-semibold py-3">accu</th>
                     <th class="font-semibold w-36">kuantitas</th>
                     <th class="font-semibold">voltage</th>
@@ -31,7 +32,8 @@
                 </tr>
             </thead>
             <tbody v-if="caribarang !== ''" class="text-center bg-white bg-opacity-40 divide-y divide-gray-300">
-                <tr class="text-sm uppercase" v-for="(hasilcari,index) in filteredList" :key="index">
+                <tr class="text-sm uppercase" v-for="(hasilcari,index) in dataPagination" :key="index">
+                    <td class="py-3">{{index+1}}</td>
                     <td class="py-3">{{hasilcari.accu}}</td>
                     <td>{{hasilcari.kuantitas}}</td>
                     <td>{{hasilcari.voltage}}</td>
@@ -82,7 +84,8 @@
                 </tr>
             </tbody>
             <tbody v-else class="text-center bg-white bg-opacity-40 divide-y divide-gray-300">
-            <tr class="text-sm uppercase" v-for="(baterai,index) in baterais" :key="index">
+            <tr class="text-sm uppercase" v-for="(baterai,index) in dataPagination" :key="index">
+                    <td class="py-3">{{baterai.nomor+1}}</td>
                     <td class="py-3">{{baterai.accu}}</td>
                     <td>{{baterai.kuantitas}}</td>
                     <td>{{baterai.voltage}}</td>
@@ -133,6 +136,15 @@
                 </tr>
             </tbody>
         </table>
+        <hr>
+        <div class="mt-5 flex justify-center" v-if="baterais.length > dataPerPage && caribarang === ''">
+            <a :href="'?halaman='+ (parseInt(currentPage)-1)" class="bg-gray-700 px-3 py-1 rounded-lg ml-1 mr-1" :class="[!this.$route.query.halaman || this.$route.query.halaman == 1 ? 'decOp' : 'incOp']"><font-awesome-icon :icon="['fas','angle-left']" class="text-yellow-500" /></a>
+            
+            <div v-for="index in totalPages" :key="index" class="ml-1 mr-1 bg-gray-700 px-3 py-1 rounded-lg">
+                <a :href="'?halaman='+index" class="text-yellow-500">{{index}}</a>
+            </div>
+            <a :href="'?halaman='+ (parseInt(currentPage)+1)" class="bg-gray-700 px-3 py-1 rounded-lg ml-1 mr-1" :class="[this.$route.query.halaman >= totalPages ? 'decOp' : 'incOp']" :disable="this.$route.query.halaman >= totalPages"><font-awesome-icon :icon="['fas','angle-right']" class="text-yellow-500"/></a>
+        </div>
     </section>
 </div>
 </template>
@@ -144,14 +156,19 @@ export default {
             caribarang:"",
             baterais:[],
             caribaterai:[],
-            master:{
-                nama : "inputBaterai",
-            },
+            totalPages:1,
+            totalRecords:0,
+            dataPerPage:10,
+            page:1,
+            currentPage:1,
+            firstData :0,
+            dataPagination:[],
+            newBaterais:[],
         }
     },
     computed:{
         filteredList() {
-            return this.baterais.filter(hasil=>{
+            return this.dataPagination.filter(hasil=>{
                 if(hasil.accu.toLowerCase().includes(this.caribarang.toLowerCase()) || hasil.kuantitas.toLowerCase().includes(this.caribarang.toLowerCase()) || hasil.voltage.toLowerCase().includes(this.caribarang.toLowerCase()) ){
                     return hasil
                 }
@@ -168,13 +185,13 @@ export default {
                 dangerMode: true
             }).then(suc=>{
                 if(suc){
-                    let indexOfArrayItem = this.baterais.findIndex(i => i.id_baterai === id)
+                    let indexOfArrayItem = this.dataPagination.findIndex(i => i.id_baterai === id)
 
                     const lokasi = this.$auth.user.lokasi
                     this.$axios.delete(`/master/deletebaterai/${id}/${lokasi}`)
                     .then(resp=>{
                         if(resp){
-                            this.baterais.splice(indexOfArrayItem, 1);
+                            this.dataPagination.splice(indexOfArrayItem, 1);
                             this.$router.push('/master/baterai')
                             swal('data dihapus',{icon:'success'})
                         }
@@ -197,6 +214,21 @@ export default {
                 resp.data.forEach(baterai => {
                     this.baterais.push(baterai)
                 })
+
+                this.totalPages = Math.ceil(this.baterais.length / this.dataPerPage) 
+                if(this.$route.query.halaman){
+                    this.currentPage = this.$route.query.halaman
+                } else {
+                    this.currentPage = 1
+                }
+
+                // menambahkan nomor tiap data
+                for(var i = 0; i < this.baterais.length; i++){
+                    this.newBaterais.push({...this.baterais[i], nomor:i})
+                }
+
+                this.firstData = (this.dataPerPage * this.currentPage) - this.dataPerPage
+                this.dataPagination = this.newBaterais.slice(this.firstData,this.firstData+this.dataPerPage)
             }
             catch(err){
                 console.error(err);
@@ -211,5 +243,14 @@ export default {
 </script>
 
 <style>
-
+.incOp{
+    opacity: 1;
+    cursor:pointer;
+    display: block;
+}
+.decOp{
+    opacity: 0;
+    cursor:default;
+    display:none;
+}
 </style>

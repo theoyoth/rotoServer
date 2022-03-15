@@ -88,8 +88,8 @@
                 </tr>
             </tbody>
             <tbody v-else class="text-center bg-white bg-opacity-40 divide-y divide-gray-300">
-                <tr class="text-sm uppercase" v-for="(network,index) in networks" :key="index">
-                    <td>{{index+1}}</td>
+                <tr class="text-sm uppercase" v-for="(network,index) in dataPagination" :key="index">
+                    <td>{{network.nomor+1}}</td>
                     <td>{{network.merek}}</td>
                     <td>{{network.model}}</td>
                     <td>{{network.tipe}}</td>
@@ -142,6 +142,16 @@
                 </tr>
             </tbody>
         </table>
+        <hr>
+        <div class="mt-5 flex justify-center" v-if="networks.length > dataPerPage && caribarang === ''">
+            <a :href="'?halaman='+ (parseInt(currentPage)-1)" class="bg-gray-700 px-3 py-1 rounded-lg ml-1 mr-1" :class="[!this.$route.query.halaman || this.$route.query.halaman == 1 ? 'decOp' : 'incOp']"><font-awesome-icon :icon="['fas','angle-left']" class="text-yellow-500" /></a>
+            
+            <div v-for="index in totalPages" :key="index" class="ml-1 mr-1 bg-gray-700 px-3 py-1 rounded-lg">
+                <a :href="'?halaman='+index" class="text-yellow-500">{{index}}</a>
+            </div>
+            <a :href="'?halaman='+ (parseInt(currentPage)+1)" class="bg-gray-700 px-3 py-1 rounded-lg ml-1 mr-1" :class="[this.$route.query.halaman >= totalPages ? 'decOp' : 'incOp']" :disable="this.$route.query.halaman >= totalPages"><font-awesome-icon :icon="['fas','angle-right']" class="text-yellow-500"/></a>
+        </div>
+       
     </section>
     </div>
 </template>
@@ -152,16 +162,20 @@ export default {
         return{
             caribarang:"",
             networks:[],
-            carinetwork:[],
-            master:{
-                nama : "inputNetwork",
-            },
-            deletemsg:"",
+            totalPages:1,
+            totalRecords:0,
+            dataPerPage:10,
+            page:1,
+            currentPage:1,
+            firstData :0,
+            dataPagination:[],
+            newNetworks:[],
+
         }
     },
     computed:{
         filteredList() {
-            return this.networks.filter(hasil=>{
+            return this.dataPagination.filter(hasil=>{
                 if(hasil.merek.toLowerCase().includes(this.caribarang.toLowerCase()) || hasil.model.toLowerCase().includes(this.caribarang.toLowerCase()) || hasil.tipe.toLowerCase().includes(this.caribarang.toLowerCase()) || hasil.kuantitas.toLowerCase().includes(this.caribarang.toLowerCase()) || hasil.kanal.toLowerCase().includes(this.caribarang.toLowerCase()) ){
                     return hasil
                 }
@@ -178,12 +192,12 @@ export default {
                 dangerMode: true
             }).then(suc=>{
                 if(suc){
-                    let indexOfArrayItem = this.networks.findIndex(i => i.id_network === id)
+                    let indexOfArrayItem = this.dataPagination.findIndex(i => i.id_network === id)
 
                     const lokasi = this.$auth.user.lokasi
                     this.$axios.delete(`/master/deletenetwork/${id}/${lokasi}`)
                     .then(resp=>{
-                        this.networks.splice(indexOfArrayItem, 1);
+                        this.dataPagination.splice(indexOfArrayItem, 1);
                         this.$router.push('/master/network')
                         swal('data dihapus',{icon:'success'})
                     }).catch(err=>{
@@ -206,6 +220,21 @@ export default {
                 resp.data.forEach(network => {
                     this.networks.push(network)   
                 })
+
+                this.totalPages = Math.ceil(this.networks.length / this.dataPerPage) 
+                if(this.$route.query.halaman){
+                    this.currentPage = this.$route.query.halaman
+                } else {
+                    this.currentPage = 1
+                }
+
+                // menambahkan nomor tiap data
+                for(var i = 0; i < this.networks.length; i++){
+                    this.newNetworks.push({...this.networks[i], nomor:i})
+                }
+
+                this.firstData = (this.dataPerPage * this.currentPage) - this.dataPerPage
+                this.dataPagination = this.newNetworks.slice(this.firstData,this.firstData+this.dataPerPage)
             }
             catch(err) {
                 console.error(err);
@@ -220,5 +249,14 @@ export default {
 </script>
 
 <style>
-
+.incOp{
+    opacity: 1;
+    cursor:pointer;
+    display: block;
+}
+.decOp{
+    opacity: 0;
+    cursor:default;
+    display:none;
+}
 </style>

@@ -171,8 +171,8 @@
         </tbody>
 
         <tbody v-else class="text-center bg-white bg-opacity-40 divide-y divide-gray-300">
-          <tr class="text-sm uppercase" v-for="(server, index) in servers" :key="index">
-            <td>{{index+1}}</td>
+          <tr class="text-sm uppercase" v-for="(server, index) in dataPagination" :key="index">
+            <td>{{server.nomor+1}}</td>
             <td>{{ $moment(server.tanggal).format('DD-MM-YYYY') }}</td>
             <td>{{ server.merek }}</td>
             <td>{{ server.model }}</td>
@@ -265,6 +265,15 @@
           </tr>
         </tbody>
       </table>
+      <hr>
+      <div class="mt-5 flex justify-center" v-if="servers.length > dataPerPage && caribarang === ''">
+          <a :href="'?halaman='+ (parseInt(currentPage)-1)" class="bg-gray-700 px-3 py-1 rounded-lg ml-1 mr-1" :class="[!this.$route.query.halaman || this.$route.query.halaman == 1 ? 'decOp' : 'incOp']"><font-awesome-icon :icon="['fas','angle-left']" class="text-yellow-500" /></a>
+          
+          <div v-for="index in totalPages" :key="index" class="ml-1 mr-1 bg-gray-700 px-3 py-1 rounded-lg">
+              <a :href="'?halaman='+index" class="text-yellow-500">{{index}}</a>
+          </div>
+          <a :href="'?halaman='+ (parseInt(currentPage)+1)" class="bg-gray-700 px-3 py-1 rounded-lg ml-1 mr-1" :class="[this.$route.query.halaman >= totalPages ? 'decOp' : 'incOp']" :disable="this.$route.query.halaman >= totalPages"><font-awesome-icon :icon="['fas','angle-right']" class="text-yellow-500"/></a>
+      </div>
     </section>
   </div>
 </template>
@@ -277,10 +286,14 @@ export default {
             caribarang:"",
             hasilcariserver:[],
             servers:[],
-            master:{
-                nama : "inputServer",
-            },
-            deletemsg:"",
+            totalPages:1,
+            totalRecords:0,
+            dataPerPage:10,
+            page:1,
+            currentPage:1,
+            firstData :0,
+            dataPagination:[],
+            newServers:[],
         }
     },
     computed: {
@@ -288,7 +301,7 @@ export default {
           return this.$auth.user
         },
         filteredList() {
-          return this.servers.filter(hasil=>{
+          return this.dataPagination.filter(hasil=>{
             if(hasil.merek.toLowerCase().includes(this.caribarang.toLowerCase()) || hasil.model.toLowerCase().includes(this.caribarang.toLowerCase()) || hasil.processor.toLowerCase().includes(this.caribarang.toLowerCase()) || hasil.memori.toString().includes(this.caribarang.toString())){
               return hasil
             }
@@ -305,13 +318,13 @@ export default {
                 dangerMode: true
             }).then(suc=>{
               if(suc){
-                let indexOfArrayItem = this.servers.findIndex(i => i.id_server === id)
+                let indexOfArrayItem = this.dataPagination.findIndex(i => i.id_server === id)
 
                 const lokasi = this.$auth.user.lokasi
                   this.$axios.delete(`/master/server/delete/${id}/${lokasi}`)
                   .then(resp=>{
                     if(resp) {
-                      this.servers.splice(indexOfArrayItem, 1);
+                      this.dataPagination.splice(indexOfArrayItem, 1);
                       this.$router.push('/master/server')
                       swal('data dihapus',{icon:'success'})
                     }
@@ -336,6 +349,21 @@ export default {
               resp.data.forEach(server => {
                   this.servers.push(server)
               })
+
+              this.totalPages = Math.ceil(this.servers.length / this.dataPerPage) 
+                    if(this.$route.query.halaman){
+                        this.currentPage = this.$route.query.halaman
+                    } else {
+                        this.currentPage = 1
+                    }
+
+                    // menambahkan nomor tiap data
+                    for(var i = 0; i < this.servers.length; i++){
+                        this.newServers.push({...this.servers[i], nomor:i})
+                    }
+
+                    this.firstData = (this.dataPerPage * this.currentPage) - this.dataPerPage
+                    this.dataPagination = this.newServers.slice(this.firstData,this.firstData+this.dataPerPage)
           }
           catch(err){
               console.error(err);
@@ -349,5 +377,15 @@ export default {
 }
 </script>
 
-<style lang=scss>
+<style>
+.incOp{
+    opacity: 1;
+    cursor:pointer;
+    display: block;
+}
+.decOp{
+    opacity: 0;
+    cursor:default;
+    display:none;
+}
 </style>

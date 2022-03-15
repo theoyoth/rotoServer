@@ -27,7 +27,6 @@
                     <th class="font-semibold py-3 w-44">Merek</th>
                     <th class="font-semibold py-3 w-44">Model</th>
                     <th class="font-semibold">sumber daya listrik</th>
-                    <th class="font-semibold w-40">dimensi</th>
                     <th class="font-semibold">kapasitas pendingin</th>
                     <th class="font-semibold w-32">garansi</th>
                     <th class="font-semibold w-24">aksi</th>
@@ -39,7 +38,6 @@
                     <td class="py-3">{{hasilcari.merek}}</td>
                     <td>{{hasilcari.model}}</td>
                     <td>{{hasilcari.sumber_daya_listrik}}</td>
-                    <td>{{hasilcari.dimensi}}</td>
                     <td>{{hasilcari.kapasitas_pendingin}}</td>
                     <td>{{$moment(hasilcari.garansi).format('DD-MM-YYYY')}}</td>
                     <td class="py-3 flex justify-around w-full lowercase">
@@ -115,12 +113,11 @@
                 </tr>
             </tbody>
             <tbody v-else class="text-center bg-white bg-opacity-40 divide-y divide-gray-300">
-                <tr class="text-sm uppercase" v-for="(ac,index) in acs" :key="index">
-                    <td>{{index+1}}</td>
+                <tr class="text-sm uppercase" v-for="(ac,index) in dataPagination" :key="index">
+                    <td>{{ac.nomor+1}}</td>
                     <td class="py-3">{{ac.merek}}</td>
                     <td>{{ac.model}}</td>
                     <td>{{ac.sumber_daya_listrik}}</td>
-                    <td>{{ac.dimensi}}</td>
                     <td>{{ac.kapasitas_pendingin}}</td>
                     <td>{{$moment(ac.garansi).format("DD-MM-YYYY")}}</td>
                     <td class="py-3 flex justify-around w-full lowercase">
@@ -196,6 +193,15 @@
                 </tr>
             </tbody>
         </table>
+        <hr>
+        <div class="mt-5 flex justify-center" v-if="acs.length > dataPerPage && caribarang === ''">
+            <a :href="'?halaman='+ (parseInt(currentPage)-1)" class="bg-gray-700 px-3 py-1 rounded-lg ml-1 mr-1" :class="[!this.$route.query.halaman || this.$route.query.halaman == 1 ? 'decOp' : 'incOp']"><font-awesome-icon :icon="['fas','angle-left']" class="text-yellow-500" /></a>
+            
+            <div v-for="index in totalPages" :key="index" class="ml-1 mr-1 bg-gray-700 px-3 py-1 rounded-lg">
+                <a :href="'?halaman='+index" class="text-yellow-500">{{index}}</a>
+            </div>
+            <a :href="'?halaman='+ (parseInt(currentPage)+1)" class="bg-gray-700 px-3 py-1 rounded-lg ml-1 mr-1" :class="[this.$route.query.halaman >= totalPages ? 'decOp' : 'incOp']" :disable="this.$route.query.halaman >= totalPages"><font-awesome-icon :icon="['fas','angle-right']" class="text-yellow-500"/></a>
+        </div>
     </section>
 </div>
 </template>
@@ -205,17 +211,20 @@ export default {
     data(){
         return{
             caribarang:"",
-            cariac:[],
             acs:[],
-            master:{
-                nama: "inputAc",
-            },
-            deletemsg:"",
+            totalPages:1,
+            totalRecords:0,
+            dataPerPage:10,
+            page:1,
+            currentPage:1,
+            firstData :0,
+            dataPagination:[],
+            newAcs:[],
         }
     },
     computed:{ 
         filteredList() {
-            return this.acs.filter(hasil=>{
+            return this.dataPagination.filter(hasil=>{
                 if(hasil.merek.toLowerCase().includes(this.caribarang.toLowerCase()) || hasil.model.toLowerCase().includes(this.caribarang.toLowerCase()) || hasil.sumber_daya_listrik.toLowerCase().includes(this.caribarang.toLowerCase()) || hasil.dimensi.toLowerCase().includes(this.caribarang.toLowerCase()) || hasil.kapasitas_pendingin.toLowerCase().includes(this.caribarang.toLowerCase())){
                     return hasil
                 }
@@ -232,12 +241,12 @@ export default {
                 dangerMode: true
             }).then(suc=>{
                 if(suc){
-                    let indexOfArrayItem = this.acs.findIndex(i => i.id_ac === id)
+                    let indexOfArrayItem = this.dataPagination.findIndex(i => i.id_ac === id)
 
                     const lokasi = this.$auth.user.lokasi
                     this.$axios.delete(`/master/deleteac/${id}/${lokasi}`)
                     .then(resp=>{
-                        this.acs.splice(indexOfArrayItem, 1);
+                        this.dataPagination.splice(indexOfArrayItem, 1);
                         this.$router.push('/master/ac')
                         swal('data dihapus',{icon:'success'})
                     }).catch(err=>{
@@ -259,6 +268,21 @@ export default {
                 resp.data.forEach(ac => {
                     this.acs.push(ac)
                 })
+
+                this.totalPages = Math.ceil(this.acs.length / this.dataPerPage) 
+                if(this.$route.query.halaman){
+                    this.currentPage = this.$route.query.halaman
+                } else {
+                    this.currentPage = 1
+                }
+
+                // menambahkan nomor tiap data
+                for(var i = 0; i < this.acs.length; i++){
+                    this.newAcs.push({...this.acs[i], nomor:i})
+                }
+
+                this.firstData = (this.dataPerPage * this.currentPage) - this.dataPerPage
+                this.dataPagination = this.newAcs.slice(this.firstData,this.firstData+this.dataPerPage)
             }
             catch(err) {
                 console.error(err);
@@ -273,5 +297,14 @@ export default {
 </script>
 
 <style>
-
+.incOp{
+    opacity: 1;
+    cursor:pointer;
+    display: block;
+}
+.decOp{
+    opacity: 0;
+    cursor:default;
+    display:none;
+}
 </style>

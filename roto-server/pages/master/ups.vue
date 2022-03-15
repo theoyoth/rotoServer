@@ -113,8 +113,8 @@
                 </tr>
             </tbody>
             <tbody v-else class="text-center bg-white bg-opacity-40 divide-y divide-gray-300">
-                <tr class="text-sm uppercase" v-for="(ups,index) in upss" :key="index">
-                    <td>{{index+1}}</td>
+                <tr class="text-sm uppercase" v-for="(ups,index) in dataPagination" :key="index">
+                    <td>{{ups.nomor+1}}</td>
                     <td>{{ups.model}}</td>
                     <td>{{ups.ups_critical_load}}</td>
                     <td>{{ups.nomor_serial}}</td>
@@ -192,6 +192,15 @@
                 </tr>
             </tbody>
         </table>
+        <hr>
+        <div class="mt-5 flex justify-center" v-if="upss.length > dataPerPage && caribarang === ''">
+            <a :href="'?halaman='+ (parseInt(currentPage)-1)" class="bg-gray-700 px-3 py-1 rounded-lg ml-1 mr-1" :class="[!this.$route.query.halaman || this.$route.query.halaman == 1 ? 'decOp' : 'incOp']"><font-awesome-icon :icon="['fas','angle-left']" class="text-yellow-500" /></a>
+            
+            <div v-for="index in totalPages" :key="index" class="ml-1 mr-1 bg-gray-700 px-3 py-1 rounded-lg">
+                <a :href="'?halaman='+index" class="text-yellow-500">{{index}}</a>
+            </div>
+            <a :href="'?halaman='+ (parseInt(currentPage)+1)" class="bg-gray-700 px-3 py-1 rounded-lg ml-1 mr-1" :class="[this.$route.query.halaman >= totalPages ? 'decOp' : 'incOp']" :disable="this.$route.query.halaman >= totalPages"><font-awesome-icon :icon="['fas','angle-right']" class="text-yellow-500"/></a>
+        </div>
     </section>
 </div>
 </template>
@@ -204,15 +213,19 @@ export default {
             caribarang:"",
             cariups:[],
             upss:[],
-            master:{
-                nama : "inputUps",
-            },
-            deletemsg:"",
+            totalPages:1,
+            totalRecords:0,
+            dataPerPage:10,
+            page:1,
+            currentPage:1,
+            firstData :0,
+            dataPagination:[],
+            newUpss:[],
         }
     },
     computed:{ 
         filteredList() {
-            return this.upss.filter(hasil=>{
+            return this.dataPagination.filter(hasil=>{
                 if(hasil.model.toLowerCase().includes(this.caribarang.toLowerCase()) || hasil.nomor_serial.toLowerCase().includes(this.caribarang.toLowerCase()) || hasil.nama_sistem.toLowerCase().includes(this.caribarang.toLowerCase()) || hasil.manufaktur.toLowerCase().includes(this.caribarang.toLowerCase()) || hasil.ups_critical_load.toLowerCase().includes(this.caribarang.toLowerCase()) ){
                     return hasil
                 }
@@ -229,13 +242,13 @@ export default {
                 dangerMode: true
             }).then(suc=>{
                 if(suc){
-                    let indexOfArrayItem = this.upss.findIndex(i => i.id_ups === id)
+                    let indexOfArrayItem = this.dataPagination.findIndex(i => i.id_ups === id)
 
                     const lokasi = this.$auth.user.lokasi
                     this.$axios.delete(`/master/deleteups/${id}/${lokasi}`)
                     .then(resp=>{
                         if(resp){
-                            this.upss.splice(indexOfArrayItem, 1);
+                            this.dataPagination.splice(indexOfArrayItem, 1);
                             this.$router.push('/master/ups')
                             swal('data dihapus',{icon:'success'})
                         }
@@ -258,6 +271,21 @@ export default {
                 resp.data.forEach(ups =>{
                     this.upss.push(ups)            
                 })
+
+                this.totalPages = Math.ceil(this.upss.length / this.dataPerPage) 
+                if(this.$route.query.halaman){
+                    this.currentPage = this.$route.query.halaman
+                } else {
+                    this.currentPage = 1
+                }
+
+                // menambahkan nomor tiap data
+                for(var i = 0; i < this.upss.length; i++){
+                    this.newUpss.push({...this.upss[i], nomor:i})
+                }
+
+                this.firstData = (this.dataPerPage * this.currentPage) - this.dataPerPage
+                this.dataPagination = this.newUpss.slice(this.firstData,this.firstData+this.dataPerPage)
             }
             catch(err) {
                 console.error(err);
@@ -271,4 +299,14 @@ export default {
 </script>
 
 <style>
+.incOp{
+    opacity: 1;
+    cursor:pointer;
+    display: block;
+}
+.decOp{
+    opacity: 0;
+    cursor:default;
+    display:none;
+}
 </style>
