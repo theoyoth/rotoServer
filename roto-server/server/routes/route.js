@@ -28,6 +28,7 @@ const fileController = require('../controllers/file/fileController.js')
 const lokasiServer = require('../controllers/lokasiServer.js')
 const { isAuthent } = require('../middleware/userAuthorization.js')
 const { body, check, validationResult } = require('express-validator')
+
 const express = require('express')
 const router = express.Router()
 
@@ -339,7 +340,7 @@ router.post(
 // login
 router.post('/login', authController.login)
 // homepage when login success
-router.get('/homepage', isAuthent, authController.homepage)
+router.get('/home', isAuthent, authController.homepage)
 // logout
 router.get('/logout', authController.logout)
 // forgot password
@@ -512,16 +513,35 @@ router.get(
   isAuthent,
   readgantiController.detailGantiBarang
 )
+// document
+router.post('/document/upload', isAuthent, fileController.uploadFiledoc)
 
-router.post('/document/:lokasi', isAuthent, fileController.uploadFiledoc)
-
-router.get('/document/list/:lokasi', isAuthent, fileController.getAllFiles)
+router.get(
+  '/document/list/:lokasi/:folder',
+  isAuthent,
+  fileController.getAllFiles
+)
 
 // router.get('/document/list/:name', fileController.downloadFile)
 router.delete(
-  '/document/list/:name/:lokasi',
+  '/document/list/:name/:lokasi/:folder',
   isAuthent,
   fileController.deleteFile
+)
+// adding folder
+router.post('/document/addFolder', isAuthent, fileController.addFolder)
+
+// list folder
+router.get(
+  '/document/listDirectory/:lokasi',
+  isAuthent,
+  fileController.readDirectory
+)
+// delete folder
+router.delete(
+  '/document/folder/:foldername/:lokasi',
+  isAuthent,
+  fileController.deleteFolder
 )
 
 // MAP
