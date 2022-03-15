@@ -4,7 +4,9 @@ export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   env: {
     TokenTelegram: process.env.TOKEN_TELEGRAM,
-    ChatId: process.env.CHAT_ID,
+    ChatId1: process.env.CHAT_ID_1,
+    ChatId2: process.env.CHAT_ID_2,
+    ChatId3: process.env.CHAT_ID_3,
   },
   head: {
     title: 'rotogravure server',
@@ -73,10 +75,8 @@ export default {
   modules: [
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
-    // '@nuxtjs/auth',
     '@nuxtjs/auth-next',
     'cookie-universal-nuxt',
-    '@nuxt/image',
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
@@ -89,6 +89,7 @@ export default {
       local: {
         token: {
           property: 'token',
+          maxAge: 3600,
         },
         endpoints: {
           login: {
@@ -99,7 +100,7 @@ export default {
           logout: false,
 
           user: {
-            url: '/homepage',
+            url: '/home',
             method: 'get',
             propertyName: false,
           },
@@ -109,7 +110,7 @@ export default {
     redirect: {
       login: '/',
       logout: '/',
-      home: '/homepage',
+      home: '/home',
     },
   },
 
