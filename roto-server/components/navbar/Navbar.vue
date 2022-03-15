@@ -43,7 +43,7 @@ export default {
       await this.$auth.logout()
       await this.$axios.get('/logout')
 
-      localStorage.setItem("app-logout",'logout'+ Math.random())
+      localStorage.setItem('applogout','logout'+ Math.random())
       return true
     },
   }
